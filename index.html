@@ -153,7 +153,7 @@ function drawChambers(){
  }).filter(Boolean).sort((a,b)=>b.p.z-a.p.z);
  for(const it of items){
    const {ch,p,i}=it;
-   const rr=clamp(ch.r*p.f,10,Math.min(W,H)*.23);
+   const rr=clamp(ch.r*p.f,10,Math.max(W,H)*1.8);
    const grad=ctx.createRadialGradient(p.x,p.y,rr*.08,p.x,p.y,rr);
    grad.addColorStop(0,chamberColor(ch.h,.035));
    grad.addColorStop(.72,chamberColor(ch.h,.025));
@@ -180,7 +180,7 @@ function drawTrail(n){
 function drawNode(n,layer){
  const p=project(pointFor(n,layer));if(!p)return;
  const s=scoreStrength(n,layer);
- const r=clamp((1.15+s*2.2)*(p.f*7.5),1.05,5.2);
+ const r=clamp((1.15+s*2.2)*(p.f*7.5),1.05,13.5);
  const a=.16+s*.56;
  if(bool(n.economic_qualified_pre_null)){
    ctx.strokeStyle=rgba(layer,.09+s*.1);ctx.lineWidth=.8;
@@ -233,22 +233,32 @@ c.addEventListener('pointerup',e=>{
    for(const h of chamberHits){const d=Math.hypot(e.clientX-h.x,e.clientY-h.y);if(d<h.r&&d<bd){best=h;bd=d}}
    if(best){
      focusTarget={x:best.ch.x,y:best.ch.y,z:best.ch.z};
-     focusDist=42;
+     focusDist=16;
    }
  }
 });
 c.addEventListener('pointercancel',()=>dragging=false);
-c.addEventListener('wheel',e=>{e.preventDefault();focusDist=clamp(focusDist*(e.deltaY>0?1.07:.93),26,150)},{passive:false});
+c.addEventListener('wheel',e=>{e.preventDefault();focusDist=clamp(focusDist*(e.deltaY>0?1.08:.90),5,180)},{passive:false});
 c.addEventListener('touchstart',e=>{
  if(e.touches.length===2)lastPinch=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
 },{passive:true});
 c.addEventListener('touchmove',e=>{
  if(e.touches.length===2){
    const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-   if(lastPinch)focusDist=clamp(focusDist*(lastPinch/d),26,150);
+   if(lastPinch)focusDist=clamp(focusDist*Math.pow(lastPinch/d,1.35),5,180);
    lastPinch=d;
  }
 },{passive:true});
+
+
+let lastTapTime=0;
+c.addEventListener('pointerup',e=>{
+ const now=Date.now();
+ if(now-lastTapTime<300){
+   focusDist=clamp(focusDist*.46,5,180);
+ }
+ lastTapTime=now;
+});
 
 document.getElementById('c1').onclick=()=>mode=0;
 document.getElementById('c2').onclick=()=>mode=1;
