@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V2 | read-only visualization | 2026-08-22 -->
+<!-- ARGUS_OBSERVATORY_V3 | truthful direction hypergraph | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -82,7 +82,7 @@ let ui={show:'all',color:'universe',size:'sample',physics:'normal',tool:'none',p
 let focus=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
 let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,MIN=3.4,MAX=245;
 let lastTapAt=0,lastTapX=0,lastTapY=0;
-let sphereHits=[],nodeHits=[],shakeUntil=0,QSET=new Set(),HSET=new Set(),PSET=new Set(),CSET=new Set(),selectedNeighbors=new Set(),familyKey=null;
+let sphereHits=[],nodeHits=[],patternHits=[],shakeUntil=0,QSET=new Set(),HSET=new Set(),PSET=new Set(),CSET=new Set(),selectedNeighbors=new Set(),familyKey=null;
 let drag=false,railDrag=false,lastX=0,lastY=0,lastMove=0;
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
@@ -196,7 +196,7 @@ function edgePack(u){
  if(ui.edgeMode==='qualified'&&DATA.edges.qualified?.length)return DATA.edges.qualified;
  if(u.id==='observation')return DATA.edges.discovery||[];
  if(u.id==='recurrence')return DATA.edges.scorecard||[];
- if(u.id==='direction')return DATA.edges.validation||[];
+ if(u.id==='direction')return [];
  if(u.id==='topology')return DATA.edges.topology||[];
  if(u.id==='economics')return DATA.edges.economics||[];
  if(u.id==='null')return DATA.edges.null||[];
@@ -214,8 +214,38 @@ function edgeWeight(e,u,qualifiedPack=false){
  return finite(e[4],.2)
 }
 function neighborsOf(si){
- const out=new Set();for(const pack of [DATA.edges.common||[],DATA.edges.qualified||[]])for(const e of pack){if(e[0]===si)out.add(e[1]);if(e[1]===si)out.add(e[0])}return out
+ const out=new Set();
+ if(focus==='direction'&&DATA.hyperedges?.direction){
+   for(const g of DATA.hyperedges.direction){const m=g.members||[];if(m.includes(si))for(const x of m)if(x!==si)out.add(x)}
+   return out
+ }
+ for(const pack of [DATA.edges.common||[],DATA.edges.qualified||[]])for(const e of pack){if(e[0]===si)out.add(e[1]);if(e[1]===si)out.add(e[0])}
+ return out
 }
+function directionHub3D(g,u){
+ const members=(g.members||[]).filter(nodeVisible);if(!members.length)return null;
+ let x=0,y=0,z=0,n=0;for(const si of members){const p=nodePos(si,u);x+=p.x;y+=p.y;z+=p.z;n++}
+ x/=n;y/=n;z/=n;
+ const a=hash(g.id+'ha')*Math.PI*2,e=(hash(g.id+'he')-.5)*1.2,off=u.r*(.10+.18*hash(g.id+'hr'));
+ return{x:x+Math.cos(a)*Math.cos(e)*off,y:y+Math.sin(e)*off,z:z+Math.sin(a)*Math.cos(e)*off}
+}
+function drawDirectionHyperedges(u,lod){
+ const gs=DATA.hyperedges?.direction||[];patternHits=[];const lim=lod===1?28:lod===2?80:180;
+ for(let gi=0;gi<Math.min(gs.length,lim);gi++){
+   const g=gs[gi],members=(g.members||[]).filter(nodeVisible);if(members.length<2)continue;
+   const hub=directionHub3D(g,u),hp=hub&&proj(hub);if(!hp)continue;
+   const acc=clamp(finite(g.accuracy),0,1),net=Math.max(0,finite(g.net)),q=clamp(finite(g.q,1),0,1);
+   const quality=clamp((acc-.5)*1.6+Math.min(net/.08,.35)+(1-q)*.18,0,1);
+   if(ui.tool==='constellation'&&quality<.55)continue;
+   const alpha=.045+quality*.30,line=.45+quality*1.45;
+   ctx.save();ctx.strokeStyle=hsla(u.h,86,75,alpha);ctx.lineWidth=line;if(quality>.65){ctx.shadowColor=hsla(u.h,90,75,.55);ctx.shadowBlur=5+quality*9}
+   for(const si of members){const sp=proj(nodePos(si,u));if(!sp)continue;ctx.beginPath();ctx.moveTo(sp.x,sp.y);ctx.lineTo(hp.x,hp.y);ctx.stroke()}
+   ctx.restore();
+   const r=clamp(2.2+quality*3.2,2.2,5.8);ctx.save();ctx.translate(hp.x,hp.y);ctx.rotate(Math.PI/4);ctx.fillStyle=hsla(u.h,92,80,.30+quality*.55);if(quality>.65){ctx.shadowColor=hsla(u.h,95,80,.8);ctx.shadowBlur=12}ctx.fillRect(-r/2,-r/2,r,r);ctx.restore();
+   patternHits.push({x:hp.x,y:hp.y,r:Math.max(13,r+8),g,u})
+ }
+}
+function hitPattern(x,y){let best=null,bd=1e9;for(const h of patternHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
 function drawEdges(u,lod){
  let pack=edgePack(u),qpack=ui.edgeMode==='qualified'&&DATA.edges.qualified?.length;
  const lim=lod===1?180:lod===2?650:1600;const step=Math.max(1,Math.floor(pack.length/lim));
@@ -232,7 +262,7 @@ function drawTrails(u){
  ctx.save();for(let si=0;si<DATA.symbols.length;si++){if(!isQualified(si)||!nodeVisible(si))continue;const a=proj(baseNodePos(si,u,PREV)),b=proj(nodePos(si,u));if(!a||!b)continue;ctx.strokeStyle=colorFor(si,u,.14);ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}ctx.restore()
 }
 function drawInterior(u){
- const inside=clamp((u.r*1.55-dist)/(u.r*1.55-MIN),0,1);if(inside<=0)return;const lod=inside<.3?1:inside<.67?2:3;drawTrails(u);drawEdges(u,lod);nodeHits=[];
+ const inside=clamp((u.r*1.55-dist)/(u.r*1.55-MIN),0,1);if(inside<=0)return;const lod=inside<.3?1:inside<.67?2:3;drawTrails(u);if(u.id==='direction')drawDirectionHyperedges(u,lod);else{patternHits=[];drawEdges(u,lod)}nodeHits=[];
  const cap=lod===1?900:lod===2?2500:DATA.symbols.length;let drawn=0;
  if(ui.tool==='freeze'&&PREV&&PREV.symbols?.length===DATA.symbols.length){ctx.save();for(let si=0;si<PREV.symbols.length;si++){if(!isQualified(si)||!nodeVisible(si))continue;const op=proj(baseNodePos(si,u,PREV));if(!op)continue;ctx.fillStyle='rgba(88,225,255,.28)';ctx.beginPath();ctx.arc(op.x,op.y,1.7,0,7);ctx.fill()}ctx.restore()}
  for(let si=0;si<DATA.symbols.length&&drawn<cap;si++){if(!nodeVisible(si))continue;const st=strength(si,u);if(ui.tool==='blackhole'&&!isQualified(si)&&st<.48)continue;if(lod<3&&!isQualified(si)&&st<(.08+(2-lod)*.06))continue;const p=proj(nodePos(si,u));if(!p)continue;
@@ -286,10 +316,12 @@ function pointerDown(e){const p=e.touches?e.touches[0]:e;lastX=p.clientX;lastY=p
 function pointerMove(e){if(!drag)return;const p=e.touches?e.touches[0]:e,x=p.clientX,y=p.clientY,dx=x-lastX,dy=y-lastY;lastMove+=Math.abs(dx)+Math.abs(dy);if(railDrag)railSet(y);else{yaw+=dx*.005;pitch=clamp(pitch+dy*.004,-1.25,1.25)}lastX=x;lastY=y;e.preventDefault()}
 function pointerUp(e){if(!drag)return;drag=false;if(railDrag){railDrag=false;return}const p=e.changedTouches?e.changedTouches[0]:e,x=p.clientX,y=p.clientY;if(lastMove>12)return;
  const dbl=isDoubleTap(x,y);
- if(focus){const n=hitNode(x,y);if(n){if(wormStart!==null&&wormStart!==n.si){const path=shortestPath(wormStart,n.si);wormPath=new Set(path);wormStart=null;showSelected(n);showToast(path.length?`wormhole path: ${path.length-1} hops`:'no path');return}showSelected(n);return}
+ if(focus){
+   if(focus==='direction'){const ph=hitPattern(x,y);if(ph){const g=ph.g;showToast(`${g.signature} → ${g.direction} · members ${g.member_count||g.members?.length||0} · dir ${(finite(g.accuracy)*100).toFixed(1)}% · net ${(finite(g.net)*100).toFixed(2)}%`);return}}
+   const n=hitNode(x,y);if(n){if(wormStart!==null&&wormStart!==n.si){const path=shortestPath(wormStart,n.si);wormPath=new Set(path);wormStart=null;showSelected(n);showToast(path.length?`wormhole path: ${path.length-1} hops`:'no path');return}showSelected(n);return}
    if(dbl){home();showToast('view reset');return}
    hideSelected();shiftViewToward(x,y);return}
- const s=hitSphere(x,y);if(s){setFocus(s.u.id);return}
+ const sh=hitSphere(x,y);if(sh){setFocus(sh.u.id);return}
  if(dbl){home();showToast('view reset');return}
  hideSelected();shiftViewToward(x,y)}
 c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',()=>drag=false);
