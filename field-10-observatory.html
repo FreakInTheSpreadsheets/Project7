@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V5 | ARGUS_OBSERVATORY_V4_COMPAT | truthful direction hypergraph + sector gravity + dynamic fusion field | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V6 | ARGUS_OBSERVATORY_V5 | ARGUS_OBSERVATORY_V4_COMPAT | 60s live refresh + persistent camera + multidimensional depth lenses | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -78,7 +78,7 @@ const PAL={
  evidence:{observation:205,recurrence:215,topology:235,direction:260,combination:285,economics:42,null:205,prospective:52,paper:120},
  polarity:{observation:190,recurrence:190,topology:260,direction:190,combination:295,economics:45,null:260,prospective:170,paper:120}
 };
-let ui={layout:'universes',show:'all',color:'universe',size:'sample',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
+let ui={layout:'universes',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
 let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,MIN=3.4,MAX=245;
 let lastTapAt=0,lastTapX=0,lastTapY=0;
@@ -86,6 +86,8 @@ let sphereHits=[],nodeHits=[],patternHits=[],shakeUntil=0,QSET=new Set(),HSET=ne
 let drag=false,railDrag=false,lastX=0,lastY=0,lastMove=0;
 let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusionActiveCount=0;
 const FUSION_R=27,FUSION_MAX_MOBILE=3200,FUSION_MAX_DESKTOP=5200;
+const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v6';
+let lastFeedFingerprint='';
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
 function qmeta(si){return DATA?.qualified_meta?.[String(si)]||null}
@@ -187,6 +189,7 @@ function fusionStep(indices){
 }
 function fusionPos(si){
  const q=fusionState.get(si)||fusionDesired(si);let x=q.x,y=q.y,z=q.z;
+ z+=dimensionScalar(si)*(ui.dimension==='delta'?11:8);
  if(ui.tool==='inversion'){x=-x;y=-y;z=-z}
  if(ui.tool==='kaleido'){const a=Math.atan2(y,x),r=Math.hypot(x,y),fold=Math.PI/3,fa=Math.abs(((a+Math.PI)%fold)-fold/2);x=Math.cos(fa)*r;y=Math.sin(fa)*r}
  return{x,y,z}
@@ -251,6 +254,44 @@ function physicsOffset(si,u,base){
  if(performance.now()<shakeUntil){x+=(hash(s+'shx'+Math.floor(t*8))-.5)*1.8;y+=(hash(s+'shy'+Math.floor(t*8))-.5)*1.8}
  return{x,y,z}
 }
+function prevIndexFor(si){
+ if(!PREV?.symbols||!DATA?.symbols)return -1;
+ const s=DATA.symbols[si];
+ if(!PREV.__symbolIndex)PREV.__symbolIndex=new Map(PREV.symbols.map((x,i)=>[x,i]));
+ return PREV.__symbolIndex.get(s)??-1
+}
+function normalizedMetrics(data,si){
+ const m=data?.metrics?.[si]||[];
+ return [
+  clamp(Math.log1p(finite(m[0]))/7,0,1),clamp(finite(m[1]),0,1),clamp(finite(m[2]),0,1),
+  clamp((finite(m[3])+.1)/.4,0,1),clamp(finite(m[4]),0,1),clamp(finite(m[5])/10,0,1),
+  clamp(finite(m[6])/8,0,1),clamp(finite(m[7])/3,0,1)
+ ]
+}
+function dimensionScalar(si){
+ if(ui.dimension==='native')return 0;
+ const qm=qmeta(si),certainty=clamp(((qm?finite(qm.dir):metric(si,2))*.62+metric(si,4)*.38),0,1);
+ if(ui.dimension==='certainty')return (certainty-.5)*2;
+ if(ui.dimension==='economics'){const pct=qm?finite(qm.net):metric(si,3)*100;return clamp(pct/8,-1,1)}
+ if(ui.dimension==='recurrence')return (clamp(metric(si,1),0,1)-.5)*2;
+ if(ui.dimension==='connectivity')return (clamp(metric(si,5)/10,0,1)-.5)*2;
+ if(ui.dimension==='tension'){
+   const tension=clamp((isConflict(si)?0.72:0)+(1-certainty)*.42+clamp(metric(si,1),0,1)*.12,0,1);
+   return (tension-.5)*2
+ }
+ if(ui.dimension==='delta'){
+   const pi=prevIndexFor(si);if(pi<0)return 0;
+   const a=normalizedMetrics(DATA,si),b=normalizedMetrics(PREV,pi);let ss=0;
+   for(let i=0;i<a.length;i++)ss+=(a[i]-b[i])*(a[i]-b[i]);
+   return clamp(Math.sqrt(ss/a.length)*7,0,1)
+ }
+ return 0
+}
+function dimensionTransform(si,u,p){
+ const d=dimensionScalar(si);if(!d)return p;
+ const k=u.r*(ui.dimension==='delta'?.85:.62);
+ return{x:p.x,y:p.y+d*u.r*.08,z:p.z+d*k}
+}
 function baseNodePos(si,u,data=DATA){
  const s=data.symbols[si],m=data.metrics[si]||[],rk=(ui.reality==='prime'?'':('|'+ui.reality)),a=hash(s+'a'+rk)*Math.PI*2,e=(hash(s+'e'+rk)-.5)*1.55;
  let rr=2.2+hash(s+'r'+rk)*u.r*.78,val=0;
@@ -272,7 +313,7 @@ function visualToolTransform(si,u,p){
  if(ui.tool==='kaleido'){const dx=x-u.x,dy=y-u.y,dz=z-u.z,a=Math.atan2(dy,dx),r=Math.hypot(dx,dy),fold=Math.PI/3,fa=Math.abs(((a+Math.PI)%fold)-fold/2);x=u.x+Math.cos(fa)*r;y=u.y+Math.sin(fa)*r;z=u.z+dz}
  return{x,y,z}
 }
-function nodePos(si,u){return visualToolTransform(si,u,physicsOffset(si,u,baseNodePos(si,u)))}
+function nodePos(si,u){return visualToolTransform(si,u,physicsOffset(si,u,dimensionTransform(si,u,baseNodePos(si,u))))}
 function rot(p){let x=p.x-target.x,y=p.y-target.y,z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;return{x:x1,y:y1,z:z2}}
 function proj(p){const q=rot(p),dep=dist+q.z;if(dep<2)return null;const f=Math.min(W,H)*1.16/dep;return{x:W*.5+q.x*f,y:H*.5-q.y*f,z:q.z,f,dep}}
 function zoom(z){dist=clamp(z,MIN,MAX)}
@@ -421,9 +462,9 @@ function render(){
  drawRail();requestAnimationFrame(render)
 }
 
-function setLayout(v){ui.layout=v;focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;target={x:0,y:0,z:0};dist=54;yaw=-.18;pitch=-.08;fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;target={x:0,y:0,z:0};dist=138;yaw=-.18;pitch=-.08;showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats()}
-function setFocus(id){ui.layout='universes';focus=id;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);target={x:u.x,y:u.y,z:u.z};dist=Math.max(MIN,u.r*1.22);syncUniverseButtons();renderDrawer();hideSelected()}
-function home(){focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();target={x:0,y:0,z:0};dist=ui.layout==='fusion'?54:138;yaw=-.18;pitch=-.08;syncUniverseButtons();hideSelected()}
+function setLayout(v){ui.layout=v;focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;target={x:0,y:0,z:0};dist=54;yaw=-.18;pitch=-.08;fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;target={x:0,y:0,z:0};dist=138;yaw=-.18;pitch=-.08;showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
+function setFocus(id){ui.layout='universes';focus=id;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);target={x:u.x,y:u.y,z:u.z};dist=Math.max(MIN,u.r*1.22);syncUniverseButtons();renderDrawer();hideSelected();persistView()}
+function home(){focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();target={x:0,y:0,z:0};dist=ui.layout==='fusion'?54:138;yaw=-.18;pitch=-.08;syncUniverseButtons();hideSelected();persistView()}
 function hitNode(x,y){let best=null,bd=1e9;for(const h of nodeHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
 function hitSphere(x,y){let best=null,bd=1e9;for(const h of sphereHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
 function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>el.classList.remove('show'),1400)}
@@ -463,10 +504,30 @@ function pointerUp(e){if(!drag)return;drag=false;if(railDrag){railDrag=false;ret
    hideSelected();shiftViewToward(x,y);return}
  const sh=hitSphere(x,y);if(sh){setFocus(sh.u.id);return}
  if(dbl){home();showToast('view reset');return}
- hideSelected();shiftViewToward(x,y)}
+ hideSelected();shiftViewToward(x,y);persistView()}
 c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',()=>drag=false);
-c.addEventListener('wheel',e=>{zoom(dist*Math.exp(e.deltaY*.0015));e.preventDefault()},{passive:false});
+c.addEventListener('wheel',e=>{zoom(dist*Math.exp(e.deltaY*.0015));persistView();e.preventDefault()},{passive:false});
 
+function snapshotView(){
+ const sym=i=>Number.isInteger(i)&&DATA?.symbols?.[i]?DATA.symbols[i]:null;
+ return {ui:{...ui},focus,target:{...target},dist,yaw,pitch,selectedSymbol:selected?sym(selected.si):null,
+         isolatedSymbol:sym(isolated),wormSymbols:[...wormPath].map(sym).filter(Boolean)}
+}
+function persistView(){try{sessionStorage.setItem(VIEW_STATE_KEY,JSON.stringify(snapshotView()))}catch(e){}}
+function restoreView(){
+ try{
+   const v=JSON.parse(sessionStorage.getItem(VIEW_STATE_KEY)||'null');if(!v)return;
+   if(v.ui)ui={...ui,...v.ui};if(v.focus)focus=v.focus;if(v.target)target={...target,...v.target};
+   if(Number.isFinite(v.dist))dist=v.dist;if(Number.isFinite(v.yaw))yaw=v.yaw;if(Number.isFinite(v.pitch))pitch=v.pitch;
+   const ix=new Map((DATA?.symbols||[]).map((s,i)=>[s,i]));
+   if(v.selectedSymbol&&ix.has(v.selectedSymbol)){const si=ix.get(v.selectedSymbol);selected={si,u:focus?uobj(focus):fusionDominantUniverse(si)}}
+   if(v.isolatedSymbol&&ix.has(v.isolatedSymbol))isolated=ix.get(v.isolatedSymbol);
+   wormPath=new Set((v.wormSymbols||[]).map(s=>ix.get(s)).filter(Number.isInteger));
+ }catch(e){}
+}
+function feedFingerprint(d){
+ const n=d?.counts||{};return [d?.checkpoint_batch_id||'',n.qualified_patterns||0,n.prospective_watchlist||0,n.prospective_signals||0,n.open_paper_positions||0,n.closed_paper_trades||0,d?.snapshot||''].join('|')
+}
 function chips(title,key,items){return `<div class="sec"><div class="label">${title}</div><div class="row">${items.map(([v,t])=>`<button class="chip ${ui[key]===v?'on':''}" data-key="${key}" data-val="${v}">${t}</button>`).join('')}</div></div>`}
 function renderDrawer(){
  const d=document.getElementById('drawer');
@@ -475,6 +536,7 @@ function renderDrawer(){
  chips('SHOW','show',[['all','ALL'],['qualified','QUALIFIED'],['hot','HOLY SHIT'],['prospective','PROSPECTIVE'],['conflict','CONFLICT']])+
  chips('COLOR','color',[['universe','UNIVERSE'],['direction','POLARITY'],['confidence','CONFIDENCE'],['economics','ECONOMICS'],['recurrence','RECURRENCE']])+
  chips('SIZE','size',[['sample','SAMPLE'],['effect','EFFECT'],['connectivity','LINKS'],['expectancy','EXPECTANCY']])+
+ chips('DIMENSION','dimension',[['native','NATIVE'],['certainty','CERTAINTY'],['economics','ECON'],['recurrence','RECURRENCE'],['connectivity','NETWORK'],['tension','TENSION'],['delta','Δ TIME']])+
  chips('PALETTE','palette',[['argus','ARGUS'],['aurora','AURORA'],['thermal','THERMAL'],['evidence','EVIDENCE'],['polarity','POLARITY']])+
  chips('REALITY','reality',[['prime','PRIME'],['alt1','ALT-1'],['alt2','ALT-2'],['alt3','ALT-3']])+
  chips('PHYSICS','physics',[['normal','NORMAL'],['gravity','GRAVITY'],['sector-g','SECTOR-G'],['zero-g','ZERO-G'],['explode','EXPLODE'],['orbit','ORBIT'],['magnetize','MAGNETIZE']])+
@@ -482,10 +544,10 @@ function renderDrawer(){
  chips('CONNECTIONS','edgeMode',[['all','ALL'],['qualified','QUALIFIED']])+
  `<div class="sec"><div class="label">MIN DIRECTIONAL ACCURACY</div><div class="rangeWrap"><input id="cut" type="range" min="0" max="95" step="5" value="${Math.round(ui.cutoff*100)}"><span id="cutV" style="font-size:10px;color:#dff7ff">${Math.round(ui.cutoff*100)}%</span></div></div>`+
  `<div class="sec"><div class="row"><button id="shake" class="chip">SHAKE</button><button id="reset" class="chip">RESET FIELD</button></div></div>`;
- d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){setLayout(v);return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');renderDrawer();if(selected)buildSelectedButtons()});
- const cut=d.querySelector('#cut');cut.oninput=()=>{ui.cutoff=+cut.value/100;d.querySelector('#cutV').textContent=cut.value+'%'};
+ d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){setLayout(v);return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');renderDrawer();if(selected)buildSelectedButtons();persistView()});
+ const cut=d.querySelector('#cut');cut.oninput=()=>{ui.cutoff=+cut.value/100;d.querySelector('#cutV').textContent=cut.value+'%';persistView()};
  d.querySelector('#shake').onclick=()=>{shakeUntil=performance.now()+1800;showToast('field shaken')};
- d.querySelector('#reset').onclick=()=>{ui={layout:'universes',show:'all',color:'universe',size:'sample',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();home();renderDrawer();showToast('field reset')};
+ d.querySelector('#reset').onclick=()=>{ui={layout:'universes',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();home();renderDrawer();persistView();showToast('field reset')};
 }
 document.getElementById('drawerToggle').onclick=()=>document.getElementById('drawer').classList.toggle('open');
 document.getElementById('selClose').onclick=()=>{selected=null;hideSelected()};
@@ -497,15 +559,34 @@ function initUI(){
  const bar=document.getElementById('universes');bar.innerHTML='';const all=document.createElement('button');all.className='ub';all.dataset.id='__fusion__';all.textContent='FUSION';all.onclick=()=>setLayout(ui.layout==='fusion'?'universes':'fusion');bar.appendChild(all);for(const u of DATA.universes||[]){const b=document.createElement('button');b.className='ub';b.dataset.id=u.id;b.textContent=SHORT[u.id]||u.label.toUpperCase();b.onclick=()=>focus===u.id&&ui.layout==='universes'?home():setFocus(u.id);bar.appendChild(b)}
  renderDrawer();syncUniverseButtons();updateStats()
 }
-function updateStats(){const n=DATA?.counts||{},sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'';document.getElementById('stats').textContent=`${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} qualified · ${n.qualified_symbols??0} symbols · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · ${DATA?.snapshot||''}`}
+function updateStats(){const n=DATA?.counts||{},sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'';document.getElementById('stats').textContent=`${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} qualified · ${n.qualified_symbols??0} symbols · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
 function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.qualified_indices=d.qualified_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];return d}
 async function fetchData(){
  const paths=['argus-v478-latest.json','argus-latest-compact.json'];let last=null;
  for(const p of paths){try{const r=await fetch(p+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);const d=normalizeOld(await r.json());return d}catch(e){last=e}}
  throw last||new Error('no data')
 }
-async function loadData(first=false){try{const d=await fetchData();const symbolLayoutChanged=!!DATA&&(DATA.symbols?.length!==d.symbols?.length||DATA.symbols?.[0]!==d.symbols?.[0]||DATA.symbols?.[DATA.symbols.length-1]!==d.symbols?.[d.symbols.length-1]);if(DATA&&d.checkpoint_batch_id&&d.checkpoint_batch_id!==DATA.checkpoint_batch_id)PREV=DATA;if(symbolLayoutChanged)fusionState.clear();DATA=d;QSET=new Set(d.qualified_indices||[]);HSET=new Set(d.hot_indices||[]);PSET=new Set(d.prospective_indices||[]);CSET=new Set(d.conflict_indices||[]);lastLoad=Date.now();loadError=false;if(first)initUI();else updateStats()}catch(e){loadError=true;if(first){document.getElementById('stats').textContent='DATA FEED OFFLINE · visualization retained when cached';showToast('feed offline')}}}
-loadData(true);setInterval(()=>loadData(false),600000);render();
+async function loadData(first=false){
+ try{
+   const d=await fetchData(),fp=feedFingerprint(d),before=DATA?snapshotView():null;
+   const symbolLayoutChanged=!!DATA&&(DATA.symbols?.length!==d.symbols?.length||DATA.symbols?.[0]!==d.symbols?.[0]||DATA.symbols?.[DATA.symbols.length-1]!==d.symbols?.[d.symbols.length-1]);
+   if(DATA&&fp!==lastFeedFingerprint)PREV=DATA;
+   if(symbolLayoutChanged)fusionState.clear();
+   DATA=d;lastFeedFingerprint=fp;QSET=new Set(d.qualified_indices||[]);HSET=new Set(d.hot_indices||[]);PSET=new Set(d.prospective_indices||[]);CSET=new Set(d.conflict_indices||[]);lastLoad=Date.now();loadError=false;
+   if(first){initUI();restoreView();syncUniverseButtons();renderDrawer();if(selected){showSelected(selected)}updateStats()}
+   else{
+     if(before){
+       const ix=new Map((DATA.symbols||[]).map((s,i)=>[s,i]));
+       if(before.selectedSymbol&&ix.has(before.selectedSymbol)){const si=ix.get(before.selectedSymbol);selected={si,u:focus?uobj(focus):fusionDominantUniverse(si)}}
+       else if(before.selectedSymbol){selected=null;hideSelected()}
+       if(before.isolatedSymbol&&ix.has(before.isolatedSymbol))isolated=ix.get(before.isolatedSymbol);else if(before.isolatedSymbol)isolated=null;
+       wormPath=new Set((before.wormSymbols||[]).map(s=>ix.get(s)).filter(Number.isInteger));
+     }
+     if(selected)showSelected(selected);updateStats();persistView()
+   }
+ }catch(e){loadError=true;if(first){document.getElementById('stats').textContent='DATA FEED OFFLINE · visualization retained when cached';showToast('feed offline')}}
+}
+loadData(true);setInterval(()=>loadData(false),LIVE_REFRESH_MS);setInterval(persistView,3000);render();
 </script>
 </body>
 </html>
