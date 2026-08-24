@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V9_1 | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V9_2 | alternate display grammars: graph + glyphs + waves | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -101,7 +101,7 @@ const PAL={
  evidence:{observation:205,recurrence:215,topology:235,direction:260,combination:285,economics:42,null:205,prospective:52,paper:120},
  polarity:{observation:190,recurrence:190,topology:260,direction:190,combination:295,economics:45,null:260,prospective:170,paper:120}
 };
-let ui={layout:'universes',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
+let ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
 let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,verticalOffset=0,MIN=3.4,MAX=245;
 const VERTICAL_MIN=-60,VERTICAL_MAX=60;
@@ -177,6 +177,33 @@ function nodeRadius(si,u,pf){
  return clamp((.7+2.1*v)*pf*4.6,.6,7.2)
 }
 function uobj(id){const p=POS[id]||[0,0,0];return{id,x:p[0],y:p[1],z:p[2],r:RAD[id]||11,h:hueForUniverse(id)}}
+function tracePolygon(x,y,r,n,rot=-Math.PI/2){ctx.beginPath();for(let i=0;i<n;i++){const a=rot+i*Math.PI*2/n,px=x+Math.cos(a)*r,py=y+Math.sin(a)*r;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath()}
+function traceStar(x,y,r,points=6,rot=-Math.PI/2){ctx.beginPath();for(let i=0;i<points*2;i++){const rr=i%2?r*.43:r,a=rot+i*Math.PI/points,px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath()}
+function paintNodeMark(si,x,y,r){
+ const dm=ui.display||'graph';
+ if(dm==='graph'){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();return}
+ const rr=dm==='waves'?r*.86:r;
+ if(isHot(si)){traceStar(x,y,rr*1.18,6);ctx.fill();return}
+ if(isConflict(si)){ctx.save();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=Math.max(1.1,rr*.44);ctx.beginPath();ctx.moveTo(x-rr,y-rr);ctx.lineTo(x+rr,y+rr);ctx.moveTo(x+rr,y-rr);ctx.lineTo(x-rr,y+rr);ctx.stroke();ctx.restore();return}
+ if(isProspective(si)){tracePolygon(x,y,rr*1.08,3,-Math.PI/2);ctx.fill();return}
+ if(isQualified(si)){tracePolygon(x,y,rr*1.03,4,Math.PI/4);ctx.fill();return}
+ tracePolygon(x,y,Math.max(1.4,rr*.92),6,Math.PI/6);ctx.save();ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=Math.max(.55,rr*.22);ctx.globalAlpha*=.82;ctx.stroke();ctx.restore()
+}
+function curveControl(a,b,bend=0){const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1,nx=-dy/len,ny=dx/len,mx=(a.x+b.x)/2,my=(a.y+b.y)/2;return{x:mx+nx*len*bend,y:my+ny*len*bend}}
+function strokeConnection(a,b,bend=0){ctx.beginPath();ctx.moveTo(a.x,a.y);if(Math.abs(bend)<.0001){ctx.lineTo(b.x,b.y)}else{const q=curveControl(a,b,bend);ctx.quadraticCurveTo(q.x,q.y,b.x,b.y)}ctx.stroke()}
+function curvePoint(a,b,t,bend=0){if(Math.abs(bend)<.0001)return{x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t};const q=curveControl(a,b,bend),u=1-t;return{x:u*u*a.x+2*u*t*q.x+t*t*b.x,y:u*u*a.y+2*u*t*q.y+t*t*b.y}}
+function waveSourcesForUniverse(u,lod){
+ const scored=[];for(let si=0;si<(DATA?.symbols||[]).length;si++){if(!nodeVisible(si))continue;const st=strength(si,u),priority=(isHot(si)?1.2:0)+(isProspective(si)?.9:0)+(isConflict(si)?.65:0)+(isQualified(si)?.55:0)+opportunityScore(si)*.7+st*.45;if(priority>.25)scored.push([priority,si])}
+ scored.sort((a,b)=>b[0]-a[0]);return scored.slice(0,W<900?(lod===1?20:32):(lod===1?36:70)).map(x=>x[1])
+}
+function drawWaveField(u,indices,posFn){
+ if((ui.display||'graph')!=='waves')return;const reduced=(typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches),now=reduced?0:performance.now()/1000;
+ ctx.save();for(let j=0;j<indices.length;j++){const si=indices[j],p=proj(posFn(si));if(!p)continue;const st=strength(si,u),opp=opportunityScore(si),freq=fireRate(si),power=clamp(.18+st*.35+opp*.47,0,1),rings=2+(isQualified(si)||isProspective(si)||isHot(si)?1:0),phase=(now*(.12+.34*freq+.18*power)+hash(DATA.symbols[si]+'wave'))%1,tilt=(hash(DATA.symbols[si]+'tilt')-.5)*1.5;
+   for(let k=0;k<rings;k++){const rr=(9+k*13+phase*13)*(1+.58*power),fade=1-k/(rings+.25),alpha=(.018+.085*power)*fade*(isHot(si)?1.8:isProspective(si)?1.35:1);ctx.strokeStyle=colorFor(si,u,alpha);ctx.lineWidth=.45+power*.85;ctx.beginPath();ctx.ellipse(p.x,p.y,rr,rr*(.46+.24*freq),tilt,0,Math.PI*2);ctx.stroke()}
+   if(isHot(si)||isProspective(si)){const rr=(7+phase*24)*(1+.4*power);ctx.strokeStyle=colorFor(si,u,.18+.18*power);ctx.lineWidth=1+power;ctx.shadowColor=colorFor(si,u,.55);ctx.shadowBlur=8+10*power;ctx.beginPath();ctx.ellipse(p.x,p.y,rr,rr*.58,tilt,0,Math.PI*2);ctx.stroke();ctx.shadowBlur=0}
+ }ctx.restore()
+}
+
 
 function fusionAnchor(id){
  const us=DATA?.universes||[],i=Math.max(0,us.findIndex(x=>x.id===id)),n=Math.max(1,us.length);
@@ -276,14 +303,14 @@ function drawFusionSectorWells(){
 }
 function drawFusionSelectedConnections(){
  if(!selected)return;const q=fusionPos(selected.si),qp=proj(q);if(!qp)return;
- ctx.save();for(const x of DATA.universes||[]){const u=uobj(x.id),v=strength(selected.si,u);if(v<.035)continue;const a=fusionAnchor(u.id),ap=proj(a);if(!ap)continue;const alpha=.12+.76*Math.pow(v,.72);ctx.strokeStyle=hsla(u.h,95,82,alpha);ctx.lineWidth=.7+2.8*v;ctx.shadowColor=hsla(u.h,98,82,.92);ctx.shadowBlur=8+18*v;ctx.beginPath();ctx.moveTo(qp.x,qp.y);ctx.lineTo(ap.x,ap.y);ctx.stroke()}
- if(ui.physics==='sector-g'){const k=sectorIndex(selected.si);if(k>=0){const sp=proj(fusionSectorCenter(k));if(sp){ctx.strokeStyle='rgba(255,255,255,.78)';ctx.lineWidth=1.4;ctx.shadowColor='rgba(255,255,255,.9)';ctx.shadowBlur=14;ctx.beginPath();ctx.moveTo(qp.x,qp.y);ctx.lineTo(sp.x,sp.y);ctx.stroke()}}}
+ ctx.save();for(const x of DATA.universes||[]){const u=uobj(x.id),v=strength(selected.si,u);if(v<.035)continue;const a=fusionAnchor(u.id),ap=proj(a);if(!ap)continue;const alpha=.12+.76*Math.pow(v,.72);ctx.strokeStyle=hsla(u.h,95,82,alpha);ctx.lineWidth=.7+2.8*v;ctx.shadowColor=hsla(u.h,98,82,.92);ctx.shadowBlur=8+18*v;strokeConnection(qp,ap,(ui.display||'graph')==='glyphs'?(hash(String(selected.si)+x.id+'fusioncurve')-.5)*.28:0)}
+ if(ui.physics==='sector-g'){const k=sectorIndex(selected.si);if(k>=0){const sp=proj(fusionSectorCenter(k));if(sp){ctx.strokeStyle='rgba(255,255,255,.78)';ctx.lineWidth=1.4;ctx.shadowColor='rgba(255,255,255,.9)';ctx.shadowBlur=14;strokeConnection(qp,sp,(ui.display||'graph')==='glyphs'?.16:0)}}}
  ctx.restore()
 }
 function drawFusion(){
- const indices=fusionIndices();fusionActiveCount=indices.length;fusionStep(indices);nodeHits=[];patternHits=[];drawFusionAnchors();drawFusionSectorWells();drawFusionSelectedConnections();
+ const indices=fusionIndices();fusionActiveCount=indices.length;fusionStep(indices);nodeHits=[];patternHits=[];drawFusionAnchors();drawFusionSectorWells();if((ui.display||'graph')!=='waves')drawFusionSelectedConnections();if(indices.length)drawWaveField(fusionDominantUniverse(selected?.si??indices[0]),indices,si=>fusionPos(si));
  // A single combined evidence arena. Lines are intentionally suppressed here: motion encodes the multi-universe pull without inventing pairwise causality.
- for(const si of indices){const pos=fusionPos(si),p=proj(pos);if(!p)continue;const u=fusionDominantUniverse(si),r=nodeRadius(si,u,p.f)*.82,qm=qmeta(si),hot=isHot(si),pros=isProspective(si);let a=qm?.72:.16;if(ui.tool==='ghost'&&!qm)a*=.18;if(ui.tool==='xray')a*=.10;ctx.save();ctx.fillStyle=fusionColor(si,a);if(qm&&ui.tool!=='xray'){ctx.shadowColor=fusionColor(si,hot?1:.72);ctx.shadowBlur=hot?24:pros?17:8}const pulse=(hot||pros)?(.72+.28*Math.sin(performance.now()/(hot?160:260))):1;if(hot){ctx.beginPath();ctx.arc(p.x,p.y,r*(2+.35*pulse),0,7);ctx.fillStyle=`rgba(255,255,255,${.035+.04*pulse})`;ctx.fill()}if(selected&&selected.si===si){ctx.strokeStyle='rgba(255,255,255,.98)';ctx.lineWidth=2.2;ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=24;ctx.beginPath();ctx.arc(p.x,p.y,r*2,0,7);ctx.stroke()}ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();ctx.restore();nodeHits.push({x:p.x,y:p.y,r:Math.max(11,r+6),si,u})}
+ for(const si of indices){const pos=fusionPos(si),p=proj(pos);if(!p)continue;const u=fusionDominantUniverse(si),r=nodeRadius(si,u,p.f)*.82,qm=qmeta(si),hot=isHot(si),pros=isProspective(si);let a=qm?.72:.16;if(ui.tool==='ghost'&&!qm)a*=.18;if(ui.tool==='xray')a*=.10;ctx.save();ctx.fillStyle=fusionColor(si,a);if(qm&&ui.tool!=='xray'){ctx.shadowColor=fusionColor(si,hot?1:.72);ctx.shadowBlur=hot?24:pros?17:8}const pulse=(hot||pros)?(.72+.28*Math.sin(performance.now()/(hot?160:260))):1;if(hot){ctx.beginPath();ctx.arc(p.x,p.y,r*(2+.35*pulse),0,7);ctx.fillStyle=`rgba(255,255,255,${.035+.04*pulse})`;ctx.fill()}if(selected&&selected.si===si){ctx.strokeStyle='rgba(255,255,255,.98)';ctx.lineWidth=2.2;ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=24;ctx.beginPath();ctx.arc(p.x,p.y,r*2,0,7);ctx.stroke()}paintNodeMark(si,p.x,p.y,r);ctx.restore();nodeHits.push({x:p.x,y:p.y,r:Math.max(11,r+6),si,u})}
  const labels=nodeHits.filter(h=>isQualified(h.si)).sort((a,b)=>(qmeta(b.si)?.grade||0)-(qmeta(a.si)?.grade||0)).slice(0,W<900?24:48);ctx.save();ctx.font='700 9px -apple-system,sans-serif';ctx.textAlign='left';for(const h of labels){ctx.fillStyle=fusionColor(h.si,.76);ctx.fillText(DATA.symbols[h.si],h.x+5,h.y-4)}ctx.restore();
  ctx.save();const cp=proj({x:0,y:0,z:0});if(cp){ctx.textAlign='center';ctx.font='800 10px -apple-system,sans-serif';ctx.fillStyle='rgba(220,245,255,.38)';ctx.fillText(`FUSION FIELD · ${indices.length} DYNAMIC NODES`,cp.x,Math.max(28,H*.105))}ctx.restore()
 }
@@ -563,8 +590,8 @@ function neighborsOf(si){
  for(const pack of [DATA.edges.common||[],DATA.edges.qualified||[]])for(const e of pack){if(e[0]===si)out.add(e[1]);if(e[1]===si)out.add(e[0])}
  return out
 }
-function drawNeuronPulse(a,b,color,weight=1,offset=0,reverse=false){
- const t=(performance.now()/1000*(.24+.55*clamp(weight,0,1))+offset)%1,k=reverse?1-t:t,x=a.x+(b.x-a.x)*k,y=a.y+(b.y-a.y)*k;
+function drawNeuronPulse(a,b,color,weight=1,offset=0,reverse=false,bend=0){
+ const t=(performance.now()/1000*(.24+.55*clamp(weight,0,1))+offset)%1,k=reverse?1-t:t,p=curvePoint(a,b,k,bend),x=p.x,y=p.y;
  ctx.save();ctx.strokeStyle=color;ctx.lineWidth=.7+1.8*weight;ctx.shadowColor=color;ctx.shadowBlur=8+12*weight;ctx.globalAlpha=.72;ctx.beginPath();ctx.arc(x,y,1.15+1.8*weight,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.restore()
 }
 function patternQuality(g){const acc=clamp(finite(g?.accuracy),0,1),net=Math.max(0,finite(g?.net)),q=clamp(finite(g?.q,1),0,1);return clamp((acc-.5)*1.6+Math.min(net/.08,.35)+(1-q)*.18,0,1)}
@@ -576,6 +603,7 @@ function directionHub3D(g,u){
  return{x:x+Math.cos(a)*Math.cos(e)*off,y:y+Math.sin(e)*off,z:z+Math.sin(a)*Math.cos(e)*off}
 }
 function drawDirectionHyperedges(u,lod){
+ if((ui.display||'graph')==='waves'){patternHits=[];return}
  const gs=DATA.hyperedges?.direction||[];patternHits=[];const lim=lod===1?28:lod===2?80:180;
  for(let gi=0;gi<Math.min(gs.length,lim);gi++){
    const g=gs[gi],members=(g.members||[]).filter(nodeVisible);if(members.length<2)continue;
@@ -585,8 +613,8 @@ function drawDirectionHyperedges(u,lod){
    const selectedIn=!!selected&&members.includes(selected.si),alpha=.045+quality*.30,line=.45+quality*1.45;
    ctx.save();ctx.strokeStyle=selectedIn?'rgba(255,255,255,.32)':hsla(u.h,86,75,alpha);ctx.lineWidth=selectedIn?Math.max(1.4,line):line;if(quality>.65||selectedIn){ctx.shadowColor=selectedIn?'rgba(255,255,255,.95)':hsla(u.h,90,75,.55);ctx.shadowBlur=selectedIn?18:5+quality*9}
    for(const si of members){const sp=proj(nodePos(si,u));if(!sp)continue;const pick=!!selected&&si===selected.si;if(pick){ctx.strokeStyle='rgba(255,255,255,.98)';ctx.lineWidth=3.0;ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=24}else if(selectedIn){ctx.strokeStyle=hsla(u.h,92,80,.40);ctx.lineWidth=1.4;ctx.shadowColor=hsla(u.h,95,80,.65);ctx.shadowBlur=10}else{ctx.strokeStyle=hsla(u.h,86,75,alpha);ctx.lineWidth=line}
-     ctx.beginPath();ctx.moveTo(sp.x,sp.y);ctx.lineTo(hp.x,hp.y);ctx.stroke();
-     if((selectedIn||isProspective(si)||isHot(si))&&quality>.28){const reverse=selectedIn&&selected&&si!==selected.si;drawNeuronPulse(sp,hp,selectedIn?'rgba(235,252,255,.98)':hsla(u.h,96,84,.92),quality,hash(g.id+':'+si),reverse)} }
+     const bend=(ui.display||'graph')==='glyphs'?(hash(g.id+':curve:'+si)-.5)*.26:0;strokeConnection(sp,hp,bend);
+     if((selectedIn||isProspective(si)||isHot(si))&&quality>.28){const reverse=selectedIn&&selected&&si!==selected.si;drawNeuronPulse(sp,hp,selectedIn?'rgba(235,252,255,.98)':hsla(u.h,96,84,.92),quality,hash(g.id+':'+si),reverse,bend)} }
    ctx.restore();
    const r=clamp(2.2+quality*3.2,2.2,5.8);ctx.save();ctx.translate(hp.x,hp.y);ctx.rotate(Math.PI/4);ctx.fillStyle=hsla(u.h,92,80,.30+quality*.55);if(quality>.65){ctx.shadowColor=hsla(u.h,95,80,.8);ctx.shadowBlur=12}ctx.fillRect(-r/2,-r/2,r,r);ctx.restore();
    patternHits.push({x:hp.x,y:hp.y,r:Math.max(13,r+8),g,u})
@@ -613,6 +641,7 @@ function drawSemanticPatternBeacons(u,overview=false){
  ctx.restore()
 }
 function drawEdges(u,lod){
+ if((ui.display||'graph')==='waves')return;
  let pack=edgePack(u),qpack=ui.edgeMode==='qualified'&&DATA.edges.qualified?.length;
  const lim=lod===1?180:lod===2?650:1600;const step=Math.max(1,Math.floor(pack.length/lim));
  for(let i=0;i<pack.length;i+=step){const e=pack[i],ia=e[0],ib=e[1];if(!nodeVisible(ia)||!nodeVisible(ib))continue;const a=proj(nodePos(ia,u)),b=proj(nodePos(ib,u));if(!a||!b)continue;let w=edgeWeight(e,u,qpack);
@@ -620,8 +649,8 @@ function drawEdges(u,lod){
    const selectedEdge=!!selected&&(selected.si===ia||selected.si===ib),strong=qpack||isQualified(ia)&&isQualified(ib),alpha=selectedEdge?.98:(strong?.10:.02)+w*(strong?.45:.14);
    ctx.save();ctx.strokeStyle=selectedEdge?'rgba(255,255,255,.98)':(strong?colorFor(ia,u,alpha):hsla(u.h,76,72,alpha));ctx.lineWidth=selectedEdge?2.5+w*2.5:(strong?1.0:.35)+w*(strong?2.4:.9);
    if(selectedEdge){ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=20+w*16}else if(strong){ctx.shadowColor=colorFor(ia,u,.75);ctx.shadowBlur=4+w*14}
-   ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
-   if(selectedEdge||isProspective(ia)||isProspective(ib)||isHot(ia)||isHot(ib)){drawNeuronPulse(a,b,selectedEdge?'rgba(245,253,255,.98)':colorFor(ia,u,.96),Math.max(.35,w),hash(DATA.symbols[ia]+DATA.symbols[ib]),false)}
+   const bend=(ui.display||'graph')==='glyphs'?(hash(DATA.symbols[ia]+'~'+DATA.symbols[ib])-.5)*.22:0;strokeConnection(a,b,bend);
+   if(selectedEdge||isProspective(ia)||isProspective(ib)||isHot(ia)||isHot(ib)){drawNeuronPulse(a,b,selectedEdge?'rgba(245,253,255,.98)':colorFor(ia,u,.96),Math.max(.35,w),hash(DATA.symbols[ia]+DATA.symbols[ib]),false,bend)}
    ctx.restore()
  }
 }
@@ -657,7 +686,7 @@ function drawRealityEcho(u){
 function drawInterior(u){
  const inside=clamp((u.r*1.55-dist)/(u.r*1.55-MIN),0,1);if(inside<=0)return;const lod=inside<.3?1:inside<.67?2:3;
  if(ui.physics==='reality-g')realityUniverseStep(u,lod);
- drawRealityBarycenter(u);drawSectorWells(u);drawTrails(u);drawRealityEcho(u);if(u.id==='direction')drawDirectionHyperedges(u,lod);else{patternHits=[];drawEdges(u,lod)}nodeHits=[];
+ drawRealityBarycenter(u);drawSectorWells(u);drawTrails(u);drawRealityEcho(u);if((ui.display||'graph')==='waves')drawWaveField(u,waveSourcesForUniverse(u,lod),si=>nodePos(si,u));if(u.id==='direction')drawDirectionHyperedges(u,lod);else{patternHits=[];drawEdges(u,lod)}nodeHits=[];
  const cap=lod===1?900:lod===2?2500:DATA.symbols.length;let drawn=0;
  if(ui.tool==='freeze'&&PREV&&PREV.symbols?.length===DATA.symbols.length){ctx.save();for(let si=0;si<PREV.symbols.length;si++){if(!isQualified(si)||!nodeVisible(si))continue;const op=proj(baseNodePos(si,u,PREV));if(!op)continue;ctx.fillStyle='rgba(88,225,255,.28)';ctx.beginPath();ctx.arc(op.x,op.y,1.7,0,7);ctx.fill()}ctx.restore()}
  for(let si=0;si<DATA.symbols.length&&drawn<cap;si++){if(!nodeVisible(si))continue;const st=strength(si,u);if(ui.tool==='blackhole'&&!isQualified(si)&&st<.48)continue;if(lod<3&&!isQualified(si)&&st<(.08+(2-lod)*.06))continue;const p=proj(nodePos(si,u));if(!p)continue;
@@ -668,7 +697,7 @@ function drawInterior(u){
    if(hot){ctx.beginPath();ctx.arc(p.x,p.y,r*(2.2+.4*pulse),0,7);ctx.fillStyle=`rgba(255,255,255,${.035+.04*pulse})`;ctx.fill()}
    else if(pros){ctx.beginPath();ctx.arc(p.x,p.y,r*(1.8+.35*pulse),0,7);ctx.fillStyle=colorFor(si,u,.025+.035*pulse);ctx.fill()}
    if(selected&&selected.si===si){ctx.strokeStyle='rgba(255,255,255,.98)';ctx.lineWidth=2;ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=22;ctx.beginPath();ctx.arc(p.x,p.y,r*1.9,0,7);ctx.stroke()}
-   ctx.beginPath();ctx.arc(p.x,p.y,r,0,7);ctx.fill();ctx.restore();
+   paintNodeMark(si,p.x,p.y,r);ctx.restore();
    if(lod>=2)nodeHits.push({x:p.x,y:p.y,r:Math.max(11,r+6),si,u});drawn++
  }
  if(lod>=2&&ui.tool!=='xray'){let labels=nodeHits.filter(h=>isQualified(h.si)).sort((a,b)=>{const A=qmeta(a.si),B=qmeta(b.si);return (B?.grade||0)-(A?.grade||0)}).slice(0,lod===2?18:60);ctx.font='700 10px -apple-system,sans-serif';ctx.textAlign='left';
@@ -760,6 +789,7 @@ function renderDrawer(){
  const d=document.getElementById('drawer');
  d.innerHTML=
  chips('LAYOUT','layout',[['universes','UNIVERSES'],['fusion','FUSION']])+
+ chips('DISPLAY','display',[['graph','GRAPH'],['glyphs','GLYPHS'],['waves','WAVES']])+
  chips('SHOW','show',[['all','ALL'],['qualified','QUALIFIED'],['hot','HOLY SHIT'],['prospective','PROSPECTIVE'],['conflict','CONFLICT']])+
  chips('COLOR','color',[['universe','UNIVERSE'],['direction','POLARITY'],['confidence','CONFIDENCE'],['economics','ECONOMICS'],['recurrence','RECURRENCE']])+
  chips('SIZE','size',[['sample','SAMPLE'],['effect','EFFECT'],['connectivity','LINKS'],['expectancy','EXPECTANCY']])+
@@ -771,10 +801,10 @@ function renderDrawer(){
  chips('CONNECTIONS','edgeMode',[['all','ALL'],['qualified','QUALIFIED']])+
  `<div class="sec"><div class="label">MIN DIRECTIONAL ACCURACY</div><div class="rangeWrap"><input id="cut" type="range" min="0" max="95" step="5" value="${Math.round(ui.cutoff*100)}"><span id="cutV" style="font-size:10px;color:#dff7ff">${Math.round(ui.cutoff*100)}%</span></div></div>`+
  `<div class="sec"><div class="row"><button id="shake" class="chip">SHAKE</button><button id="reset" class="chip">RESET FIELD</button></div></div>`;
- d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){setLayout(v);return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='physics'){realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0}}if(k==='physics'&&v==='reality-g'){fusionState.clear();fusionLast=performance.now();showToast('REALITY-G · INTERACTING GRAVITY · movement changes movement')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');renderDrawer();if(selected)buildSelectedButtons();persistView()});
+ d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){setLayout(v);return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='physics'){realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0}}if(k==='physics'&&v==='reality-g'){fusionState.clear();fusionLast=performance.now();showToast('REALITY-G · INTERACTING GRAVITY · movement changes movement')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');if(k==='display')showToast(v==='graph'?'GRAPH · nodes + connections':v==='glyphs'?'GLYPHS · evidence states as shapes + curved paths':'WAVES · firing frequency + strength as propagating fields');renderDrawer();if(selected)buildSelectedButtons();persistView()});
  const cut=d.querySelector('#cut');cut.oninput=()=>{ui.cutoff=+cut.value/100;d.querySelector('#cutV').textContent=cut.value+'%';persistView()};
  d.querySelector('#shake').onclick=()=>{shakeUntil=performance.now()+1800;showToast('field shaken')};
- d.querySelector('#reset').onclick=()=>{ui={layout:'universes',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};home();renderDrawer();persistView();showToast('field reset')};
+ d.querySelector('#reset').onclick=()=>{ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};home();renderDrawer();persistView();showToast('field reset')};
 }
 document.getElementById('drawerToggle').onclick=()=>{document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.toggle('open')};
 document.getElementById('selClose').onclick=()=>{selected=null;hideSelected()};
