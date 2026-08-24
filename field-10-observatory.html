@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V9 | semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V9_1 | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -103,10 +103,11 @@ const PAL={
 };
 let ui={layout:'universes',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
-let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,MIN=3.4,MAX=245;
+let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,verticalOffset=0,MIN=3.4,MAX=245;
+const VERTICAL_MIN=-60,VERTICAL_MAX=60;
 let lastTapAt=0,lastTapX=0,lastTapY=0;
 let sphereHits=[],nodeHits=[],patternHits=[],shakeUntil=0,QSET=new Set(),HSET=new Set(),PSET=new Set(),CSET=new Set(),selectedNeighbors=new Set(),familyKey=null;
-let drag=false,railDrag=false,lastX=0,lastY=0,lastMove=0;
+let drag=false,railDrag=false,verticalRailDrag=false,lastX=0,lastY=0,lastMove=0;
 let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusionActiveCount=0;
 // REALITY-G V8 keeps a persistent physical state for the currently entered evidence universe.
 // Positions and velocities feed back into the next force calculation, so movement changes movement.
@@ -485,13 +486,23 @@ function visualToolTransform(si,u,p){
  return{x,y,z}
 }
 function nodePos(si,u){return visualToolTransform(si,u,physicsOffset(si,u,dimensionTransform(si,u,baseNodePos(si,u))))}
-function rot(p){let x=p.x-target.x,y=p.y-target.y,z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;return{x:x1,y:y1,z:z2}}
+function rot(p){let x=p.x-target.x,y=p.y-(target.y+verticalOffset),z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;return{x:x1,y:y1,z:z2}}
 function proj(p){const q=rot(p),dep=dist+q.z;if(dep<2)return null;const f=Math.min(W,H)*1.16/dep;return{x:W*.5+q.x*f,y:H*.5-q.y*f,z:q.z,f,dep}}
 function zoom(z){dist=clamp(z,MIN,MAX)}
 function rail(){const x=W-Math.max(27,W*.021),top=H*.16,bottom=H*.82;return{x,top,bottom,h:bottom-top,hit:54}}
 function railHit(x,y){const g=rail();return x>g.x-g.hit&&y>g.top-20&&y<g.bottom+20}
 function railSet(y){const g=rail(),t=clamp((y-g.top)/g.h,0,1);zoom(MIN*Math.pow(MAX/MIN,t))}
 function drawRail(){const g=rail(),t=clamp(Math.log(dist/MIN)/Math.log(MAX/MIN),0,1),y=g.top+t*g.h;ctx.save();ctx.lineCap='round';ctx.strokeStyle='rgba(220,247,255,.12)';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(g.x,g.top);ctx.lineTo(g.x,g.bottom);ctx.stroke();ctx.strokeStyle='rgba(95,229,255,.6)';ctx.lineWidth=1.4;ctx.stroke();ctx.shadowColor='rgba(88,225,255,.9)';ctx.shadowBlur=16;ctx.fillStyle='#7cecff';ctx.beginPath();ctx.arc(g.x,y,11,0,7);ctx.fill();ctx.restore()}
+
+function verticalRail(){const x=Math.max(27,W*.021),top=H*.16,bottom=H*.82;return{x,top,bottom,h:bottom-top,hit:54}}
+function verticalRailHit(x,y){const g=verticalRail();return x<g.x+g.hit&&y>g.top-20&&y<g.bottom+20}
+function verticalRailSet(y){const g=verticalRail(),t=clamp((y-g.top)/g.h,0,1);verticalOffset=VERTICAL_MAX-(VERTICAL_MAX-VERTICAL_MIN)*t;persistView()}
+function drawVerticalRail(){
+ const g=verticalRail(),t=clamp((VERTICAL_MAX-verticalOffset)/(VERTICAL_MAX-VERTICAL_MIN),0,1),y=g.top+t*g.h;
+ ctx.save();ctx.lineCap='round';ctx.strokeStyle='rgba(220,247,255,.10)';ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(g.x,g.top);ctx.lineTo(g.x,g.bottom);ctx.stroke();
+ ctx.strokeStyle='rgba(190,135,255,.66)';ctx.lineWidth=1.4;ctx.stroke();ctx.shadowColor='rgba(182,118,255,.9)';ctx.shadowBlur=16;ctx.fillStyle='#cf9cff';ctx.beginPath();ctx.arc(g.x,y,11,0,7);ctx.fill();
+ ctx.shadowBlur=0;ctx.fillStyle='rgba(232,221,255,.58)';ctx.font='800 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('↑',g.x,g.top-12);ctx.fillText('↓',g.x,g.bottom+18);ctx.restore()
+}
 
 function bg(){
  const h=focus?hueForUniverse(focus):202;ctx.fillStyle='#010204';ctx.fillRect(0,0,W,H);
@@ -670,12 +681,12 @@ function bridge(){
 function render(){
  if(!DATA){bg();requestAnimationFrame(render);return}bg();sphereHits=[];
  if(ui.layout==='fusion'){drawFusion()}else{bridge();if(focus){const u=uobj(focus);shell(u);if(u.id==='direction'&&dist>=u.r*1.42)drawSemanticPatternBeacons(u,false);drawInterior(u)}else{for(const x of DATA.universes||[])shell(uobj(x.id));const du=uobj('direction');drawSemanticPatternBeacons(du,true)}}
- drawRail();requestAnimationFrame(render)
+ drawVerticalRail();drawRail();requestAnimationFrame(render)
 }
 
-function setLayout(v){ui.layout=v;focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;target={x:0,y:0,z:0};dist=54;yaw=-.18;pitch=-.08;fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;target={x:0,y:0,z:0};dist=138;yaw=-.18;pitch=-.08;showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
-function setFocus(id){ui.layout='universes';focus=id;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);target={x:u.x,y:u.y,z:u.z};dist=Math.max(MIN,u.r*1.22);syncUniverseButtons();renderDrawer();hideSelected();persistView()}
-function home(){focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();target={x:0,y:0,z:0};dist=ui.layout==='fusion'?54:138;yaw=-.18;pitch=-.08;syncUniverseButtons();hideSelected();persistView()}
+function setLayout(v){ui.layout=v;focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;target={x:0,y:0,z:0};dist=54;yaw=-.18;pitch=-.08;verticalOffset=0;fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;target={x:0,y:0,z:0};dist=138;yaw=-.18;pitch=-.08;verticalOffset=0;showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
+function setFocus(id){ui.layout='universes';focus=id;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);target={x:u.x,y:u.y,z:u.z};dist=Math.max(MIN,u.r*1.22);verticalOffset=0;syncUniverseButtons();renderDrawer();hideSelected();persistView()}
+function home(){focus=null;selected=null;isolated=null;wormStart=null;wormPath.clear();target={x:0,y:0,z:0};dist=ui.layout==='fusion'?54:138;yaw=-.18;pitch=-.08;verticalOffset=0;syncUniverseButtons();hideSelected();persistView()}
 function hitNode(x,y){let best=null,bd=1e9;for(const h of nodeHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
 function hitSphere(x,y){let best=null,bd=1e9;for(const h of sphereHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
 function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>el.classList.remove('show'),1400)}
@@ -702,9 +713,9 @@ function shortestPath(a,b){
  const out=[];let x=b;while(x!==null){out.push(x);x=prev.get(x)}return out.reverse()
 }
 
-function pointerDown(e){const p=e.touches?e.touches[0]:e;lastX=p.clientX;lastY=p.clientY;drag=true;railDrag=railHit(lastX,lastY);if(railDrag)railSet(lastY);lastMove=0;e.preventDefault()}
-function pointerMove(e){if(!drag)return;const p=e.touches?e.touches[0]:e,x=p.clientX,y=p.clientY,dx=x-lastX,dy=y-lastY;lastMove+=Math.abs(dx)+Math.abs(dy);if(railDrag)railSet(y);else{yaw+=dx*.005;pitch=clamp(pitch+dy*.004,-1.25,1.25)}lastX=x;lastY=y;e.preventDefault()}
-function pointerUp(e){if(!drag)return;drag=false;if(railDrag){railDrag=false;return}const p=e.changedTouches?e.changedTouches[0]:e,x=p.clientX,y=p.clientY;if(lastMove>12)return;
+function pointerDown(e){const p=e.touches?e.touches[0]:e;lastX=p.clientX;lastY=p.clientY;drag=true;verticalRailDrag=verticalRailHit(lastX,lastY);railDrag=!verticalRailDrag&&railHit(lastX,lastY);if(verticalRailDrag)verticalRailSet(lastY);else if(railDrag)railSet(lastY);lastMove=0;e.preventDefault()}
+function pointerMove(e){if(!drag)return;const p=e.touches?e.touches[0]:e,x=p.clientX,y=p.clientY,dx=x-lastX,dy=y-lastY;lastMove+=Math.abs(dx)+Math.abs(dy);if(verticalRailDrag)verticalRailSet(y);else if(railDrag)railSet(y);else{yaw+=dx*.005;pitch=clamp(pitch+dy*.004,-1.25,1.25)}lastX=x;lastY=y;e.preventDefault()}
+function pointerUp(e){if(!drag)return;drag=false;if(verticalRailDrag){verticalRailDrag=false;persistView();return}if(railDrag){railDrag=false;persistView();return}const p=e.changedTouches?e.changedTouches[0]:e,x=p.clientX,y=p.clientY;if(lastMove>12)return;
  const dbl=isDoubleTap(x,y);
  if(ui.layout==='fusion'){
    const n=hitNode(x,y);if(n){showSelected(n);return}
@@ -721,12 +732,12 @@ function pointerUp(e){if(!drag)return;drag=false;if(railDrag){railDrag=false;ret
  const sh=hitSphere(x,y);if(sh){setFocus(sh.u.id);return}
  if(dbl){home();showToast('view reset');return}
  hideSelected();shiftViewToward(x,y);persistView()}
-c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',()=>drag=false);
+c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',()=>{drag=false;railDrag=false;verticalRailDrag=false});
 c.addEventListener('wheel',e=>{zoom(dist*Math.exp(e.deltaY*.0015));persistView();e.preventDefault()},{passive:false});
 
 function snapshotView(){
  const sym=i=>Number.isInteger(i)&&DATA?.symbols?.[i]?DATA.symbols[i]:null;
- return {ui:{...ui},focus,target:{...target},dist,yaw,pitch,selectedSymbol:selected?sym(selected.si):null,
+ return {ui:{...ui},focus,target:{...target},dist,yaw,pitch,verticalOffset,selectedSymbol:selected?sym(selected.si):null,
          isolatedSymbol:sym(isolated),wormSymbols:[...wormPath].map(sym).filter(Boolean)}
 }
 function persistView(){try{sessionStorage.setItem(VIEW_STATE_KEY,JSON.stringify(snapshotView()))}catch(e){}}
@@ -734,7 +745,7 @@ function restoreView(){
  try{
    const v=JSON.parse(sessionStorage.getItem(VIEW_STATE_KEY)||'null');if(!v)return;
    if(v.ui)ui={...ui,...v.ui};if(v.focus)focus=v.focus;if(v.target)target={...target,...v.target};
-   if(Number.isFinite(v.dist))dist=v.dist;if(Number.isFinite(v.yaw))yaw=v.yaw;if(Number.isFinite(v.pitch))pitch=v.pitch;
+   if(Number.isFinite(v.dist))dist=v.dist;if(Number.isFinite(v.yaw))yaw=v.yaw;if(Number.isFinite(v.pitch))pitch=v.pitch;if(Number.isFinite(v.verticalOffset))verticalOffset=clamp(v.verticalOffset,VERTICAL_MIN,VERTICAL_MAX);
    const ix=new Map((DATA?.symbols||[]).map((s,i)=>[s,i]));
    if(v.selectedSymbol&&ix.has(v.selectedSymbol)){const si=ix.get(v.selectedSymbol);selected={si,u:focus?uobj(focus):fusionDominantUniverse(si)}}
    if(v.isolatedSymbol&&ix.has(v.isolatedSymbol))isolated=ix.get(v.isolatedSymbol);
