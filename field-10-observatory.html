@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V9_2 | alternate display grammars: graph + glyphs + waves | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V9_3 | expanded evidence universes: magnitude + frequency + immediacy + generalization | alternate display grammars: graph + glyphs + waves | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -61,7 +61,7 @@ body.immersive #fullToggle{border-color:rgba(120,225,255,.42);background:rgba(55
 #selEvidence{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
 .eBadge{font-size:8px;font-weight:850;letter-spacing:.09em;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px 6px;color:rgba(220,238,245,.32)}
 .eBadge.on{color:#effcff;border-color:rgba(115,230,255,.30);background:rgba(75,200,235,.08);box-shadow:0 0 10px rgba(80,220,255,.06)}
-#selPulseLine{margin-top:6px;font-size:9px;color:rgba(210,234,243,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#selContext{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.ctxPill{font-size:8px;font-weight:800;letter-spacing:.055em;border:1px solid rgba(255,255,255,.07);border-radius:999px;padding:4px 6px;color:rgba(221,241,248,.58);background:rgba(255,255,255,.018)}#selPulseLine{margin-top:6px;font-size:9px;color:rgba(210,234,243,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #selBtns{display:flex;gap:5px;margin-top:7px;overflow-x:auto}
 #selBtns button{flex:0 0 auto}
 #toast{position:fixed;left:50%;top:18%;transform:translate(-50%,-10px);opacity:0;z-index:20;padding:7px 10px;border-radius:999px;font-size:10px;color:#dff8ff;background:rgba(4,12,18,.82);border:1px solid rgba(140,230,255,.18);transition:.18s;pointer-events:none}
@@ -79,7 +79,7 @@ body.immersive #fullToggle{border-color:rgba(120,225,255,.42);background:rgba(55
 <div id="drawer" class="glass"></div>
 <div id="universes" class="glass"></div>
 <div id="bottom" class="glass"><button id="old" class="bmode"></button><button id="new" class="bmode"></button><button id="both" class="bmode"></button><button id="home" class="bmode"></button></div>
-<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
+<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selContext"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
 <div id="toast"></div>
 <script>
 const c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false});
@@ -91,15 +91,15 @@ function resize(){DPR=Math.min(1.6,devicePixelRatio||1);W=innerWidth;H=innerHeig
 addEventListener('resize',resize);resize();
 
 let DATA=null,PREV=null,loadError=false,lastLoad=0;
-const POS={observation:[-62,-7,16],recurrence:[-39,10,0],topology:[-20,20,-10],direction:[-18,-18,12],combination:[5,18,5],economics:[12,-7,-7],null:[32,4,10],prospective:[52,12,-8],paper:[67,-9,13]};
-const RAD={observation:12,recurrence:12,topology:11,direction:11,combination:12,economics:13,null:12,prospective:11,paper:11};
-const SHORT={observation:'OBS',recurrence:'REC',topology:'TOP',direction:'DIR',combination:'COMBO',economics:'ECON',null:'NULL',prospective:'PRO',paper:'PAPER'};
+const POS={observation:[-78,-7,16],magnitude:[-65,11,-4],frequency:[-52,-13,8],recurrence:[-39,10,0],topology:[-26,20,-10],combination:[-13,15,6],direction:[0,-18,12],immediacy:[13,16,-8],generalization:[26,-9,7],economics:[39,10,-7],null:[52,-7,10],prospective:[65,13,-8],paper:[78,-9,13]};
+const RAD={observation:12,magnitude:12,frequency:12,recurrence:12,topology:11,combination:12,direction:11,immediacy:11,generalization:12,economics:13,null:12,prospective:11,paper:11};
+const SHORT={observation:'OBS',magnitude:'MAG',frequency:'FREQ',recurrence:'REC',topology:'TOP',combination:'COMBO',direction:'DIR',immediacy:'TIME',generalization:'GEN',economics:'ECON',null:'NULL',prospective:'PRO',paper:'PAPER'};
 const PAL={
- argus:{observation:194,recurrence:177,topology:262,direction:318,combination:25,economics:44,null:176,prospective:205,paper:116},
- aurora:{observation:173,recurrence:198,topology:226,direction:278,combination:314,economics:347,null:188,prospective:160,paper:120},
- thermal:{observation:250,recurrence:235,topology:220,direction:20,combination:30,economics:42,null:250,prospective:50,paper:60},
- evidence:{observation:205,recurrence:215,topology:235,direction:260,combination:285,economics:42,null:205,prospective:52,paper:120},
- polarity:{observation:190,recurrence:190,topology:260,direction:190,combination:295,economics:45,null:260,prospective:170,paper:120}
+ argus:{observation:194,magnitude:32,frequency:158,recurrence:177,topology:262,combination:25,direction:318,immediacy:8,generalization:220,economics:44,null:176,prospective:205,paper:116},
+ aurora:{observation:173,magnitude:28,frequency:148,recurrence:198,topology:226,combination:314,direction:278,immediacy:12,generalization:235,economics:347,null:188,prospective:160,paper:120},
+ thermal:{observation:250,magnitude:18,frequency:52,recurrence:235,topology:220,combination:30,direction:20,immediacy:5,generalization:205,economics:42,null:250,prospective:50,paper:60},
+ evidence:{observation:205,magnitude:38,frequency:165,recurrence:215,topology:235,combination:285,direction:260,immediacy:18,generalization:225,economics:42,null:205,prospective:52,paper:120},
+ polarity:{observation:190,magnitude:38,frequency:160,recurrence:190,topology:260,combination:295,direction:190,immediacy:10,generalization:225,economics:45,null:260,prospective:170,paper:120}
 };
 let ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
@@ -114,7 +114,7 @@ let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusio
 let realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};
 const FUSION_R=27,FUSION_MAX_MOBILE=3200,FUSION_MAX_DESKTOP=5200;
 const REALITY_MAX_MOBILE=4600,REALITY_MAX_DESKTOP=9000,REALITY_MIN_STEP_MS=34;
-const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v9';
+const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v9-3';
 let lastFeedFingerprint='';
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
@@ -134,8 +134,12 @@ function opportunityScore(si){
 function strength(si,u){
  const m=DATA.metrics[si]||[];
  if(u.id==='observation')return clamp(Math.log1p(finite(m[0]))/7,0,1);
+ if(u.id==='magnitude')return clamp(clamp(finite(m[9])/8,0,1)*.65+clamp(finite(m[10])/25,0,1)*.35,0,1);
+ if(u.id==='frequency')return clamp(finite(m[8]),0,1);
  if(u.id==='recurrence')return clamp(finite(m[1]),0,1);
  if(u.id==='direction')return clamp(finite(m[2]),0,1);
+ if(u.id==='immediacy')return clamp(finite(m[14]),0,1);
+ if(u.id==='generalization')return clamp(finite(m[13]),0,1);
  if(u.id==='economics')return clamp((finite(m[3])+.1)/.4,0,1);
  if(u.id==='null')return clamp(finite(m[4]),0,1);
  if(u.id==='topology')return clamp(finite(m[5])/10,0,1);
@@ -464,7 +468,9 @@ function normalizedMetrics(data,si){
  return [
   clamp(Math.log1p(finite(m[0]))/7,0,1),clamp(finite(m[1]),0,1),clamp(finite(m[2]),0,1),
   clamp((finite(m[3])+.1)/.4,0,1),clamp(finite(m[4]),0,1),clamp(finite(m[5])/10,0,1),
-  clamp(finite(m[6])/8,0,1),clamp(finite(m[7])/3,0,1)
+  clamp(finite(m[6])/8,0,1),clamp(finite(m[7])/3,0,1),clamp(finite(m[8]),0,1),
+  clamp(finite(m[9])/8,0,1),clamp(finite(m[10])/25,0,1),clamp((finite(m[11])+1)/2,0,1),
+  clamp(finite(m[12]),0,1),clamp(finite(m[13]),0,1),clamp(finite(m[14]),0,1),clamp(finite(m[15]),0,1)
  ]
 }
 function dimensionScalar(si){
@@ -473,6 +479,10 @@ function dimensionScalar(si){
  if(ui.dimension==='certainty')return (certainty-.5)*2;
  if(ui.dimension==='economics'){const pct=qm?finite(qm.net):metric(si,3)*100;return clamp(pct/8,-1,1)}
  if(ui.dimension==='recurrence')return (clamp(metric(si,1),0,1)-.5)*2;
+ if(ui.dimension==='frequency')return (clamp(metric(si,8),0,1)-.5)*2;
+ if(ui.dimension==='magnitude'){const v=clamp(clamp(metric(si,9)/8,0,1)*.65+clamp(metric(si,10)/25,0,1)*.35,0,1);return (v-.5)*2}
+ if(ui.dimension==='generalization')return (clamp(metric(si,13),0,1)-.5)*2;
+ if(ui.dimension==='immediacy')return (clamp(metric(si,14),0,1)-.5)*2;
  if(ui.dimension==='connectivity')return (clamp(metric(si,5)/10,0,1)-.5)*2;
  if(ui.dimension==='tension'){
    const tension=clamp((isConflict(si)?0.72:0)+(1-certainty)*.42+clamp(metric(si,1),0,1)*.12,0,1);
@@ -495,8 +505,12 @@ function baseNodePos(si,u,data=DATA){
  const s=data.symbols[si],m=data.metrics[si]||[],rk=(ui.reality==='prime'?'':('|'+ui.reality)),a=hash(s+'a'+rk)*Math.PI*2,e=(hash(s+'e'+rk)-.5)*1.55;
  let rr=2.2+hash(s+'r'+rk)*u.r*.78,val=0;
  if(u.id==='observation')val=Math.log1p(finite(m[0]))/7;
+ if(u.id==='magnitude')val=clamp(clamp(finite(m[9])/8,0,1)*.65+clamp(finite(m[10])/25,0,1)*.35,0,1);
+ if(u.id==='frequency')val=clamp(finite(m[8]),0,1);
  if(u.id==='recurrence')val=finite(m[1]);
  if(u.id==='direction')val=finite(m[2]);
+ if(u.id==='immediacy')val=clamp(finite(m[14]),0,1);
+ if(u.id==='generalization')val=clamp(finite(m[13]),0,1);
  if(u.id==='economics')val=clamp((finite(m[3])+.1)/.4,0,1);
  if(u.id==='null')val=finite(m[4]);
  if(u.id==='topology')val=clamp(finite(m[5])/10,0,1);
@@ -724,7 +738,8 @@ function isDoubleTap(x,y){const now=performance.now();const yes=(now-lastTapAt<3
 function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isHot(h.si)?'  ✦':'');const pre=sec?sec+' · ':'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}`:`${pre}observed · not historically qualified`;
  const fv=document.getElementById('fireValue');fv.textContent=fw?`${fd} / ${fw} · ${Math.round(fr*100)}%`:'waiting for day history';document.getElementById('fireFill').style.width=(fr*100).toFixed(1)+'%';
  const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
- const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'frequency is observational; no causal claim';
+ const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
+ const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
  document.getElementById('sel').classList.add('show');buildSelectedButtons()}
 function hideSelected(){document.getElementById('sel').classList.remove('show')}
 function buildSelectedButtons(){const box=document.getElementById('selBtns');box.innerHTML='';if(!selected)return;const add=(name,fn,on=false)=>{const b=document.createElement('button');b.className='chip'+(on?' on':'');b.textContent=name;b.onclick=fn;box.appendChild(b)};
@@ -793,7 +808,7 @@ function renderDrawer(){
  chips('SHOW','show',[['all','ALL'],['qualified','QUALIFIED'],['hot','HOLY SHIT'],['prospective','PROSPECTIVE'],['conflict','CONFLICT']])+
  chips('COLOR','color',[['universe','UNIVERSE'],['direction','POLARITY'],['confidence','CONFIDENCE'],['economics','ECONOMICS'],['recurrence','RECURRENCE']])+
  chips('SIZE','size',[['sample','SAMPLE'],['effect','EFFECT'],['connectivity','LINKS'],['expectancy','EXPECTANCY']])+
- chips('DIMENSION','dimension',[['native','NATIVE'],['certainty','CERTAINTY'],['economics','ECON'],['recurrence','RECURRENCE'],['connectivity','NETWORK'],['tension','TENSION'],['delta','Δ TIME']])+
+ chips('DIMENSION','dimension',[['native','NATIVE'],['certainty','CERTAINTY'],['economics','ECON'],['recurrence','RECURRENCE'],['frequency','FREQUENCY'],['magnitude','MAGNITUDE'],['generalization','GENERALIZE'],['immediacy','IMMEDIACY'],['connectivity','NETWORK'],['tension','TENSION'],['delta','Δ TIME']])+
  chips('PALETTE','palette',[['argus','ARGUS'],['aurora','AURORA'],['thermal','THERMAL'],['evidence','EVIDENCE'],['polarity','POLARITY']])+
  chips('REALITY','reality',[['prime','PRIME'],['alt1','ALT-1'],['alt2','ALT-2'],['alt3','ALT-3']])+
  chips('PHYSICS','physics',[['normal','NORMAL'],['gravity','GRAVITY'],['opportunity-g','OPPORTUNITY-G'],['reality-g','REALITY-G'],['sector-g','SECTOR-G'],['zero-g','ZERO-G'],['explode','EXPLODE'],['orbit','ORBIT'],['magnetize','MAGNETIZE']])+
