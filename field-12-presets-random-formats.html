@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Argus Observatory</title>
+<style>
+html,body{margin:0;width:100%;height:100%;height:100dvh;overflow:hidden;background:#010204}
+#argusFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#010204}
+</style>
+</head>
+<body>
+<iframe id="argusFrame" src="field-10-observatory.html?v=12-presets-random-formats" allow="fullscreen" allowfullscreen></iframe>
+<script>
+const frame=document.getElementById('argusFrame');
+frame.addEventListener('load',()=>{
+  const d=frame.contentDocument;
+  if(!d)return;
+  const patch=d.createElement('script');
+  patch.textContent=`
+(()=>{
+  if(window.__ARGUS_PRESET_FORMAT_PATCH__)return;
+  window.__ARGUS_PRESET_FORMAT_PATCH__='12.0';
+
+  ui.minN=finite(ui.minN,0);
+  let ARGUS_MAX_N=1;
+  let ARGUS_FORMAT_INDEX=0;
+  let ARGUS_AUTO_TOUR=false;
+  let ARGUS_AUTO_TIMER=null;
+
+  function refreshOccurrenceRange(){
+    let mx=1;
+    const q=DATA?.qualified_meta||{};
+    for(const k in q)mx=Math.max(mx,finite(q[k]?.n,0));
+    ARGUS_MAX_N=mx;
+    return mx;
+  }
+
+  function occurrenceScale(n){
+    n=Math.max(0,finite(n,0));
+    if(!n)return .04;
+    const ceiling=Math.max(100,ARGUS_MAX_N);
+    return clamp(Math.log1p(n)/Math.log1p(ceiling),0,1);
+  }
+
+  function randomOf(arr){return arr[Math.floor(Math.random()*arr.length)]}
+  function chance(p){return Math.random()<p}
+  function setModeValue(v){if(typeof mode!=='undefined'){mode=v;syncModeButtons&&syncModeButtons()}}
+  function allUniverses(){return (DATA?.universes||[]).map(x=>x.id)}
+  function randomUniverse(){return randomOf(allUniverses().filter(x=>x!=='null'))||'observation'}
+
+  const __nodeVisible=nodeVisible;
+  nodeVisible=function(si){
+    if(!__nodeVisible(si))return false;
+    const floor=Math.max(0,finite(ui.minN,0));
+    if(floor>0){
+      const q=qmeta(si);
+      if(!q||finite(q.n,0)<floor)return false;
+    }
+    return true;
+  };
+
+  const __nodeRadius=nodeRadius;
+  nodeRadius=function(si,u,pf){
+    if(ui.size!=='sample')return __nodeRadius(si,u,pf);
+    const q=qmeta(si),v=occurrenceScale(q?.n||0);
+    return clamp((.58+3.55*v)*pf*4.6,.55,10.5);
+  };
+
+  const __paintNodeMark=paintNodeMark;
+  paintNodeMark=function(si,x,y,r){
+    const q=qmeta(si),net=q?finite(q.net,0):0,mag=q?clamp(Math.abs(net)/5,0,1):0;
+
+    if(q&&net>0){
+      ctx.save();
+      ctx.globalCompositeOperation='lighter';
+      const haloR=r*(2.2+2.1*mag);
+      const g=ctx.createRadialGradient(x,y,Math.max(.2,r*.12),x,y,haloR);
+      g.addColorStop(0,'rgba(255,255,255,'+(.10+.22*mag)+')');
+      g.addColorStop(.28,'rgba(205,244,255,'+(.06+.16*mag)+')');
+      g.addColorStop(1,'rgba(160,220,255,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.arc(x,y,haloR,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.save();
+    if(q&&net<0)ctx.globalAlpha*=clamp(.70-.42*mag,.22,.70);
+    if(q&&net>0){
+      ctx.shadowColor='rgba(240,252,255,'+(.58+.38*mag)+')';
+      ctx.shadowBlur=Math.max(finite(ctx.shadowBlur,0),8+28*mag);
+    }
+    __paintNodeMark(si,x,y,r);
+    ctx.restore();
+
+    if(q){
+      const dir=clamp(finite(q.dir,.5),0,1),cons=clamp((dir-.5)*2,0,1);
+      if(cons>.01){
+        ctx.save();
+        ctx.strokeStyle='rgba(225,248,255,'+(.08+.46*cons)+')';
+        ctx.lineWidth=.45+2.35*cons;
+        ctx.beginPath();ctx.arc(x,y,r*(1.34+.18*cons),0,Math.PI*2);ctx.stroke();
+        ctx.restore();
+      }
+    }
+  };
+
+  function candidatePool(kind='qualified'){
+    const pool=[];
+    for(let si=0;si<(DATA?.symbols||[]).length;si++){
+      if(kind==='hot'&&!isHot(si))continue;
+      if(kind==='prospective'&&!isProspective(si))continue;
+      if(kind==='conflict'&&!isConflict(si))continue;
+      if(kind==='qualified'&&!isQualified(si))continue;
+      if(!nodeVisible(si))continue;
+      pool.push(si);
+    }
+    if(pool.length)return pool;
+    for(let si=0;si<(DATA?.symbols||[]).length;si++)if(nodeVisible(si))pool.push(si);
+    return pool;
+  }
+
+  function centerSecurity(si){
+    if(!Number.isInteger(si))return;
+    const u=ui.layout==='fusion' ? fusionDominantUniverse(si) : uobj(focus||randomUniverse());
+    const pos=ui.layout==='fusion' ? fusionPos(si) : nodePos(si,u);
+    selected={si,u};
+    selectedNeighbors=neighborsOf(si);
+    showSelected(selected);
+    cameraGoalTo({target:{x:pos.x,y:pos.y,z:pos.z},dist:Math.max(MIN*1.35,Math.min(22,cameraGoal.dist*.62)),verticalOffset:0});
+  }
+
+  function applyLens(cfg){
+    const base={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',edgeMode:'all'};
+    Object.assign(ui,base,cfg.ui||{});
+    ui.minN=cfg.minN??ui.minN??0;
+    familyKey=null;isolated=null;wormStart=null;wormPath.clear();
+    if(cfg.mode!==undefined)setModeValue(cfg.mode);
+    if(cfg.layout==='fusion'||ui.layout==='fusion'){setLayout('fusion')} else setLayout('universes');
+    if(cfg.focus)setFocus(cfg.focus);
+    if(cfg.home)home();
+    if(cfg.pick){
+      const pickPool=candidatePool(cfg.pick);
+      if(pickPool.length)centerSecurity(randomOf(pickPool));
+    }
+    renderDrawer();updateStats();persistView();
+    if(cfg.toast)showToast(cfg.toast);
+  }
+
+  const FORMAT_LENSES=[
+    {name:'GRAPH CORE', ui:{display:'graph',tool:'none',physics:'normal',dimension:'native',color:'universe',size:'sample',palette:'argus',show:'qualified'}, minN:10},
+    {name:'GLYPH MATRIX', ui:{display:'glyphs',tool:'constellation',physics:'gravity',dimension:'connectivity',color:'confidence',size:'connectivity',palette:'evidence',show:'qualified'}, minN:10},
+    {name:'WAVE PULSE', ui:{display:'waves',tool:'none',physics:'opportunity-g',dimension:'frequency',color:'economics',size:'expectancy',palette:'thermal',show:'qualified'}, minN:10},
+    {name:'ECON DEPTH', ui:{display:'graph',tool:'none',physics:'sector-g',dimension:'economics',color:'economics',size:'sample',palette:'thermal',show:'qualified'}, minN:25},
+    {name:'TENSION MAP', ui:{display:'glyphs',tool:'ghost',physics:'magnetize',dimension:'tension',color:'direction',size:'connectivity',palette:'polarity',show:'conflict'}, minN:5},
+    {name:'REALITY ORBIT', ui:{display:'graph',tool:'none',physics:'reality-g',dimension:'delta',color:'confidence',size:'sample',palette:'aurora',show:'qualified'}, minN:10},
+    {name:'RECURRENCE ATLAS', ui:{display:'glyphs',tool:'none',physics:'gravity',dimension:'recurrence',color:'recurrence',size:'sample',palette:'evidence',show:'qualified'}, minN:25},
+    {name:'KALEIDO FIELD', ui:{display:'waves',tool:'kaleido',physics:'zero-g',dimension:'certainty',color:'confidence',size:'effect',palette:'aurora',show:'all'}, minN:0}
+  ];
+
+  const PRESET_VIEWS=[
+    {name:'SIGNAL FORGE', ui:{layout:'universes',display:'glyphs',show:'qualified',color:'confidence',size:'sample',dimension:'frequency',physics:'gravity',tool:'none',palette:'argus',edgeMode:'qualified'}, focus:'observation', minN:10, mode:2, pick:'qualified', toast:'SIGNAL FORGE'},
+    {name:'PULSE REACTOR', ui:{layout:'fusion',display:'waves',show:'qualified',color:'economics',size:'expectancy',dimension:'economics',physics:'opportunity-g',tool:'none',palette:'thermal',edgeMode:'qualified'}, minN:10, mode:2, pick:'hot', toast:'PULSE REACTOR'},
+    {name:'CONFLICT HUNTER', ui:{layout:'universes',display:'glyphs',show:'conflict',color:'direction',size:'connectivity',dimension:'tension',physics:'magnetize',tool:'constellation',palette:'polarity',edgeMode:'qualified'}, focus:'direction', minN:5, mode:2, pick:'conflict', toast:'CONFLICT HUNTER'},
+    {name:'PROSPECT RADAR', ui:{layout:'universes',display:'waves',show:'prospective',color:'confidence',size:'sample',dimension:'immediacy',physics:'orbit',tool:'none',palette:'aurora',edgeMode:'qualified'}, focus:'prospective', minN:0, mode:1, pick:'prospective', toast:'PROSPECT RADAR'},
+    {name:'CONSTELLATION GARDEN', ui:{layout:'universes',display:'glyphs',show:'qualified',color:'recurrence',size:'connectivity',dimension:'generalization',physics:'reality-g',tool:'constellation',palette:'evidence',edgeMode:'qualified'}, focus:'direction', minN:25, mode:2, pick:'qualified', toast:'CONSTELLATION GARDEN'},
+    {name:'ECONOMIC GRAVITY', ui:{layout:'fusion',display:'graph',show:'qualified',color:'economics',size:'sample',dimension:'economics',physics:'sector-g',tool:'none',palette:'thermal',edgeMode:'qualified'}, minN:25, mode:2, pick:'qualified', toast:'ECONOMIC GRAVITY'},
+    {name:'NEURAL AURORA', ui:{layout:'fusion',display:'waves',show:'all',color:'confidence',size:'sample',dimension:'certainty',physics:'zero-g',tool:'kaleido',palette:'aurora',edgeMode:'all'}, minN:0, mode:2, pick:'qualified', toast:'NEURAL AURORA'}
+  ];
+
+  function randomFormat(){
+    ARGUS_FORMAT_INDEX=(ARGUS_FORMAT_INDEX+1)%FORMAT_LENSES.length;
+    const f=randomOf(FORMAT_LENSES);
+    const targetFocus=chance(.5)?randomUniverse():focus;
+    applyLens({ui:{...f.ui,layout:ui.layout},focus:ui.layout==='universes'?(targetFocus||randomUniverse()):null,minN:f.minN,mode:mode,pick:chance(.6)?'qualified':null,toast:'FORMAT · '+f.name});
+  }
+
+  function nextFormat(){
+    ARGUS_FORMAT_INDEX=(ARGUS_FORMAT_INDEX+1)%FORMAT_LENSES.length;
+    const f=FORMAT_LENSES[ARGUS_FORMAT_INDEX];
+    applyLens({ui:{...f.ui,layout:ui.layout},focus:ui.layout==='universes'?(focus||randomUniverse()):null,minN:f.minN,mode:mode,pick:null,toast:'FORMAT · '+f.name});
+  }
+
+  function surpriseView(){
+    const p=randomOf(PRESET_VIEWS);
+    applyLens({...p, ui:{...p.ui}});
+  }
+
+  function toggleAutoTour(){
+    ARGUS_AUTO_TOUR=!ARGUS_AUTO_TOUR;
+    if(ARGUS_AUTO_TIMER){clearInterval(ARGUS_AUTO_TIMER);ARGUS_AUTO_TIMER=null;}
+    if(ARGUS_AUTO_TOUR){
+      surpriseView();
+      ARGUS_AUTO_TIMER=setInterval(()=>{chance(.55)?surpriseView():randomFormat()},12000);
+      showToast('AUTO TOUR · ON');
+    }else{
+      showToast('AUTO TOUR · OFF');
+    }
+    syncPresetButtons();
+  }
+
+  function ensurePresetDock(){
+    if(document.getElementById('argusPresetDock'))return;
+    const dock=document.createElement('div');
+    dock.id='argusPresetDock';
+    dock.style.cssText='position:fixed;left:max(10px,env(safe-area-inset-left));top:calc(max(10px,env(safe-area-inset-top)) + 54px);z-index:12;display:flex;gap:6px;flex-wrap:wrap;max-width:min(86vw,520px)';
+    dock.innerHTML='<button id="argusSurpriseBtn" class="chip on" style="backdrop-filter:blur(12px);background:rgba(80,190,230,.14);color:#fff;border-color:rgba(110,225,255,.38)">SURPRISE</button><button id="argusFormatBtn" class="chip" style="backdrop-filter:blur(12px)">RANDOM FORMAT</button><button id="argusNextFormatBtn" class="chip" style="backdrop-filter:blur(12px)">NEXT FORMAT</button><button id="argusAutoTourBtn" class="chip" style="backdrop-filter:blur(12px)">AUTO TOUR</button>';
+    document.body.appendChild(dock);
+    document.getElementById('argusSurpriseBtn').onclick=surpriseView;
+    document.getElementById('argusFormatBtn').onclick=randomFormat;
+    document.getElementById('argusNextFormatBtn').onclick=nextFormat;
+    document.getElementById('argusAutoTourBtn').onclick=toggleAutoTour;
+    syncPresetButtons();
+  }
+
+  function syncPresetButtons(){
+    const b=document.getElementById('argusAutoTourBtn');
+    if(b)b.classList.toggle('on',!!ARGUS_AUTO_TOUR);
+  }
+
+  const __updateStats=updateStats;
+  updateStats=function(){
+    __updateStats();
+    const n=Math.max(0,finite(ui.minN,0));
+    if(n>0){
+      const el=document.getElementById('stats');
+      if(el&&!el.textContent.includes('N≥'))el.textContent+=' · N≥'+n;
+    }
+  };
+
+  const __renderDrawer=renderDrawer;
+  renderDrawer=function(){
+    ui.minN=Math.max(0,finite(ui.minN,0));
+    refreshOccurrenceRange();
+    __renderDrawer();
+    const drawer=document.getElementById('drawer');
+    if(!drawer)return;
+
+    const sampleBtn=drawer.querySelector('[data-key="size"][data-val="sample"]');
+    if(sampleBtn)sampleBtn.textContent='OCCURRENCES';
+
+    const cutoffSec=drawer.querySelector('#cut')?.closest('.sec');
+
+    const grammar=document.createElement('div');
+    grammar.className='sec';
+    grammar.innerHTML='<div class="label">NODE LANGUAGE</div><div style="font-size:9px;line-height:1.55;color:rgba(220,241,248,.62);letter-spacing:.035em"><b style="color:#eefcff">SIZE</b> = N &nbsp;·&nbsp; <b style="color:#eefcff">GLOW</b> = +NET &nbsp;·&nbsp; <b style="color:#eefcff">DARK</b> = −NET &nbsp;·&nbsp; <b style="color:#eefcff">RING</b> = DIRECTION</div>';
+    drawer.insertBefore(grammar,cutoffSec||drawer.lastElementChild);
+
+    const presetSec=document.createElement('div');
+    presetSec.className='sec';
+    presetSec.innerHTML='<div class="label">PRESET VIEWS</div><div class="row" id="presetViewRow"></div><div class="label" style="margin-top:8px">FORMAT GENERATOR</div><div class="row" id="formatViewRow"></div>';
+    drawer.insertBefore(presetSec,cutoffSec||drawer.lastElementChild);
+
+    const pv=presetSec.querySelector('#presetViewRow');
+    [['SURPRISE',surpriseView,false],['AUTO TOUR',toggleAutoTour,ARGUS_AUTO_TOUR],['PULSE',()=>applyLens(PRESET_VIEWS[1]),false],['CONFLICT',()=>applyLens(PRESET_VIEWS[2]),false]].forEach(([name,fn,on])=>{
+      const b=document.createElement('button');b.className='chip'+(on?' on':'');b.textContent=name;b.onclick=fn;pv.appendChild(b);
+    });
+
+    const fv=presetSec.querySelector('#formatViewRow');
+    [['RANDOM',randomFormat,false],['NEXT',nextFormat,false],['GRAPH',()=>applyLens({ui:{...FORMAT_LENSES[0].ui,layout:ui.layout},focus:ui.layout==='universes'?(focus||randomUniverse()):null,minN:FORMAT_LENSES[0].minN,toast:'FORMAT · GRAPH CORE'}),false],['WAVES',()=>applyLens({ui:{...FORMAT_LENSES[2].ui,layout:ui.layout},focus:ui.layout==='universes'?(focus||randomUniverse()):null,minN:FORMAT_LENSES[2].minN,toast:'FORMAT · WAVE PULSE'}),false]].forEach(([name,fn,on])=>{
+      const b=document.createElement('button');b.className='chip'+(on?' on':'');b.textContent=name;b.onclick=fn;fv.appendChild(b);
+    });
+
+    const sec=document.createElement('div');
+    sec.className='sec';
+    const sliderMax=Math.max(100,ARGUS_MAX_N),step=sliderMax>500?10:sliderMax>150?5:1;
+    sec.innerHTML='<div class="label">MIN OCCURRENCES · N ≥</div><div class="rangeWrap"><input id="occN" type="range" min="0" max="'+sliderMax+'" step="'+step+'" value="'+Math.min(ui.minN,sliderMax)+'"><span id="occNV" style="font-size:10px;color:#dff7ff;min-width:54px;text-align:right">N ≥ '+ui.minN+'</span></div><div id="occQuick" class="row" style="margin-top:7px"></div>';
+    drawer.insertBefore(sec,cutoffSec||drawer.lastElementChild);
+
+    const input=sec.querySelector('#occN'),value=sec.querySelector('#occNV');
+    input.oninput=()=>{ui.minN=+input.value;value.textContent='N ≥ '+ui.minN;updateStats();persistView();};
+    input.onchange=()=>showToast(ui.minN?'N ≥ '+ui.minN+' · low-sample nodes hidden':'occurrence filter cleared');
+
+    const quick=sec.querySelector('#occQuick');
+    [0,10,25,50,100].forEach(n=>{
+      const b=document.createElement('button');
+      b.className='chip'+(ui.minN===n?' on':'');
+      b.textContent=n===0?'ALL':'N≥'+n;
+      b.onclick=()=>{ui.minN=n;renderDrawer();updateStats();persistView();showToast(n?'N ≥ '+n:'all occurrence counts');};
+      quick.appendChild(b);
+    });
+
+    syncPresetButtons();
+  };
+
+  const __revealSecurity=revealSecurity;
+  revealSecurity=function(si){ui.minN=0;return __revealSecurity(si)};
+
+  const __loadData=loadData;
+  loadData=async function(first=false){
+    const out=await __loadData(first);
+    refreshOccurrenceRange();
+    return out;
+  };
+
+  const __backView=backView;
+  backView=function(){
+    if(ARGUS_AUTO_TOUR){toggleAutoTour();}
+    return __backView();
+  };
+
+  refreshOccurrenceRange();
+  renderDrawer();
+  ensurePresetDock();
+  updateStats();
+  showToast('PRESETS + FORMAT GENERATOR · ACTIVE');
+})();
+`;
+  d.body.appendChild(patch);
+});
+</script>
+</body>
+</html>
