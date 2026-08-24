@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V11_0 | ARGUS_OBSERVATORY_V10_0 | ARGUS_OBSERVATORY_V9_9 | ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -67,11 +67,37 @@ body.immersive #fullToggle{border-color:rgba(120,225,255,.42);background:rgba(55
 .eBadge{font-size:8px;font-weight:850;letter-spacing:.09em;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:4px 6px;color:rgba(220,238,245,.32)}
 .eBadge.on{color:#effcff;border-color:rgba(115,230,255,.30);background:rgba(75,200,235,.08);box-shadow:0 0 10px rgba(80,220,255,.06)}
 #selContext{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.ctxPill{font-size:8px;font-weight:800;letter-spacing:.055em;border:1px solid rgba(255,255,255,.07);border-radius:999px;padding:4px 6px;color:rgba(221,241,248,.58);background:rgba(255,255,255,.018)}#selPulseLine{margin-top:6px;font-size:9px;color:rgba(210,234,243,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#selMarket{display:grid;grid-template-columns:minmax(118px,.72fr) minmax(0,1.28fr);gap:6px;margin-top:7px}
+.selStat{min-width:0;border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:6px 7px;background:rgba(255,255,255,.018)}
+.selStatK{display:block;font-size:7px;font-weight:900;letter-spacing:.12em;color:rgba(200,230,241,.38)}
+.selStatV{display:block;margin-top:2px;font-size:11px;font-weight:850;color:#f2fbff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.selStatS{display:block;margin-top:1px;font-size:7.5px;font-weight:720;color:rgba(205,232,241,.43);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#selPriceValue{font-variant-numeric:tabular-nums}#selPaperRecord{font-variant-numeric:tabular-nums}
+@media(max-width:520px){#selMarket{grid-template-columns:1fr}.selStatV{font-size:10px}}
 #selBtns{display:flex;gap:5px;margin-top:7px;overflow-x:auto}
 #selBtns button{flex:0 0 auto}
 #toast{position:fixed;left:50%;top:18%;transform:translate(-50%,-10px);opacity:0;z-index:20;padding:7px 10px;border-radius:999px;font-size:10px;color:#dff8ff;background:rgba(4,12,18,.82);border:1px solid rgba(140,230,255,.18);transition:.18s;pointer-events:none}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:700px){#drawer{top:58px}.sec{padding:8px 5px}.chip{padding:7px 8px}#hud{max-width:44vw}#sel{bottom:112px}.bmode{height:40px;min-width:43px;padding:0 7px;font-size:8px}#universes{bottom:60px}.ub{padding:6px 8px}#gestureHelp{font-size:8px;gap:5px;padding:7px 8px}#helpToggle{right:max(154px,calc(env(safe-area-inset-right) + 154px))}}
+
+
+/* V11 preset filters + navigable evidence volume */
+#filterBar{position:fixed;left:50%;top:max(58px,calc(env(safe-area-inset-top) + 58px));transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:5px;padding:5px 6px;border-radius:14px;max-width:calc(100vw - 20px);overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+#filterBar::-webkit-scrollbar{display:none}
+.fset{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.fset label{font-size:7px;font-weight:900;letter-spacing:.12em;color:rgba(205,235,245,.38)}
+.fset select{appearance:none;-webkit-appearance:none;min-height:30px;border-radius:9px;border:1px solid rgba(160,228,255,.13);background:rgba(2,8,14,.62);color:rgba(232,248,255,.82);padding:0 21px 0 8px;font:800 8px -apple-system,sans-serif;letter-spacing:.045em;background-image:linear-gradient(45deg,transparent 50%,rgba(210,242,250,.48) 50%),linear-gradient(135deg,rgba(210,242,250,.48) 50%,transparent 50%);background-position:calc(100% - 10px) 12px,calc(100% - 7px) 12px;background-size:3px 3px,3px 3px;background-repeat:no-repeat}
+.fset select:disabled{opacity:.34}
+#filterReset{min-height:30px;border-radius:9px;border:1px solid rgba(160,228,255,.13);background:rgba(2,8,14,.62);color:rgba(232,248,255,.72);font:900 9px -apple-system,sans-serif;padding:0 9px}
+#filterCount{font:850 8px -apple-system,sans-serif;color:rgba(150,232,255,.58);padding:0 4px}
+#zoomPad{grid-template-columns:44px 44px;grid-template-rows:42px 42px 42px;gap:4px}
+#zoomPad button{width:44px;height:42px;font-size:21px}
+#zoomPad span{grid-column:1/3;grid-row:2;align-self:center}
+#zoomIn{grid-column:1;grid-row:1}#zoomOut{grid-column:2;grid-row:1}#liftUp{grid-column:1;grid-row:3}#liftDown{grid-column:2;grid-row:3}
+#rollPad{position:absolute;right:max(12px,env(safe-area-inset-right));bottom:max(262px,calc(env(safe-area-inset-bottom) + 262px));display:flex;gap:4px;pointer-events:auto}
+#rollPad button{width:44px;height:38px;border-radius:13px;border:1px solid rgba(180,235,255,.18);background:rgba(4,10,17,.48);color:#e9fbff;font:700 18px -apple-system,sans-serif;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+body[data-device='desktop'] #rollPad,body[data-device='tv'] #rollPad{display:none}
+@media(max-width:700px){#filterBar{top:max(57px,calc(env(safe-area-inset-top) + 57px));left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));transform:none;max-width:none}.fset label{display:none}.fset select{min-height:32px;font-size:8px}#filterCount{display:none}#sel{bottom:118px}}
 
 /* V9.6 adaptive navigation and device layout */
 :root{--tap:44px;--ui-gap:8px;--ui-font:10px}
@@ -120,11 +146,19 @@ body[data-device='tv'] #sel{bottom:158px;width:min(760px,72vw);padding:14px 16px
 <button id="drawerToggle" aria-label="Open controls">☷</button>
 <div id="searchPanel" class="glass"><input id="securitySearch" type="search" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Search ticker / security"><div id="searchResults"></div></div>
 <div id="drawer" class="glass"></div>
-<div id="gestureHelp" class="glass"><span id="gestureText"><strong>DRAG</strong> look · <strong>MOVE</strong> pad travel · <strong>+/−</strong> zoom · <strong>TAP</strong> inspect · <strong>DOUBLE-TAP</strong> focus</span><button id="gestureClose" aria-label="Hide navigation help">×</button></div>
+<div id="filterBar" class="glass" aria-label="Preset evidence filters">
+  <div class="fset"><label>$</label><select id="fPrice" aria-label="Price filter"><option value="any">$ ALL</option><option value="lt5">&lt;$5</option><option value="5_20">$5–20</option><option value="20_100">$20–100</option><option value="gte100">$100+</option></select></div>
+  <div class="fset"><label>CAP</label><select id="fCap" aria-label="Market cap filter"><option value="any">CAP ALL</option><option value="lt300m">&lt;$300M</option><option value="300m_2b">$300M–2B</option><option value="2b_10b">$2–10B</option><option value="gte10b">$10B+</option></select></div>
+  <div class="fset"><label>MOVE</label><select id="fMove" aria-label="Movement filter"><option value="any">MOVE ALL</option><option value="gte05">≥0.5%</option><option value="gte1">≥1%</option><option value="gte2">≥2%</option><option value="gte4">≥4%</option></select></div>
+  <div class="fset"><label>FIRE</label><select id="fFire" aria-label="Signal occurrence filter"><option value="any">FIRE ALL</option><option value="gte1">1+ DAYS</option><option value="gte5">5+ DAYS</option><option value="gte10">10+ DAYS</option><option value="gte20">20+ DAYS</option></select></div>
+  <div class="fset"><label>QUALITY</label><select id="fQuality" aria-label="Signal quality filter"><option value="any">QUALITY ALL</option><option value="qualified">QUALIFIED</option><option value="asymmetric">ASYMMETRIC</option><option value="dir70">DIR ≥70%</option><option value="dir80">DIR ≥80%</option><option value="hot">HOLY SHIT</option></select></div>
+  <button id="filterReset" aria-label="Clear preset filters">CLEAR</button><span id="filterCount"></span>
+</div>
+<div id="gestureHelp" class="glass"><span id="gestureText"><strong>DRAG</strong> rotate · <strong>MOVE</strong> fly · <strong>PINCH</strong> zoom · <strong>TWIST</strong> roll · <strong>TAP</strong> inspect</span><button id="gestureClose" aria-label="Hide navigation help">×</button></div>
 <div id="universes" class="glass"></div>
-<div id="touchNav" aria-label="Touch navigation"><div id="movePad" aria-label="Move through field"><div id="moveKnob"></div></div><div id="zoomPad"><button id="zoomIn" aria-label="Zoom in">+</button><span>ZOOM</span><button id="zoomOut" aria-label="Zoom out">−</button></div></div>
+<div id="touchNav" aria-label="Touch navigation"><div id="movePad" aria-label="Fly through evidence volume"><div id="moveKnob"></div></div><div id="zoomPad"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button><span>ZOOM · LIFT</span><button id="liftUp" aria-label="Move up">↑</button><button id="liftDown" aria-label="Move down">↓</button></div><div id="rollPad"><button id="rollLeft" aria-label="Roll view left">↶</button><button id="rollRight" aria-label="Roll view right">↷</button></div></div>
 <div id="bottom" class="glass"><button id="back" class="bmode" aria-label="Back">‹ BACK</button><button id="home" class="bmode" aria-label="Home">⌂ HOME</button><button id="old" class="bmode" aria-label="Historical evidence">HIST</button><button id="new" class="bmode" aria-label="Rolling evidence">ROLL</button><button id="both" class="bmode on" aria-label="Historical and rolling evidence">BOTH</button></div>
-<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selContext"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
+<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selMarket"><div class="selStat"><span class="selStatK">PRICE</span><span id="selPriceValue" class="selStatV">—</span><span id="selPriceStamp" class="selStatS">last observed price</span></div><div class="selStat"><span class="selStatK">PAPER TRADER</span><span id="selPaperRecord" class="selStatV">0 TAKEN · 0W 0L</span><span id="selPaperPnl" class="selStatS">realized $0.00</span></div></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selContext"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
 <div id="toast"></div>
 <script>
 const c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false});
@@ -139,7 +173,7 @@ function detectDeviceProfile(){
  if(coarse||(/iPad|Tablet|Android/i.test(ua)&&minSide>=600))return 'tablet';
  return 'desktop';
 }
-function updateDeviceProfile(){deviceProfile=detectDeviceProfile();document.body.dataset.device=deviceProfile;document.body.dataset.orientation=W>=H?'landscape':'portrait';const gt=document.getElementById('gestureText');if(gt){if(deviceProfile==='phone'||deviceProfile==='tablet')gt.innerHTML='<strong>DRAG</strong> look · <strong>MOVE</strong> pad travel · <strong>+/−</strong> zoom · <strong>TAP</strong> inspect · <strong>DOUBLE-TAP</strong> focus';else if(deviceProfile==='tv')gt.innerHTML='<strong>ARROWS</strong> look · <strong>ENTER</strong> inspect center · <strong>+/−</strong> zoom · <strong>BACK</strong> return';else gt.innerHTML='<strong>DRAG</strong> look · <strong>RIGHT-DRAG</strong> move · <strong>WHEEL</strong> zoom · <strong>WASD</strong> move · <strong>TAP</strong> inspect';}}
+function updateDeviceProfile(){deviceProfile=detectDeviceProfile();document.body.dataset.device=deviceProfile;document.body.dataset.orientation=W>=H?'landscape':'portrait';const gt=document.getElementById('gestureText');if(gt){if(deviceProfile==='phone'||deviceProfile==='tablet')gt.innerHTML='<strong>DRAG</strong> rotate · <strong>MOVE</strong> fly · <strong>PINCH</strong> zoom · <strong>TWIST</strong> roll · <strong>↑↓</strong> lift';else if(deviceProfile==='tv')gt.innerHTML='<strong>ARROWS</strong> look · <strong>ENTER</strong> inspect center · <strong>+/−</strong> zoom · <strong>BACK</strong> return';else gt.innerHTML='<strong>DRAG</strong> rotate · <strong>RIGHT-DRAG</strong> pan · <strong>WHEEL</strong> deep zoom · <strong>WASD</strong> fly · <strong>Q/E</strong> lift · <strong>Z/X</strong> roll';}}
 function resize(){const vv=window.visualViewport;W=Math.max(1,Math.round(vv?.width||innerWidth));H=Math.max(1,Math.round(vv?.height||innerHeight));updateDeviceProfile();DPR=Math.min(deviceProfile==='phone'?1.25:deviceProfile==='tablet'?1.4:deviceProfile==='tv'?1.35:1.6,devicePixelRatio||1);c.width=Math.round(W*DPR);c.height=Math.round(H*DPR);c.style.width=W+'px';c.style.height=H+'px';ctx.setTransform(DPR,0,0,DPR,0,0)}
 addEventListener('resize',resize);visualViewport?.addEventListener('resize',resize);resize();
 
@@ -156,31 +190,42 @@ const PAL={
 };
 let ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,sectorFocus=null,sectorReturnView=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
-let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,verticalOffset=0,MIN=3.4,MAX=245;
-const VERTICAL_MIN=-120,VERTICAL_MAX=120;
-let cameraGoal={target:{...target},dist,yaw,pitch,verticalOffset},cameraLast=performance.now();
-let moveDrive={x:0,y:0},zoomDrive=0,movePadPointer=null,navPointerMode='orbit';
-function cameraGoalTo(v={},snap=false){if(v.target)cameraGoal.target={...cameraGoal.target,...v.target};if(Number.isFinite(v.dist))cameraGoal.dist=clamp(v.dist,MIN,MAX);if(Number.isFinite(v.yaw))cameraGoal.yaw=v.yaw;if(Number.isFinite(v.pitch))cameraGoal.pitch=clamp(v.pitch,-1.25,1.25);if(Number.isFinite(v.verticalOffset))cameraGoal.verticalOffset=clamp(v.verticalOffset,VERTICAL_MIN,VERTICAL_MAX);if(snap){target={...cameraGoal.target};dist=cameraGoal.dist;yaw=cameraGoal.yaw;pitch=cameraGoal.pitch;verticalOffset=cameraGoal.verticalOffset}}
-function cameraStep(now){const dt=clamp((now-cameraLast)/1000,0,.05);cameraLast=now;const response=(deviceProfile==='phone'?18:deviceProfile==='tablet'?16:14),k=1-Math.exp(-response*dt);if(moveDrive.x||moveDrive.y){const speed=(deviceProfile==='phone'?1.35:1.6)*cameraGoal.dist*dt;cameraGoal.target.x-=moveDrive.x*speed*Math.cos(cameraGoal.yaw);cameraGoal.target.z+=moveDrive.x*speed*Math.sin(cameraGoal.yaw);cameraGoal.target.y+=moveDrive.y*speed}if(zoomDrive){cameraGoal.dist=clamp(cameraGoal.dist*Math.exp(zoomDrive*dt*1.45),MIN,MAX)}yaw+=((cameraGoal.yaw-yaw+Math.PI*3)%(Math.PI*2)-Math.PI)*k;pitch+=(cameraGoal.pitch-pitch)*k;dist+=(cameraGoal.dist-dist)*k;verticalOffset+=(cameraGoal.verticalOffset-verticalOffset)*k;target.x+=(cameraGoal.target.x-target.x)*k;target.y+=(cameraGoal.target.y-target.y)*k;target.z+=(cameraGoal.target.z-target.z)*k}
+let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,roll=0,verticalOffset=0,MIN=.35,MAX=1400;
+const VERTICAL_MIN=-220,VERTICAL_MAX=220;
+let cameraGoal={target:{...target},dist,yaw,pitch,roll,verticalOffset},cameraLast=performance.now();
+let moveDrive={x:0,y:0},zoomDrive=0,liftDrive=0,rollDrive=0,movePadPointer=null,navPointerMode='orbit';
+function cameraGoalTo(v={},snap=false){if(v.target)cameraGoal.target={...cameraGoal.target,...v.target};if(Number.isFinite(v.dist))cameraGoal.dist=clamp(v.dist,MIN,MAX);if(Number.isFinite(v.yaw))cameraGoal.yaw=v.yaw;if(Number.isFinite(v.pitch))cameraGoal.pitch=clamp(v.pitch,-1.52,1.52);if(Number.isFinite(v.roll))cameraGoal.roll=v.roll;if(Number.isFinite(v.verticalOffset))cameraGoal.verticalOffset=clamp(v.verticalOffset,VERTICAL_MIN,VERTICAL_MAX);if(snap){target={...cameraGoal.target};dist=cameraGoal.dist;yaw=cameraGoal.yaw;pitch=cameraGoal.pitch;roll=cameraGoal.roll;verticalOffset=cameraGoal.verticalOffset}}
+function cameraStep(now){const dt=clamp((now-cameraLast)/1000,0,.05);cameraLast=now;const response=(deviceProfile==='phone'?18:deviceProfile==='tablet'?16:14),k=1-Math.exp(-response*dt);
+ if(moveDrive.x||moveDrive.y||liftDrive){const speed=(deviceProfile==='phone'?1.65:1.9)*Math.max(cameraGoal.dist,3)*dt,cp=Math.cos(cameraGoal.pitch),sp=Math.sin(cameraGoal.pitch),sy=Math.sin(cameraGoal.yaw),cy=Math.cos(cameraGoal.yaw);const fx=sy*cp,fy=-sp,fz=cy*cp,rx=cy,rz=-sy;cameraGoal.target.x+=(moveDrive.x*rx+moveDrive.y*fx)*speed;cameraGoal.target.z+=(moveDrive.x*rz+moveDrive.y*fz)*speed;cameraGoal.target.y+=(moveDrive.y*fy+liftDrive)*speed}
+ if(zoomDrive)cameraGoal.dist=clamp(cameraGoal.dist*Math.exp(zoomDrive*dt*1.9),MIN,MAX);if(rollDrive)cameraGoal.roll+=rollDrive*dt*1.25;clampCameraTarget();
+ yaw+=((cameraGoal.yaw-yaw+Math.PI*3)%(Math.PI*2)-Math.PI)*k;pitch+=(cameraGoal.pitch-pitch)*k;roll+=((cameraGoal.roll-roll+Math.PI*3)%(Math.PI*2)-Math.PI)*k;dist+=(cameraGoal.dist-dist)*k;verticalOffset+=(cameraGoal.verticalOffset-verticalOffset)*k;target.x+=(cameraGoal.target.x-target.x)*k;target.y+=(cameraGoal.target.y-target.y)*k;target.z+=(cameraGoal.target.z-target.z)*k}
+
 function perfStep(now){const dt=now-perfLast;perfLast=now;if(dt>0&&dt<120){frameEMA=frameEMA*.94+dt*.06;if(frameEMA>25)perfScale=Math.max(.55,perfScale-.012);else if(frameEMA<18.5)perfScale=Math.min(1,perfScale+.004)}}
 function renderBudget(kind,lod=3){let base;if(kind==='fusion')base=deviceProfile==='phone'?1800:deviceProfile==='tablet'?3300:deviceProfile==='tv'?4200:5200;else base=deviceProfile==='phone'?(lod===1?700:lod===2?1500:2600):deviceProfile==='tablet'?(lod===1?950:lod===2?2300:5200):deviceProfile==='tv'?(lod===1?1100:lod===2?2800:6500):(lod===1?1200:lod===2?3000:9000);return Math.max(350,Math.round(base*perfScale))}
 let lastTapAt=0,lastTapX=0,lastTapY=0;
-let sphereHits=[],sectorHits=[],nodeHits=[],patternHits=[],shakeUntil=0,QSET=new Set(),HSET=new Set(),PSET=new Set(),CSET=new Set(),selectedNeighbors=new Set(),familyKey=null;
+let sphereHits=[],sectorHits=[],nodeHits=[],patternHits=[],shakeUntil=0,QSET=new Set(),RSET=new Set(),HSET=new Set(),PSET=new Set(),CSET=new Set(),selectedNeighbors=new Set(),familyKey=null;
 let drag=false,railDrag=false,verticalRailDrag=false,lastX=0,lastY=0,lastMove=0;
-let activePointers=new Map(),primaryPointerId=null,suppressTap=false,pinchLastDist=0,pinchLastMid={x:0,y:0};
+let activePointers=new Map(),primaryPointerId=null,suppressTap=false,pinchLastDist=0,pinchLastAngle=null,pinchLastMid={x:0,y:0};
 let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusionActiveCount=0;
 // REALITY-G V8 keeps a persistent physical state for the currently entered evidence universe.
 // Positions and velocities feed back into the next force calculation, so movement changes movement.
 let realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};
 const FUSION_R=27,FUSION_MAX_MOBILE=3200,FUSION_MAX_DESKTOP=5200;
 const REALITY_MAX_MOBILE=4600,REALITY_MAX_DESKTOP=9000,REALITY_MIN_STEP_MS=34;
-const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v9-8';
+const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v11-0';
 let lastFeedFingerprint='';
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
 function qmeta(si){return DATA?.qualified_meta?.[String(si)]||null}
 function imeta(si){return DATA?.intake_meta?.[String(si)]||null}
+function riskMeta(si){
+ const q=qmeta(si),im=imeta(si);
+ if(q&&(q.risk_pass||finite(q.risk_ratio)>0))return{pass:!!q.risk_pass,ratio:finite(q.risk_ratio),up:finite(q.upside),down:finite(q.downside),mae:finite(q.mae_p75),mfe:finite(q.mfe_p75),edge:finite(q.asymmetry),n:finite(q.risk_n),source:q.risk_source||'historical'};
+ if(im&&(im.rolling_risk_pass||finite(im.rolling_risk_ratio)>0))return{pass:!!im.rolling_risk_pass,ratio:finite(im.rolling_risk_ratio),up:finite(im.rolling_upside_p75_net_pct),down:finite(im.rolling_downside_exposure_pct),mae:0,mfe:0,edge:finite(im.rolling_upside_p75_net_pct)-finite(im.rolling_downside_exposure_pct),n:0,source:'rolling'};
+ return null
+}
 function isQualified(si){return QSET.has(si)||!!qmeta(si)}
+function isRiskPositive(si){const r=riskMeta(si);return RSET.has(si)||!!(r?.pass&&r.ratio>1)}
 function isHot(si){return HSET.has(si)}
 function isProspective(si){return PSET.has(si)}
 function isConflict(si){return CSET.has(si)}
@@ -209,6 +254,26 @@ function strength(si,u){
  if(u.id==='paper')return clamp(finite(m[7])/3,0,1);
  return .1
 }
+const presetFilters={price:'any',cap:'any',move:'any',fire:'any',quality:'any'};
+function rawNum(v){const n=Number(v);return Number.isFinite(n)?n:null}
+function nodePrice(si){return rawNum(DATA?.latest_prices?.[si])}
+function nodeCap(si){const im=imeta(si);return rawNum(DATA?.market_caps?.[si])??rawNum(im?.market_cap)}
+function nodeMove(si){return Math.max(0,metric(si,9,0))}
+function nodeDirQuality(si){const q=qmeta(si),im=imeta(si);return q?finite(q.dir):im?finite(im.rolling_directional_accuracy):metric(si,2)}
+function capDataAvailable(){return !!(DATA?.symbols||[]).find((_,i)=>nodeCap(i)!==null)}
+function passesPresetFilters(si){
+ const p=nodePrice(si),cap=nodeCap(si),mv=nodeMove(si),fd=fireDays(si),dq=nodeDirQuality(si);
+ if(presetFilters.price!=='any'){if(p===null)return false;if(presetFilters.price==='lt5'&&!(p<5))return false;if(presetFilters.price==='5_20'&&!(p>=5&&p<20))return false;if(presetFilters.price==='20_100'&&!(p>=20&&p<100))return false;if(presetFilters.price==='gte100'&&!(p>=100))return false}
+ if(presetFilters.cap!=='any'){if(cap===null)return false;if(presetFilters.cap==='lt300m'&&!(cap<3e8))return false;if(presetFilters.cap==='300m_2b'&&!(cap>=3e8&&cap<2e9))return false;if(presetFilters.cap==='2b_10b'&&!(cap>=2e9&&cap<1e10))return false;if(presetFilters.cap==='gte10b'&&!(cap>=1e10))return false}
+ if(presetFilters.move==='gte05'&&mv<.5)return false;if(presetFilters.move==='gte1'&&mv<1)return false;if(presetFilters.move==='gte2'&&mv<2)return false;if(presetFilters.move==='gte4'&&mv<4)return false;
+ if(presetFilters.fire==='gte1'&&fd<1)return false;if(presetFilters.fire==='gte5'&&fd<5)return false;if(presetFilters.fire==='gte10'&&fd<10)return false;if(presetFilters.fire==='gte20'&&fd<20)return false;
+ if(presetFilters.quality==='qualified'&&!isQualified(si))return false;if(presetFilters.quality==='asymmetric'&&!isRiskPositive(si))return false;if(presetFilters.quality==='dir70'&&dq<.70)return false;if(presetFilters.quality==='dir80'&&dq<.80)return false;if(presetFilters.quality==='hot'&&!isHot(si))return false;
+ return true
+}
+function visibleEvidenceCount(){if(!DATA)return 0;let n=0;for(let i=0;i<DATA.symbols.length;i++)if(nodeVisible(i))n++;return n}
+function syncPresetFilters(){const map={fPrice:'price',fCap:'cap',fMove:'move',fFire:'fire',fQuality:'quality'};for(const [id,k] of Object.entries(map)){const e=document.getElementById(id);if(!e)continue;e.value=presetFilters[k];if(id==='fCap')e.disabled=!capDataAvailable()}const ct=document.getElementById('filterCount');if(ct)ct.textContent=DATA?`${visibleEvidenceCount()} SHOWN`:''}
+function bindPresetFilters(){const map={fPrice:'price',fCap:'cap',fMove:'move',fFire:'fire',fQuality:'quality'};for(const [id,k] of Object.entries(map)){const e=document.getElementById(id);if(!e)continue;e.onchange=()=>{presetFilters[k]=e.value;fusionState.clear();syncPresetFilters();updateStats();persistView()}}const r=document.getElementById('filterReset');if(r)r.onclick=()=>{for(const k of Object.keys(presetFilters))presetFilters[k]='any';syncPresetFilters();updateStats();persistView();showToast('PRESET FILTERS CLEARED')}}
+
 function nodeVisible(si){
  if(sectorFocus!==null && sectorIndex(si)!==sectorFocus)return false;
  if(isolated!==null && si!==isolated && !wormPath.has(si)) return false;
@@ -220,6 +285,7 @@ function nodeVisible(si){
  if(familyKey && (!qm || `${qm.family}|${qm.signature}|${qm.direction}|${qm.horizon}`!==familyKey))return false;
  const im=imeta(si),dirAcc=qm?finite(qm.dir):(im?finite(im.rolling_directional_accuracy):metric(si,2));
  if(ui.cutoff>0 && dirAcc<ui.cutoff)return false;
+ if(!passesPresetFilters(si))return false;
  return true
 }
 function colorFor(si,u,alpha=1){
@@ -247,6 +313,11 @@ function tracePolygon(x,y,r,n,rot=-Math.PI/2){ctx.beginPath();for(let i=0;i<n;i+
 function traceStar(x,y,r,points=6,rot=-Math.PI/2){ctx.beginPath();for(let i=0;i<points*2;i++){const rr=i%2?r*.43:r,a=rot+i*Math.PI/points,px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.closePath()}
 function paintNodeMark(si,x,y,r){
  const dm=ui.display||'graph';
+ if(isRiskPositive(si)){
+   const rm=riskMeta(si),ratio=clamp(finite(rm?.ratio,1),1,4),pulse=.78+.22*Math.sin(performance.now()/260+si*.37);
+   const rr=Math.max(6.2,r*(1.9+.10*Math.min(ratio-1,2)));
+   ctx.save();ctx.globalAlpha*=.52+.30*pulse;ctx.strokeStyle='rgba(142,242,255,.92)';ctx.lineWidth=Math.max(1.15,r*.26);ctx.shadowColor='rgba(105,226,255,.95)';ctx.shadowBlur=10+9*Math.min(ratio-1,2);ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);ctx.stroke();ctx.restore();
+ }
  if(dm==='graph'){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();return}
  const rr=dm==='waves'?r*.86:r;
  if(isHot(si)){traceStar(x,y,rr*1.18,6);ctx.fill();return}
@@ -599,9 +670,11 @@ function visualToolTransform(si,u,p){
  return{x,y,z}
 }
 function nodePos(si,u){return visualToolTransform(si,u,physicsOffset(si,u,dimensionTransform(si,u,baseNodePos(si,u))))}
-function rot(p){let x=p.x-target.x,y=p.y-(target.y+verticalOffset),z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;return{x:x1,y:y1,z:z2}}
-function proj(p){const q=rot(p),dep=dist+q.z;if(dep<2)return null;const f=Math.min(W,H)*1.16/dep;return{x:W*.5+q.x*f,y:H*.5-q.y*f,z:q.z,f,dep}}
+function rot(p){let x=p.x-target.x,y=p.y-(target.y+verticalOffset),z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),cr=Math.cos(roll),sr=Math.sin(roll);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;let x2=x1*cr-y1*sr,y2=x1*sr+y1*cr;return{x:x2,y:y2,z:z2}}
+function proj(p){const q=rot(p),dep=dist+q.z;if(dep<.12)return null;const f=Math.min(W,H)*1.16/Math.max(dep,.12);return{x:W*.5+q.x*f,y:H*.5-q.y*f,z:q.z,f,dep}}
 function zoom(z){cameraGoal.dist=clamp(z,MIN,MAX)}
+function cameraBounds(){return ui.layout==='fusion'?{x:35,y:35,z:35}:{x:104,y:60,z:60}}
+function clampCameraTarget(){const b=cameraBounds();cameraGoal.target.x=clamp(cameraGoal.target.x,-b.x,b.x);cameraGoal.target.y=clamp(cameraGoal.target.y,-b.y,b.y);cameraGoal.target.z=clamp(cameraGoal.target.z,-b.z,b.z)}
 function rail(){const x=W-Math.max(27,W*.021),top=H*.16,bottom=H*.82;return{x,top,bottom,h:bottom-top,hit:54}}
 function railHit(x,y){const g=rail();return x>g.x-g.hit&&y>g.top-20&&y<g.bottom+20}
 function railSet(y){const g=rail(),t=clamp((y-g.top)/g.h,0,1);zoom(MIN*Math.pow(MAX/MIN,t))}
@@ -618,11 +691,21 @@ function drawVerticalRail(){
  ctx.shadowBlur=0;ctx.fillStyle='rgba(232,221,255,.58)';ctx.font='800 11px -apple-system,sans-serif';ctx.textAlign='center';ctx.fillText('↑',g.x,g.top-12);ctx.fillText('↓',g.x,g.bottom+18);ctx.restore()
 }
 
+const SPACE_STARS=Array.from({length:520},(_,i)=>({x:hash('starx'+i),y:hash('stary'+i),z:.25+hash('starz'+i)*.75,a:.16+hash('stara'+i)*.68,r:.18+hash('starr'+i)*1.35,h:185+hash('starh'+i)*70}));
+const SPACE_GALAXIES=Array.from({length:11},(_,i)=>({x:hash('galx'+i),y:hash('galy'+i),a:.05+hash('gala'+i)*.13,r:.035+hash('galr'+i)*.075,tilt:(hash('galt'+i)-.5)*1.8,h:180+hash('galh'+i)*170}));
+const SPACE_SUNS=Array.from({length:5},(_,i)=>({x:hash('sunx'+i),y:hash('suny'+i),r:.004+hash('sunr'+i)*.006,h:28+hash('sunh'+i)*36,a:.30+hash('suna'+i)*.28}));
+function spaceVisibility(){const lo=Math.log(1.4),hi=Math.log(120);return clamp((Math.log(Math.max(dist,1.4))-lo)/(hi-lo),0,1)}
 function bg(){
- const h=focus?hueForUniverse(focus):202;ctx.fillStyle='#010204';ctx.fillRect(0,0,W,H);
- const g=ctx.createRadialGradient(W*.5,H*.48,0,W*.5,H*.48,Math.max(W,H)*.78);g.addColorStop(0,hsla(h,58,14,.15));g.addColorStop(.6,'rgba(2,7,11,.42)');g.addColorStop(1,'#000');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
- for(let i=0;i<110;i++){ctx.fillStyle=`rgba(195,227,240,${.035+hash('sx'+i)*.12})`;ctx.beginPath();ctx.arc(hash('sxx'+i)*W,hash('syy'+i)*H,.25+hash('ss'+i)*.9,0,7);ctx.fill()}
+ const h=focus?hueForUniverse(focus):202,space=spaceVisibility();ctx.fillStyle='#000104';ctx.fillRect(0,0,W,H);
+ const driftX=(yaw/(Math.PI*2))*.22,driftY=(pitch/Math.PI)*.18;
+ for(const g0 of SPACE_GALAXIES){let gx=((g0.x+driftX*g0.r*5)%1+1)%1*W,gy=((g0.y-driftY*g0.r*4)%1+1)%1*H,rr=Math.min(W,H)*g0.r;ctx.save();ctx.translate(gx,gy);ctx.rotate(g0.tilt+roll*.12);ctx.scale(1,.34+.32*hash('gs'+g0.x));const g=ctx.createRadialGradient(0,0,0,0,0,rr);g.addColorStop(0,hsla(g0.h,72,82,g0.a*space));g.addColorStop(.18,hsla(g0.h,74,55,g0.a*.55*space));g.addColorStop(.58,hsla(g0.h,72,34,g0.a*.16*space));g.addColorStop(1,hsla(g0.h,60,18,0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,rr,0,7);ctx.fill();ctx.restore()}
+ for(const su of SPACE_SUNS){const x=((su.x+driftX*.32)%1+1)%1*W,y=((su.y-driftY*.28)%1+1)%1*H,r=Math.min(W,H)*su.r,g=ctx.createRadialGradient(x,y,0,x,y,r*7);g.addColorStop(0,hsla(su.h,78,96,su.a*space));g.addColorStop(.10,hsla(su.h,90,75,su.a*.78*space));g.addColorStop(.34,hsla(su.h,88,48,su.a*.22*space));g.addColorStop(1,hsla(su.h,80,30,0));ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*7,0,7);ctx.fill();}
+ for(const st of SPACE_STARS){let x=((st.x+driftX*st.z)%1+1)%1*W,y=((st.y-driftY*st.z)%1+1)%1*H,tw=.72+.28*Math.sin(performance.now()/900+st.x*71);ctx.fillStyle=hsla(st.h,48,84,st.a*space*tw);ctx.beginPath();ctx.arc(x,y,st.r*(.55+st.z*.75),0,7);ctx.fill();if(st.r>1.15&&space>.45){ctx.strokeStyle=hsla(st.h,62,88,.10*space);ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(x-st.r*2.8,y);ctx.lineTo(x+st.r*2.8,y);ctx.moveTo(x,y-st.r*2.8);ctx.lineTo(x,y+st.r*2.8);ctx.stroke()}}
+ const neb=ctx.createRadialGradient(W*.5,H*.48,0,W*.5,H*.48,Math.max(W,H)*.78);neb.addColorStop(0,hsla(h,58,14,.13*space));neb.addColorStop(.6,'rgba(2,7,11,.30)');neb.addColorStop(1,'rgba(0,0,0,.78)');ctx.fillStyle=neb;ctx.fillRect(0,0,W,H);
+ const dark=1-space; if(dark>0){ctx.fillStyle=`rgba(0,0,0,${(.80*dark).toFixed(3)})`;ctx.fillRect(0,0,W,H)}
 }
+function drawUniverseCube(){const sx=ui.layout==='fusion'?36:105,sy=ui.layout==='fusion'?36:62,sz=ui.layout==='fusion'?36:62;const pts=[[-sx,-sy,-sz],[sx,-sy,-sz],[sx,sy,-sz],[-sx,sy,-sz],[-sx,-sy,sz],[sx,-sy,sz],[sx,sy,sz],[-sx,sy,sz]].map(v=>({x:v[0],y:v[1],z:v[2]}));const edges=[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];ctx.save();ctx.lineWidth=.65;ctx.strokeStyle='rgba(155,224,246,.075)';ctx.setLineDash([3,7]);for(const [a,b] of edges){const p=proj(pts[a]),q=proj(pts[b]);if(!p||!q)continue;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}ctx.setLineDash([]);const axis=[{a:{x:-sx,y:0,z:0},b:{x:sx,y:0,z:0}},{a:{x:0,y:-sy,z:0},b:{x:0,y:sy,z:0}},{a:{x:0,y:0,z:-sz},b:{x:0,y:0,z:sz}}];ctx.strokeStyle='rgba(185,235,250,.045)';for(const e of axis){const p=proj(e.a),q=proj(e.b);if(p&&q){ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}ctx.restore()}
+
 function shell(u){
  const p=proj(u);if(!p)return;const rr=clamp(u.r*p.f,7,Math.max(W,H)*3);let a=(focus&&focus!==u.id)?0.018:(focus===u.id?.42:.31);
  // Region body. The overview should read as nine distinct territories, not nine shy circles
@@ -796,12 +879,12 @@ function bridge(){
  if(focus)return;for(const [a,b] of DATA.bridges||[]){const pa=proj(uobj(a)),pb=proj(uobj(b));if(!pa||!pb)continue;ctx.strokeStyle='rgba(112,210,235,.05)';ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke()}
 }
 function render(now=performance.now()){
- perfStep(now);cameraStep(now);if(!DATA){bg();requestAnimationFrame(render);return}bg();sphereHits=[];sectorHits=[];
+ perfStep(now);cameraStep(now);if(!DATA){bg();requestAnimationFrame(render);return}bg();drawUniverseCube();sphereHits=[];sectorHits=[];
  if(ui.layout==='fusion'){drawFusion()}else{bridge();if(focus){const u=uobj(focus);shell(u);if(u.id==='direction'&&dist>=u.r*1.42)drawSemanticPatternBeacons(u,false);drawInterior(u)}else{for(const x of DATA.universes||[])shell(uobj(x.id));const du=uobj('direction');drawSemanticPatternBeacons(du,true)}}
  drawVerticalRail();drawRail();requestAnimationFrame(render)
 }
 
-function setLayout(v){ui.layout=v;focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;cameraGoalTo({target:{x:0,y:0,z:0},dist:54,yaw:-.18,pitch:-.08,verticalOffset:0});fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;cameraGoalTo({target:{x:0,y:0,z:0},dist:138,yaw:-.18,pitch:-.08,verticalOffset:0});showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
+function setLayout(v){ui.layout=v;focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;cameraGoalTo({target:{x:0,y:0,z:0},dist:54,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;cameraGoalTo({target:{x:0,y:0,z:0},dist:138,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
 function setFocus(id){ui.layout='universes';focus=id;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);cameraGoalTo({target:{x:u.x,y:u.y,z:u.z},dist:Math.max(MIN,u.r*1.22),verticalOffset:0});syncUniverseButtons();renderDrawer();hideSelected();persistView()}
 function home(){focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();cameraGoalTo({target:{x:0,y:0,z:0},dist:ui.layout==='fusion'?54:138,yaw:-.18,pitch:-.08,verticalOffset:0});syncUniverseButtons();hideSelected();persistView()}
 function hitNode(x,y){let best=null,bd=1e9;for(const h of nodeHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
@@ -824,15 +907,49 @@ function exitSector(){
 }
 function backView(){if(selected){selected=null;selectedNeighbors.clear();hideSelected();persistView();return}if(sectorFocus!==null){exitSector();return}if(focus){home();return}if(ui.layout==='fusion'){setLayout('universes');return}home()}
 function isDoubleTap(x,y){const now=performance.now();const yes=(now-lastTapAt<320&&Math.hypot(x-lastTapX,y-lastTapY)<22);lastTapAt=now;lastTapX=x;lastTapY=y;return yes}
-function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),im=imeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isHot(h.si)?'  ✦':'');const pre=sec?sec+' · ':'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}`:(im&&finite(im.scan_count)>0?`${pre}rolling ${im.rolling_grade||'observed'} · net ${finite(im.rolling_best_net_pct).toFixed(2)}% · dir ${(finite(im.rolling_directional_accuracy)*100).toFixed(1)}% · candidate only`:`${pre}catalogued · waiting for rolling scan`);
+let quoteRequestSeq=0;
+function money(v){const n=Number(v);if(!Number.isFinite(n))return '—';return (n<0?'−$':'$')+Math.abs(n).toFixed(Math.abs(n)>=100?2:2)}
+function priceText(v){const n=Number(v);if(!Number.isFinite(n)||n<=0)return '—';return '$'+n.toLocaleString(undefined,{minimumFractionDigits:n>=100?2:2,maximumFractionDigits:n<1?4:2})}
+function shortStamp(v){if(!v)return '';const d=new Date(v);if(!Number.isFinite(d.getTime()))return String(v).slice(0,25);return d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
+function renderSelectedMarket(si,liveOverride=null){
+ const qm=qmeta(si)||{},pm=(DATA?.paper_meta||{})[String(si)]||{};
+ const snapPrice=Array.isArray(DATA?.latest_prices)?DATA.latest_prices[si]:null;
+ const snapTime=Array.isArray(DATA?.latest_price_times)?DATA.latest_price_times[si]:'';
+ const snapSource=Array.isArray(DATA?.latest_price_sources)?DATA.latest_price_sources[si]:'';
+ const pv=document.getElementById('selPriceValue'),ps=document.getElementById('selPriceStamp');
+ const p=liveOverride?.price??snapPrice,pt=liveOverride?.time??snapTime,src=liveOverride?.source??snapSource;
+ pv.textContent=priceText(p);
+ ps.textContent=(src?String(src).replaceAll('_',' ')+' · ':'LAST OBSERVED · ')+(shortStamp(pt)||'timestamp pending');
+ const closed=Number(pm.closed_trades??qm.paper_trades??0)||0,open=Number(pm.open_positions??qm.open_positions??0)||0,taken=Number(pm.taken??(closed+open))||0;
+ const wins=Number(pm.wins??0)||0,losses=Number(pm.losses??0)||0,flat=Number(pm.breakeven??0)||0;
+ const wr=Number(pm.win_rate);const wrTxt=Number.isFinite(wr)&&closed>0?` · ${(wr*100).toFixed(0)}% WIN`:'';
+ document.getElementById('selPaperRecord').textContent=`${taken} TAKEN · ${wins}W ${losses}L${flat?` ${flat}BE`:''} · ${open} OPEN${wrTxt}`;
+ const realized=Number(pm.realized_pnl??0)||0;document.getElementById('selPaperPnl').textContent=`realized ${realized>=0?'+':''}${money(realized)}${closed?` · ${closed} closed`:''}`;
+}
+async function refreshSelectedQuote(si,symbol){
+ const seq=++quoteRequestSeq;
+ const ysym=String(symbol||'').trim();if(!ysym)return;
+ const urls=[`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ysym)}?interval=1m&range=1d`,`https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ysym)}?interval=1m&range=1d`];
+ for(const url of urls){
+  try{
+   const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),3500);const r=await fetch(url,{cache:'no-store',signal:ctrl.signal});clearTimeout(timer);if(!r.ok)continue;
+   const j=await r.json(),res=j?.chart?.result?.[0];if(!res)continue;let px=Number(res?.meta?.regularMarketPrice),ts=Number(res?.meta?.regularMarketTime)||0;
+   if(!Number.isFinite(px)||px<=0){const closes=res?.indicators?.quote?.[0]?.close||[],times=res?.timestamp||[];for(let k=closes.length-1;k>=0;k--){if(Number.isFinite(Number(closes[k]))){px=Number(closes[k]);ts=Number(times[k]||0);break}}}
+   if(!Number.isFinite(px)||px<=0)continue;if(seq!==quoteRequestSeq||!selected||selected.si!==si)return;
+   renderSelectedMarket(si,{price:px,time:ts?new Date(ts*1000).toISOString():'',source:'LIVE QUOTE'});return;
+  }catch(_){ }
+ }
+}
+function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),im=imeta(h.si),rm=riskMeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isRiskPositive(h.si)?'  ◉':(isHot(h.si)?'  ✦':''));const pre=sec?sec+' · ':'';const asym=rm&&finite(rm.ratio)>0?` · asym ${finite(rm.ratio).toFixed(2)}×`:'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}${asym}`:(im&&finite(im.scan_count)>0?`${pre}rolling ${im.rolling_grade||'observed'} · net ${finite(im.rolling_best_net_pct).toFixed(2)}% · dir ${(finite(im.rolling_directional_accuracy)*100).toFixed(1)}%${asym} · candidate only`:`${pre}catalogued · waiting for rolling scan`);
+ renderSelectedMarket(h.si);refreshSelectedQuote(h.si,s);
  const fv=document.getElementById('fireValue');fv.textContent=fw?`${fd} / ${fw} · ${Math.round(fr*100)}%`:'waiting for day history';document.getElementById('fireFill').style.width=(fr*100).toFixed(1)+'%';
- const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${im&&finite(im.scan_count)>0?'on':''}">R ROLLING</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
- const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}if(im){ctx.push(`ROLL ${im.rolling_grade||'—'}`);ctx.push(`SCANS ${finite(im.scan_count)}`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
- const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);else if(im&&finite(im.scan_count)>0)line.push('rolling grade is observational candidate evidence only');if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
+ const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${isRiskPositive(h.si)?'on':''}">A ASYMMETRIC</span><span class="eBadge ${im&&finite(im.scan_count)>0?'on':''}">R ROLLING</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
+ const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}if(rm){ctx.push(`ASYM ${finite(rm.ratio).toFixed(2)}×`);ctx.push(`NET ${finite(rm.up).toFixed(2)}%`);ctx.push(`DOWN P75 ${finite(rm.down).toFixed(2)}%`)}if(im){ctx.push(`ROLL ${im.rolling_grade||'—'}`);ctx.push(`SCANS ${finite(im.scan_count)}`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
+ const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);else if(im&&finite(im.scan_count)>0)line.push('rolling grade is observational candidate evidence only');if(isRiskPositive(h.si))line.push('EXPECTED NET > P75 DOWNSIDE EXPOSURE');if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
  document.getElementById('sel').classList.add('show');buildSelectedButtons()}
 function hideSelected(){document.getElementById('sel').classList.remove('show')}
 function buildSelectedButtons(){const box=document.getElementById('selBtns');box.innerHTML='';if(!selected)return;const add=(name,fn,on=false)=>{const b=document.createElement('button');b.className='chip'+(on?' on':'');b.textContent=name;b.onclick=fn;box.appendChild(b)};
- add('WHY?',()=>{const q=qmeta(selected.si),im=imeta(selected.si);showToast(q?`historical qualified: ${q.count} pattern${q.count===1?'':'s'} · grade ${q.grade.toFixed(1)}`:(im&&finite(im.scan_count)>0?`rolling ${im.rolling_grade||'candidate'} · ${im.rolling_qualified_patterns||0} rolling qualified pattern${im.rolling_qualified_patterns===1?'':'s'} · no historical authority`:'catalogued · rolling scan pending'))});
+ add('WHY?',()=>{const q=qmeta(selected.si),im=imeta(selected.si),r=riskMeta(selected.si);showToast(r?.pass?`asymmetry pass · expected net ${finite(r.up).toFixed(2)}% > p75 downside ${finite(r.down).toFixed(2)}% · ${finite(r.ratio).toFixed(2)}×`:q?`historical qualified: ${q.count} pattern${q.count===1?'':'s'} · grade ${q.grade.toFixed(1)} · asymmetry not passed`:(im&&finite(im.scan_count)>0?`rolling ${im.rolling_grade||'candidate'} · ${im.rolling_qualified_patterns||0} rolling qualified pattern${im.rolling_qualified_patterns===1?'':'s'} · no historical authority`:'catalogued · rolling scan pending'))});
  add('LINKS',()=>{ui.edgeMode='qualified';renderDrawer();showToast('qualified links')},ui.edgeMode==='qualified');
  add('ECON',()=>{ui.color='economics';ui.size='expectancy';renderDrawer();showToast('economics remap')});
  add('ISOLATE',()=>{isolated=isolated===selected.si?null:selected.si;wormPath=isolated!==null?neighborsOf(selected.si):new Set();if(isolated!==null)wormPath.add(selected.si);buildSelectedButtons()},isolated===selected.si);
@@ -846,22 +963,22 @@ function shortestPath(a,b){
  const out=[];let x=b;while(x!==null){out.push(x);x=prev.get(x)}return out.reverse()
 }
 
-function pairMetrics(){const p=[...activePointers.values()].slice(0,2);if(p.length<2)return null;const a=p[0],b=p[1];return{d:Math.max(1,Math.hypot(b.x-a.x,b.y-a.y)),m:{x:(a.x+b.x)/2,y:(a.y+b.y)/2}}}
+function pairMetrics(){const p=[...activePointers.values()].slice(0,2);if(p.length<2)return null;const a=p[0],b=p[1];return{d:Math.max(1,Math.hypot(b.x-a.x,b.y-a.y)),a:Math.atan2(b.y-a.y,b.x-a.x),m:{x:(a.x+b.x)/2,y:(a.y+b.y)/2}}}
 function pointerDown(e){
  e.preventDefault();try{c.setPointerCapture(e.pointerId)}catch(_){ }
  activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
  if(activePointers.size===1){primaryPointerId=e.pointerId;lastX=e.clientX;lastY=e.clientY;lastMove=0;drag=true;navPointerMode=(e.pointerType==='mouse'&&(e.button===2||e.shiftKey))?'pan':'orbit';verticalRailDrag=(deviceProfile==='desktop'||deviceProfile==='tv')&&verticalRailHit(lastX,lastY);railDrag=!verticalRailDrag&&(deviceProfile==='desktop'||deviceProfile==='tv')&&railHit(lastX,lastY);if(verticalRailDrag)verticalRailSet(lastY);else if(railDrag)railSet(lastY)}
- else{railDrag=false;verticalRailDrag=false;suppressTap=true;const pm=pairMetrics();if(pm){pinchLastDist=pm.d;pinchLastMid=pm.m}}
+ else{railDrag=false;verticalRailDrag=false;suppressTap=true;const pm=pairMetrics();if(pm){pinchLastDist=pm.d;pinchLastAngle=pm.a;pinchLastMid=pm.m}}
 }
 function pointerMove(e){
  if(!activePointers.has(e.pointerId))return;e.preventDefault();activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- if(activePointers.size>=2){const pm=pairMetrics();if(!pm)return;if(pinchLastDist>0){zoom(cameraGoal.dist*(pinchLastDist/pm.d));panCamera(pm.m.x-pinchLastMid.x,pm.m.y-pinchLastMid.y)}pinchLastDist=pm.d;pinchLastMid=pm.m;lastMove+=4;return}
+ if(activePointers.size>=2){const pm=pairMetrics();if(!pm)return;if(pinchLastDist>0){zoom(cameraGoal.dist*(pinchLastDist/pm.d));panCamera(pm.m.x-pinchLastMid.x,pm.m.y-pinchLastMid.y)}if(Number.isFinite(pinchLastAngle)){let da=(pm.a-pinchLastAngle+Math.PI*3)%(Math.PI*2)-Math.PI;cameraGoal.roll+=da}pinchLastDist=pm.d;pinchLastAngle=pm.a;pinchLastMid=pm.m;lastMove+=4;return}
  if(e.pointerId!==primaryPointerId)return;const x=e.clientX,y=e.clientY,dx=x-lastX,dy=y-lastY;lastMove+=Math.abs(dx)+Math.abs(dy);if(verticalRailDrag)verticalRailSet(y);else if(railDrag)railSet(y);else if(navPointerMode==='pan')panCamera(dx,dy);else{cameraGoal.yaw+=dx*.005;cameraGoal.pitch=clamp(cameraGoal.pitch+dy*.004,-1.25,1.25)}lastX=x;lastY=y
 }
 function pointerUp(e){
  if(!activePointers.has(e.pointerId))return;e.preventDefault();const x=e.clientX,y=e.clientY;activePointers.delete(e.pointerId);try{c.releasePointerCapture(e.pointerId)}catch(_){ }
  if(activePointers.size){const [id,p]=[...activePointers.entries()][0];primaryPointerId=id;lastX=p.x;lastY=p.y;lastMove=Math.max(lastMove,30);const pm=pairMetrics();if(pm){pinchLastDist=pm.d;pinchLastMid=pm.m}return}
- drag=false;primaryPointerId=null;pinchLastDist=0;
+ drag=false;primaryPointerId=null;pinchLastDist=0;pinchLastAngle=null;
  if(verticalRailDrag){verticalRailDrag=false;suppressTap=false;persistView();return}if(railDrag){railDrag=false;suppressTap=false;persistView();return}
  if(suppressTap){suppressTap=false;persistView();return}if(lastMove>12){persistView();return}
  const dbl=isDoubleTap(x,y);
@@ -883,21 +1000,21 @@ function pointerUp(e){
  if(dbl){home();showToast('view reset');return}
  hideSelected();shiftViewToward(x,y);persistView()
 }
-c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',e=>{activePointers.delete(e.pointerId);if(!activePointers.size){drag=false;railDrag=false;verticalRailDrag=false;suppressTap=false;primaryPointerId=null;pinchLastDist=0}});
+c.addEventListener('pointerdown',pointerDown);c.addEventListener('pointermove',pointerMove);c.addEventListener('pointerup',pointerUp);c.addEventListener('pointercancel',e=>{activePointers.delete(e.pointerId);if(!activePointers.size){drag=false;railDrag=false;verticalRailDrag=false;suppressTap=false;primaryPointerId=null;pinchLastDist=0;pinchLastAngle=null}});
 c.addEventListener('contextmenu',e=>e.preventDefault());
 c.addEventListener('wheel',e=>{zoom(cameraGoal.dist*Math.exp(e.deltaY*.00135));persistView();e.preventDefault()},{passive:false});
 
 function snapshotView(){
  const sym=i=>Number.isInteger(i)&&DATA?.symbols?.[i]?DATA.symbols[i]:null;
- return {ui:{...ui},focus,sectorFocus,sectorReturnView:sectorReturnView?{...sectorReturnView,target:{...sectorReturnView.target}}:null,target:{...cameraGoal.target},dist:cameraGoal.dist,yaw:cameraGoal.yaw,pitch:cameraGoal.pitch,verticalOffset:cameraGoal.verticalOffset,selectedSymbol:selected?sym(selected.si):null,
+ return {ui:{...ui},focus,sectorFocus,sectorReturnView:sectorReturnView?{...sectorReturnView,target:{...sectorReturnView.target}}:null,target:{...cameraGoal.target},dist:cameraGoal.dist,yaw:cameraGoal.yaw,pitch:cameraGoal.pitch,roll:cameraGoal.roll,verticalOffset:cameraGoal.verticalOffset,presetFilters:{...presetFilters},selectedSymbol:selected?sym(selected.si):null,
          isolatedSymbol:sym(isolated),wormSymbols:[...wormPath].map(sym).filter(Boolean)}
 }
 function persistView(){try{sessionStorage.setItem(VIEW_STATE_KEY,JSON.stringify(snapshotView()))}catch(e){}}
 function restoreView(){
  try{
    const v=JSON.parse(sessionStorage.getItem(VIEW_STATE_KEY)||'null');if(!v)return;
-   if(v.ui)ui={...ui,...v.ui};if(v.focus)focus=v.focus;if(Number.isInteger(v.sectorFocus)&&sectorInfo(v.sectorFocus))sectorFocus=v.sectorFocus;if(v.sectorReturnView?.target)sectorReturnView={...v.sectorReturnView,target:{...v.sectorReturnView.target}};if(v.target)target={...target,...v.target};
-   if(Number.isFinite(v.dist))dist=v.dist;if(Number.isFinite(v.yaw))yaw=v.yaw;if(Number.isFinite(v.pitch))pitch=v.pitch;if(Number.isFinite(v.verticalOffset))verticalOffset=clamp(v.verticalOffset,VERTICAL_MIN,VERTICAL_MAX);cameraGoalTo({target,dist,yaw,pitch,verticalOffset},true);
+   if(v.ui)ui={...ui,...v.ui};if(v.presetFilters)Object.assign(presetFilters,v.presetFilters);if(v.focus)focus=v.focus;if(Number.isInteger(v.sectorFocus)&&sectorInfo(v.sectorFocus))sectorFocus=v.sectorFocus;if(v.sectorReturnView?.target)sectorReturnView={...v.sectorReturnView,target:{...v.sectorReturnView.target}};if(v.target)target={...target,...v.target};
+   if(Number.isFinite(v.dist))dist=v.dist;if(Number.isFinite(v.yaw))yaw=v.yaw;if(Number.isFinite(v.pitch))pitch=v.pitch;if(Number.isFinite(v.roll))roll=v.roll;if(Number.isFinite(v.verticalOffset))verticalOffset=clamp(v.verticalOffset,VERTICAL_MIN,VERTICAL_MAX);cameraGoalTo({target,dist,yaw,pitch,roll,verticalOffset},true);
    const ix=new Map((DATA?.symbols||[]).map((s,i)=>[s,i]));
    if(v.selectedSymbol&&ix.has(v.selectedSymbol)){const si=ix.get(v.selectedSymbol);selected={si,u:focus?uobj(focus):fusionDominantUniverse(si)}}
    if(v.isolatedSymbol&&ix.has(v.isolatedSymbol))isolated=ix.get(v.isolatedSymbol);
@@ -935,19 +1052,24 @@ function syncModeButtons(){for(const [id,val] of [['old',0],['new',1],['both',2]
 for(const [id,val] of [['old',0],['new',1],['both',2]])document.getElementById(id).onclick=()=>{mode=val;syncModeButtons();showToast(val===0?'HISTORICAL evidence':val===1?'ROLLING evidence':'HISTORICAL + ROLLING')};
 document.getElementById('home').onclick=home;document.getElementById('back').onclick=backView;
 const movePad=document.getElementById('movePad'),moveKnob=document.getElementById('moveKnob');
-function movePadSet(e){const r=movePad.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,max=r.width*.31,mag=Math.hypot(dx,dy)||1,k=Math.min(1,max/mag),px=dx*k,py=dy*k;moveKnob.style.transform=`translate(${px}px,${py}px)`;moveDrive.x=clamp(px/max,-1,1);moveDrive.y=clamp(py/max,-1,1)}
+function movePadSet(e){const r=movePad.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,max=r.width*.31,mag=Math.hypot(dx,dy)||1,k=Math.min(1,max/mag),px=dx*k,py=dy*k;moveKnob.style.transform=`translate(${px}px,${py}px)`;moveDrive.x=clamp(px/max,-1,1);moveDrive.y=clamp(-py/max,-1,1)}
 movePad.addEventListener('pointerdown',e=>{e.preventDefault();movePadPointer=e.pointerId;try{movePad.setPointerCapture(e.pointerId)}catch(_){}movePadSet(e)});movePad.addEventListener('pointermove',e=>{if(e.pointerId===movePadPointer){e.preventDefault();movePadSet(e)}});function releaseMove(e){if(movePadPointer===null||e.pointerId!==movePadPointer)return;movePadPointer=null;moveDrive.x=moveDrive.y=0;moveKnob.style.transform='translate(0,0)';persistView()}movePad.addEventListener('pointerup',releaseMove);movePad.addEventListener('pointercancel',releaseMove);
 function bindZoomHold(id,dir){const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();zoomDrive=dir;try{b.setPointerCapture(e.pointerId)}catch(_){}});const stop=()=>{zoomDrive=0;persistView()};b.addEventListener('pointerup',stop);b.addEventListener('pointercancel',stop);b.addEventListener('pointerleave',e=>{if(e.buttons===0)stop()})}
 bindZoomHold('zoomIn',-1);bindZoomHold('zoomOut',1);
+function bindHoldValue(id,setter,on,off=0){const b=document.getElementById(id);if(!b)return;b.addEventListener('pointerdown',e=>{e.preventDefault();setter(on);try{b.setPointerCapture(e.pointerId)}catch(_){}});const stop=()=>{setter(off);persistView()};b.addEventListener('pointerup',stop);b.addEventListener('pointercancel',stop);b.addEventListener('pointerleave',e=>{if(e.buttons===0)stop()})}
+bindHoldValue('liftUp',v=>liftDrive=v,1);bindHoldValue('liftDown',v=>liftDrive=v,-1);bindHoldValue('rollLeft',v=>rollDrive=v,-1);bindHoldValue('rollRight',v=>rollDrive=v,1);
 function centerPick(){const x=W/2,y=H/2;const sec=hitSector(x,y);if(sec){enterSector(sec.k);return}let n=hitNode(x,y);if(n){showSelected(n);return}const p=hitPattern(x,y);if(p){setFocus('direction');return}const s=hitSphere(x,y);if(s){setFocus(s.u.id);return}showToast('nothing at center')}
-addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))return;const k=e.key.toLowerCase(),step=Math.max(10,cameraGoal.dist*.08);if(k==='escape'||k==='backspace'){backView();e.preventDefault();return}if(k==='home'){home();e.preventDefault();return}if(k==='enter'){centerPick();e.preventDefault();return}if(k==='+'||k==='='){zoom(cameraGoal.dist*.86);persistView();e.preventDefault();return}if(k==='-'||k==='_'){zoom(cameraGoal.dist*1.16);persistView();e.preventDefault();return}if(k==='w'){panCamera(0,-step);e.preventDefault()}else if(k==='s'){panCamera(0,step);e.preventDefault()}else if(k==='a'){panCamera(-step,0);e.preventDefault()}else if(k==='d'){panCamera(step,0);e.preventDefault()}else if(k==='arrowleft'){cameraGoal.yaw-=.11;e.preventDefault()}else if(k==='arrowright'){cameraGoal.yaw+=.11;e.preventDefault()}else if(k==='arrowup'){cameraGoal.pitch=clamp(cameraGoal.pitch-.085,-1.25,1.25);e.preventDefault()}else if(k==='arrowdown'){cameraGoal.pitch=clamp(cameraGoal.pitch+.085,-1.25,1.25);e.preventDefault()}});
+addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))return;const k=e.key.toLowerCase(),step=Math.max(1.2,cameraGoal.dist*.08);if(k==='escape'||k==='backspace'){backView();e.preventDefault();return}if(k==='home'){home();e.preventDefault();return}if(k==='enter'){centerPick();e.preventDefault();return}if(k==='+'||k==='='){zoom(cameraGoal.dist*.72);persistView();e.preventDefault();return}if(k==='-'||k==='_'){zoom(cameraGoal.dist*1.38);persistView();e.preventDefault();return}
+ const cp=Math.cos(cameraGoal.pitch),sp=Math.sin(cameraGoal.pitch),sy=Math.sin(cameraGoal.yaw),cy=Math.cos(cameraGoal.yaw),fx=sy*cp,fy=-sp,fz=cy*cp,rx=cy,rz=-sy;
+ if(k==='w'){cameraGoal.target.x+=fx*step;cameraGoal.target.y+=fy*step;cameraGoal.target.z+=fz*step;e.preventDefault()}else if(k==='s'){cameraGoal.target.x-=fx*step;cameraGoal.target.y-=fy*step;cameraGoal.target.z-=fz*step;e.preventDefault()}else if(k==='a'){cameraGoal.target.x-=rx*step;cameraGoal.target.z-=rz*step;e.preventDefault()}else if(k==='d'){cameraGoal.target.x+=rx*step;cameraGoal.target.z+=rz*step;e.preventDefault()}else if(k==='q'){cameraGoal.target.y+=step;e.preventDefault()}else if(k==='e'){cameraGoal.target.y-=step;e.preventDefault()}else if(k==='z'){cameraGoal.roll-=.12;e.preventDefault()}else if(k==='x'){cameraGoal.roll+=.12;e.preventDefault()}else if(k==='arrowleft'){cameraGoal.yaw-=.11;e.preventDefault()}else if(k==='arrowright'){cameraGoal.yaw+=.11;e.preventDefault()}else if(k==='arrowup'){cameraGoal.pitch=clamp(cameraGoal.pitch-.085,-1.52,1.52);e.preventDefault()}else if(k==='arrowdown'){cameraGoal.pitch=clamp(cameraGoal.pitch+.085,-1.52,1.52);e.preventDefault()}});
+
 const gestureHelp=document.getElementById('gestureHelp');function setGestureHelp(on){gestureHelp.classList.toggle('show',!!on);try{if(!on)localStorage.setItem('argus-nav-help-seen','1')}catch(_){}}
 document.getElementById('helpToggle').onclick=()=>setGestureHelp(!gestureHelp.classList.contains('show'));document.getElementById('gestureClose').onclick=()=>setGestureHelp(false);
 setTimeout(()=>{try{if(!localStorage.getItem('argus-nav-help-seen'))setGestureHelp(true)}catch(_){setGestureHelp(true)}},550);setTimeout(()=>{if(gestureHelp.classList.contains('show'))setGestureHelp(false)},6500);
 
 function searchMatches(q){q=String(q||'').trim().toUpperCase();if(!q)return[];const all=(DATA?.symbols||[]).map((s,i)=>({s,i,score:s.toUpperCase()===q?0:s.toUpperCase().startsWith(q)?1:s.toUpperCase().includes(q)?2:9})).filter(x=>x.score<9);all.sort((a,b)=>a.score-b.score||a.s.length-b.s.length||a.s.localeCompare(b.s));return all.slice(0,12)}
 function renderSearchResults(){const q=document.getElementById('securitySearch').value,box=document.getElementById('searchResults'),m=searchMatches(q);box.innerHTML='';for(const x of m){const b=document.createElement('button');b.type='button';b.className='searchResult';const sec=sectorLabel(x.i),qm=qmeta(x.i),fw=fireWindow(),fd=fireDays(x.i);b.innerHTML=`<div class="searchSym">${x.s}${isHot(x.i)?' ✦':''}</div><div class="searchMeta">${sec?sec+' · ':''}${qm?qm.direction+' · '+qm.horizon+'m · ':''}${fw?fd+'/'+fw+' fire days':'frequency pending'}</div>`;b.onclick=()=>revealSecurity(x.i);box.appendChild(b)}if(q&&!m.length){box.innerHTML='<div class="searchMeta" style="padding:8px">No matching observed security.</div>'}}
-function revealSecurity(si){document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.remove('open');familyKey=null;isolated=null;wormPath.clear();sectorFocus=null;sectorReturnView=null;ui.show='all';ui.cutoff=0;ui.layout='fusion';focus=null;const u=fusionDominantUniverse(si),d=fusionDesired(si);cameraGoalTo({target:{x:d.x,y:d.y,z:d.z},dist:18,yaw:-.18,pitch:-.08,verticalOffset:0});selected={si,u};selectedNeighbors=neighborsOf(si);showSelected(selected);syncUniverseButtons();renderDrawer();persistView();showToast(`${DATA.symbols[si]} located in FUSION`)}
+function revealSecurity(si){document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.remove('open');familyKey=null;isolated=null;wormPath.clear();sectorFocus=null;sectorReturnView=null;ui.show='all';ui.cutoff=0;ui.layout='fusion';focus=null;const u=fusionDominantUniverse(si),d=fusionDesired(si);cameraGoalTo({target:{x:d.x,y:d.y,z:d.z},dist:8,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});selected={si,u};selectedNeighbors=neighborsOf(si);showSelected(selected);syncUniverseButtons();renderDrawer();persistView();showToast(`${DATA.symbols[si]} located in FUSION`)}
 const searchPanel=document.getElementById('searchPanel'),searchInput=document.getElementById('securitySearch');
 document.getElementById('searchToggle').onclick=()=>{const open=!searchPanel.classList.contains('open');document.getElementById('drawer').classList.remove('open');searchPanel.classList.toggle('open',open);if(open){searchInput.value='';renderSearchResults();setTimeout(()=>searchInput.focus(),30)}};
 searchInput.addEventListener('input',renderSearchResults);searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){const m=searchMatches(searchInput.value);if(m[0])revealSecurity(m[0].i)}if(e.key==='Escape')searchPanel.classList.remove('open')});
@@ -957,11 +1079,11 @@ document.getElementById('fullToggle').onclick=toggleFullscreen;document.addEvent
 function syncUniverseButtons(){document.querySelectorAll('.ub').forEach(b=>b.classList.toggle('on',b.dataset.id==='__fusion__'?ui.layout==='fusion':(ui.layout==='universes'&&b.dataset.id===focus)))}
 function initUI(){
  const bar=document.getElementById('universes');bar.innerHTML='';const all=document.createElement('button');all.className='ub';all.dataset.id='__fusion__';all.textContent='FUSION';all.onclick=()=>setLayout(ui.layout==='fusion'?'universes':'fusion');bar.appendChild(all);for(const u of DATA.universes||[]){const b=document.createElement('button');b.className='ub';b.dataset.id=u.id;b.textContent=SHORT[u.id]||u.label.toUpperCase();b.onclick=()=>focus===u.id&&ui.layout==='universes'?home():setFocus(u.id);bar.appendChild(b)}
- renderDrawer();syncUniverseButtons();syncModeButtons();updateStats()
+ renderDrawer();syncUniverseButtons();syncModeButtons();bindPresetFilters();syncPresetFilters();updateStats()
 }
 function serviceHealth(){const h=DATA?.service_health||{},stamp=Date.parse(h.generated_at_utc||'');const age=Number.isFinite(stamp)?Math.max(0,(Date.now()-stamp)/1000):Infinity;let status=String(h.overall_status||'UNKNOWN').toUpperCase();if(age>900)status='STALE';return {status,age}}
-function updateStats(){const n=DATA?.counts||{},sh=serviceHealth(),sec=sectorFocus!==null?sectorInfo(sectorFocus):null,sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} frozen · ${n.universe_intake_prospective_confirmed||0} prospect-confirmed`:'';document.getElementById('title').textContent=`ARGUS OBSERVATORY · ${sh.status}${sec?' · '+sec.label.toUpperCase():''}`;document.getElementById('stats').textContent=`${sec?sec.count+' '+sec.label+' sector · ':''}${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
-function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.intake_meta=d.intake_meta||{};d.universe_intake=d.universe_intake||{};d.service_health=d.service_health||{};d.qualified_indices=d.qualified_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];d.fire_days_60=d.fire_days_60||[];d.fire_window_days=finite(d.fire_window_days,0);return d}
+function updateStats(){const n=DATA?.counts||{},sh=serviceHealth(),sec=sectorFocus!==null?sectorInfo(sectorFocus):null,sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} frozen · ${n.universe_intake_prospective_confirmed||0} prospect-confirmed`:'';document.getElementById('title').textContent=`ARGUS OBSERVATORY · ${sh.status}${sec?' · '+sec.label.toUpperCase():''}`;document.getElementById('stats').textContent=`${visibleEvidenceCount()} shown · ${sec?sec.count+' '+sec.label+' sector · ':''}${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.risk_positive_symbols??DATA?.risk_positive_indices?.length??0} asymmetric · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
+function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.intake_meta=d.intake_meta||{};d.paper_meta=d.paper_meta||{};d.latest_prices=d.latest_prices||[];d.latest_price_times=d.latest_price_times||[];d.latest_price_sources=d.latest_price_sources||[];d.market_caps=d.market_caps||[];d.universe_intake=d.universe_intake||{};d.service_health=d.service_health||{};d.qualified_indices=d.qualified_indices||[];d.risk_positive_indices=d.risk_positive_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];d.fire_days_60=d.fire_days_60||[];d.fire_window_days=finite(d.fire_window_days,0);return d}
 async function fetchData(){
  const paths=['argus-v478-latest.json','argus-latest-compact.json'];let last=null;
  for(const p of paths){try{const r=await fetch(p+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);const d=normalizeOld(await r.json());return d}catch(e){last=e}}
@@ -973,7 +1095,7 @@ async function loadData(first=false){
    const symbolLayoutChanged=!!DATA&&(DATA.symbols?.length!==d.symbols?.length||DATA.symbols?.[0]!==d.symbols?.[0]||DATA.symbols?.[DATA.symbols.length-1]!==d.symbols?.[d.symbols.length-1]);
    if(DATA&&fp!==lastFeedFingerprint)PREV=DATA;
    if(symbolLayoutChanged)fusionState.clear();
-   DATA=d;lastFeedFingerprint=fp;QSET=new Set(d.qualified_indices||[]);HSET=new Set(d.hot_indices||[]);PSET=new Set(d.prospective_indices||[]);CSET=new Set(d.conflict_indices||[]);if(sectorFocus!==null&&!sectorInfo(sectorFocus))sectorFocus=null;lastLoad=Date.now();loadError=false;
+   DATA=d;lastFeedFingerprint=fp;QSET=new Set(d.qualified_indices||[]);RSET=new Set(d.risk_positive_indices||[]);HSET=new Set(d.hot_indices||[]);PSET=new Set(d.prospective_indices||[]);CSET=new Set(d.conflict_indices||[]);if(sectorFocus!==null&&!sectorInfo(sectorFocus))sectorFocus=null;lastLoad=Date.now();loadError=false;
    if(first){initUI();restoreView();syncUniverseButtons();renderDrawer();if(selected){showSelected(selected)}updateStats()}
    else{
      if(before){
