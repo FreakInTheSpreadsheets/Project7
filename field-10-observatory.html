@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V9_3 | expanded evidence universes: magnitude + frequency + immediacy + generalization | alternate display grammars: graph + glyphs + waves | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V9_4 | ARGUS_OBSERVATORY_V9_3 | continuous rolling universe intake + expanded evidence universes: magnitude + frequency + immediacy + generalization | alternate display grammars: graph + glyphs + waves | vertical camera rail + semantic LOD + neuron pulses + opportunity gravity + 60-day fire gauge + security search + fullscreen | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -114,11 +114,12 @@ let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusio
 let realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};
 const FUSION_R=27,FUSION_MAX_MOBILE=3200,FUSION_MAX_DESKTOP=5200;
 const REALITY_MAX_MOBILE=4600,REALITY_MAX_DESKTOP=9000,REALITY_MIN_STEP_MS=34;
-const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v9-3';
+const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v9-4';
 let lastFeedFingerprint='';
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
 function qmeta(si){return DATA?.qualified_meta?.[String(si)]||null}
+function imeta(si){return DATA?.intake_meta?.[String(si)]||null}
 function isQualified(si){return QSET.has(si)||!!qmeta(si)}
 function isHot(si){return HSET.has(si)}
 function isProspective(si){return PSET.has(si)}
@@ -156,7 +157,7 @@ function nodeVisible(si){
  if(ui.show==='conflict'&&!isConflict(si))return false;
  const qm=qmeta(si);
  if(familyKey && (!qm || `${qm.family}|${qm.signature}|${qm.direction}|${qm.horizon}`!==familyKey))return false;
- const dirAcc=qm?finite(qm.dir):metric(si,2);
+ const im=imeta(si),dirAcc=qm?finite(qm.dir):(im?finite(im.rolling_directional_accuracy):metric(si,2));
  if(ui.cutoff>0 && dirAcc<ui.cutoff)return false;
  return true
 }
@@ -735,15 +736,15 @@ function hitSphere(x,y){let best=null,bd=1e9;for(const h of sphereHits){const d=
 function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(showToast.t);showToast.t=setTimeout(()=>el.classList.remove('show'),1400)}
 function shiftViewToward(x,y){const nx=(x/W)-.5,ny=(y/H)-.5;yaw+=nx*1.15;pitch=clamp(pitch+ny*.9,-1.25,1.25)}
 function isDoubleTap(x,y){const now=performance.now();const yes=(now-lastTapAt<320&&Math.hypot(x-lastTapX,y-lastTapY)<22);lastTapAt=now;lastTapX=x;lastTapY=y;return yes}
-function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isHot(h.si)?'  ✦':'');const pre=sec?sec+' · ':'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}`:`${pre}observed · not historically qualified`;
+function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),im=imeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isHot(h.si)?'  ✦':'');const pre=sec?sec+' · ':'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}`:(im&&finite(im.scan_count)>0?`${pre}rolling ${im.rolling_grade||'observed'} · net ${finite(im.rolling_best_net_pct).toFixed(2)}% · dir ${(finite(im.rolling_directional_accuracy)*100).toFixed(1)}% · candidate only`:`${pre}catalogued · waiting for rolling scan`);
  const fv=document.getElementById('fireValue');fv.textContent=fw?`${fd} / ${fw} · ${Math.round(fr*100)}%`:'waiting for day history';document.getElementById('fireFill').style.width=(fr*100).toFixed(1)+'%';
- const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
- const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
- const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
+ const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${im&&finite(im.scan_count)>0?'on':''}">R ROLLING</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
+ const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}if(im){ctx.push(`ROLL ${im.rolling_grade||'—'}`);ctx.push(`SCANS ${finite(im.scan_count)}`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
+ const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);else if(im&&finite(im.scan_count)>0)line.push('rolling grade is observational candidate evidence only');if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
  document.getElementById('sel').classList.add('show');buildSelectedButtons()}
 function hideSelected(){document.getElementById('sel').classList.remove('show')}
 function buildSelectedButtons(){const box=document.getElementById('selBtns');box.innerHTML='';if(!selected)return;const add=(name,fn,on=false)=>{const b=document.createElement('button');b.className='chip'+(on?' on':'');b.textContent=name;b.onclick=fn;box.appendChild(b)};
- add('WHY?',()=>{const q=qmeta(selected.si);showToast(q?`qualified: ${q.count} pattern${q.count===1?'':'s'} · grade ${q.grade.toFixed(1)}`:'no qualified pattern yet')});
+ add('WHY?',()=>{const q=qmeta(selected.si),im=imeta(selected.si);showToast(q?`historical qualified: ${q.count} pattern${q.count===1?'':'s'} · grade ${q.grade.toFixed(1)}`:(im&&finite(im.scan_count)>0?`rolling ${im.rolling_grade||'candidate'} · ${im.rolling_qualified_patterns||0} rolling qualified pattern${im.rolling_qualified_patterns===1?'':'s'} · no historical authority`:'catalogued · rolling scan pending'))});
  add('LINKS',()=>{ui.edgeMode='qualified';renderDrawer();showToast('qualified links')},ui.edgeMode==='qualified');
  add('ECON',()=>{ui.color='economics';ui.size='expectancy';renderDrawer();showToast('economics remap')});
  add('ISOLATE',()=>{isolated=isolated===selected.si?null:selected.si;wormPath=isolated!==null?neighborsOf(selected.si):new Set();if(isolated!==null)wormPath.add(selected.si);buildSelectedButtons()},isolated===selected.si);
@@ -797,7 +798,7 @@ function restoreView(){
  }catch(e){}
 }
 function feedFingerprint(d){
- const n=d?.counts||{};return [d?.checkpoint_batch_id||'',n.qualified_patterns||0,n.prospective_watchlist||0,n.prospective_signals||0,n.open_paper_positions||0,n.closed_paper_trades||0,d?.snapshot||''].join('|')
+ const n=d?.counts||{};return [d?.checkpoint_batch_id||'',n.qualified_patterns||0,n.prospective_watchlist||0,n.prospective_signals||0,n.open_paper_positions||0,n.closed_paper_trades||0,d?.market_context_hash||'',d?.universe_intake_hash||'',n.universe_catalog_symbols||0,n.universe_intake_scanned||0,d?.snapshot||''].join('|')
 }
 function chips(title,key,items){return `<div class="sec"><div class="label">${title}</div><div class="row">${items.map(([v,t])=>`<button class="chip ${ui[key]===v?'on':''}" data-key="${key}" data-val="${v}">${t}</button>`).join('')}</div></div>`}
 function renderDrawer(){
@@ -840,8 +841,8 @@ function initUI(){
  const bar=document.getElementById('universes');bar.innerHTML='';const all=document.createElement('button');all.className='ub';all.dataset.id='__fusion__';all.textContent='FUSION';all.onclick=()=>setLayout(ui.layout==='fusion'?'universes':'fusion');bar.appendChild(all);for(const u of DATA.universes||[]){const b=document.createElement('button');b.className='ub';b.dataset.id=u.id;b.textContent=SHORT[u.id]||u.label.toUpperCase();b.onclick=()=>focus===u.id&&ui.layout==='universes'?home():setFocus(u.id);bar.appendChild(b)}
  renderDrawer();syncUniverseButtons();updateStats()
 }
-function updateStats(){const n=DATA?.counts||{},sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'';document.getElementById('stats').textContent=`${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} qualified · ${n.qualified_symbols??0} symbols · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
-function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.qualified_indices=d.qualified_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];d.fire_days_60=d.fire_days_60||[];d.fire_window_days=finite(d.fire_window_days,0);return d}
+function updateStats(){const n=DATA?.counts||{},sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} rolling-qualified`:'';document.getElementById('stats').textContent=`${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
+function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.intake_meta=d.intake_meta||{};d.universe_intake=d.universe_intake||{};d.qualified_indices=d.qualified_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];d.fire_days_60=d.fire_days_60||[];d.fire_window_days=finite(d.fire_window_days,0);return d}
 async function fetchData(){
  const paths=['argus-v478-latest.json','argus-latest-compact.json'];let last=null;
  for(const p of paths){try{const r=await fetch(p+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);const d=normalizeOld(await r.json());return d}catch(e){last=e}}
