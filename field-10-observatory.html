@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_V11_0 | ARGUS_OBSERVATORY_V10_0 | ARGUS_OBSERVATORY_V9_9 | ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_V12_NAV_HELP | ARGUS_OBSERVATORY_V12_XBOX_HUD_SHAPES | ARGUS_OBSERVATORY_V11_0 | ARGUS_OBSERVATORY_V10_0 | ARGUS_OBSERVATORY_V9_9 | ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -135,6 +135,51 @@ body[data-device='tv'] .ub{padding:10px 14px;font-size:12px;min-height:44px}
 body[data-device='tv'] #bottom{bottom:16px;padding:7px;gap:7px}body[data-device='tv'] .bmode{height:58px;min-width:74px;font-size:12px}
 body[data-device='tv'] #sel{bottom:158px;width:min(760px,72vw);padding:14px 16px}body[data-device='tv'] #selName{font-size:20px}body[data-device='tv'] #selMeta{font-size:13px}
 @media (max-height:540px) and (orientation:landscape){body[data-device='phone'] #movePad{width:86px;height:86px;bottom:66px}body[data-device='phone'] #zoomPad{bottom:66px;grid-template-rows:40px 14px 40px}body[data-device='phone'] #zoomPad button{height:40px;width:46px}body[data-device='phone'] #universes{bottom:55px}body[data-device='phone'] #sel{bottom:104px;max-height:52dvh}}
+
+/* V12 Xbox-inspired HUD draft: data targeting first, visual systems second. */
+#drawer{width:min(410px,calc(100vw - 20px));padding:0;border:1px solid rgba(125,225,255,.16);background:linear-gradient(180deg,rgba(5,12,20,.94),rgba(2,6,11,.90));box-shadow:0 20px 70px rgba(0,0,0,.48),inset 0 0 0 1px rgba(255,255,255,.018)}
+.commandHud{gap:8px!important;padding:5px!important;border-radius:18px!important;overflow:visible!important}
+.hudBumper{height:36px;border-radius:11px;border:1px solid rgba(136,230,255,.17);background:rgba(8,18,29,.84);color:#e9fbff;font:900 9px -apple-system,sans-serif;letter-spacing:.08em;padding:0 11px;display:flex;align-items:center;gap:7px;white-space:nowrap}.hudBumper span{display:grid;place-items:center;min-width:22px;height:22px;border-radius:7px;background:rgba(155,235,255,.09);border:1px solid rgba(155,235,255,.16);font-size:8px;color:rgba(220,248,255,.72)}
+.hudReadout{min-width:0;display:flex;align-items:center;gap:8px;padding:0 5px}.hudReadout span{font:950 9px -apple-system,sans-serif;color:#eaffff;white-space:nowrap}.hudReadout strong{max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:800 8px -apple-system,sans-serif;letter-spacing:.055em;color:rgba(178,225,240,.45)}
+.hudTabs{position:sticky;top:0;z-index:3;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;padding:9px;background:rgba(3,9,15,.96);border-bottom:1px solid rgba(155,230,255,.10);backdrop-filter:blur(18px)}
+.hudTab{min-height:46px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);color:rgba(220,240,247,.48);font:900 9px -apple-system,sans-serif;letter-spacing:.075em;display:flex;justify-content:center;align-items:center;gap:7px}.hudTab span{font-size:7px;padding:4px 5px;border-radius:5px;border:1px solid rgba(255,255,255,.08);color:rgba(215,240,248,.35)}.hudTab.on{color:#fff;border-color:rgba(105,226,255,.38);background:linear-gradient(180deg,rgba(73,196,229,.15),rgba(37,103,129,.10));box-shadow:inset 0 -2px 0 rgba(105,226,255,.45),0 0 20px rgba(70,210,255,.06)}
+.hudPane{padding:0 9px 10px}.hudPaneTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 7px 8px}.hudPaneTitle span{font:950 11px -apple-system,sans-serif;letter-spacing:.12em;color:#effcff}.hudPaneTitle b{font:850 8px -apple-system,sans-serif;letter-spacing:.09em;color:rgba(140,226,255,.44);white-space:nowrap}
+.hudGroup{padding:10px 5px 12px}.hudTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.qualityTiles{grid-template-columns:repeat(3,minmax(0,1fr))}.hudTile{min-height:44px;border-radius:11px!important;padding:7px!important;font-size:9px!important;display:grid;place-items:center}.hudTile.on{box-shadow:inset 0 -2px 0 rgba(99,225,255,.48),0 0 16px rgba(80,215,255,.08)!important}
+.hudSliders{display:grid;gap:13px}.hudSlider{padding:7px 8px 9px;border-radius:12px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.018)}.hudSliderTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.hudSliderTop span{font:850 8px -apple-system,sans-serif;letter-spacing:.09em;color:rgba(206,234,243,.46)}.hudSliderTop strong{font:950 12px -apple-system,sans-serif;color:#effcff;font-variant-numeric:tabular-nums}.hudSlider input[type=range]{width:100%;height:28px;accent-color:#78ddf5}
+.hudActions{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:11px 5px}.hudActions .hudAction:only-child{grid-column:1/-1}.hudAction{min-height:46px;border-radius:12px;border:1px solid rgba(130,225,255,.14);background:rgba(72,190,225,.055);color:rgba(232,250,255,.76);font:900 9px -apple-system,sans-serif;letter-spacing:.07em}
+@media(max-width:700px){#filterBar{left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:min(calc(100vw - 18px),520px);max-width:none!important}.hudReadout strong{display:none}.hudBumper{padding:0 8px}.qualityTiles{grid-template-columns:repeat(2,minmax(0,1fr))}body[data-device='phone'] #drawer{padding:0;max-height:min(78dvh,650px)}}
+.chartTiles{grid-template-columns:repeat(2,minmax(0,1fr))}.chartTile{position:relative;min-height:54px!important;align-content:center;line-height:1.15}.chartTile small{display:block;margin-top:4px;font:750 7px -apple-system,sans-serif;letter-spacing:.04em;color:rgba(190,225,238,.38)}.chartTile.on small{color:rgba(215,244,251,.62)}
+#chartBadge{position:fixed;left:50%;top:max(104px,calc(env(safe-area-inset-top) + 104px));transform:translateX(-50%);z-index:5;pointer-events:none;padding:5px 9px;border-radius:999px;border:1px solid rgba(125,225,255,.10);background:rgba(3,9,15,.42);backdrop-filter:blur(10px);font:900 8px -apple-system,sans-serif;letter-spacing:.10em;color:rgba(220,246,255,.52);opacity:0;transition:.18s}#chartBadge.show{opacity:1}
+body[data-device='phone'] #chartBadge{top:max(102px,calc(env(safe-area-inset-top) + 102px));font-size:7px;max-width:70vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+
+
+/* V12 navigation legend / help screen */
+#navHelpScreen{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));background:radial-gradient(circle at 50% 20%,rgba(24,73,96,.32),rgba(0,4,8,.86) 62%,rgba(0,2,5,.94));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;pointer-events:none;transition:opacity .18s ease}
+#navHelpScreen.open{opacity:1;pointer-events:auto}
+.navHelpShell{width:min(980px,100%);max-height:min(88dvh,820px);overflow:auto;border:1px solid rgba(135,225,255,.20);border-radius:24px;background:linear-gradient(180deg,rgba(8,18,28,.96),rgba(3,9,15,.96));box-shadow:0 26px 80px rgba(0,0,0,.55),inset 0 0 50px rgba(90,205,255,.025);color:#eafaff}
+.navHelpHead{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px 14px;background:linear-gradient(180deg,rgba(7,18,28,.99),rgba(7,18,28,.94));border-bottom:1px solid rgba(135,225,255,.12);backdrop-filter:blur(15px)}
+.navHelpKicker{font:900 8px -apple-system,sans-serif;letter-spacing:.18em;color:rgba(139,229,255,.55)}
+.navHelpTitle{margin-top:3px;font:900 18px -apple-system,sans-serif;letter-spacing:.06em;color:#f3fdff}
+#navHelpClose{flex:0 0 auto;width:44px;height:44px;border-radius:13px;border:1px solid rgba(150,230,255,.18);background:rgba(255,255,255,.035);color:#e9fbff;font-size:24px}
+.navHelpBody{padding:15px 18px 20px}
+.navHelpIntro{font:650 11px/1.5 -apple-system,sans-serif;color:rgba(218,240,248,.68);max-width:780px;margin-bottom:14px}
+.navHelpGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.navHelpCard{border:1px solid rgba(150,225,250,.10);border-radius:16px;padding:13px;background:linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.012))}
+.navHelpCard.wide{grid-column:1/-1}
+.navHelpCard h3{margin:0 0 9px;font:900 10px -apple-system,sans-serif;letter-spacing:.13em;color:rgba(151,231,255,.84)}
+.navRows{display:grid;grid-template-columns:minmax(90px,150px) 1fr;gap:6px 11px;align-items:start}
+.navKey{font:900 9px/1.35 -apple-system,sans-serif;letter-spacing:.07em;color:#fff}
+.navDesc{font:600 10px/1.4 -apple-system,sans-serif;color:rgba(216,238,246,.66)}
+.navPill{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:22px;padding:0 7px;margin-right:3px;border-radius:7px;border:1px solid rgba(135,225,255,.16);background:rgba(92,194,230,.07);font:900 8px -apple-system,sans-serif;color:#e9fbff;vertical-align:middle}
+.navFlow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:4px}
+.navFlowStep{padding:9px;border-radius:11px;background:rgba(73,175,215,.055);border:1px solid rgba(130,220,255,.09);font:700 9px/1.35 -apple-system,sans-serif;color:rgba(223,243,250,.72)}
+.navFlowStep b{display:block;margin-bottom:3px;color:#fff;letter-spacing:.08em}
+.navHelpFoot{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(62,176,218,.055);font:650 9px/1.45 -apple-system,sans-serif;color:rgba(213,239,248,.58)}
+body.nav-help-open{overflow:hidden}
+body.nav-help-open #touchNav{opacity:.12;pointer-events:none}
+@media(max-width:700px){#navHelpScreen{padding:8px}.navHelpShell{max-height:94dvh;border-radius:20px}.navHelpHead{padding:13px 14px 11px}.navHelpTitle{font-size:15px}.navHelpBody{padding:12px 13px 16px}.navHelpGrid{grid-template-columns:1fr}.navHelpCard.wide{grid-column:auto}.navRows{grid-template-columns:minmax(86px,116px) 1fr}.navFlow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
@@ -146,19 +191,94 @@ body[data-device='tv'] #sel{bottom:158px;width:min(760px,72vw);padding:14px 16px
 <button id="drawerToggle" aria-label="Open controls">☷</button>
 <div id="searchPanel" class="glass"><input id="securitySearch" type="search" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Search ticker / security"><div id="searchResults"></div></div>
 <div id="drawer" class="glass"></div>
-<div id="filterBar" class="glass" aria-label="Preset evidence filters">
-  <div class="fset"><label>$</label><select id="fPrice" aria-label="Price filter"><option value="any">$ ALL</option><option value="lt5">&lt;$5</option><option value="5_20">$5–20</option><option value="20_100">$20–100</option><option value="gte100">$100+</option></select></div>
-  <div class="fset"><label>CAP</label><select id="fCap" aria-label="Market cap filter"><option value="any">CAP ALL</option><option value="lt300m">&lt;$300M</option><option value="300m_2b">$300M–2B</option><option value="2b_10b">$2–10B</option><option value="gte10b">$10B+</option></select></div>
-  <div class="fset"><label>MOVE</label><select id="fMove" aria-label="Movement filter"><option value="any">MOVE ALL</option><option value="gte05">≥0.5%</option><option value="gte1">≥1%</option><option value="gte2">≥2%</option><option value="gte4">≥4%</option></select></div>
-  <div class="fset"><label>FIRE</label><select id="fFire" aria-label="Signal occurrence filter"><option value="any">FIRE ALL</option><option value="gte1">1+ DAYS</option><option value="gte5">5+ DAYS</option><option value="gte10">10+ DAYS</option><option value="gte20">20+ DAYS</option></select></div>
-  <div class="fset"><label>QUALITY</label><select id="fQuality" aria-label="Signal quality filter"><option value="any">QUALITY ALL</option><option value="qualified">QUALIFIED</option><option value="asymmetric">ASYMMETRIC</option><option value="dir70">DIR ≥70%</option><option value="dir80">DIR ≥80%</option><option value="hot">HOLY SHIT</option></select></div>
-  <button id="filterReset" aria-label="Clear preset filters">CLEAR</button><span id="filterCount"></span>
+<div id="filterBar" class="glass commandHud" aria-label="Argus targeting HUD">
+  <button id="hudTarget" class="hudBumper" type="button" aria-label="Open targeting controls"><span>LB</span>TARGET</button>
+  <div class="hudReadout"><span id="filterCount">—</span><strong id="filterSummary">NO FILTERS</strong></div>
+  <button id="hudView" class="hudBumper" type="button" aria-label="Open view controls">VIEW<span>RB</span></button>
 </div>
+<div id="chartBadge"></div>
+
+<div id="navHelpScreen" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="navHelpTitle">
+  <div class="navHelpShell glass">
+    <div class="navHelpHead">
+      <div><div class="navHelpKicker">ARGUS NAVIGATION SYSTEM</div><div id="navHelpTitle" class="navHelpTitle">FLIGHT + HUD LEGEND</div></div>
+      <button id="navHelpClose" type="button" aria-label="Close navigation help">×</button>
+    </div>
+    <div class="navHelpBody">
+      <div class="navHelpIntro">This screen explains how to move through the evidence field and operate the HUD. Navigation changes only what you are looking at. It does not change qualification, authority, paper-trading rules, or evidence.</div>
+      <div class="navHelpGrid">
+        <section class="navHelpCard">
+          <h3>TOUCH / iPAD / PHONE</h3>
+          <div class="navRows">
+            <div class="navKey">DRAG FIELD</div><div class="navDesc">Rotate / look around the 3D field.</div>
+            <div class="navKey">MOVE PAD</div><div class="navDesc">Fly forward, backward, and sideways through the evidence volume.</div>
+            <div class="navKey">PINCH</div><div class="navDesc">Zoom toward or away from the field.</div>
+            <div class="navKey">TWIST</div><div class="navDesc">Roll the camera.</div>
+            <div class="navKey">TAP NODE</div><div class="navDesc">Inspect a symbol or pattern.</div>
+            <div class="navKey">DOUBLE TAP NODE</div><div class="navDesc">Center the camera on that object.</div>
+            <div class="navKey">DOUBLE TAP EMPTY</div><div class="navDesc">Return the current view to home.</div>
+            <div class="navKey">+ / − PAD</div><div class="navDesc">Dedicated zoom controls. ↑ / ↓ changes vertical position and ↶ / ↷ rolls the view.</div>
+          </div>
+        </section>
+        <section class="navHelpCard">
+          <h3>MOUSE / TRACKPAD</h3>
+          <div class="navRows">
+            <div class="navKey">DRAG</div><div class="navDesc">Rotate the camera.</div>
+            <div class="navKey">SCROLL</div><div class="navDesc">Zoom in or out.</div>
+            <div class="navKey">CLICK NODE</div><div class="navDesc">Open the selected-security panel.</div>
+            <div class="navKey">DOUBLE CLICK NODE</div><div class="navDesc">Center the view on the selected node.</div>
+            <div class="navKey">DOUBLE CLICK EMPTY</div><div class="navDesc">Reset the current camera view.</div>
+            <div class="navKey">⌕ SEARCH</div><div class="navDesc">Locate a ticker directly and fly to it in FUSION.</div>
+            <div class="navKey">⛶</div><div class="navDesc">Enter or leave fullscreen / immersive mode.</div>
+            <div class="navKey">☷</div><div class="navDesc">Open the main TARGET / VIEW / FIELD control drawer.</div>
+          </div>
+        </section>
+        <section class="navHelpCard wide">
+          <h3>KEYBOARD FLIGHT</h3>
+          <div class="navRows">
+            <div class="navKey"><span class="navPill">W</span><span class="navPill">S</span></div><div class="navDesc">Fly forward / backward.</div>
+            <div class="navKey"><span class="navPill">A</span><span class="navPill">D</span></div><div class="navDesc">Strafe left / right.</div>
+            <div class="navKey"><span class="navPill">Q</span><span class="navPill">E</span></div><div class="navDesc">Move vertically up / down.</div>
+            <div class="navKey"><span class="navPill">←</span><span class="navPill">→</span><span class="navPill">↑</span><span class="navPill">↓</span></div><div class="navDesc">Look left / right / up / down.</div>
+            <div class="navKey"><span class="navPill">Z</span><span class="navPill">X</span></div><div class="navDesc">Roll left / right.</div>
+            <div class="navKey"><span class="navPill">+</span><span class="navPill">−</span></div><div class="navDesc">Zoom in / out.</div>
+            <div class="navKey"><span class="navPill">ENTER</span></div><div class="navDesc">Inspect whatever is at screen center.</div>
+            <div class="navKey"><span class="navPill">ESC</span> / <span class="navPill">BACKSPACE</span></div><div class="navDesc">Go back one navigation level. If this help screen is open, ESC closes it first.</div>
+            <div class="navKey"><span class="navPill">HOME</span></div><div class="navDesc">Return to the home field.</div>
+            <div class="navKey"><span class="navPill">H</span> / <span class="navPill">?</span></div><div class="navDesc">Open or close this navigation screen.</div>
+          </div>
+        </section>
+        <section class="navHelpCard">
+          <h3>HUD MAP</h3>
+          <div class="navRows">
+            <div class="navKey">LB · TARGET</div><div class="navDesc">Filter what is visible by evidence class, firing frequency, directional accuracy, expected net, asymmetry, and move magnitude.</div>
+            <div class="navKey">RB · VIEW</div><div class="navDesc">Change projection: Universe, 3D Graph, Risk Cube, Frontier, Orbital, Donut, Funnel, Sphere, Torus, Helix, Pyramid, Cylinder, Black Hole, plus render/color/scale channels.</div>
+            <div class="navKey">Y · FIELD</div><div class="navDesc">Change visual layout, reality embedding, physics, tools, and connection display. These are visual manipulations only.</div>
+            <div class="navKey">HIST / ROLL / BOTH</div><div class="navDesc">Choose which evidence universe is displayed.</div>
+            <div class="navKey">‹ BACK</div><div class="navDesc">Leave a drilled-in sector / universe / navigation level.</div>
+            <div class="navKey">⌂ HOME</div><div class="navDesc">Return to the default Observatory field.</div>
+          </div>
+        </section>
+        <section class="navHelpCard">
+          <h3>HOW TO EXPLORE</h3>
+          <div class="navFlow">
+            <div class="navFlowStep"><b>1 · TARGET</b>Narrow the universe only if you want to hunt a specific behavior.</div>
+            <div class="navFlowStep"><b>2 · VIEW</b>Choose the geometry that makes that behavior easiest to see.</div>
+            <div class="navFlowStep"><b>3 · FLY</b>Move through clusters, sectors, risk surfaces, or evidence layers.</div>
+            <div class="navFlowStep"><b>4 · INSPECT</b>Tap a symbol for price, signal, evidence, risk, and paper-trade detail.</div>
+          </div>
+          <div class="navHelpFoot"><strong>Important:</strong> VIEW and FIELD are lenses. TARGET is a display filter. None of them promote a candidate, rewrite the 694 historical authority rows, or change paper-trading eligibility.</div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="gestureHelp" class="glass"><span id="gestureText"><strong>DRAG</strong> rotate · <strong>MOVE</strong> fly · <strong>PINCH</strong> zoom · <strong>TWIST</strong> roll · <strong>TAP</strong> inspect</span><button id="gestureClose" aria-label="Hide navigation help">×</button></div>
 <div id="universes" class="glass"></div>
 <div id="touchNav" aria-label="Touch navigation"><div id="movePad" aria-label="Fly through evidence volume"><div id="moveKnob"></div></div><div id="zoomPad"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button><span>ZOOM · LIFT</span><button id="liftUp" aria-label="Move up">↑</button><button id="liftDown" aria-label="Move down">↓</button></div><div id="rollPad"><button id="rollLeft" aria-label="Roll view left">↶</button><button id="rollRight" aria-label="Roll view right">↷</button></div></div>
 <div id="bottom" class="glass"><button id="back" class="bmode" aria-label="Back">‹ BACK</button><button id="home" class="bmode" aria-label="Home">⌂ HOME</button><button id="old" class="bmode" aria-label="Historical evidence">HIST</button><button id="new" class="bmode" aria-label="Rolling evidence">ROLL</button><button id="both" class="bmode on" aria-label="Historical and rolling evidence">BOTH</button></div>
-<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selMarket"><div class="selStat"><span class="selStatK">PRICE</span><span id="selPriceValue" class="selStatV">—</span><span id="selPriceStamp" class="selStatS">last observed price</span></div><div class="selStat"><span class="selStatK">PAPER TRADER</span><span id="selPaperRecord" class="selStatV">0 TAKEN · 0W 0L</span><span id="selPaperPnl" class="selStatS">realized $0.00</span></div></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selContext"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
+<div id="sel" class="glass"><div id="selTop"><div><div id="selName"></div><div id="selMeta"></div></div><button id="selClose" class="chip">×</button></div><div id="selMarket"><div class="selStat"><span class="selStatK">CURRENT</span><span id="selPriceValue" class="selStatV">—</span><span id="selPriceStamp" class="selStatS">last observed price</span></div><div class="selStat"><span class="selStatK">PAPER TRADER</span><span id="selPaperRecord" class="selStatV">0 TAKEN · 0W 0L</span><span id="selPaperPnl" class="selStatS">realized $0.00</span></div></div><div id="selGauge"><div id="gaugeTop"><span>60-DAY FIRE RATE</span><span id="fireValue">—</span></div><div id="gaugeTrack"><div id="fireFill"></div></div><div id="selEvidence"></div><div id="selContext"></div><div id="selPulseLine"></div></div><div id="selBtns"></div></div>
 <div id="toast"></div>
 <script>
 const c=document.getElementById('c'),ctx=c.getContext('2d',{alpha:false});
@@ -188,7 +308,7 @@ const PAL={
  evidence:{observation:205,magnitude:38,frequency:165,recurrence:215,topology:235,combination:285,direction:260,immediacy:18,generalization:225,economics:42,null:205,prospective:52,paper:120},
  polarity:{observation:190,magnitude:38,frequency:160,recurrence:190,topology:260,combination:295,direction:190,immediacy:10,generalization:225,economics:45,null:260,prospective:170,paper:120}
 };
-let ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
+let ui={layout:'universes',chart:'universe',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};
 let focus=null,sectorFocus=null,sectorReturnView=null,selected=null,isolated=null,wormStart=null,wormPath=new Set(),mode=2;
 let target={x:0,y:0,z:0},dist=138,yaw=-.18,pitch=-.08,roll=0,verticalOffset=0,MIN=.35,MAX=1400;
 const VERTICAL_MIN=-220,VERTICAL_MAX=220;
@@ -212,7 +332,7 @@ let fusionState=new Map(),fusionLast=performance.now(),fusionAnchorHits=[],fusio
 let realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};
 const FUSION_R=27,FUSION_MAX_MOBILE=3200,FUSION_MAX_DESKTOP=5200;
 const REALITY_MAX_MOBILE=4600,REALITY_MAX_DESKTOP=9000,REALITY_MIN_STEP_MS=34;
-const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v11-0';
+const LIVE_REFRESH_MS=60000,VIEW_STATE_KEY='argus-observatory-view-v12-xbox-hud';
 let lastFeedFingerprint='';
 
 function hueForUniverse(id){return (PAL[ui.palette]||PAL.argus)[id]??194}
@@ -220,9 +340,16 @@ function qmeta(si){return DATA?.qualified_meta?.[String(si)]||null}
 function imeta(si){return DATA?.intake_meta?.[String(si)]||null}
 function riskMeta(si){
  const q=qmeta(si),im=imeta(si);
- if(q&&(q.risk_pass||finite(q.risk_ratio)>0))return{pass:!!q.risk_pass,ratio:finite(q.risk_ratio),up:finite(q.upside),down:finite(q.downside),mae:finite(q.mae_p75),mfe:finite(q.mfe_p75),edge:finite(q.asymmetry),n:finite(q.risk_n),source:q.risk_source||'historical'};
- if(im&&(im.rolling_risk_pass||finite(im.rolling_risk_ratio)>0))return{pass:!!im.rolling_risk_pass,ratio:finite(im.rolling_risk_ratio),up:finite(im.rolling_upside_p75_net_pct),down:finite(im.rolling_downside_exposure_pct),mae:0,mfe:0,edge:finite(im.rolling_upside_p75_net_pct)-finite(im.rolling_downside_exposure_pct),n:0,source:'rolling'};
+ if(q&&(q.risk_pass||finite(q.risk_n)>0||finite(q.downside)>0||finite(q.risk_ratio)>0))return{pass:!!q.risk_pass,ratio:finite(q.risk_ratio),up:finite(q.upside),down:finite(q.downside),mae:finite(q.mae_p75),mfe:finite(q.mfe_p75),edge:finite(q.asymmetry),n:finite(q.risk_n),source:q.risk_source||'historical'};
+ const rollingKnown=im&&(String(im.rolling_risk_status||'').toUpperCase()==='KNOWN'||finite(im.rolling_risk_n)>0||finite(im.rolling_downside_exposure_pct)>0||finite(im.rolling_risk_ratio)>0);
+ if(rollingKnown)return{pass:!!im.rolling_risk_pass,ratio:finite(im.rolling_risk_ratio),up:finite(im.rolling_upside_p75_net_pct),down:finite(im.rolling_downside_exposure_pct),mae:finite(im.rolling_mae_p75_pct),mfe:finite(im.rolling_mfe_p75_pct),edge:finite(im.rolling_asymmetry_edge_pct,finite(im.rolling_upside_p75_net_pct)-finite(im.rolling_downside_exposure_pct)),n:finite(im.rolling_risk_n),source:'rolling'};
  return null
+}
+function sequenceMeta(si){
+ const q=qmeta(si),im=imeta(si),src=q&&finite(q.sequence_n)>0?q:(im&&finite(im.sequence_n)>0?im:null);if(!src)return null;
+ const get=(a,b=a)=>finite(src[a],finite(src[b],0));
+ const p1=get('sequence_p_loss_after_1_loss');const p2=get('sequence_p_loss_after_2_losses');const p3=get('sequence_p_loss_after_3_losses');
+ return{n:get('sequence_n'),win:get('sequence_win_rate'),avgWin:get('sequence_avg_win_pct'),avgLoss:get('sequence_avg_loss_pct'),payoff:get('sequence_payoff_ratio'),maxLoss:get('sequence_max_consecutive_losses'),streak3:get('sequence_loss_streaks_ge3'),streak4:get('sequence_loss_streaks_ge4'),p1:p1>=0?p1:null,p2:p2>=0?p2:null,p3:p3>=0?p3:null,drawdown:get('sequence_worst_additive_drawdown_pct'),source:q&&finite(q.sequence_n)>0?'historical':'rolling'}
 }
 function isQualified(si){return QSET.has(si)||!!qmeta(si)}
 function isRiskPositive(si){const r=riskMeta(si);return RSET.has(si)||!!(r?.pass&&r.ratio>1)}
@@ -254,25 +381,87 @@ function strength(si,u){
  if(u.id==='paper')return clamp(finite(m[7])/3,0,1);
  return .1
 }
-const presetFilters={price:'any',cap:'any',move:'any',fire:'any',quality:'any'};
+const presetFilters={minMove:0,minFire:0,minNet:0,minAsym:0,quality:'any'};
+let hudTab='target';
 function rawNum(v){const n=Number(v);return Number.isFinite(n)?n:null}
 function nodePrice(si){return rawNum(DATA?.latest_prices?.[si])}
 function nodeCap(si){const im=imeta(si);return rawNum(DATA?.market_caps?.[si])??rawNum(im?.market_cap)}
 function nodeMove(si){return Math.max(0,metric(si,9,0))}
 function nodeDirQuality(si){const q=qmeta(si),im=imeta(si);return q?finite(q.dir):im?finite(im.rolling_directional_accuracy):metric(si,2)}
+function nodeExpectedNet(si){const q=qmeta(si),im=imeta(si);if(q&&Number.isFinite(+q.net))return +q.net;if(im&&Number.isFinite(+im.rolling_best_net_pct))return +im.rolling_best_net_pct;return 0}
+function nodeAsymmetry(si){const r=riskMeta(si);return r&&Number.isFinite(+r.ratio)?Math.max(0,+r.ratio):0}
+
+function nodeDownside(si){const r=riskMeta(si);return r&&Number.isFinite(+r.down)?Math.max(0,+r.down):null}
+function nodeEvidenceStage(si){const pm=(DATA?.paper_meta||{})[String(si)]||{};if(Number(pm.open_positions||0)>0||Number(pm.closed_trades||0)>0)return 5;if(isProspective(si)||isHot(si))return 4;if(isRiskPositive(si))return 3;if(isQualified(si))return 2;if(imeta(si))return 1;return 0}
+function nodeDirectionSign(si){const q=qmeta(si),im=imeta(si),d=String(q?.direction||im?.rolling_direction||'').toUpperCase();return d.includes('FALL')?-1:d.includes('RISE')?1:(hash(DATA?.symbols?.[si]||String(si))>.5?1:-1)}
+function sectorOrdinal(si){const ids=(DATA?.sectors||[]).map(x=>x.id),k=sectorIndex(si),j=ids.indexOf(k);return j>=0?j:Math.floor(hash(DATA?.symbols?.[si]||String(si))*Math.max(1,ids.length))}
+function chartMode(){return ui.chart||'universe'}
+function chartPosition(si){
+ const s=DATA.symbols[si]||String(si),h=hash(s+'chart'),h2=hash(s+'chart2'),freq=fireRate(si),net=clamp(nodeExpectedNet(si),-5,12),down=nodeDownside(si),risk=down===null?null:clamp(down,0,10),asym=clamp(nodeAsymmetry(si),0,5),stage=nodeEvidenceStage(si),dir=nodeDirectionSign(si),secs=Math.max(1,(DATA.sectors||[]).length),sec=sectorOrdinal(si),mode=chartMode();
+ if(mode==='graph3d'){return{x:(freq-.5)*46,y:(net/17)*38-3,z:risk===null?17:(risk/10-.5)*38}}
+ if(mode==='riskcube'){return{x:(freq-.5)*44,y:(asym/5-.5)*38,z:risk===null?18:(risk/10-.5)*38}}
+ if(mode==='frontier'){return{x:risk===null?20:(risk/10-.5)*42,y:(net/17)*38-3,z:(freq-.5)*40}}
+ if(mode==='orbital'){const rr=7+(risk===null?16:clamp(risk/10,0,1)*18),a=(sec+(h-.5)*.72)*Math.PI*2/secs;return{x:Math.cos(a)*rr,y:(net/17)*22-2,z:Math.sin(a)*rr}}
+ if(mode==='donut'){const a=(sec+(h-.5)*.78)*Math.PI*2/secs,major=18,minor=3+freq*6,b=(h2*2-1)*Math.PI*.72;return{x:(major+minor*Math.cos(b))*Math.cos(a),y:minor*Math.sin(b)+(net/17)*8,z:(major+minor*Math.cos(b))*Math.sin(a)}}
+ if(mode==='funnel'){const t=stage/5,y=-20+t*40,rr=(1-t)*24+3,a=h*Math.PI*2;return{x:Math.cos(a)*rr*(.35+.65*h2),y,z:Math.sin(a)*rr*(.35+.65*(1-h2))}}
+ if(mode==='sphere'){const a=(sec+(h-.5))*Math.PI*2/secs,lat=(freq-.5)*Math.PI*.82,rr=17+clamp(Math.max(net,0)/12,0,1)*8;return{x:Math.cos(lat)*Math.cos(a)*rr,y:Math.sin(lat)*rr,z:Math.cos(lat)*Math.sin(a)*rr}}
+ if(mode==='torus'){const a=(sec+(h-.5)*.65)*Math.PI*2/secs,b=(freq*.82+h2*.18)*Math.PI*2,major=17,minor=3+(risk===null?5:clamp(risk/10,0,1)*7);return{x:(major+minor*Math.cos(b))*Math.cos(a),y:minor*Math.sin(b),z:(major+minor*Math.cos(b))*Math.sin(a)}}
+ if(mode==='helix'){const turns=2.8,a=(freq*turns+h*.22)*Math.PI*2+dir*(Math.PI/2),rr=10+stage*1.4;return{x:Math.cos(a)*rr,y:-20+stage*8+(h2-.5)*3,z:Math.sin(a)*rr}}
+ if(mode==='pyramid'){const t=stage/5,y=-20+t*40,half=(1-t)*22+2;return{x:(h*2-1)*half,y,z:(h2*2-1)*half}}
+ if(mode==='cylinder'){const a=(sec+(h-.5)*.72)*Math.PI*2/secs,rr=12+(risk===null?8:clamp(risk/10,0,1)*10);return{x:Math.cos(a)*rr,y:-20+stage*8+(net/17)*5,z:Math.sin(a)*rr}}
+ if(mode==='blackhole'){const rr=3+(risk===null?22:Math.max(2,22-clamp(risk/10,0,1)*19)),a=(sec+h)*Math.PI*2/secs,warp=(asym>1?Math.min(5,asym)*1.5:0);return{x:Math.cos(a)*rr,y:(net/17)*16+Math.sin(a*2.2)*warp,z:Math.sin(a)*rr}}
+ return null
+}
+function chartTitle(){return({universe:'UNIVERSE',graph3d:'3D GRAPH · FIRE / NET / DOWNSIDE',riskcube:'RISK CUBE · FIRE / ASYMMETRY / DOWNSIDE',frontier:'PROFIT FRONTIER · RISK / NET / FREQUENCY',orbital:'ORBITAL · RISK RADIUS',donut:'3D DONUT · SECTOR / FREQUENCY',funnel:'EVIDENCE FUNNEL',sphere:'SPHERE · SECTOR / FREQUENCY / NET',torus:'TORUS · SECTOR / FIRE / RISK',helix:'HELIX · RISE / FALL EVIDENCE',pyramid:'EVIDENCE PYRAMID',cylinder:'EVIDENCE CYLINDER',blackhole:'BLACK HOLE · DOWNSIDE GRAVITY'})[chartMode()]||String(chartMode()).toUpperCase()}
+function syncChartBadge(){const b=document.getElementById('chartBadge');if(!b)return;const on=chartMode()!=='universe';b.textContent=chartTitle();b.classList.toggle('show',on)}
+function setChartMode(v){ui.chart=v;focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v!=='universe')ui.layout='fusion';fusionState.clear();realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};cameraGoalTo({target:{x:0,y:0,z:0},dist:v==='universe'?(ui.layout==='fusion'?54:138):62,yaw:-.42,pitch:-.18,roll:0,verticalOffset:0});syncChartBadge();syncUniverseButtons();renderDrawer();updateStats();persistView();showToast(chartTitle())}
+function drawChartGuides(){const mode=chartMode();if(mode==='universe')return;ctx.save();ctx.lineWidth=.75;ctx.strokeStyle='rgba(175,232,248,.105)';ctx.fillStyle='rgba(210,242,250,.42)';ctx.font='800 8px -apple-system,sans-serif';ctx.textAlign='center';
+ const line=(a,b)=>{const p=proj(a),q=proj(b);if(!p||!q)return;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()};
+ const label=(p,t)=>{const q=proj(p);if(q)ctx.fillText(t,q.x,q.y)};
+ if(mode==='graph3d'||mode==='riskcube'||mode==='frontier'){line({x:-24,y:-20,z:-20},{x:24,y:-20,z:-20});line({x:-24,y:-20,z:-20},{x:-24,y:22,z:-20});line({x:-24,y:-20,z:-20},{x:-24,y:-20,z:22});const labs=mode==='graph3d'?['FIRE →','NET ↑','DOWNSIDE →']:mode==='riskcube'?['FIRE →','ASYM ↑','DOWNSIDE →']:['RISK →','NET ↑','FREQUENCY →'];label({x:22,y:-20,z:-20},labs[0]);label({x:-24,y:22,z:-20},labs[1]);label({x:-24,y:-20,z:20},labs[2]);if(mode!=='frontier')label({x:18,y:19,z:18},'RISK UNKNOWN = FAR PLANE')}
+ else if(mode==='orbital'||mode==='donut'||mode==='torus'||mode==='cylinder'||mode==='blackhole'){const cp=proj({x:0,y:0,z:0});if(cp){for(const rr of mode==='blackhole'?[3,9,16,24]:[8,16,24]){const r=rr*cp.f;ctx.beginPath();ctx.ellipse(cp.x,cp.y,r,r*.42,0,0,Math.PI*2);ctx.stroke()}if(mode==='blackhole'){const g=ctx.createRadialGradient(cp.x,cp.y,0,cp.x,cp.y,36);g.addColorStop(0,'rgba(0,0,0,.98)');g.addColorStop(.35,'rgba(170,80,220,.28)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(cp.x,cp.y,36,0,7);ctx.fill()}}}
+ else if(mode==='funnel'){for(const y of [-20,-12,-4,4,12,20]){const t=(y+20)/40,rr=(1-t)*24+3;line({x:-rr,y,z:-rr*.35},{x:rr,y,z:-rr*.35});line({x:-rr,y,z:rr*.35},{x:rr,y,z:rr*.35})}label({x:0,y:22,z:0},'TRADED / PROSPECTIVE ↑')}
+ else if(mode==='sphere'){const cp=proj({x:0,y:0,z:0});if(cp){for(const rr of [17,25]){ctx.beginPath();ctx.ellipse(cp.x,cp.y,rr*cp.f,rr*.42*cp.f,0,0,Math.PI*2);ctx.stroke()}}}
+ else if(mode==='helix'){line({x:0,y:-22,z:0},{x:0,y:23,z:0});label({x:0,y:23,z:0},'EVIDENCE ↑')}
+ else if(mode==='pyramid'){const base=[[-22,-20,-22],[22,-20,-22],[22,-20,22],[-22,-20,22]],tip=[0,20,0];for(let i=0;i<4;i++){line({x:base[i][0],y:base[i][1],z:base[i][2]},{x:base[(i+1)%4][0],y:base[(i+1)%4][1],z:base[(i+1)%4][2]});line({x:base[i][0],y:base[i][1],z:base[i][2]},{x:tip[0],y:tip[1],z:tip[2]})}}
+ ctx.restore()}
 function capDataAvailable(){return !!(DATA?.symbols||[]).find((_,i)=>nodeCap(i)!==null)}
 function passesPresetFilters(si){
- const p=nodePrice(si),cap=nodeCap(si),mv=nodeMove(si),fd=fireDays(si),dq=nodeDirQuality(si);
- if(presetFilters.price!=='any'){if(p===null)return false;if(presetFilters.price==='lt5'&&!(p<5))return false;if(presetFilters.price==='5_20'&&!(p>=5&&p<20))return false;if(presetFilters.price==='20_100'&&!(p>=20&&p<100))return false;if(presetFilters.price==='gte100'&&!(p>=100))return false}
- if(presetFilters.cap!=='any'){if(cap===null)return false;if(presetFilters.cap==='lt300m'&&!(cap<3e8))return false;if(presetFilters.cap==='300m_2b'&&!(cap>=3e8&&cap<2e9))return false;if(presetFilters.cap==='2b_10b'&&!(cap>=2e9&&cap<1e10))return false;if(presetFilters.cap==='gte10b'&&!(cap>=1e10))return false}
- if(presetFilters.move==='gte05'&&mv<.5)return false;if(presetFilters.move==='gte1'&&mv<1)return false;if(presetFilters.move==='gte2'&&mv<2)return false;if(presetFilters.move==='gte4'&&mv<4)return false;
- if(presetFilters.fire==='gte1'&&fd<1)return false;if(presetFilters.fire==='gte5'&&fd<5)return false;if(presetFilters.fire==='gte10'&&fd<10)return false;if(presetFilters.fire==='gte20'&&fd<20)return false;
- if(presetFilters.quality==='qualified'&&!isQualified(si))return false;if(presetFilters.quality==='asymmetric'&&!isRiskPositive(si))return false;if(presetFilters.quality==='dir70'&&dq<.70)return false;if(presetFilters.quality==='dir80'&&dq<.80)return false;if(presetFilters.quality==='hot'&&!isHot(si))return false;
+ const mv=nodeMove(si),fd=fireDays(si),dq=nodeDirQuality(si),net=nodeExpectedNet(si),asym=nodeAsymmetry(si);
+ if(mv<finite(presetFilters.minMove))return false;
+ if(fd<finite(presetFilters.minFire))return false;
+ if(net<finite(presetFilters.minNet))return false;
+ if(asym<finite(presetFilters.minAsym))return false;
+ if(ui.cutoff>0&&dq<ui.cutoff)return false;
+ if(presetFilters.quality==='qualified'&&!isQualified(si))return false;
+ if(presetFilters.quality==='asymmetric'&&!isRiskPositive(si))return false;
+ if(presetFilters.quality==='riskknown'&&!riskMeta(si))return false;
+ if(presetFilters.quality==='riskunknown'&&riskMeta(si))return false;
+ if(presetFilters.quality==='prospective'&&!isProspective(si))return false;
+ if(presetFilters.quality==='hot'&&!isHot(si))return false;
+ if(presetFilters.quality==='conflict'&&!isConflict(si))return false;
  return true
 }
 function visibleEvidenceCount(){if(!DATA)return 0;let n=0;for(let i=0;i<DATA.symbols.length;i++)if(nodeVisible(i))n++;return n}
-function syncPresetFilters(){const map={fPrice:'price',fCap:'cap',fMove:'move',fFire:'fire',fQuality:'quality'};for(const [id,k] of Object.entries(map)){const e=document.getElementById(id);if(!e)continue;e.value=presetFilters[k];if(id==='fCap')e.disabled=!capDataAvailable()}const ct=document.getElementById('filterCount');if(ct)ct.textContent=DATA?`${visibleEvidenceCount()} SHOWN`:''}
-function bindPresetFilters(){const map={fPrice:'price',fCap:'cap',fMove:'move',fFire:'fire',fQuality:'quality'};for(const [id,k] of Object.entries(map)){const e=document.getElementById(id);if(!e)continue;e.onchange=()=>{presetFilters[k]=e.value;fusionState.clear();syncPresetFilters();updateStats();persistView()}}const r=document.getElementById('filterReset');if(r)r.onclick=()=>{for(const k of Object.keys(presetFilters))presetFilters[k]='any';syncPresetFilters();updateStats();persistView();showToast('PRESET FILTERS CLEARED')}}
+function filterSummary(){
+ const parts=[];
+ if(finite(presetFilters.minMove)>0)parts.push(`MOVE ${finite(presetFilters.minMove).toFixed(1)}%+`);
+ if(finite(presetFilters.minFire)>0)parts.push(`FIRE ${Math.round(finite(presetFilters.minFire))}+`);
+ if(finite(ui.cutoff)>0)parts.push(`DIR ${Math.round(ui.cutoff*100)}%+`);
+ if(finite(presetFilters.minNet)>0)parts.push(`NET ${finite(presetFilters.minNet).toFixed(2)}%+`);
+ if(finite(presetFilters.minAsym)>0)parts.push(`ASYM ${finite(presetFilters.minAsym).toFixed(1)}×+`);
+ if(presetFilters.quality!=='any')parts.push(String(presetFilters.quality).toUpperCase());
+ return parts.length?parts.join(' · '):'NO FILTERS'
+}
+function syncPresetFilters(){
+ const ct=document.getElementById('filterCount');if(ct)ct.textContent=DATA?`${visibleEvidenceCount()} IN FIELD`:'—';
+ const sm=document.getElementById('filterSummary');if(sm)sm.textContent=filterSummary();
+}
+function bindPresetFilters(){
+ const reset=document.getElementById('filterReset');if(reset)reset.onclick=()=>resetTargeting();
+ syncPresetFilters()
+}
+function resetTargeting(){presetFilters.minMove=0;presetFilters.minFire=0;presetFilters.minNet=0;presetFilters.minAsym=0;presetFilters.quality='any';ui.cutoff=0;fusionState.clear();syncPresetFilters();updateStats();renderDrawer();persistView();showToast('TARGETING RESET')}
 
 function nodeVisible(si){
  if(sectorFocus!==null && sectorIndex(si)!==sectorFocus)return false;
@@ -408,6 +597,7 @@ function fusionStep(indices){
  }
 }
 function fusionPos(si){
+ const chart=chartPosition(si);if(chart)return chart;
  const q=fusionState.get(si)||fusionDesired(si);let x=q.x,y=q.y,z=q.z;
  z+=dimensionScalar(si)*(ui.dimension==='delta'?11:8);
  if(ui.tool==='inversion'){x=-x;y=-y;z=-z}
@@ -455,11 +645,11 @@ function drawFusionSelectedConnections(){
  ctx.restore()
 }
 function drawFusion(){
- const indices=fusionIndices();fusionActiveCount=indices.length;fusionStep(indices);nodeHits=[];patternHits=[];drawFusionAnchors();drawFusionSectorWells();if((ui.display||'graph')!=='waves')drawFusionSelectedConnections();if(indices.length)drawWaveField(fusionDominantUniverse(selected?.si??indices[0]),indices,si=>fusionPos(si));
+ const indices=fusionIndices();fusionActiveCount=indices.length;if(chartMode()==='universe')fusionStep(indices);nodeHits=[];patternHits=[];drawChartGuides();if(chartMode()==='universe'){drawFusionAnchors();drawFusionSectorWells();if((ui.display||'graph')!=='waves')drawFusionSelectedConnections();if(indices.length)drawWaveField(fusionDominantUniverse(selected?.si??indices[0]),indices,si=>fusionPos(si))}
  // A single combined evidence arena. Lines are intentionally suppressed here: motion encodes the multi-universe pull without inventing pairwise causality.
  for(const si of indices){const pos=fusionPos(si),p=proj(pos);if(!p)continue;const u=fusionDominantUniverse(si),r=nodeRadius(si,u,p.f)*.82,qm=qmeta(si),hot=isHot(si),pros=isProspective(si);let a=qm?.72:.16;if(ui.tool==='ghost'&&!qm)a*=.18;if(ui.tool==='xray')a*=.10;ctx.save();ctx.fillStyle=fusionColor(si,a);if(qm&&ui.tool!=='xray'){ctx.shadowColor=fusionColor(si,hot?1:.72);ctx.shadowBlur=hot?24:pros?17:8}const pulse=(hot||pros)?(.72+.28*Math.sin(performance.now()/(hot?160:260))):1;if(hot){ctx.beginPath();ctx.arc(p.x,p.y,r*(2+.35*pulse),0,7);ctx.fillStyle=`rgba(255,255,255,${.035+.04*pulse})`;ctx.fill()}if(selected&&selected.si===si){ctx.strokeStyle='rgba(255,255,255,.98)';ctx.lineWidth=2.2;ctx.shadowColor='rgba(255,255,255,1)';ctx.shadowBlur=24;ctx.beginPath();ctx.arc(p.x,p.y,r*2,0,7);ctx.stroke()}paintNodeMark(si,p.x,p.y,r);ctx.restore();nodeHits.push({x:p.x,y:p.y,r:Math.max(11,r+6),si,u})}
  const labels=nodeHits.filter(h=>isQualified(h.si)).sort((a,b)=>(qmeta(b.si)?.grade||0)-(qmeta(a.si)?.grade||0)).slice(0,deviceProfile==='phone'?16:deviceProfile==='tablet'?28:deviceProfile==='tv'?54:48);ctx.save();ctx.font='700 9px -apple-system,sans-serif';ctx.textAlign='left';for(const h of labels){ctx.fillStyle=fusionColor(h.si,.76);ctx.fillText(DATA.symbols[h.si],h.x+5,h.y-4)}ctx.restore();
- ctx.save();const cp=proj({x:0,y:0,z:0});if(cp){ctx.textAlign='center';ctx.font='800 10px -apple-system,sans-serif';ctx.fillStyle='rgba(220,245,255,.38)';ctx.fillText(`FUSION FIELD · ${indices.length} DYNAMIC NODES`,cp.x,Math.max(28,H*.105))}ctx.restore()
+ ctx.save();const cp=proj({x:0,y:0,z:0});if(cp){ctx.textAlign='center';ctx.font='800 10px -apple-system,sans-serif';ctx.fillStyle='rgba(220,245,255,.38)';ctx.fillText(chartMode()==='universe'?`FUSION FIELD · ${indices.length} DYNAMIC NODES`:`${chartTitle()} · ${indices.length} NODES`,cp.x,Math.max(28,H*.105))}ctx.restore()
 }
 
 function sectorIndex(si){const k=DATA.sector_ids?.[si];return Number.isInteger(k)?k:-1}
@@ -673,7 +863,7 @@ function nodePos(si,u){return visualToolTransform(si,u,physicsOffset(si,u,dimens
 function rot(p){let x=p.x-target.x,y=p.y-(target.y+verticalOffset),z=p.z-target.z;const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),cr=Math.cos(roll),sr=Math.sin(roll);let x1=x*cy-z*sy,z1=x*sy+z*cy;let y1=y*cp-z1*sp,z2=y*sp+z1*cp;let x2=x1*cr-y1*sr,y2=x1*sr+y1*cr;return{x:x2,y:y2,z:z2}}
 function proj(p){const q=rot(p),dep=dist+q.z;if(dep<.12)return null;const f=Math.min(W,H)*1.16/Math.max(dep,.12);return{x:W*.5+q.x*f,y:H*.5-q.y*f,z:q.z,f,dep}}
 function zoom(z){cameraGoal.dist=clamp(z,MIN,MAX)}
-function cameraBounds(){return ui.layout==='fusion'?{x:35,y:35,z:35}:{x:104,y:60,z:60}}
+function cameraBounds(){return ui.layout==='fusion'?(chartMode()==='universe'?{x:35,y:35,z:35}:{x:44,y:44,z:44}):{x:104,y:60,z:60}}
 function clampCameraTarget(){const b=cameraBounds();cameraGoal.target.x=clamp(cameraGoal.target.x,-b.x,b.x);cameraGoal.target.y=clamp(cameraGoal.target.y,-b.y,b.y);cameraGoal.target.z=clamp(cameraGoal.target.z,-b.z,b.z)}
 function rail(){const x=W-Math.max(27,W*.021),top=H*.16,bottom=H*.82;return{x,top,bottom,h:bottom-top,hit:54}}
 function railHit(x,y){const g=rail();return x>g.x-g.hit&&y>g.top-20&&y<g.bottom+20}
@@ -879,12 +1069,12 @@ function bridge(){
  if(focus)return;for(const [a,b] of DATA.bridges||[]){const pa=proj(uobj(a)),pb=proj(uobj(b));if(!pa||!pb)continue;ctx.strokeStyle='rgba(112,210,235,.05)';ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke()}
 }
 function render(now=performance.now()){
- perfStep(now);cameraStep(now);if(!DATA){bg();requestAnimationFrame(render);return}bg();drawUniverseCube();sphereHits=[];sectorHits=[];
+ perfStep(now);cameraStep(now);if(!DATA){bg();requestAnimationFrame(render);return}bg();if(chartMode()==='universe')drawUniverseCube();sphereHits=[];sectorHits=[];
  if(ui.layout==='fusion'){drawFusion()}else{bridge();if(focus){const u=uobj(focus);shell(u);if(u.id==='direction'&&dist>=u.r*1.42)drawSemanticPatternBeacons(u,false);drawInterior(u)}else{for(const x of DATA.universes||[])shell(uobj(x.id));const du=uobj('direction');drawSemanticPatternBeacons(du,true)}}
  drawVerticalRail();drawRail();requestAnimationFrame(render)
 }
 
-function setLayout(v){ui.layout=v;focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;cameraGoalTo({target:{x:0,y:0,z:0},dist:54,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});fusionLast=performance.now();showToast('FUSION · all universe fields combined')}else{fusionActiveCount=0;cameraGoalTo({target:{x:0,y:0,z:0},dist:138,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});showToast('UNIVERSES · separated')}syncUniverseButtons();renderDrawer();updateStats();persistView()}
+function setLayout(v){ui.layout=v;if(v==='universes')ui.chart='universe';focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();hideSelected();if(v==='fusion'){fusionActiveCount=DATA?fusionIndices().length:0;cameraGoalTo({target:{x:0,y:0,z:0},dist:chartMode()==='universe'?54:62,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});fusionLast=performance.now();showToast(chartMode()==='universe'?'FUSION · all universe fields combined':chartTitle())}else{fusionActiveCount=0;cameraGoalTo({target:{x:0,y:0,z:0},dist:138,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});showToast('UNIVERSES · separated')}syncChartBadge();syncUniverseButtons();renderDrawer();updateStats();persistView()}
 function setFocus(id){ui.layout='universes';focus=id;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();const u=uobj(id);cameraGoalTo({target:{x:u.x,y:u.y,z:u.z},dist:Math.max(MIN,u.r*1.22),verticalOffset:0});syncUniverseButtons();renderDrawer();hideSelected();persistView()}
 function home(){focus=null;sectorFocus=null;sectorReturnView=null;selected=null;isolated=null;wormStart=null;wormPath.clear();cameraGoalTo({target:{x:0,y:0,z:0},dist:ui.layout==='fusion'?54:138,yaw:-.18,pitch:-.08,verticalOffset:0});syncUniverseButtons();hideSelected();persistView()}
 function hitNode(x,y){let best=null,bd=1e9;for(const h of nodeHits){const d=Math.hypot(x-h.x,y-h.y);if(d<h.r&&d<bd){best=h;bd=d}}return best}
@@ -916,10 +1106,11 @@ function renderSelectedMarket(si,liveOverride=null){
  const snapPrice=Array.isArray(DATA?.latest_prices)?DATA.latest_prices[si]:null;
  const snapTime=Array.isArray(DATA?.latest_price_times)?DATA.latest_price_times[si]:'';
  const snapSource=Array.isArray(DATA?.latest_price_sources)?DATA.latest_price_sources[si]:'';
+ const snapFresh=Array.isArray(DATA?.latest_price_freshness)?DATA.latest_price_freshness[si]:'STALE';
  const pv=document.getElementById('selPriceValue'),ps=document.getElementById('selPriceStamp');
- const p=liveOverride?.price??snapPrice,pt=liveOverride?.time??snapTime,src=liveOverride?.source??snapSource;
+ const p=liveOverride?.price??snapPrice,pt=liveOverride?.time??snapTime,src=liveOverride?.source??snapSource,fresh=String(liveOverride?.freshness??snapFresh??'STALE').toUpperCase();
  pv.textContent=priceText(p);
- ps.textContent=(src?String(src).replaceAll('_',' ')+' · ':'LAST OBSERVED · ')+(shortStamp(pt)||'timestamp pending');
+ ps.textContent=`${fresh} · ${shortStamp(pt)||'timestamp pending'}${src?` · ${String(src).replaceAll('_',' ')}`:''}`;
  const closed=Number(pm.closed_trades??qm.paper_trades??0)||0,open=Number(pm.open_positions??qm.open_positions??0)||0,taken=Number(pm.taken??(closed+open))||0;
  const wins=Number(pm.wins??0)||0,losses=Number(pm.losses??0)||0,flat=Number(pm.breakeven??0)||0;
  const wr=Number(pm.win_rate);const wrTxt=Number.isFinite(wr)&&closed>0?` · ${(wr*100).toFixed(0)}% WIN`:'';
@@ -936,15 +1127,25 @@ async function refreshSelectedQuote(si,symbol){
    const j=await r.json(),res=j?.chart?.result?.[0];if(!res)continue;let px=Number(res?.meta?.regularMarketPrice),ts=Number(res?.meta?.regularMarketTime)||0;
    if(!Number.isFinite(px)||px<=0){const closes=res?.indicators?.quote?.[0]?.close||[],times=res?.timestamp||[];for(let k=closes.length-1;k>=0;k--){if(Number.isFinite(Number(closes[k]))){px=Number(closes[k]);ts=Number(times[k]||0);break}}}
    if(!Number.isFinite(px)||px<=0)continue;if(seq!==quoteRequestSeq||!selected||selected.si!==si)return;
-   renderSelectedMarket(si,{price:px,time:ts?new Date(ts*1000).toISOString():'',source:'LIVE QUOTE'});return;
+   const nowSec=Date.now()/1000,ageSec=ts?Math.max(0,nowSec-ts):Infinity,metaState=String(res?.meta?.marketState||'').toUpperCase();
+   let freshness=ageSec<=180?'LIVE':ageSec<=900?'DELAYED':'STALE';
+   if(metaState&&metaState!=='REGULAR'&&ageSec>900)freshness='LAST CLOSE';
+   renderSelectedMarket(si,{price:px,time:ts?new Date(ts*1000).toISOString():'',source:'YAHOO QUOTE',freshness});return;
   }catch(_){ }
  }
+ if(seq!==quoteRequestSeq||!selected||selected.si!==si)return;
+ // A failed live refresh during a market-hours feed is explicit STALE, never a silent
+ // reuse of an older quote under a reassuring label.
+ const feedFresh=Array.isArray(DATA?.latest_price_freshness)?String(DATA.latest_price_freshness[si]||'STALE').toUpperCase():'STALE';
+ if(feedFresh==='DELAYED'||feedFresh==='LIVE'){
+   renderSelectedMarket(si,{price:Array.isArray(DATA?.latest_prices)?DATA.latest_prices[si]:null,time:Array.isArray(DATA?.latest_price_times)?DATA.latest_price_times[si]:'',source:Array.isArray(DATA?.latest_price_sources)?DATA.latest_price_sources[si]:'SNAPSHOT',freshness:'STALE'});
+ }
 }
-function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),im=imeta(h.si),rm=riskMeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isRiskPositive(h.si)?'  ◉':(isHot(h.si)?'  ✦':''));const pre=sec?sec+' · ':'';const asym=rm&&finite(rm.ratio)>0?` · asym ${finite(rm.ratio).toFixed(2)}×`:'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}${asym}`:(im&&finite(im.scan_count)>0?`${pre}rolling ${im.rolling_grade||'observed'} · net ${finite(im.rolling_best_net_pct).toFixed(2)}% · dir ${(finite(im.rolling_directional_accuracy)*100).toFixed(1)}%${asym} · candidate only`:`${pre}catalogued · waiting for rolling scan`);
+function showSelected(h){selected=h;selectedNeighbors=neighborsOf(h.si);const qm=qmeta(h.si),im=imeta(h.si),rm=riskMeta(h.si),sq=sequenceMeta(h.si),s=DATA.symbols[h.si],sec=sectorLabel(h.si),fd=fireDays(h.si),fw=fireWindow(),fr=fw?fd/fw:0;document.getElementById('selName').textContent=s+(isRiskPositive(h.si)?'  ◉':(isHot(h.si)?'  ✦':''));const pre=sec?sec+' · ':'';const asym=rm&&finite(rm.ratio)>0?` · asym ${finite(rm.ratio).toFixed(2)}×`:'';document.getElementById('selMeta').textContent=qm?`${pre}${qm.direction} · ${qm.horizon}m · net ${qm.net.toFixed(2)}% · dir ${(qm.dir*100).toFixed(1)}% · n=${qm.n}${asym}`:(im&&finite(im.scan_count)>0?`${pre}rolling ${im.rolling_grade||'observed'} · net ${finite(im.rolling_best_net_pct).toFixed(2)}% · dir ${(finite(im.rolling_directional_accuracy)*100).toFixed(1)}%${asym} · candidate only`:`${pre}catalogued · waiting for rolling scan`);
  renderSelectedMarket(h.si);refreshSelectedQuote(h.si,s);
  const fv=document.getElementById('fireValue');fv.textContent=fw?`${fd} / ${fw} · ${Math.round(fr*100)}%`:'waiting for day history';document.getElementById('fireFill').style.width=(fr*100).toFixed(1)+'%';
  const ev=document.getElementById('selEvidence');ev.innerHTML=`<span class="eBadge ${qm?'on':''}">H HISTORICAL</span><span class="eBadge ${qm&&qm.n>0?'on':''}">O HOLDOUT</span><span class="eBadge ${isRiskPositive(h.si)?'on':''}">A ASYMMETRIC</span><span class="eBadge ${im&&finite(im.scan_count)>0?'on':''}">R ROLLING</span><span class="eBadge ${isProspective(h.si)?'on':''}">P PROSPECTIVE</span><span class="eBadge ${isConflict(h.si)?'on':''}">↯ COUNTER</span>`;
- const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}if(rm){ctx.push(`ASYM ${finite(rm.ratio).toFixed(2)}×`);ctx.push(`NET ${finite(rm.up).toFixed(2)}%`);ctx.push(`DOWN P75 ${finite(rm.down).toFixed(2)}%`)}if(im){ctx.push(`ROLL ${im.rolling_grade||'—'}`);ctx.push(`SCANS ${finite(im.scan_count)}`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
+ const m=DATA.metrics[h.si]||[],ctx=[];if(m.length>=16){ctx.push(`FREQ ${(finite(m[8])*100).toFixed(0)}%`);ctx.push(`MOVE μ ${finite(m[9]).toFixed(2)}%`);ctx.push(`MAX ${finite(m[10]).toFixed(2)}%`);ctx.push(`GEN ${(finite(m[13])*100).toFixed(0)}%`);ctx.push(qm?`TIME ${qm.horizon||0}m`:`IMM ${(finite(m[14])*100).toFixed(0)}%`);ctx.push(`DEPTH ${(finite(m[15])*100).toFixed(0)}%`)}if(rm){ctx.push(`ASYM ${finite(rm.ratio).toFixed(2)}×`);ctx.push(`NET ${finite(rm.up).toFixed(2)}%`);ctx.push(`DOWN P75 ${finite(rm.down).toFixed(2)}%`)}else{ctx.push('RISK UNKNOWN')}const sm=(DATA?.signal_meta||{})[String(h.si)];if(sm&&Number.isFinite(Number(sm.signal_price))&&Number(sm.signal_price)>0)ctx.push(`SIGNAL ${priceText(sm.signal_price)} · ${shortStamp(sm.signal_bar_time_et)}`);if(sq){ctx.push(`MAX L STREAK ${Math.round(sq.maxLoss)}`);if(sq.payoff>0)ctx.push(`PAYOFF ${sq.payoff.toFixed(2)}×`);if(sq.p1!==null)ctx.push(`P(L|L) ${(sq.p1*100).toFixed(0)}%`);if(sq.drawdown>0)ctx.push(`SEQ DD ${sq.drawdown.toFixed(2)}%`)}if(im){ctx.push(`ROLL ${im.rolling_grade||'—'}`);ctx.push(`SCANS ${finite(im.scan_count)}`)}document.getElementById('selContext').innerHTML=ctx.map(x=>`<span class="ctxPill">${x}</span>`).join('');
  const line=[];if(qm)line.push(`${qm.family||'pattern'} → ${qm.direction||'—'} @ ${qm.horizon||0}m`);else if(im&&finite(im.scan_count)>0)line.push('rolling grade is observational candidate evidence only');if(isRiskPositive(h.si))line.push('EXPECTED NET > P75 DOWNSIDE EXPOSURE');if(isProspective(h.si))line.push('LIVE WATCH ACTIVE');if(isConflict(h.si))line.push('opposing qualified direction present');document.getElementById('selPulseLine').textContent=line.join(' · ')||'expanded lenses are observational; no causal claim';
  document.getElementById('sel').classList.add('show');buildSelectedButtons()}
 function hideSelected(){document.getElementById('sel').classList.remove('show')}
@@ -1024,29 +1225,54 @@ function restoreView(){
 function feedFingerprint(d){
  const n=d?.counts||{};return [d?.checkpoint_batch_id||'',n.qualified_patterns||0,n.prospective_watchlist||0,n.prospective_signals||0,n.open_paper_positions||0,n.closed_paper_trades||0,d?.market_context_hash||'',d?.universe_intake_hash||'',n.universe_catalog_symbols||0,n.universe_intake_scanned||0,d?.snapshot||''].join('|')
 }
-function chips(title,key,items){return `<div class="sec"><div class="label">${title}</div><div class="row">${items.map(([v,t])=>`<button class="chip ${ui[key]===v?'on':''}" data-key="${key}" data-val="${v}">${t}</button>`).join('')}</div></div>`}
+function chips(title,key,items){return `<div class="sec hudGroup"><div class="label">${title}</div><div class="hudTiles">${items.map(([v,t])=>`<button class="chip hudTile ${ui[key]===v?'on':''}" data-key="${key}" data-val="${v}">${t}</button>`).join('')}</div></div>`}
+function hudSlider(id,label,min,max,step,value,unit=''){return `<div class="hudSlider"><div class="hudSliderTop"><span>${label}</span><strong id="${id}V">${value}${unit}</strong></div><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${value}" aria-label="${label}"></div>`}
+function chartChips(){const opts=[['universe','UNIVERSE','free-flight field'],['graph3d','3D GRAPH','fire · net · downside'],['riskcube','RISK CUBE','fire · asym · downside'],['frontier','FRONTIER','risk · net · frequency'],['orbital','ORBITAL','risk becomes radius'],['donut','3D DONUT','sector · frequency'],['funnel','FUNNEL','evidence maturity'],['sphere','SPHERE','sector · fire · net'],['torus','TORUS','sector · fire · risk'],['helix','HELIX','rise / fall strands'],['pyramid','PYRAMID','evidence layers'],['cylinder','CYLINDER','sector · evidence'],['blackhole','BLACK HOLE','downside gravity']];return `<div class="sec hudGroup"><div class="label">SHAPE / CHART</div><div class="hudTiles chartTiles">${opts.map(([v,t,s])=>`<button class="chip hudTile chartTile ${chartMode()===v?'on':''}" data-chart="${v}">${t}<small>${s}</small></button>`).join('')}</div></div>`}
 function renderDrawer(){
  const d=document.getElementById('drawer');
- d.innerHTML=
- chips('LAYOUT','layout',[['universes','UNIVERSES'],['fusion','FUSION']])+
- chips('DISPLAY','display',[['graph','GRAPH'],['glyphs','GLYPHS'],['waves','WAVES']])+
- chips('SHOW','show',[['all','ALL'],['qualified','QUALIFIED'],['hot','HOLY SHIT'],['prospective','PROSPECTIVE'],['conflict','CONFLICT']])+
- chips('COLOR','color',[['universe','UNIVERSE'],['direction','POLARITY'],['confidence','CONFIDENCE'],['economics','ECONOMICS'],['recurrence','RECURRENCE']])+
- chips('SIZE','size',[['sample','SAMPLE'],['effect','EFFECT'],['connectivity','LINKS'],['expectancy','EXPECTANCY']])+
- chips('DIMENSION','dimension',[['native','NATIVE'],['certainty','CERTAINTY'],['economics','ECON'],['recurrence','RECURRENCE'],['frequency','FREQUENCY'],['magnitude','MAGNITUDE'],['generalization','GENERALIZE'],['immediacy','IMMEDIACY'],['connectivity','NETWORK'],['tension','TENSION'],['delta','Δ TIME']])+
- chips('PALETTE','palette',[['argus','ARGUS'],['aurora','AURORA'],['thermal','THERMAL'],['evidence','EVIDENCE'],['polarity','POLARITY']])+
- chips('REALITY','reality',[['prime','PRIME'],['alt1','ALT-1'],['alt2','ALT-2'],['alt3','ALT-3']])+
- chips('PHYSICS','physics',[['normal','NORMAL'],['gravity','GRAVITY'],['opportunity-g','OPPORTUNITY-G'],['reality-g','REALITY-G'],['sector-g','SECTOR-G'],['zero-g','ZERO-G'],['explode','EXPLODE'],['orbit','ORBIT'],['magnetize','MAGNETIZE']])+
- chips('TOOLS','tool',[['none','CLEAR'],['inversion','INVERSION'],['echo','ECHO'],['kaleido','KALEIDOSCOPE'],['ghost','GHOST'],['xray','X-RAY'],['constellation','CONSTELLATION'],['trails','TRAILS'],['freeze','FREEZE'],['blackhole','BLACK HOLE']])+
- chips('CONNECTIONS','edgeMode',[['all','ALL'],['qualified','QUALIFIED']])+
- `<div class="sec"><div class="label">MIN DIRECTIONAL ACCURACY</div><div class="rangeWrap"><input id="cut" type="range" min="0" max="95" step="5" value="${Math.round(ui.cutoff*100)}"><span id="cutV" style="font-size:10px;color:#dff7ff">${Math.round(ui.cutoff*100)}%</span></div></div>`+
- `<div class="sec"><div class="row"><button id="shake" class="chip">SHAKE</button><button id="reset" class="chip">RESET FIELD</button></div></div>`;
- d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){setLayout(v);return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='physics'){realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0}}if(k==='physics'&&v==='reality-g'){fusionState.clear();fusionLast=performance.now();showToast('REALITY-G · INTERACTING GRAVITY · movement changes movement')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');if(k==='display')showToast(v==='graph'?'GRAPH · nodes + connections':v==='glyphs'?'GLYPHS · evidence states as shapes + curved paths':'WAVES · firing frequency + strength as propagating fields');renderDrawer();if(selected)buildSelectedButtons();persistView()});
- const cut=d.querySelector('#cut');cut.oninput=()=>{ui.cutoff=+cut.value/100;d.querySelector('#cutV').textContent=cut.value+'%';persistView()};
- d.querySelector('#shake').onclick=()=>{shakeUntil=performance.now()+1800;showToast('field shaken')};
- d.querySelector('#reset').onclick=()=>{ui={layout:'universes',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};home();renderDrawer();persistView();showToast('field reset')};
+ const tabs=`<div class="hudTabs"><button type="button" class="hudTab ${hudTab==='target'?'on':''}" data-tab="target"><span>LB</span>TARGET</button><button type="button" class="hudTab ${hudTab==='view'?'on':''}" data-tab="view">VIEW<span>RB</span></button><button type="button" class="hudTab ${hudTab==='field'?'on':''}" data-tab="field">FIELD<span>Y</span></button></div>`;
+ let body='';
+ if(hudTab==='target'){
+   body=`<div class="hudPane"><div class="hudPaneTitle"><span>TARGETING COMPUTER</span><b>${DATA?visibleEvidenceCount():'—'} / ${DATA?.symbols?.length||'—'}</b></div>`+
+   `<div class="sec hudGroup"><div class="label">EVIDENCE CLASS</div><div class="hudTiles qualityTiles">${[['any','ALL'],['qualified','QUALIFIED'],['asymmetric','R4 PASS'],['riskknown','RISK KNOWN'],['riskunknown','RISK UNKNOWN'],['prospective','LIVE'],['hot','HOLY SHIT'],['conflict','CONFLICT']].map(([v,t])=>`<button class="chip hudTile ${presetFilters.quality===v?'on':''}" data-quality="${v}">${t}</button>`).join('')}</div></div>`+
+   `<div class="sec hudGroup hudSliders">`+
+   hudSlider('hudFire','SIGNAL DAYS / 60',0,60,1,Math.round(finite(presetFilters.minFire)),'')+
+   hudSlider('hudDir','DIRECTIONAL ACCURACY',0,95,1,Math.round(finite(ui.cutoff)*100),'%')+
+   hudSlider('hudNet','EXPECTED NET',0,5,0.05,finite(presetFilters.minNet).toFixed(2),'%')+
+   hudSlider('hudAsym','ASYMMETRY',0,4,0.1,finite(presetFilters.minAsym).toFixed(1),'×')+
+   hudSlider('hudMove','MOVE MAGNITUDE',0,5,0.1,finite(presetFilters.minMove).toFixed(1),'%')+
+   `</div><div class="sec hudActions"><button id="filterReset" class="hudAction">X · RESET TARGETING</button></div></div>`;
+ }else if(hudTab==='view'){
+   body=`<div class="hudPane"><div class="hudPaneTitle"><span>VISUAL SYSTEMS</span><b>DISPLAY ONLY</b></div>`+
+   chartChips()+
+   chips('RENDER MODE','display',[['graph','GRAPH'],['glyphs','GLYPHS'],['waves','WAVES']])+
+   chips('COLOR CHANNEL','color',[['universe','UNIVERSE'],['direction','POLARITY'],['confidence','CONFIDENCE'],['economics','ECONOMICS'],['recurrence','RECURRENCE']])+
+   chips('NODE SCALE','size',[['sample','SAMPLE'],['effect','EFFECT'],['connectivity','LINKS'],['expectancy','EXPECTANCY']])+
+   chips('EVIDENCE AXIS','dimension',[['native','NATIVE'],['certainty','CERTAINTY'],['economics','ECON'],['recurrence','RECURRENCE'],['frequency','FREQUENCY'],['magnitude','MAGNITUDE'],['generalization','GENERALIZE'],['immediacy','IMMEDIACY'],['connectivity','NETWORK'],['tension','TENSION'],['delta','Δ TIME']])+
+   chips('PALETTE','palette',[['argus','ARGUS'],['aurora','AURORA'],['thermal','THERMAL'],['evidence','EVIDENCE'],['polarity','POLARITY']])+`</div>`;
+ }else{
+   body=`<div class="hudPane"><div class="hudPaneTitle"><span>FIELD MANIPULATION</span><b>VISUAL PHYSICS</b></div>`+
+   chips('LAYOUT','layout',[['universes','UNIVERSES'],['fusion','FUSION']])+
+   chips('REALITY','reality',[['prime','PRIME'],['alt1','ALT-1'],['alt2','ALT-2'],['alt3','ALT-3']])+
+   chips('PHYSICS','physics',[['normal','NORMAL'],['gravity','GRAVITY'],['opportunity-g','OPPORTUNITY-G'],['reality-g','REALITY-G'],['sector-g','SECTOR-G'],['zero-g','ZERO-G'],['explode','EXPLODE'],['orbit','ORBIT'],['magnetize','MAGNETIZE']])+
+   chips('TOOLS','tool',[['none','CLEAR'],['inversion','INVERSION'],['echo','ECHO'],['kaleido','KALEIDOSCOPE'],['ghost','GHOST'],['xray','X-RAY'],['constellation','CONSTELLATION'],['trails','TRAILS'],['freeze','FREEZE'],['blackhole','BLACK HOLE']])+
+   chips('CONNECTIONS','edgeMode',[['all','ALL'],['qualified','QUALIFIED']])+`<div class="sec hudActions"><button id="shake" class="hudAction">A · SHAKE FIELD</button><button id="reset" class="hudAction">X · RESET FIELD</button></div></div>`;
+ }
+ d.innerHTML=tabs+body+`<div class="sec hudActions navHelpDrawerAction"><button id="navHelpFromDrawer" class="hudAction">? · NAV HELP</button></div>`;
+ const navHelpFromDrawer=d.querySelector('#navHelpFromDrawer');if(navHelpFromDrawer)navHelpFromDrawer.onclick=()=>setNavHelp(true);
+ d.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{hudTab=b.dataset.tab;renderDrawer()});
+ d.querySelectorAll('[data-quality]').forEach(b=>b.onclick=()=>{presetFilters.quality=b.dataset.quality;fusionState.clear();syncPresetFilters();updateStats();renderDrawer();persistView()});
+d.querySelectorAll('[data-chart]').forEach(b=>b.onclick=()=>setChartMode(b.dataset.chart));
+ d.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{const k=b.dataset.key,v=b.dataset.val;if(k==='layout'){if(v==='universes')ui.chart='universe';setLayout(v);syncChartBadge();return}ui[k]=v;if(k==='reality'){fusionState.clear();fusionLast=performance.now();showToast(v==='prime'?'PRIME REALITY':v.toUpperCase()+' · same evidence, alternate embedding')}if(k==='physics'){realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0}}if(k==='physics'&&v==='reality-g'){fusionState.clear();fusionLast=performance.now();showToast('REALITY-G · INTERACTING GRAVITY')}if(k==='tool'&&(v==='inversion'||v==='kaleido'))showToast(v.toUpperCase()+' · visual transform only');renderDrawer();if(selected)buildSelectedButtons();persistView()});
+ const bind=(id,key,scale=1,unit='')=>{const el=d.querySelector('#'+id);if(!el)return;el.oninput=()=>{const raw=+el.value;const value=raw*scale;if(key==='cutoff')ui.cutoff=value;else presetFilters[key]=value;const out=d.querySelector('#'+id+'V');if(out)out.textContent=(id==='hudNet'?raw.toFixed(2):id==='hudAsym'||id==='hudMove'?raw.toFixed(1):Math.round(raw))+unit;fusionState.clear();syncPresetFilters();updateStats();persistView()}};
+ bind('hudFire','minFire',1,'');bind('hudDir','cutoff',.01,'%');bind('hudNet','minNet',1,'%');bind('hudAsym','minAsym',1,'×');bind('hudMove','minMove',1,'%');
+ const fr=d.querySelector('#filterReset');if(fr)fr.onclick=resetTargeting;
+ const sh=d.querySelector('#shake');if(sh)sh.onclick=()=>{shakeUntil=performance.now()+1800;showToast('FIELD SHAKEN')};
+ const rs=d.querySelector('#reset');if(rs)rs.onclick=()=>{ui={layout:'universes',chart:'universe',display:'graph',show:'all',color:'universe',size:'sample',dimension:'native',physics:'normal',tool:'none',reality:'prime',palette:'argus',cutoff:0,edgeMode:'all'};isolated=null;familyKey=null;wormPath.clear();fusionState.clear();realityField={key:'',state:new Map(),last:performance.now(),active:0,bary:{x:0,y:0,z:0},mass:0};resetTargeting();home();renderDrawer();persistView();showToast('FIELD RESET')};
+ syncPresetFilters()
 }
 document.getElementById('drawerToggle').onclick=()=>{document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.toggle('open')};
+for(const [id,tab] of [['hudTarget','target'],['hudView','view']]){const b=document.getElementById(id);if(b)b.onclick=()=>{hudTab=tab;document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.add('open');renderDrawer()}}
 document.getElementById('selClose').onclick=()=>{selected=null;hideSelected()};
 function syncModeButtons(){for(const [id,val] of [['old',0],['new',1],['both',2]])document.getElementById(id).classList.toggle('on',mode===val)}
 for(const [id,val] of [['old',0],['new',1],['both',2]])document.getElementById(id).onclick=()=>{mode=val;syncModeButtons();showToast(val===0?'HISTORICAL evidence':val===1?'ROLLING evidence':'HISTORICAL + ROLLING')};
@@ -1059,17 +1285,18 @@ bindZoomHold('zoomIn',-1);bindZoomHold('zoomOut',1);
 function bindHoldValue(id,setter,on,off=0){const b=document.getElementById(id);if(!b)return;b.addEventListener('pointerdown',e=>{e.preventDefault();setter(on);try{b.setPointerCapture(e.pointerId)}catch(_){}});const stop=()=>{setter(off);persistView()};b.addEventListener('pointerup',stop);b.addEventListener('pointercancel',stop);b.addEventListener('pointerleave',e=>{if(e.buttons===0)stop()})}
 bindHoldValue('liftUp',v=>liftDrive=v,1);bindHoldValue('liftDown',v=>liftDrive=v,-1);bindHoldValue('rollLeft',v=>rollDrive=v,-1);bindHoldValue('rollRight',v=>rollDrive=v,1);
 function centerPick(){const x=W/2,y=H/2;const sec=hitSector(x,y);if(sec){enterSector(sec.k);return}let n=hitNode(x,y);if(n){showSelected(n);return}const p=hitPattern(x,y);if(p){setFocus('direction');return}const s=hitSphere(x,y);if(s){setFocus(s.u.id);return}showToast('nothing at center')}
-addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))return;const k=e.key.toLowerCase(),step=Math.max(1.2,cameraGoal.dist*.08);if(k==='escape'||k==='backspace'){backView();e.preventDefault();return}if(k==='home'){home();e.preventDefault();return}if(k==='enter'){centerPick();e.preventDefault();return}if(k==='+'||k==='='){zoom(cameraGoal.dist*.72);persistView();e.preventDefault();return}if(k==='-'||k==='_'){zoom(cameraGoal.dist*1.38);persistView();e.preventDefault();return}
+addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||''))return;const k=e.key.toLowerCase(),step=Math.max(1.2,cameraGoal.dist*.08);if(k==='h'||k==='?'){toggleNavHelp();e.preventDefault();return}if(k==='escape'&&document.getElementById('navHelpScreen')?.classList.contains('open')){setNavHelp(false);e.preventDefault();return}if(k==='escape'||k==='backspace'){backView();e.preventDefault();return}if(k==='home'){home();e.preventDefault();return}if(k==='enter'){centerPick();e.preventDefault();return}if(k==='+'||k==='='){zoom(cameraGoal.dist*.72);persistView();e.preventDefault();return}if(k==='-'||k==='_'){zoom(cameraGoal.dist*1.38);persistView();e.preventDefault();return}
  const cp=Math.cos(cameraGoal.pitch),sp=Math.sin(cameraGoal.pitch),sy=Math.sin(cameraGoal.yaw),cy=Math.cos(cameraGoal.yaw),fx=sy*cp,fy=-sp,fz=cy*cp,rx=cy,rz=-sy;
  if(k==='w'){cameraGoal.target.x+=fx*step;cameraGoal.target.y+=fy*step;cameraGoal.target.z+=fz*step;e.preventDefault()}else if(k==='s'){cameraGoal.target.x-=fx*step;cameraGoal.target.y-=fy*step;cameraGoal.target.z-=fz*step;e.preventDefault()}else if(k==='a'){cameraGoal.target.x-=rx*step;cameraGoal.target.z-=rz*step;e.preventDefault()}else if(k==='d'){cameraGoal.target.x+=rx*step;cameraGoal.target.z+=rz*step;e.preventDefault()}else if(k==='q'){cameraGoal.target.y+=step;e.preventDefault()}else if(k==='e'){cameraGoal.target.y-=step;e.preventDefault()}else if(k==='z'){cameraGoal.roll-=.12;e.preventDefault()}else if(k==='x'){cameraGoal.roll+=.12;e.preventDefault()}else if(k==='arrowleft'){cameraGoal.yaw-=.11;e.preventDefault()}else if(k==='arrowright'){cameraGoal.yaw+=.11;e.preventDefault()}else if(k==='arrowup'){cameraGoal.pitch=clamp(cameraGoal.pitch-.085,-1.52,1.52);e.preventDefault()}else if(k==='arrowdown'){cameraGoal.pitch=clamp(cameraGoal.pitch+.085,-1.52,1.52);e.preventDefault()}});
 
+const navHelpScreen=document.getElementById('navHelpScreen');function setNavHelp(on){navHelpScreen.classList.toggle('open',!!on);navHelpScreen.setAttribute('aria-hidden',on?'false':'true');document.body.classList.toggle('nav-help-open',!!on);if(on){document.getElementById('drawer').classList.remove('open');document.getElementById('searchPanel').classList.remove('open');setGestureHelp(false);setTimeout(()=>document.getElementById('navHelpClose')?.focus(),20)}}function toggleNavHelp(){setNavHelp(!navHelpScreen.classList.contains('open'))}
 const gestureHelp=document.getElementById('gestureHelp');function setGestureHelp(on){gestureHelp.classList.toggle('show',!!on);try{if(!on)localStorage.setItem('argus-nav-help-seen','1')}catch(_){}}
-document.getElementById('helpToggle').onclick=()=>setGestureHelp(!gestureHelp.classList.contains('show'));document.getElementById('gestureClose').onclick=()=>setGestureHelp(false);
+document.getElementById('helpToggle').onclick=toggleNavHelp;document.getElementById('navHelpClose').onclick=()=>setNavHelp(false);navHelpScreen.addEventListener('pointerdown',e=>{if(e.target===navHelpScreen)setNavHelp(false)});document.getElementById('gestureClose').onclick=()=>setGestureHelp(false);
 setTimeout(()=>{try{if(!localStorage.getItem('argus-nav-help-seen'))setGestureHelp(true)}catch(_){setGestureHelp(true)}},550);setTimeout(()=>{if(gestureHelp.classList.contains('show'))setGestureHelp(false)},6500);
 
 function searchMatches(q){q=String(q||'').trim().toUpperCase();if(!q)return[];const all=(DATA?.symbols||[]).map((s,i)=>({s,i,score:s.toUpperCase()===q?0:s.toUpperCase().startsWith(q)?1:s.toUpperCase().includes(q)?2:9})).filter(x=>x.score<9);all.sort((a,b)=>a.score-b.score||a.s.length-b.s.length||a.s.localeCompare(b.s));return all.slice(0,12)}
 function renderSearchResults(){const q=document.getElementById('securitySearch').value,box=document.getElementById('searchResults'),m=searchMatches(q);box.innerHTML='';for(const x of m){const b=document.createElement('button');b.type='button';b.className='searchResult';const sec=sectorLabel(x.i),qm=qmeta(x.i),fw=fireWindow(),fd=fireDays(x.i);b.innerHTML=`<div class="searchSym">${x.s}${isHot(x.i)?' ✦':''}</div><div class="searchMeta">${sec?sec+' · ':''}${qm?qm.direction+' · '+qm.horizon+'m · ':''}${fw?fd+'/'+fw+' fire days':'frequency pending'}</div>`;b.onclick=()=>revealSecurity(x.i);box.appendChild(b)}if(q&&!m.length){box.innerHTML='<div class="searchMeta" style="padding:8px">No matching observed security.</div>'}}
-function revealSecurity(si){document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.remove('open');familyKey=null;isolated=null;wormPath.clear();sectorFocus=null;sectorReturnView=null;ui.show='all';ui.cutoff=0;ui.layout='fusion';focus=null;const u=fusionDominantUniverse(si),d=fusionDesired(si);cameraGoalTo({target:{x:d.x,y:d.y,z:d.z},dist:8,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});selected={si,u};selectedNeighbors=neighborsOf(si);showSelected(selected);syncUniverseButtons();renderDrawer();persistView();showToast(`${DATA.symbols[si]} located in FUSION`)}
+function revealSecurity(si){document.getElementById('searchPanel').classList.remove('open');document.getElementById('drawer').classList.remove('open');familyKey=null;isolated=null;wormPath.clear();sectorFocus=null;sectorReturnView=null;ui.show='all';ui.cutoff=0;ui.layout='fusion';ui.chart='universe';syncChartBadge();focus=null;const u=fusionDominantUniverse(si),d=fusionDesired(si);cameraGoalTo({target:{x:d.x,y:d.y,z:d.z},dist:8,yaw:-.18,pitch:-.08,roll:0,verticalOffset:0});selected={si,u};selectedNeighbors=neighborsOf(si);showSelected(selected);syncUniverseButtons();renderDrawer();persistView();showToast(`${DATA.symbols[si]} located in FUSION`)}
 const searchPanel=document.getElementById('searchPanel'),searchInput=document.getElementById('securitySearch');
 document.getElementById('searchToggle').onclick=()=>{const open=!searchPanel.classList.contains('open');document.getElementById('drawer').classList.remove('open');searchPanel.classList.toggle('open',open);if(open){searchInput.value='';renderSearchResults();setTimeout(()=>searchInput.focus(),30)}};
 searchInput.addEventListener('input',renderSearchResults);searchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){const m=searchMatches(searchInput.value);if(m[0])revealSecurity(m[0].i)}if(e.key==='Escape')searchPanel.classList.remove('open')});
@@ -1079,7 +1306,7 @@ document.getElementById('fullToggle').onclick=toggleFullscreen;document.addEvent
 function syncUniverseButtons(){document.querySelectorAll('.ub').forEach(b=>b.classList.toggle('on',b.dataset.id==='__fusion__'?ui.layout==='fusion':(ui.layout==='universes'&&b.dataset.id===focus)))}
 function initUI(){
  const bar=document.getElementById('universes');bar.innerHTML='';const all=document.createElement('button');all.className='ub';all.dataset.id='__fusion__';all.textContent='FUSION';all.onclick=()=>setLayout(ui.layout==='fusion'?'universes':'fusion');bar.appendChild(all);for(const u of DATA.universes||[]){const b=document.createElement('button');b.className='ub';b.dataset.id=u.id;b.textContent=SHORT[u.id]||u.label.toUpperCase();b.onclick=()=>focus===u.id&&ui.layout==='universes'?home():setFocus(u.id);bar.appendChild(b)}
- renderDrawer();syncUniverseButtons();syncModeButtons();bindPresetFilters();syncPresetFilters();updateStats()
+ renderDrawer();syncChartBadge();syncUniverseButtons();syncModeButtons();bindPresetFilters();syncPresetFilters();updateStats()
 }
 function serviceHealth(){const h=DATA?.service_health||{},stamp=Date.parse(h.generated_at_utc||'');const age=Number.isFinite(stamp)?Math.max(0,(Date.now()-stamp)/1000):Infinity;let status=String(h.overall_status||'UNKNOWN').toUpperCase();if(age>900)status='STALE';return {status,age}}
 function updateStats(){const n=DATA?.counts||{},sh=serviceHealth(),sec=sectorFocus!==null?sectorInfo(sectorFocus):null,sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} frozen · ${n.universe_intake_prospective_confirmed||0} prospect-confirmed`:'';document.getElementById('title').textContent=`ARGUS OBSERVATORY · ${sh.status}${sec?' · '+sec.label.toUpperCase():''}`;document.getElementById('stats').textContent=`${visibleEvidenceCount()} shown · ${sec?sec.count+' '+sec.label+' sector · ':''}${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.risk_positive_symbols??DATA?.risk_positive_indices?.length??0} asymmetric · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
