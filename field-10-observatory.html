@@ -1448,13 +1448,58 @@ function initUI(){
  renderDrawer();syncChartBadge();syncUniverseButtons();syncModeButtons();bindPresetFilters();syncPresetFilters();updateStats();document.querySelectorAll('[data-fire-window]').forEach(b=>b.onclick=()=>setFireWindow(b.dataset.fireWindow));const fc=document.getElementById('fireCustomDays');if(fc){fc.value=String(fireCustomDays);fc.oninput=()=>{fireCustomDays=clamp(Math.round(+fc.value||60),1,60);document.getElementById('fireCustomValue').textContent=fireCustomDays+'D';if(fireWindowMode==='custom')setFireWindow('custom')}}setFireWindow(fireWindowMode)
 }
 function serviceHealth(){const h=DATA?.service_health||{},stamp=Date.parse(h.generated_at_utc||'');const age=Number.isFinite(stamp)?Math.max(0,(Date.now()-stamp)/1000):Infinity;let status=String(h.overall_status||'UNKNOWN').toUpperCase();if(age>900)status='STALE';return {status,age}}
-function updateStats(){const n=DATA?.counts||{},sh=serviceHealth(),sec=sectorFocus!==null?sectorInfo(sectorFocus):null,sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} frozen · ${n.universe_intake_prospective_confirmed||0} prospect-confirmed`:'';document.getElementById('title').textContent=`ARGUS OBSERVATORY · ${sh.status}${sec?' · '+sec.label.toUpperCase():''}`;document.getElementById('stats').textContent=`${visibleEvidenceCount()} shown · ${sec?sec.count+' '+sec.label+' sector · ':''}${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.risk_positive_symbols??DATA?.risk_positive_indices?.length??0} asymmetric · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict · ${unexpectedCount()} unexpected${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.snapshot||''}`}
+function updateStats(){const n=DATA?.counts||{},sh=serviceHealth(),sec=sectorFocus!==null?sectorInfo(sectorFocus):null,sc=n.sector_classified_symbols?` · ${n.sector_classified_symbols} sector-mapped`:'',uc=n.universe_catalog_symbols?` · ${n.universe_catalog_symbols} catalog · ${n.universe_intake_scanned||0} rolling-scanned · ${n.universe_intake_rolling_qualified_symbols||0} frozen · ${n.universe_intake_prospective_confirmed||0} prospect-confirmed`:'';document.getElementById('title').textContent=`ARGUS OBSERVATORY · ${sh.status}${sec?' · '+sec.label.toUpperCase():''}`;document.getElementById('stats').textContent=`${visibleEvidenceCount()} shown · ${sec?sec.count+' '+sec.label+' sector · ':''}${n.symbols??DATA?.symbols?.length??0} observed · ${n.qualified_patterns??0} historical-qualified · ${n.qualified_symbols??0} historical symbols · ${n.risk_positive_symbols??DATA?.risk_positive_indices?.length??0} asymmetric · ${n.hot_symbols??DATA?.hot_indices?.length??0} hot · ${n.conflict_symbols??DATA?.conflict_indices?.length??0} conflict · ${unexpectedCount()} unexpected${uc}${sc}${ui.layout==='fusion'&&fusionActiveCount?` · ${fusionActiveCount} moving`:''} · DIM ${String(ui.dimension||'native').toUpperCase()} · LIVE 60s · ${DATA?.live_snapshot||DATA?.snapshot||''}`}
 function normalizeOld(d){d.edges=d.edges||{};d.qualified_meta=d.qualified_meta||{};d.intake_meta=d.intake_meta||{};d.paper_meta=d.paper_meta||{};d.friction_status=d.friction_status||{};d.avg_dollar_volumes=d.avg_dollar_volumes||[];d.latest_prices=d.latest_prices||[];d.latest_price_times=d.latest_price_times||[];d.latest_price_sources=d.latest_price_sources||[];d.market_caps=d.market_caps||[];d.universe_intake=d.universe_intake||{};d.service_health=d.service_health||{};d.qualified_indices=d.qualified_indices||[];d.risk_positive_indices=d.risk_positive_indices||[];d.hot_indices=d.hot_indices||[];d.conflict_indices=d.conflict_indices||[];d.prospective_indices=d.prospective_indices||[];d.sector_ids=d.sector_ids||[];d.sectors=d.sectors||[];d.fire_days_60=d.fire_days_60||[];d.fire_window_days=finite(d.fire_window_days,0);d.universes=d.universes||[];if(!d.universes.some(u=>u.id==='unexpected'))d.universes.push({id:'unexpected',label:'Unexpected Movers'});return d}
-async function fetchData(){
- const paths=['argus-v478-latest.json','argus-latest-compact.json'];let last=null;
- for(const p of paths){try{const r=await fetch(p+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);const d=normalizeOld(await r.json());return d}catch(e){last=e}}
- throw last||new Error('no data')
+function liveMetaExpand(c){
+ c=c||{};return{
+  status:c.st||'',scan_count:finite(c.c,0),rolling_grade:c.g||'',rolling_qualified_patterns:finite(c.qp,0),
+  rolling_best_net_pct:c.net??0,rolling_directional_accuracy:c.da??0,frozen_candidate_patterns:finite(c.fc,0),
+  prospective_status:c.ps||'',prospective_n:finite(c.pn,0),latest_price:c.px??null,latest_bar_et:c.pt||'',
+  rolling_direction:c.dir||'',rolling_risk_status:c.rs||'UNKNOWN',rolling_risk_n:finite(c.rn,0),
+  rolling_mfe_p75_pct:c.mfe??null,rolling_mae_p75_pct:c.mae??null,rolling_risk_ratio:c.rr??null,
+  rolling_asymmetry_edge_pct:c.ae??null,rolling_upside_p75_net_pct:c.up??null,rolling_downside_exposure_pct:c.down??null,
+  rolling_risk_pass:!!c.rp,sequence_n:finite(c.sn,0),sequence_win_rate:c.sw??null,sequence_avg_win_pct:c.aw??null,
+  sequence_avg_loss_pct:c.al??null,sequence_payoff_ratio:c.po??null,sequence_max_consecutive_losses:finite(c.ml,0),
+  sequence_loss_streaks_ge3:finite(c.s3,0),sequence_loss_streaks_ge4:finite(c.s4,0),
+  sequence_p_loss_after_1_loss:c.p1??null,sequence_p_loss_after_2_losses:c.p2??null,sequence_p_loss_after_3_losses:c.p3??null,
+  sequence_worst_additive_drawdown_pct:c.dd??null,rolling_authority:'live_universe_overlay'
+ }
 }
+function liveB64Bytes(s){if(!s)return new Uint8Array(0);try{const b=atob(s),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}catch(_){return new Uint8Array(0)}}
+function liveB64F32(s){const b=liveB64Bytes(s);try{return new Float32Array(b.buffer,b.byteOffset,Math.floor(b.byteLength/4))}catch(_){return new Float32Array(0)}}
+function liveBit(bytes,i){return !!(bytes[i>>3]&(1<<(i&7)))}
+function applyLiveCatalog(d,c){
+ if(!c||c.schema!=='ARGUS_V478_FIELD10_LIVE_CATALOG_V1'||!Array.isArray(c.symbols))return d;
+ d=normalizeOld(d);const ix=new Map((d.symbols||[]).map((s,i)=>[String(s),i]));
+ const ensureArr=name=>{if(!Array.isArray(d[name]))d[name]=[];return d[name]};
+ const metrics=ensureArr('metrics'),prices=ensureArr('latest_prices'),ptimes=ensureArr('latest_price_times'),psrc=ensureArr('latest_price_sources'),pfresh=ensureArr('latest_price_freshness'),caps=ensureArr('market_caps'),advs=ensureArr('avg_dollar_volumes'),secids=ensureArr('sector_ids'),fire=ensureArr('fire_days_60');
+ const addDefaults=()=>{metrics.push(Array(16).fill(0));prices.push(null);ptimes.push('');psrc.push('');pfresh.push('STALE');caps.push(null);advs.push(null);secids.push(-1);fire.push(0)};
+ for(const sym0 of c.symbols){const sym=String(sym0);if(!ix.has(sym)){ix.set(sym,d.symbols.length);d.symbols.push(sym);addDefaults()}}
+ d.live_catalog_symbols=c.symbols.map(String);d.live_catalog_hash=c.catalog_hash||'';d.counts={...(d.counts||{}),symbols:d.symbols.length,universe_catalog_symbols:c.symbols.length};return d
+}
+function applyLiveOverlay(d,o){
+ if(!o||o.schema!=='ARGUS_V478_FIELD10_LIVE_UNIVERSE_OVERLAY_V2_COMPACT')return d;
+ d=normalizeOld(d);const cat=Array.isArray(d.live_catalog_symbols)?d.live_catalog_symbols:[],ix=new Map((d.symbols||[]).map((s,i)=>[String(s),i]));
+ const st=liveB64Bytes(o.status_u8_b64),gr=liveB64Bytes(o.grade_u8_b64),tw=liveB64Bytes(o.scan_twice_b64),px=liveB64F32(o.price_f32_b64),stn=o.status_names||[],grn=o.grade_names||[];
+ if(!Array.isArray(d.latest_prices))d.latest_prices=[];if(!Array.isArray(d.latest_price_times))d.latest_price_times=[];if(!Array.isArray(d.latest_price_sources))d.latest_price_sources=[];if(!Array.isArray(d.latest_price_freshness))d.latest_price_freshness=[];
+ for(let ci=0;ci<cat.length;ci++){const sym=cat[ci],si=ix.get(sym);if(!Number.isInteger(si))continue;const code=st[ci]||0,gc=gr[ci]||0,basic={st:stn[code]||'',g:grn[gc]||'',c:code?1:0};if(liveBit(tw,ci))basic.c=2;const detail=(o.m||{})[sym]||{};const m=liveMetaExpand({...basic,...detail});d.intake_meta[String(si)]={...(d.intake_meta[String(si)]||{}),...m};
+  const p=px[ci];if(Number.isFinite(p)&&p>0){d.latest_prices[si]=p;d.latest_price_times[si]=m.latest_bar_et||o.updated_at_utc||'';d.latest_price_sources[si]='ROLLING_SCAN';d.latest_price_freshness[si]='STALE'}
+ }
+ const rset=new Set(d.risk_positive_indices||[]);for(const sym of o.risk_positive_symbols||[]){const si=ix.get(String(sym));if(Number.isInteger(si))rset.add(si)}d.risk_positive_indices=[...rset];
+ const pset=new Set(d.prospective_indices||[]);for(const sym of o.prospective_symbols||[]){const si=ix.get(String(sym));if(Number.isInteger(si))pset.add(si)}d.prospective_indices=[...pset];
+ d.counts={...(d.counts||{}),...(o.counts||{})};d.counts.symbols=d.symbols.length;d.counts.risk_positive_symbols=d.risk_positive_indices.length;
+ d.universe_intake=o.universe_intake||d.universe_intake||{};d.universe_intake_hash=o.overlay_hash||d.universe_intake_hash||'';d.live_snapshot=o.updated_at_utc||'';
+ if(o.service_health&&typeof o.service_health==='object')d.service_health=o.service_health;return d
+}
+async function fetchData(){
+ const paths=['argus-v478-latest.json','argus-latest-compact.json'];let last=null,base=null;
+ for(const p of paths){try{const r=await fetch(p+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);base=normalizeOld(await r.json());break}catch(e){last=e}}
+ if(!base)throw last||new Error('no data');
+ try{const r=await fetch('argus-universe-catalog.json?ts='+Date.now(),{cache:'no-store'});if(r.ok)base=applyLiveCatalog(base,await r.json())}catch(_){ }
+ try{const r=await fetch('argus-universe-live.json?ts='+Date.now(),{cache:'no-store'});if(r.ok)base=applyLiveOverlay(base,await r.json())}catch(_){ }
+ return base
+}
+
 async function loadData(first=false){
  try{
    const d=await fetchData(),fp=feedFingerprint(d),before=DATA?snapshotView():null;
