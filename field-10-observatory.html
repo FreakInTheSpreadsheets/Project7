@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_OBSERVATORY_TRADE_HISTORY_FILE_V1_20260901 | ARGUS_OBSERVATORY_TRADE_HISTORY_TRANSPORT_V1_20260901 | ARGUS_OBSERVATORY_TRADE_HISTORY_V1_20260901 | ARGUS_OBSERVATORY_PORTFOLIO_SCREEN_V1_20260901 | ARGUS_OBSERVATORY_PORTFOLIO_PERFORMANCE_V1_20260901 | ARGUS_OBSERVATORY_MEASURED_CAPACITY_CEILING_V1_20260827 | ARGUS_OBSERVATORY_SHADOW_MARKET_FUSION_V1_20260826 | ARGUS_OBSERVATORY_SAFE_INTRADAY_UI_20260825 | ARGUS_OBSERVATORY_PRICE_ORB_SCALE_V1 | ARGUS_OBSERVATORY_OCCURRENCE_GLOW_60D_V1 | ARGUS_OBSERVATORY_POSTCLOSE_HISTORY_WINDOWS_V1 | ARGUS_OBSERVATORY_GROSS_WL_ACCOUNTING_V1 | ARGUS_OBSERVATORY_MARKET_STATUS_FRICTION_V1 | ARGUS_OBSERVATORY_UNEXPECTED_MOVERS_V1 | ARGUS_OBSERVATORY_V12_CLEAN_VIEW_ORBS | ARGUS_OBSERVATORY_V12_CLUSTER_LEGEND | ARGUS_OBSERVATORY_V12_NAV_HELP | ARGUS_OBSERVATORY_V12_XBOX_HUD_SHAPES | ARGUS_OBSERVATORY_V11_0 | ARGUS_OBSERVATORY_V10_0 | ARGUS_OBSERVATORY_V9_9 | ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
+<!-- ARGUS_OBSERVATORY_DEDICATED_PORTFOLIO_FEED_V1_20260901 | ARGUS_OBSERVATORY_TRADE_HISTORY_FILE_V1_20260901 | ARGUS_OBSERVATORY_TRADE_HISTORY_TRANSPORT_V1_20260901 | ARGUS_OBSERVATORY_TRADE_HISTORY_V1_20260901 | ARGUS_OBSERVATORY_PORTFOLIO_SCREEN_V1_20260901 | ARGUS_OBSERVATORY_PORTFOLIO_PERFORMANCE_V1_20260901 | ARGUS_OBSERVATORY_MEASURED_CAPACITY_CEILING_V1_20260827 | ARGUS_OBSERVATORY_SHADOW_MARKET_FUSION_V1_20260826 | ARGUS_OBSERVATORY_SAFE_INTRADAY_UI_20260825 | ARGUS_OBSERVATORY_PRICE_ORB_SCALE_V1 | ARGUS_OBSERVATORY_OCCURRENCE_GLOW_60D_V1 | ARGUS_OBSERVATORY_POSTCLOSE_HISTORY_WINDOWS_V1 | ARGUS_OBSERVATORY_GROSS_WL_ACCOUNTING_V1 | ARGUS_OBSERVATORY_MARKET_STATUS_FRICTION_V1 | ARGUS_OBSERVATORY_UNEXPECTED_MOVERS_V1 | ARGUS_OBSERVATORY_V12_CLEAN_VIEW_ORBS | ARGUS_OBSERVATORY_V12_CLUSTER_LEGEND | ARGUS_OBSERVATORY_V12_NAV_HELP | ARGUS_OBSERVATORY_V12_XBOX_HUD_SHAPES | ARGUS_OBSERVATORY_V11_0 | ARGUS_OBSERVATORY_V10_0 | ARGUS_OBSERVATORY_V9_9 | ARGUS_OBSERVATORY_V9_8 | ARGUS_OBSERVATORY_V9_7 | ARGUS_OBSERVATORY_V9_6 | sector drill-down + adaptive navigation + service health + frozen/prospective rolling authority: drag-to-look + touch flight pad + dedicated zoom rocker + desktop mouse/keyboard + TV remote keys | responsive phone/tablet/desktop/TV layout + adaptive render budget + inertial camera | continuous rolling universe intake + expanded evidence universes | graph + glyphs + waves | ARGUS_OBSERVATORY_V8_COMPAT | ARGUS_OBSERVATORY_V6_COMPAT | 2026-08-23 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -1500,49 +1500,8 @@ function initUI(){
  const bar=document.getElementById('universes');bar.innerHTML='';const addFusionMode=(id,label,view)=>{const b=document.createElement('button');b.className='ub';b.dataset.id=id;b.textContent=label;b.onclick=()=>setFusionView(view);bar.appendChild(b)};addFusionMode('__fusion__','FUSION','market');addFusionMode('__shadow__','SHADOW','shadow');addFusionMode('__split__','SPLIT','split');for(const u of DATA.universes||[]){const b=document.createElement('button');b.className='ub';b.dataset.id=u.id;b.textContent=SHORT[u.id]||u.label.toUpperCase();b.onclick=()=>focus===u.id&&ui.layout==='universes'?home():setFocus(u.id);bar.appendChild(b)}
  renderDrawer();syncChartBadge();syncUniverseButtons();syncModeButtons();bindPresetFilters();syncPresetFilters();updateStats();document.querySelectorAll('[data-fire-window]').forEach(b=>b.onclick=()=>setFireWindow(b.dataset.fireWindow));const fc=document.getElementById('fireCustomDays');if(fc){fc.value=String(fireCustomDays);fc.oninput=()=>{fireCustomDays=clamp(Math.round(+fc.value||60),1,60);document.getElementById('fireCustomValue').textContent=fireCustomDays+'D';if(fireWindowMode==='custom')setFireWindow('custom')}}setFireWindow(fireWindowMode)
 }
-// ARGUS_OBSERVATORY_PORTFOLIO_HISTORY_FALLBACK_V1_20260901
-// Display-only fallback: derive realized performance from the dedicated closed-trade
-// history feed when older/compact live overlays omit portfolio_performance.
-function derivePortfolioFromTradeHistory(){
- const th=DATA?.trade_history||{},rows=Array.isArray(th.trades)?th.trades:[];
- if(!rows.length)return {};
- const trades=rows.map((t,i)=>({
-   ...t,
-   _i:i,
-   _pnl:Number(t.pnl),
-   _notional:Number(t.notional),
-   _ts:Date.parse(t.exit_time_et||t.entry_time_et||''),
-   _date:String(t.exit_time_et||t.entry_time_et||'').slice(0,10)
- })).filter(t=>Number.isFinite(t._pnl));
- if(!trades.length)return {};
- trades.sort((a,b)=>(Number.isFinite(a._ts)?a._ts:Infinity)-(Number.isFinite(b._ts)?b._ts:Infinity)||a._i-b._i);
- const firstNotional=trades.find(t=>Number.isFinite(t._notional)&&t._notional>0)?._notional;
- const starting=Number.isFinite(firstNotional)?firstNotional:1000;
- const totalPnl=trades.reduce((a,t)=>a+t._pnl,0),equity=starting+totalPnl;
- const etParts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
- const y=+etParts.year,m=+etParts.month,d=+etParts.day;
- const pad=n=>String(n).padStart(2,'0'),ymd=x=>`${x.getUTCFullYear()}-${pad(x.getUTCMonth()+1)}-${pad(x.getUTCDate())}`;
- const todayDate=new Date(Date.UTC(y,m-1,d)),today=ymd(todayDate),dow=todayDate.getUTCDay(),monBack=(dow+6)%7,weekDate=new Date(todayDate.getTime()-monBack*86400000),week=ymd(weekDate);
- const now=Date.now(),rolling14=now-14*86400000,rolling30=now-30*86400000;
- const firstTs=trades.find(t=>Number.isFinite(t._ts))?._ts,firstDate=trades.find(t=>t._date)?._date||today;
- const windowFrom=(key,insideFn,beforeFn,complete,startLabel)=>{
-   const inside=trades.filter(insideFn),before=trades.filter(beforeFn).reduce((a,t)=>a+t._pnl,0),pnl=inside.reduce((a,t)=>a+t._pnl,0),base=starting+before,end=base+pnl;
-   return {pct:base?pnl/base*100:0,pnl,start_equity:base,end_equity:end,trades:inside.length,complete:!!complete,window_start_et:startLabel};
- };
- const windows={
-   day:windowFrom('day',t=>t._date>=today,t=>t._date&&t._date<today,firstDate<=today,today+'T00:00:00 America/New_York'),
-   week:windowFrom('week',t=>t._date>=week,t=>t._date&&t._date<week,firstDate<=week,week+'T00:00:00 America/New_York'),
-   two_weeks:windowFrom('two_weeks',t=>Number.isFinite(t._ts)&&t._ts>=rolling14,t=>Number.isFinite(t._ts)&&t._ts<rolling14,Number.isFinite(firstTs)&&firstTs<=rolling14,new Date(rolling14).toISOString()),
-   month:windowFrom('month',t=>Number.isFinite(t._ts)&&t._ts>=rolling30,t=>Number.isFinite(t._ts)&&t._ts<rolling30,Number.isFinite(firstTs)&&firstTs<=rolling30,new Date(rolling30).toISOString())
- };
- return {schema:'ARGUS_V478_PORTFOLIO_PERFORMANCE_V1_HISTORY_FALLBACK',available:true,book:String(th.book||'long'),starting_equity:starting,equity,realized_pnl:totalPnl,trades:trades.length,basis:String(th.basis||'GROSS_OBSERVED_PENDING_EXECUTION_COST'),execution_cost_status:String(th.execution_cost_status||'UNKNOWN_NOT_MEASURED'),generated_at_utc:String(th.generated_at_utc||new Date().toISOString()),windows,semantics:'display-only realized paper performance derived from dedicated closed-trade history; trading authority unchanged'};
-}
-function portfolioPerformanceView(){
- const p=DATA?.portfolio_performance||{};
- return p.available&&p.windows?p:derivePortfolioFromTradeHistory();
-}
 function renderPortfolioPerformance(){
- const box=document.getElementById('portfolioPerf');if(!box)return;const p=portfolioPerformanceView();
+ const box=document.getElementById('portfolioPerf');if(!box)return;const p=DATA?.portfolio_performance||{};
  if(!p.available||!p.windows){box.innerHTML='<div class="pfHead"><span>PAPER LONG · REALIZED</span><strong>WAITING</strong></div><div class="pfBasis">DISPLAY ONLY · TRADING AUTHORITY UNCHANGED</div>';return}
  const moneyFmt=v=>{const n=Number(v);return Number.isFinite(n)?'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):'—'};
  const rows=[['DAY','day'],['WEEK','week'],['2W','two_weeks'],['MONTH','month']];
@@ -1562,7 +1521,7 @@ function renderPortfolioTradeHistory(p){
 }
 function renderPortfolioScreen(){
  const view=document.getElementById('portfolioScreen');if(!view)return;const active=chartMode()==='portfolio';document.body.classList.toggle('portfolioScreenOpen',active);view.classList.toggle('historyOpen',active&&portfolioHistoryOpen);view.setAttribute('aria-hidden',active?'false':'true');document.getElementById('portfolioHistoryBody')?.setAttribute('aria-hidden',(active&&portfolioHistoryOpen)?'false':'true');if(!active)return;
- const p=portfolioPerformanceView(),body=document.getElementById('portfolioScreenBody'),fresh=document.getElementById('portfolioScreenFreshness');renderPortfolioTradeHistory(p);
+ const p=DATA?.portfolio_performance||{},body=document.getElementById('portfolioScreenBody'),fresh=document.getElementById('portfolioScreenFreshness');renderPortfolioTradeHistory(p);
  if(!body)return;
  const money=v=>{const n=Number(v);return Number.isFinite(n)?'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}):'—'};
  const signedMoney=v=>{const n=Number(v);return Number.isFinite(n)?`${n>=0?'+':'-'}$${Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}`:'—'};
@@ -1627,6 +1586,9 @@ async function fetchData(){
  if(!base)throw last||new Error('no data');
  try{const r=await fetch('argus-universe-catalog.json?ts='+Date.now(),{cache:'no-store'});if(r.ok)base=applyLiveCatalog(base,await r.json())}catch(_){ }
  try{const r=await fetch('argus-universe-live.json?ts='+Date.now(),{cache:'no-store'});if(r.ok)base=applyLiveOverlay(base,await r.json())}catch(_){ }
+ // Portfolio performance is important enough to have its own tiny transport.
+ // This makes the screen resilient if the much larger live-universe overlay is slow, stale, or temporarily unavailable.
+ try{const r=await fetch('argus-portfolio-performance.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const pp=await r.json();if(pp&&typeof pp==='object'&&pp.available!==false)base.portfolio_performance=pp}}catch(_){ }
  try{const r=await fetch('argus-trade-history.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){const th=await r.json();if(th&&typeof th==='object')base.trade_history=th}}catch(_){ }
  return base
 }
