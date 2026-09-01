@@ -1,8 +1,57 @@
 {
   "schema": "ARGUS_V478_PORTFOLIO_PERFORMANCE_V1",
-  "available": false,
+  "available": true,
   "book": "long",
+  "starting_equity": 1000.0,
+  "equity": 1163.961606,
+  "realized_pnl": 163.961606,
+  "trades": 34,
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
-  "semantics": "display-only realized paper performance; trading authority unchanged"
+  "inception_et": "2026-08-24T10:30:41.599917-04:00",
+  "generated_at_utc": "2026-09-01T21:38:15.625482+00:00",
+  "missing_timestamp_trades": 0,
+  "windows": {
+    "day": {
+      "pct": 1.594298,
+      "pnl": 18.265802,
+      "start_equity": 1145.695804,
+      "end_equity": 1163.961606,
+      "trades": 8,
+      "complete": true,
+      "window_start_et": "2026-09-01T00:00:00-04:00",
+      "coverage_start_et": "2026-09-01T00:00:00-04:00"
+    },
+    "week": {
+      "pct": 4.053972,
+      "pnl": 45.348276,
+      "start_equity": 1118.61333,
+      "end_equity": 1163.961606,
+      "trades": 14,
+      "complete": true,
+      "window_start_et": "2026-08-31T00:00:00-04:00",
+      "coverage_start_et": "2026-08-31T00:00:00-04:00"
+    },
+    "two_weeks": {
+      "pct": 16.396161,
+      "pnl": 163.961606,
+      "start_equity": 1000.0,
+      "end_equity": 1163.961606,
+      "trades": 34,
+      "complete": false,
+      "window_start_et": "2026-08-18T17:38:15.601967-04:00",
+      "coverage_start_et": "2026-08-24T10:30:41.599917-04:00"
+    },
+    "month": {
+      "pct": 16.396161,
+      "pnl": 163.961606,
+      "start_equity": 1000.0,
+      "end_equity": 1163.961606,
+      "trades": 34,
+      "complete": false,
+      "window_start_et": "2026-08-02T17:38:15.601967-04:00",
+      "coverage_start_et": "2026-08-24T10:30:41.599917-04:00"
+    }
+  },
+  "semantics": "display-only realized paper performance; no trading, qualification, sizing, stop, horizon, or authority changes"
 }
