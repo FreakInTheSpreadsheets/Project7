@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 35,
+  "count": 36,
   "trades": [
     {
       "trade_no": 1,
@@ -563,9 +563,25 @@
       "pct": -0.832611,
       "exit_reason": "STOP_0_75_PCT",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 36,
+      "symbol": "XEL",
+      "direction": "RISE",
+      "pattern_family": "CORE",
+      "pattern_id": "4d6889dfa9ef7e1d8caaf54e",
+      "entry_time_et": "2026-09-02T10:02:00-04:00",
+      "exit_time_et": "2026-09-02T10:32:00-04:00",
+      "entry_price": 74.919998,
+      "exit_price": 75.040001,
+      "notional": 1154.270335,
+      "pnl": 1.848847,
+      "pct": 0.160175,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-09-02T14:32:21.097538+00:00",
+  "generated_at_utc": "2026-09-02T14:33:29.065667+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
