@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 42,
+  "count": 43,
   "trades": [
     {
       "trade_no": 1,
@@ -675,9 +675,25 @@
       "pct": 0.08615,
       "exit_reason": "FIXED_30_MINUTE_HORIZON",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 43,
+      "symbol": "BMNU",
+      "direction": "RISE",
+      "pattern_family": "FLOW",
+      "pattern_id": "4b7b021e60f1ec7dcc19aee4",
+      "entry_time_et": "2026-09-03T11:02:00-04:00",
+      "exit_time_et": "2026-09-03T11:12:00-04:00",
+      "entry_price": 20.9,
+      "exit_price": 20.530001,
+      "notional": 1129.666685,
+      "pnl": -19.998827,
+      "pct": -1.77033,
+      "exit_reason": "STOP_0_75_PCT",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-09-03T15:11:45.469344+00:00",
+  "generated_at_utc": "2026-09-03T15:12:52.342342+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
