@@ -9,7 +9,7 @@
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "inception_et": "2026-08-24T10:30:41.599917-04:00",
-  "generated_at_utc": "2026-09-04T18:55:54.902317+00:00",
+  "generated_at_utc": "2026-09-04T18:57:06.341662+00:00",
   "missing_timestamp_trades": 0,
   "windows": {
     "day": {
@@ -39,7 +39,7 @@
       "end_equity": 1086.869655,
       "trades": 51,
       "complete": false,
-      "window_start_et": "2026-08-21T14:55:54.888080-04:00",
+      "window_start_et": "2026-08-21T14:57:06.327046-04:00",
       "coverage_start_et": "2026-08-24T10:30:41.599917-04:00"
     },
     "month": {
@@ -49,7 +49,7 @@
       "end_equity": 1086.869655,
       "trades": 51,
       "complete": false,
-      "window_start_et": "2026-08-05T14:55:54.888080-04:00",
+      "window_start_et": "2026-08-05T14:57:06.327046-04:00",
       "coverage_start_et": "2026-08-24T10:30:41.599917-04:00"
     }
   },
