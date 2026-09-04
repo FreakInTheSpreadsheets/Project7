@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 45,
+  "count": 46,
   "trades": [
     {
       "trade_no": 1,
@@ -723,9 +723,25 @@
       "pct": -0.833335,
       "exit_reason": "STOP_0_75_PCT",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 46,
+      "symbol": "PTIR",
+      "direction": "RISE",
+      "pattern_family": "CORE",
+      "pattern_id": "4f1245560c0a1fe20e03c4d0",
+      "entry_time_et": "2026-09-04T09:38:00-04:00",
+      "exit_time_et": "2026-09-04T09:44:00-04:00",
+      "entry_price": 19.184999,
+      "exit_price": 19.035,
+      "notional": 1108.359758,
+      "pnl": -8.665809,
+      "pct": -0.781859,
+      "exit_reason": "STOP_0_75_PCT",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-09-04T13:43:36.751733+00:00",
+  "generated_at_utc": "2026-09-04T13:44:46.362954+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
