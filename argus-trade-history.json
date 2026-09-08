@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 56,
+  "count": 57,
   "trades": [
     {
       "trade_no": 1,
@@ -899,9 +899,25 @@
       "pct": 0.013755,
       "exit_reason": "FIXED_30_MINUTE_HORIZON",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 57,
+      "symbol": "HD",
+      "direction": "RISE",
+      "pattern_family": "FLOW",
+      "pattern_id": "fac546e329920d07062938e9",
+      "entry_time_et": "2026-09-08T12:37:00-04:00",
+      "exit_time_et": "2026-09-08T13:07:00-04:00",
+      "entry_price": 315.774994,
+      "exit_price": 315.73999,
+      "notional": 1111.336878,
+      "pnl": -0.123192,
+      "pct": -0.011085,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-09-08T17:07:30.912404+00:00",
+  "generated_at_utc": "2026-09-08T17:08:42.964785+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
