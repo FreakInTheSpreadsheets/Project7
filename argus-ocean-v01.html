@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f4a">
+  <title>Argus Ocean V0.1</title>
+  <style>
+    :root {
+      --paper:#eee8d8; --paper-2:#e1dac7; --ink:#203239; --muted:#66777a;
+      --rule:#839496; --surface:#8ab7b2; --shelf:#4e8688; --thermo:#2f6871;
+      --deep:#183f4a; --abyss:#102c35; --warm:#c97b55; --cool:#7eb7b0;
+      --signal:#e7c87e; --danger:#a95646;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--abyss);color:var(--ink);font-family:"Avenir Next",Avenir,"Helvetica Neue",Arial,sans-serif}
+    button{font:inherit}
+    .shell{min-height:100vh;display:grid;grid-template-columns:minmax(235px,19rem) 1fr;background:var(--paper)}
+    .instrument{position:relative;z-index:4;background:var(--paper);border-right:1px solid #64777a;padding:22px 20px 18px;display:flex;flex-direction:column;gap:20px;box-shadow:8px 0 18px rgba(6,29,35,.18)}
+    .masthead{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;border-bottom:2px solid var(--ink);padding-bottom:15px}
+    .eyebrow,.micro,.zone-label,.metric-label,.filter,.feed-state{font-family:"SFMono-Regular",Consolas,monospace;text-transform:uppercase;letter-spacing:.1em}
+    .eyebrow{font-size:11px;color:#526a6c;margin-bottom:5px}
+    h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:30px;line-height:.95;margin:0;letter-spacing:-.03em}
+    .edition{border:1px solid var(--ink);padding:5px 6px;font:10px/1.1 "SFMono-Regular",monospace;text-align:center}
+    .metrics{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+    .metric{min-height:76px;padding:10px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+    .metric-label{font-size:9px;color:#657477;margin-bottom:7px}
+    .metric-value{font:500 22px/1 Georgia,serif;font-variant-numeric:tabular-nums}
+    .metric-note{font:10px/1.3 "SFMono-Regular",monospace;color:#647174;margin-top:5px}
+    .positive{color:#2d6b62}.negative{color:#9f493d}
+    .filter-title{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--ink);padding-bottom:6px}
+    .filter-title strong{font:600 12px/1 "SFMono-Regular",monospace;text-transform:uppercase;letter-spacing:.09em}
+    .filter-title span{font:10px/1 "SFMono-Regular",monospace;color:#657477}
+    .filters{display:grid;gap:7px}
+    .filter{display:grid;grid-template-columns:16px 1fr auto;align-items:center;gap:8px;width:100%;padding:9px 8px;border:1px solid transparent;background:transparent;color:var(--ink);font-size:11px;text-align:left;cursor:pointer}
+    .filter:hover,.filter:focus-visible{border-color:var(--rule);outline:none}
+    .filter[aria-pressed="true"]{background:var(--paper-2);border-color:#738486}
+    .swatch{display:block;width:15px;height:3px;background:currentColor}
+    .filter[data-state="accepted"]{color:#326e68}.filter[data-state="review"]{color:#9d6d43}.filter[data-state="rejected"]{color:#884f48}
+    .filter b{font-weight:600}.filter em{font-style:normal;font-size:12px}
+    .scale{margin-top:auto;border-top:1px solid var(--ink);padding-top:10px}
+    .scale-row{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:center;margin:8px 0;font-size:10px}
+    .sample{height:11px;position:relative}
+    .sample:before{content:"";position:absolute;left:0;right:0;top:5px;border-top:1px solid #315e62}
+    .sample.pressure:before{border-top-width:4px}
+    .sample.turbulence:before{border-style:dashed;transform:skewY(-5deg)}
+    .feed-state{font-size:9px;line-height:1.45;color:#657477;border-top:1px solid var(--rule);padding-top:10px}
+    .ocean{position:relative;min-height:100vh;overflow:hidden;background:linear-gradient(to bottom,#aacbc2 0 10%,#78aaa6 10% 25%,#467f83 25% 45%,#285967 45% 69%,#173c48 69% 88%,#0e2932 88% 100%)}
+    .ocean:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;background-image:repeating-linear-gradient(0deg,rgba(239,232,210,.18) 0,rgba(239,232,210,.18) 1px,transparent 1px,transparent 6px)}
+    canvas{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+    .bathymetry{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.52}
+    .bathymetry svg{width:100%;height:100%}
+    .contour{fill:none;stroke:#d9dfce;stroke-width:.65;stroke-opacity:.32}
+    .ridge{fill:#173743;fill-opacity:.68;stroke:#b2bdad;stroke-width:.6;stroke-opacity:.28}
+    .zone-grid{position:absolute;inset:0;z-index:3;pointer-events:none;display:grid;grid-template-rows:10% 15% 20% 24% 19% 12%}
+    .zone{position:relative;border-bottom:1px solid rgba(235,231,211,.3)}
+    .zone-label{position:absolute;top:7px;left:18px;font-size:9px;color:rgba(244,239,220,.7);text-shadow:0 1px 0 rgba(0,0,0,.18)}
+    .zone-label b{font-weight:500;margin-right:8px}.zone-label span{opacity:.68}
+    .surface-line{position:absolute;left:0;right:0;top:10%;height:16px;z-index:3;pointer-events:none;transform:translateY(-8px);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='16' viewBox='0 0 150 16'%3E%3Cpath d='M0 9 C18 1 32 15 50 8 S82 2 100 9 S132 15 150 7' fill='none' stroke='%23f0ead8' stroke-opacity='.72' stroke-width='1.2'/%3E%3C/svg%3E") repeat-x;animation:surface 12s linear infinite}
+    @keyframes surface{to{background-position:150px 0}}
+    .toolbar{position:absolute;z-index:5;top:16px;right:16px;display:flex;gap:8px;align-items:center}
+    .status-chip{background:rgba(238,232,216,.92);border:1px solid #748588;padding:7px 9px;font:10px/1 "SFMono-Regular",monospace;text-transform:uppercase;letter-spacing:.08em;color:#365054}
+    .status-chip[data-live="true"]:before{content:"";display:inline-block;width:6px;height:6px;background:#477b6a;border-radius:50%;margin-right:7px}
+    .detail{position:absolute;z-index:7;right:16px;bottom:16px;width:min(370px,calc(100% - 32px));background:rgba(238,232,216,.96);border:1px solid #667a7c;box-shadow:0 10px 36px rgba(5,24,30,.28);transform:translateY(calc(100% + 30px));transition:transform .25s ease}
+    .detail.open{transform:translateY(0)}
+    .detail-head{display:flex;justify-content:space-between;gap:12px;align-items:start;padding:13px 14px 10px;border-bottom:1px solid #879596}
+    .detail-kicker{font:9px/1 "SFMono-Regular",monospace;text-transform:uppercase;letter-spacing:.1em;color:#667679;margin-bottom:4px}
+    .detail h2{margin:0;font:500 23px/1 Georgia,serif}
+    .close{border:0;background:transparent;font-size:22px;line-height:1;color:#40575b;padding:0 2px;cursor:pointer}
+    .detail-body{padding:12px 14px 14px}
+    .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #93a09f}
+    .detail-cell{padding:8px;border-right:1px solid #93a09f}.detail-cell:last-child{border:0}
+    .detail-cell small{display:block;font:8px/1.2 "SFMono-Regular",monospace;text-transform:uppercase;color:#6b7777;margin-bottom:5px}
+    .detail-cell strong{font:600 14px/1.2 "SFMono-Regular",monospace}
+    .detail p{margin:11px 0 0;font-size:12px;line-height:1.45;color:#4e6265}
+    .notice{position:absolute;z-index:6;left:18px;bottom:16px;background:rgba(16,44,53,.83);color:#e7e5d6;border-left:2px solid #d8c58d;padding:9px 11px;max-width:430px;font:10px/1.4 "SFMono-Regular",monospace;letter-spacing:.02em}
+    .loading{position:absolute;z-index:8;inset:0;display:grid;place-items:center;background:#183f4a;color:#eee8d8;transition:opacity .45s ease}
+    .loading.hidden{opacity:0;pointer-events:none}
+    .sounding{width:min(330px,75vw)}
+    .sounding-title{font:24px/1 Georgia,serif;margin-bottom:10px}
+    .sounding-rule{height:2px;background:#e6ddc5;transform-origin:left;animation:sound 1.4s ease-in-out infinite}
+    .sounding-copy{font:10px/1.5 "SFMono-Regular",monospace;text-transform:uppercase;letter-spacing:.12em;margin-top:10px;opacity:.78}
+    @keyframes sound{50%{transform:scaleX(.34);opacity:.45}}
+    @media(max-width:760px){
+      .shell{display:block}.instrument{position:absolute;left:0;right:0;top:0;height:auto;padding:12px 13px 9px;background:rgba(238,232,216,.94);border-right:0;border-bottom:1px solid #64777a;gap:9px}
+      .masthead{grid-template-columns:1fr auto;padding-bottom:8px}.eyebrow{font-size:8px;margin-bottom:3px}h1{font-size:23px}.edition{font-size:8px}
+      .metrics{grid-template-columns:repeat(4,1fr)}.metric{min-height:49px;padding:6px}.metric:nth-child(n+5){display:none}.metric-label{font-size:7px;margin-bottom:4px}.metric-value{font-size:15px}.metric-note{display:none}
+      .filter-title,.scale,.feed-state{display:none}.filters{grid-template-columns:repeat(3,1fr);gap:4px}.filter{grid-template-columns:8px 1fr auto;gap:4px;padding:5px 4px;font-size:8px}.filter em{font-size:9px}.swatch{width:8px}
+      .ocean{min-height:100svh}.zone-grid{padding-top:158px}.toolbar{top:166px;right:9px}.status-chip{font-size:8px;padding:5px 6px}.notice{left:10px;bottom:9px;max-width:calc(100% - 20px);font-size:8px;padding:7px 8px}.detail{right:9px;bottom:9px;width:calc(100% - 18px)}
+    }
+    @media(prefers-reduced-motion:reduce){.surface-line{animation:none}.sounding-rule{animation:none}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <aside class="instrument" aria-label="Argus Ocean instruments">
+    <header class="masthead">
+      <div><div class="eyebrow">Project Zephyr · Observatory</div><h1>Argus Ocean</h1></div>
+      <div class="edition">V0.1<br>READ ONLY</div>
+    </header>
+    <section class="metrics" aria-label="Portfolio performance">
+      <div class="metric"><div class="metric-label">Realized equity</div><div class="metric-value" id="equity">—</div><div class="metric-note">long book</div></div>
+      <div class="metric"><div class="metric-label">Observed gross</div><div class="metric-value" id="gross">—</div><div class="metric-note">pending execution cost</div></div>
+      <div class="metric"><div class="metric-label">Today</div><div class="metric-value" id="day">—</div><div class="metric-note" id="dayTrades">— trades</div></div>
+      <div class="metric"><div class="metric-label">Closed trades</div><div class="metric-value" id="trades">—</div><div class="metric-note">prospective observations</div></div>
+      <div class="metric"><div class="metric-label">Modeled · 5 bps</div><div class="metric-value" id="fiveBps">—</div><div class="metric-note">round-trip drag</div></div>
+      <div class="metric"><div class="metric-label">Modeled · 10 bps</div><div class="metric-value" id="tenBps">—</div><div class="metric-note">round-trip drag</div></div>
+    </section>
+    <section>
+      <div class="filter-title"><strong>Pattern authority</strong><span>tap currents</span></div>
+      <div class="filters">
+        <button class="filter" data-state="accepted" aria-pressed="true"><span class="swatch"></span><b>Accepted</b><em id="acceptedCount">0</em></button>
+        <button class="filter" data-state="review" aria-pressed="true"><span class="swatch"></span><b>Under review</b><em id="reviewCount">0</em></button>
+        <button class="filter" data-state="rejected" aria-pressed="true"><span class="swatch"></span><b>Rejected</b><em id="rejectedCount">0</em></button>
+      </div>
+    </section>
+    <section class="scale" aria-label="Map legend">
+      <div class="filter-title"><strong>Field notation</strong><span>relative</span></div>
+      <div class="scale-row"><span>Evidence</span><span class="sample"></span></div>
+      <div class="scale-row"><span>Pressure</span><span class="sample pressure"></span></div>
+      <div class="scale-row"><span>Turbulence</span><span class="sample turbulence"></span></div>
+    </section>
+    <div class="feed-state" id="feedState">Sounding live Project7 feeds…</div>
+  </aside>
+
+  <section class="ocean" aria-label="Behavioral ocean field">
+    <div class="bathymetry" aria-hidden="true">
+      <svg viewBox="0 0 1200 900" preserveAspectRatio="none">
+        <path class="contour" d="M-40 520 C170 452 287 596 470 528 S802 465 1240 551"/>
+        <path class="contour" d="M-40 562 C179 502 302 648 491 576 S824 518 1240 603"/>
+        <path class="contour" d="M-40 610 C207 553 322 706 526 630 S875 580 1240 655"/>
+        <path class="contour" d="M-40 665 C236 612 367 760 566 686 S910 649 1240 714"/>
+        <path class="ridge" d="M0 900 L0 811 C96 786 160 794 232 753 C318 704 398 777 485 746 C574 714 655 604 756 661 C868 724 979 719 1081 767 C1132 791 1174 782 1200 773 L1200 900 Z"/>
+        <path class="contour" d="M75 827 C190 789 292 837 406 802 S636 763 755 792 S989 819 1130 786"/>
+        <path class="contour" d="M142 862 C263 821 360 873 485 841 S727 803 849 834 S1045 855 1170 824"/>
+      </svg>
+    </div>
+    <div class="zone-grid" aria-hidden="true">
+      <div class="zone"><div class="zone-label"><b>Surface</b><span>visible market behavior</span></div></div>
+      <div class="zone"><div class="zone-label"><b>Mixed layer</b><span>executed observations</span></div></div>
+      <div class="zone"><div class="zone-label"><b>Boundary</b><span>accepted authority</span></div></div>
+      <div class="zone"><div class="zone-label"><b>Thermocline</b><span>forming and competing evidence</span></div></div>
+      <div class="zone"><div class="zone-label"><b>Deep</b><span>rejected traces preserved</span></div></div>
+      <div class="zone"><div class="zone-label"><b>Abyss</b><span>latent and unexplored structure</span></div></div>
+    </div>
+    <div class="surface-line" aria-hidden="true"></div>
+    <canvas id="field"></canvas>
+    <div class="toolbar"><div class="status-chip" id="freshness" data-live="false">Awaiting feed</div></div>
+    <div class="notice" id="notice">Classification is descriptive during the frozen run. No live authority is changed here.</div>
+    <section class="detail" id="detail" aria-live="polite">
+      <div class="detail-head"><div><div class="detail-kicker" id="detailState">Current</div><h2 id="detailTitle">Pattern</h2></div><button class="close" id="closeDetail" aria-label="Close pattern detail">×</button></div>
+      <div class="detail-body"><div class="detail-grid">
+        <div class="detail-cell"><small>Observations</small><strong id="dObs">—</strong></div>
+        <div class="detail-cell"><small>Expectancy</small><strong id="dExp">—</strong></div>
+        <div class="detail-cell"><small>Contribution</small><strong id="dPnl">—</strong></div>
+      </div><p id="detailCopy"></p></div>
+    </section>
+    <div class="loading" id="loading"><div class="sounding"><div class="sounding-title">Taking a sounding</div><div class="sounding-rule"></div><div class="sounding-copy">Reading behavior · current · depth · pressure · temperature</div></div></div>
+  </section>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const FEEDS = {
+    performance:'argus-portfolio-performance.json', history:'argus-trade-history.json',
+    live:'argus-universe-live.json', latest:'argus-v478-latest.json'
+  };
+  const BREAK_EVEN_BPS = 18.2;
+  const $ = s => document.querySelector(s);
+  const canvas = $('#field'), ctx = canvas.getContext('2d');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W=0,H=0,dpr=1,currents=[],classificationCounts=null,active={accepted:true,review:true,rejected:true},hover=null,selected=null,raf=0;
+  const palette={accepted:'#e7d6a2',review:'#d09b68',rejected:'#b96a5e'};
+  const stateY={accepted:[.27,.43],review:[.48,.68],rejected:[.72,.89]};
+  const demoPerformance={starting_equity:1000,equity:1116.363816,realized_pnl:116.363816,trades:58,basis:'GROSS_OBSERVED_PENDING_EXECUTION_COST',generated_at_utc:'2026-09-08T19:37:18.956902+00:00',windows:{day:{pct:1.925193,trades:6}}};
+  const demoTrades=[
+    {pattern_id:'a58ef0d3e5c896734afffcc8',pattern_family:'CORE',symbol:'IBIT',pnl:13.8,pct:1.34},
+    {pattern_id:'14e0c9c8ea61f2092e6d5454',pattern_family:'FLOW',symbol:'CRCL',pnl:24.1,pct:2.17},
+    {pattern_id:'4325b3b3ad4f62b7ff297808',pattern_family:'CORE',symbol:'CXAI',pnl:51.52,pct:5.05},
+    {pattern_id:'f207a4ffcc05a77df36520f7',pattern_family:'FLOW',symbol:'VEU',pnl:0.98,pct:.10},
+    {pattern_id:'29a8bcecf0d1c984af42edb9',pattern_family:'FLOW',symbol:'TPL',pnl:-2.85,pct:-.28}
+  ];
+  const fmtMoney=n=>Number.isFinite(+n)?new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(+n):'—';
+  const fmtPct=n=>Number.isFinite(+n)?`${+n>=0?'+':''}${(+n).toFixed(2)}%`:'—';
+  const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
+  const rng=s=>{let x=hash(s)||1;return()=>((x=Math.imul(1664525,x)+1013904223>>>0)/4294967296)};
+  async function json(path){const r=await fetch(`${path}?ocean=${Date.now()}`,{cache:'no-store'});if(!r.ok)throw new Error(`${path}: ${r.status}`);return r.json()}
+  function setMetric(id,value){const el=$(id);el.textContent=value;el.classList.toggle('positive',String(value).startsWith('+'));el.classList.toggle('negative',String(value).startsWith('-'))}
+  function flatten(obj,depth=0,out=[]){if(depth>5||obj==null)return out;if(Array.isArray(obj)){obj.slice(0,1000).forEach(v=>flatten(v,depth+1,out));return out}if(typeof obj==='object'){const keys=Object.keys(obj);const marker=keys.some(k=>/pattern|qualification|authority|status|state|reject/i.test(k));if(marker)out.push(obj);keys.forEach(k=>flatten(obj[k],depth+1,out))}return out}
+  function explicitPatterns(...feeds){
+    const rows=flatten(feeds).filter(x=>x&&typeof x==='object'); const seen=new Set(),out=[];
+    for(const x of rows){
+      const raw=String(x.classification||x.pattern_state||x.qualification_state||x.authority_state||x.status||'').toUpperCase();
+      let state=/REJECT|FAILED|DISQUAL/.test(raw)?'rejected':/REVIEW|PENDING|CANDIDATE|FORMING|INSUFFICIENT|CONFLICT/.test(raw)?'review':/ACCEPT|QUALIFIED|AUTHORIZED|ACTIVE/.test(raw)?'accepted':'';
+      if(!state)continue; const id=String(x.pattern_id||x.id||x.pattern_key||x.name||''); if(!id||seen.has(state+id))continue; seen.add(state+id);
+      out.push({id,state,family:String(x.pattern_family||x.family||'UNCLASSIFIED'),symbols:[x.symbol||x.ticker].filter(Boolean),obs:+(x.observations||x.n||x.count||0),pnl:+(x.contribution||x.pnl||0),expectancy:+(x.expectancy||x.mean_return||x.avg_return||0),reason:String(x.rejection_reason||x.reason||raw),explicit:true});
+    } return out;
+  }
+  function classifiedPatterns(feed){
+    const pc=feed?.pattern_classification;if(!pc||!Array.isArray(pc.patterns))return [];
+    classificationCounts=pc.counts||null;
+    return pc.patterns.map(x=>{
+      const raw=String(x.classification||'').toUpperCase();
+      const state=raw==='ACCEPTED'?'accepted':raw==='REJECTED'?'rejected':'review';
+      return {id:String(x.pattern_id||x.id||''),state,family:String(x.pattern_family||'UNCLASSIFIED'),symbols:[x.symbol].filter(Boolean),obs:+(x.observations||0),trades:+(x.trades||0),pnl:+(x.contribution||0),expectancy:+(x.expectancy||0),reason:String(x.rejection_reason||x.reason||x.authority_state||raw),explicit:true,authority:x.authority_state||'',executionCostStatus:x.execution_cost_status||''};
+    }).filter(x=>x.id);
+  }
+  function aggregateTrades(trades){
+    const m=new Map(); for(const t of trades||[]){const id=String(t.pattern_id||`${t.pattern_family||'UNKNOWN'}:${t.symbol||'?'}`);if(!m.has(id))m.set(id,{id,state:'accepted',family:String(t.pattern_family||'UNCLASSIFIED'),symbols:[],obs:0,pnl:0,returns:[],explicit:false});const p=m.get(id);p.obs++;p.pnl+=+(t.pnl||0);p.returns.push(+(t.pct||0));if(t.symbol&&!p.symbols.includes(t.symbol))p.symbols.push(t.symbol)}
+    return [...m.values()].map(p=>({...p,expectancy:p.returns.reduce((a,b)=>a+b,0)/Math.max(1,p.returns.length),reason:'Executed under frozen Argus authority'}));
+  }
+  function synthesizeReview(live){const c=live?.counts||{};const n=Math.min(6,Math.max(2,Math.round(Math.log10(+(c.universe_intake_hypothesis_population||100))*1.4)));return Array.from({length:n},(_,i)=>({id:`forming-${i+1}`,state:'review',family:'FORMING',symbols:[],obs:0,pnl:0,expectancy:0,reason:'Observed structure; explicit pattern record not present in current public feed',explicit:false}))}
+  function buildCurrents(patterns){
+    currents=patterns.slice(0,42).map((p,i)=>{const r=rng(p.state+p.id),band=stateY[p.state],y=(band[0]+r()*(band[1]-band[0]))*H;const obs=Math.max(1,p.obs||1);const strength=Math.min(1,Math.log2(obs+1)/4.5);const start=-W*(.05+r()*.16),end=W*(.82+r()*.3);const amp=(12+r()*26)*(p.state==='review'?1.35:p.state==='rejected'?.75:1);return{...p,x0:start,x1:end,y,amp,phase:r()*Math.PI*2,speed:(.00008+r()*.00012)*(p.expectancy<0?-1:1),width:1.1+strength*4,alpha:.38+strength*.48,turbulence:p.state==='review'?.85:p.state==='rejected'?.42:.2,hit:[]}});
+    countStates();
+  }
+  function countStates(){for(const s of ['accepted','review','rejected']){const key=s==='review'?'under_review':s;const n=classificationCounts&&Number.isFinite(+classificationCounts[key])?+classificationCounts[key]:currents.filter(c=>c.state===s).length;$(`#${s==='review'?'review':s}Count`).textContent=n.toLocaleString()}}
+  function resize(){const rect=canvas.getBoundingClientRect();dpr=Math.min(2,devicePixelRatio||1);W=rect.width;H=rect.height;canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(currents.length)buildCurrents(currents.map(({hit,x0,x1,y,amp,phase,speed,width,alpha,turbulence,...p})=>p))}
+  function trace(c,t,hitOnly=false){const steps=56,path=[];ctx.beginPath();for(let i=0;i<=steps;i++){const q=i/steps,x=c.x0+(c.x1-c.x0)*q;const drift=Math.sin(q*6.1+c.phase+t*c.speed)*c.amp;const fine=Math.sin(q*19+c.phase*2+t*c.speed*2.4)*c.amp*c.turbulence*.35;const y=c.y+drift+fine+(q-.5)*c.amp*.35;path.push([x,y]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}c.hit=path;if(!hitOnly)ctx.stroke()}
+  function draw(t=0){ctx.clearRect(0,0,W,H);ctx.save();ctx.globalCompositeOperation='source-over';for(const c of currents){if(!active[c.state])continue;const focus=(hover===c||selected===c);ctx.strokeStyle=palette[c.state];ctx.globalAlpha=focus?1:c.alpha;ctx.lineWidth=c.width+(focus?1.8:0);ctx.setLineDash(c.state==='rejected'?[10,8]:c.state==='review'?[4,5]:[]);ctx.lineCap='round';trace(c,t);ctx.setLineDash([]);if(c.state==='accepted'){ctx.globalAlpha=.18;ctx.lineWidth=c.width+7;trace(c,t)} }ctx.restore();if(!reduced)raf=requestAnimationFrame(draw)}
+  function distTo(c,x,y){let d=Infinity;for(const p of c.hit||[])d=Math.min(d,Math.hypot(p[0]-x,p[1]-y));return d}
+  function pointer(e,click=false){const r=canvas.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;const candidates=currents.filter(c=>active[c.state]).map(c=>[distTo(c,x,y),c]).sort((a,b)=>a[0]-b[0]);hover=candidates[0]?.[0]<18?candidates[0][1]:null;canvas.style.cursor=hover?'pointer':'default';if(click&&hover){selected=hover;showDetail(hover)}}
+  function showDetail(c){$('#detailState').textContent=c.state==='review'?'Under review':c.state;$('#detailTitle').textContent=`${c.family} · ${c.symbols?.join(', ')||c.id.slice(0,9)}`;$('#dObs').textContent=c.obs||'—';$('#dExp').textContent=fmtPct(c.expectancy);$('#dPnl').textContent=fmtMoney(c.pnl);$('#detailCopy').textContent=`${c.reason||'No reason supplied.'}${c.explicit?' Classification read from an explicit feed field.':' Display fallback only; not an Argus authority decision.'}`;$('#detail').classList.add('open')}
+  async function init(){
+    resize(); addEventListener('resize',resize); canvas.addEventListener('pointermove',e=>pointer(e));canvas.addEventListener('pointerleave',()=>hover=null);canvas.addEventListener('click',e=>pointer(e,true));
+    document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{const s=b.dataset.state;active[s]=!active[s];b.setAttribute('aria-pressed',String(active[s]))}));$('#closeDetail').onclick=()=>{$('#detail').classList.remove('open');selected=null};
+    let perf,history,live,latest,mode='LIVE';
+    const results=await Promise.allSettled(Object.values(FEEDS).map(json));
+    [perf,history,live,latest]=results.map(r=>r.status==='fulfilled'?r.value:null);
+    if(!perf){perf=demoPerformance;mode='LOCAL FALLBACK'}if(!history){history={trades:demoTrades};mode='LOCAL FALLBACK'}
+    setMetric('#equity',fmtMoney(perf.equity));setMetric('#gross',fmtPct((perf.realized_pnl/perf.starting_equity)*100));setMetric('#day',fmtPct(perf.windows?.day?.pct));$('#dayTrades').textContent=`${perf.windows?.day?.trades??'—'} trades`;$('#trades').textContent=perf.trades??history.trades?.length??'—';
+    const n=+(perf.trades||history.trades?.length||0),gross=(+(perf.equity||0)/+(perf.starting_equity||1000)-1)*100;setMetric('#fiveBps',fmtPct(gross-(n*.05)));setMetric('#tenBps',fmtPct(gross-(n*.10)));
+    let patterns=classifiedPatterns(live);const explicitCount=patterns.length;if(!patterns.length)patterns=explicitPatterns(live,latest,history);if(!patterns.some(p=>p.state==='accepted'))patterns.push(...aggregateTrades(history.trades));if(!patterns.some(p=>p.state==='review')&&!classificationCounts)patterns.push(...synthesizeReview(live));
+    buildCurrents(patterns);const stamp=perf.generated_at_utc?new Date(perf.generated_at_utc):null,age=stamp?(Date.now()-stamp.getTime())/60000:Infinity,fresh=mode==='LIVE'&&age<20;$('#freshness').dataset.live=String(fresh);$('#freshness').textContent=fresh?'Live sounding':mode==='LIVE'?'Feed delayed':'Preview data';
+    const unassessed=classificationCounts?.unassessed_symbols;
+    $('#feedState').innerHTML=`${mode}<br>Updated ${stamp&&Number.isFinite(stamp.getTime())?stamp.toLocaleString():'unknown'}<br>Classification: ${explicitCount?'explicit Argus states':'display fallback'}${Number.isFinite(+unassessed)?`<br>Unassessed symbols: ${(+unassessed).toLocaleString()}`:''}<br>Break-even drag: ~${BREAK_EVEN_BPS.toFixed(1)} bps RT`;
+    $('#notice').textContent=explicitCount?'Research classifications are descriptive only. Candidate scoring cannot alter the frozen R4 watchlist or fire trades.':'Current public feeds do not expose formal pattern classifications. Display fallback is descriptive only; frozen Argus authority is untouched.';
+    $('#loading').classList.add('hidden');draw(performance.now());
+  }
+  init().catch(err=>{console.error(err);$('#loading').classList.add('hidden');$('#notice').textContent=`Ocean could not read its feeds: ${err.message}`});
+})();
+</script>
+</body>
+</html>
