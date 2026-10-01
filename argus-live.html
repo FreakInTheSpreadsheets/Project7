@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- ARGUS_LIVE_STATUS_WEB_V2_20260930 -->
+<!-- ARGUS_LIVE_STATUS_WEB_V3_20261001 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -16,117 +16,77 @@
   --good:#75a995;--warn:#b59d68;--bad:#b87572;--idle:#64737c;
   --water:#6f8796;--deep:#405563;
 }
-*{box-sizing:border-box}
-html{background:var(--bg)}
+*{box-sizing:border-box}html{background:var(--bg)}
 body{margin:0;background:linear-gradient(180deg,#0b141a 0,#091015 42%,#070c10 100%);color:var(--text);min-height:100vh}
-button{font:inherit}
-main{max-width:920px;margin:auto;padding:18px 14px 44px}
+button,a{font:inherit}a{text-decoration:none;color:inherit}
+main{max-width:960px;margin:auto;padding:18px 14px 44px}
 .top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin:2px 0 13px}
-.brand h1{font-size:27px;line-height:1;margin:0 0 7px;letter-spacing:.035em}
-.kicker{font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
-.stamp{text-align:right;font-size:12px;color:var(--muted);white-space:nowrap}
+.brand h1{font-size:27px;line-height:1;margin:0 0 7px;letter-spacing:.035em}.kicker{font-size:12px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.stamp{text-align:right;font-size:12px;color:var(--muted);white-space:nowrap}
 .statusbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border:1px solid var(--line);background:rgba(13,22,29,.82);border-radius:16px;padding:11px 12px;margin-bottom:12px}
-.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid #2b3a43;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800;letter-spacing:.04em}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--idle)}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid #2b3a43;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800;letter-spacing:.04em}.dot{width:8px;height:8px;border-radius:50%;background:var(--idle)}
 .green .dot{background:var(--good)}.yellow .dot{background:var(--warn)}.red .dot{background:var(--bad)}.gray .dot{background:var(--idle)}
-.runtime{font-size:12px;color:var(--soft);min-width:0;overflow-wrap:anywhere}
-.tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
-.tool{border:1px solid #2a3942;background:#0b1319;color:var(--soft);border-radius:9px;min-height:36px;padding:0 10px;font-weight:700;font-size:11px}
-.tool:active{background:#14222b}
-.field{border:1px solid var(--line);background:linear-gradient(180deg,rgba(17,29,37,.96),rgba(11,19,25,.96));border-radius:18px;padding:13px;margin-bottom:12px;overflow:hidden;position:relative}
-.field:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#71889755,transparent)}
-.fieldhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
-.fieldtitle{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;font-weight:800}
-.fieldnote{font-size:11px;color:#62737d}
-.sea{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.gauge{min-width:0;border-left:1px solid #21313b;padding:3px 9px 5px}.gauge:first-child{border-left:0;padding-left:2px}
-.glabel{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
-.gvalue{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gsub{font-size:10px;color:#687983;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.depthtrack{height:4px;background:#17242c;border-radius:99px;margin-top:7px;overflow:hidden}.depthfill{height:100%;background:var(--water);width:0}
-.map{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:8px;margin-top:12px}
-.node{border:1px solid #243640;background:#0b141a;border-radius:13px;padding:10px;min-width:0;text-align:left;color:inherit;min-height:76px}
-.node strong{display:block;font-size:12px;margin-bottom:5px}.node small{display:block;color:var(--muted);font-size:10px;line-height:1.35}.node .state{margin-top:6px;font-size:11px;font-weight:800;color:var(--soft)}
-.node:active{background:#132029}
-.module{border:1px solid var(--line);background:rgba(12,21,27,.94);border-radius:16px;margin:9px 0;overflow:hidden}
-.module[open]{background:rgba(13,23,30,.98)}
-.module summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto 14px;gap:10px;padding:13px 14px;cursor:pointer;align-items:center}
-.module summary::-webkit-details-marker{display:none}
-.summary-left{min-width:0}.summary-name{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:850}.summary-sub{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chev{display:inline-block;color:#71838e;font-size:12px;transition:transform .16s ease}.module[open] .chev{transform:rotate(90deg)}
-.summary-state{text-align:right;min-width:90px}.state-main{font-size:12px;font-weight:850}.state-sub{font-size:10px;color:var(--muted);margin-top:4px}
-.body{border-top:1px solid #1d2b34;padding:5px 14px 13px}
-.metric{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:9px 0;border-top:1px solid #18252d;font-size:12px}.metric:first-child{border-top:0}.metric span{color:#a8b5bc}.metric b{text-align:right;overflow-wrap:anywhere;max-width:58vw}.metric[data-note]{cursor:pointer}.metric[data-note]:active{background:#111d24}
-.progress{height:6px;background:#17242c;border-radius:999px;overflow:hidden;margin:3px 0 7px}.progress>i{display:block;height:100%;background:#758b99;width:0}
-.inspect{display:none;border:1px solid #2a3b45;background:#0a1217;border-radius:12px;padding:11px 12px;margin:8px 0 4px}.inspect.show{display:block}.inspect-k{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.inspect-v{font-size:15px;font-weight:850;margin:3px 0 6px;overflow-wrap:anywhere}.inspect-n{font-size:11px;line-height:1.45;color:#899aa4}
-.raw{border-top:1px solid #1c2a32;margin-top:7px;padding-top:8px}.raw summary{display:block;padding:6px 0;color:#71818b;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.raw pre{white-space:pre-wrap;word-break:break-word;background:#080e12;border:1px solid #1b2931;border-radius:10px;padding:9px;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#83959f;max-height:260px;overflow:auto}
-.err{color:#d49a97;white-space:pre-wrap;font-size:11px;line-height:1.45;margin-top:8px;border-left:2px solid #7e4f4d;padding-left:8px}
-.readonly{display:inline-flex;align-items:center;gap:6px;color:#6c7c85;font-size:10px;margin-top:14px}.readonly:before{content:"";width:6px;height:6px;border-radius:50%;background:#52636d}
-footer{margin-top:14px;color:#5e6d76;font-size:10px;text-align:center;line-height:1.5}
-@media(max-width:680px){main{padding:14px 10px 36px}.top{align-items:flex-start}.brand h1{font-size:25px}.stamp{font-size:10px}.tools{width:100%;margin-left:0}.statusbar{align-items:flex-start}.sea{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:11px}.gauge:nth-child(3){border-left:0;padding-left:2px}.map{grid-template-columns:1fr}.node{min-height:64px}.metric b{max-width:52vw}}
+.runtime{font-size:12px;color:var(--soft);min-width:0;overflow-wrap:anywhere}.tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}.tool{display:inline-flex;align-items:center;justify-content:center;border:1px solid #2a3942;background:#0b1319;color:var(--soft);border-radius:9px;min-height:36px;padding:0 10px;font-weight:700;font-size:11px}.tool:active{background:#14222b}.tool.primary{border-color:#425966;color:#e0e9ed;background:#122029}
+.field{border:1px solid var(--line);background:linear-gradient(180deg,rgba(17,29,37,.96),rgba(11,19,25,.96));border-radius:18px;padding:13px;margin-bottom:12px;overflow:hidden;position:relative}.field:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#71889755,transparent)}
+.fieldhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.fieldtitle{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.14em;font-weight:800}.fieldnote{font-size:11px;color:#62737d;text-align:right}
+.livegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.sessioncard,.positioncard,.nowcard{border:1px solid #243640;background:#0b141a;border-radius:13px;padding:11px;min-width:0}.sessioncard .label,.positioncard .label,.nowcard .label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em}.sessioncard .big,.positioncard .big,.nowcard .big{font-size:18px;font-weight:850;margin-top:5px;overflow-wrap:anywhere}.sessioncard .sub,.positioncard .sub,.nowcard .sub{font-size:11px;color:#7f9099;margin-top:4px;line-height:1.4}.pos{color:var(--good)}.neg{color:var(--bad)}
+.positionlist{display:grid;gap:8px;margin-top:9px}.positioncard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start}.positioncard .right{text-align:right}.positioncard .symbol{font-size:20px;font-weight:900;letter-spacing:.03em}.positioncard .pnl{font-size:18px;font-weight:900}.mini{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.45}.flat{border:1px dashed #2c3d47;border-radius:13px;padding:16px;text-align:center;color:#82939d;font-size:12px;margin-top:9px}.flat strong{display:block;color:#c5d0d6;font-size:15px;margin-bottom:4px}
+.nowgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.nowcard .big{font-size:14px}.nowcard .sub{min-height:30px}.nowmeta{font-size:10px;color:#60717b;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tape{display:grid;gap:0}.event{display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;padding:9px 0;border-top:1px solid #18252d}.event:first-child{border-top:0}.eventtime{font:10px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;color:#687983}.eventhead{font-size:12px;font-weight:800}.eventdetail{font-size:10px;color:#72838c;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.eventtag{font-size:9px;color:#8c9ca5;border:1px solid #2a3942;border-radius:999px;padding:2px 5px;margin-left:6px;vertical-align:1px}
+.sea{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.gauge{min-width:0;border-left:1px solid #21313b;padding:3px 9px 5px}.gauge:first-child{border-left:0;padding-left:2px}.glabel{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}.gvalue{font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gsub{font-size:10px;color:#687983;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.depthtrack{height:4px;background:#17242c;border-radius:99px;margin-top:7px;overflow:hidden}.depthfill{height:100%;background:var(--water);width:0}.map{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:8px;margin-top:12px}.node{border:1px solid #243640;background:#0b141a;border-radius:13px;padding:10px;min-width:0;text-align:left;color:inherit;min-height:76px}.node strong{display:block;font-size:12px;margin-bottom:5px}.node small{display:block;color:var(--muted);font-size:10px;line-height:1.35}.node .state{margin-top:6px;font-size:11px;font-weight:800;color:var(--soft)}.node:active{background:#132029}
+.module{border:1px solid var(--line);background:rgba(12,21,27,.94);border-radius:16px;margin:9px 0;overflow:hidden}.module[open]{background:rgba(13,23,30,.98)}.module summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto 14px;gap:10px;padding:13px 14px;cursor:pointer;align-items:center}.module summary::-webkit-details-marker{display:none}.summary-left{min-width:0}.summary-name{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:850}.summary-sub{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chev{display:inline-block;color:#71838e;font-size:12px;transition:transform .16s ease}.module[open] .chev{transform:rotate(90deg)}.summary-state{text-align:right;min-width:90px}.state-main{font-size:12px;font-weight:850}.state-sub{font-size:10px;color:var(--muted);margin-top:4px}.body{border-top:1px solid #1d2b34;padding:5px 14px 13px}.metric{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;padding:9px 0;border-top:1px solid #18252d;font-size:12px}.metric:first-child{border-top:0}.metric span{color:#a8b5bc}.metric b{text-align:right;overflow-wrap:anywhere;max-width:58vw}.metric[data-note]{cursor:pointer}.metric[data-note]:active{background:#111d24}.progress{height:6px;background:#17242c;border-radius:999px;overflow:hidden;margin:3px 0 7px}.progress>i{display:block;height:100%;background:#758b99;width:0}.inspect{display:none;border:1px solid #2a3b45;background:#0a1217;border-radius:12px;padding:11px 12px;margin:8px 0 4px}.inspect.show{display:block}.inspect-k{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.inspect-v{font-size:15px;font-weight:850;margin:3px 0 6px;overflow-wrap:anywhere}.inspect-n{font-size:11px;line-height:1.45;color:#899aa4}.raw{border-top:1px solid #1c2a32;margin-top:7px;padding-top:8px}.raw summary{display:block;padding:6px 0;color:#71818b;font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}.raw pre{white-space:pre-wrap;word-break:break-word;background:#080e12;border:1px solid #1b2931;border-radius:10px;padding:9px;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:#83959f;max-height:260px;overflow:auto}.err{color:#d49a97;white-space:pre-wrap;font-size:11px;line-height:1.45;margin-top:8px;border-left:2px solid #7e4f4d;padding-left:8px}.readonly{display:inline-flex;align-items:center;gap:6px;color:#6c7c85;font-size:10px;margin-top:14px}.readonly:before{content:"";width:6px;height:6px;border-radius:50%;background:#52636d}footer{margin-top:14px;color:#5e6d76;font-size:10px;text-align:center;line-height:1.5}
+@media(max-width:680px){main{padding:14px 10px 36px}.top{align-items:flex-start}.brand h1{font-size:25px}.stamp{font-size:10px}.tools{width:100%;margin-left:0}.statusbar{align-items:flex-start}.livegrid{grid-template-columns:1fr 1fr}.nowgrid{grid-template-columns:1fr}.sea{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:11px}.gauge:nth-child(3){border-left:0;padding-left:2px}.map{grid-template-columns:1fr}.node{min-height:64px}.metric b{max-width:52vw}.positioncard{grid-template-columns:minmax(0,1fr) auto}.event{grid-template-columns:48px minmax(0,1fr)}}
+@media(max-width:420px){.livegrid{grid-template-columns:1fr}.tools .tool{flex:1}.positioncard .symbol{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.chev{transition:none}}
 </style>
 </head>
 <body>
 <main>
-  <div class="top">
-    <div class="brand"><h1>ARGUS LIVE</h1><div class="kicker">Market machine · read-only field view</div></div>
-    <div class="stamp" id="stamp">Loading…</div>
-  </div>
+  <div class="top"><div class="brand"><h1>ARGUS LIVE</h1><div class="kicker">Market machine · live read-only field view</div></div><div class="stamp" id="stamp">Loading…</div></div>
 
   <div class="statusbar">
     <span class="badge gray" id="overall"><span class="dot"></span><span>LOADING</span></span>
     <span class="runtime" id="runtimeText"></span>
     <div class="tools">
-      <button class="tool" type="button" id="expandAll">Expand all</button>
-      <button class="tool" type="button" id="collapseAll">Collapse</button>
-      <button class="tool" type="button" id="refreshNow">Refresh</button>
+      <a class="tool primary" id="colabLink" href="https://colab.research.google.com/drive/1m9Tphju8igADu3E8TiwMZ40NzHSkfBjJ" target="_blank" rel="noopener">Open Colab</a>
+      <button class="tool" type="button" id="expandAll">Expand all</button><button class="tool" type="button" id="collapseAll">Collapse</button><button class="tool" type="button" id="refreshNow">Refresh</button>
     </div>
   </div>
 
+  <section class="field" aria-label="Live positions">
+    <div class="fieldhead"><span class="fieldtitle">1 · Live positions</span><span class="fieldnote">what money is exposed right now</span></div>
+    <div class="livegrid"><div class="sessioncard"><div class="label">R4 session</div><div class="big" id="r4SessionReturn">—</div><div class="sub" id="r4SessionSub">waiting</div></div><div class="sessioncard"><div class="label">R5 session</div><div class="big" id="r5SessionReturn">—</div><div class="sub" id="r5SessionSub">waiting</div></div></div>
+    <div class="positionlist" id="positions"></div>
+  </section>
+
+  <section class="field" aria-label="Current engine work">
+    <div class="fieldhead"><span class="fieldtitle">2 · What Argus is doing now</span><span class="fieldnote">engine state · evaluation · research lane</span></div>
+    <div class="nowgrid">
+      <div class="nowcard"><div class="label">Frozen R4</div><div class="big" id="nowR4">—</div><div class="sub" id="nowR4Sub">—</div><div class="nowmeta" id="nowR4Meta">—</div></div>
+      <div class="nowcard"><div class="label">Rolling R5</div><div class="big" id="nowR5">—</div><div class="sub" id="nowR5Sub">—</div><div class="nowmeta" id="nowR5Meta">—</div></div>
+      <div class="nowcard"><div class="label">Research</div><div class="big" id="nowResearch">—</div><div class="sub" id="nowResearchSub">—</div><div class="nowmeta" id="nowResearchMeta">—</div></div>
+    </div>
+  </section>
+
+  <section class="field" aria-label="Recent activity">
+    <div class="fieldhead"><span class="fieldtitle">3 · Activity tape</span><span class="fieldnote">latest entries · exits · evaluations · research</span></div>
+    <div class="tape" id="activity"></div>
+  </section>
+
   <section class="field" aria-label="Argus sea state">
-    <div class="fieldhead"><span class="fieldtitle">Sea state</span><span class="fieldnote">tap a body below to examine</span></div>
-    <div class="sea">
-      <div class="gauge"><div class="glabel">Current</div><div class="gvalue" id="gCurrent">—</div><div class="gsub" id="gCurrentSub">R4 stage</div></div>
-      <div class="gauge"><div class="glabel">Depth</div><div class="gvalue" id="gDepth">—</div><div class="gsub">research coverage</div><div class="depthtrack"><div class="depthfill" id="depthFill"></div></div></div>
-      <div class="gauge"><div class="glabel">Pressure</div><div class="gvalue" id="gPressure">—</div><div class="gsub" id="gPressureSub">heartbeat load</div></div>
-      <div class="gauge"><div class="glabel">Turbulence</div><div class="gvalue" id="gTurbulence">—</div><div class="gsub" id="gTurbulenceSub">exceptions</div></div>
-    </div>
-    <div class="map" id="machineMap">
-      <button class="node" type="button" data-open="r4mod"><strong>Frozen R4</strong><small>control authority</small><div class="state" id="nodeR4">—</div></button>
-      <button class="node" type="button" data-open="r5mod"><strong>Rolling R5</strong><small>shadow authority</small><div class="state" id="nodeR5">—</div></button>
-      <button class="node" type="button" data-open="researchmod"><strong>Research</strong><small>depth engine</small><div class="state" id="nodeResearch">—</div></button>
-    </div>
+    <div class="fieldhead"><span class="fieldtitle">System health</span><span class="fieldnote">tap a body below to examine</span></div>
+    <div class="sea"><div class="gauge"><div class="glabel">Current</div><div class="gvalue" id="gCurrent">—</div><div class="gsub" id="gCurrentSub">R4 stage</div></div><div class="gauge"><div class="glabel">Depth</div><div class="gvalue" id="gDepth">—</div><div class="gsub">research coverage</div><div class="depthtrack"><div class="depthfill" id="depthFill"></div></div></div><div class="gauge"><div class="glabel">Pressure</div><div class="gvalue" id="gPressure">—</div><div class="gsub" id="gPressureSub">heartbeat load</div></div><div class="gauge"><div class="glabel">Turbulence</div><div class="gvalue" id="gTurbulence">—</div><div class="gsub" id="gTurbulenceSub">exceptions</div></div></div>
+    <div class="map" id="machineMap"><button class="node" type="button" data-open="r4mod"><strong>Frozen R4</strong><small>control authority</small><div class="state" id="nodeR4">—</div></button><button class="node" type="button" data-open="r5mod"><strong>Rolling R5</strong><small>fresh authority</small><div class="state" id="nodeR5">—</div></button><button class="node" type="button" data-open="researchmod"><strong>Research</strong><small>depth engine</small><div class="state" id="nodeResearch">—</div></button></div>
   </section>
 
   <div id="inspection" class="inspect" aria-live="polite"><div class="inspect-k" id="inspectKey"></div><div class="inspect-v" id="inspectValue"></div><div class="inspect-n" id="inspectNote"></div></div>
 
-  <details class="module" id="r4mod" open>
-    <summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r4dot"></span>Frozen R4</div><div class="summary-sub" id="r4sub">control paper long account</div></div><div class="summary-state"><div class="state-main" id="r4main">—</div><div class="state-sub" id="r4age">—</div></div><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body"><div id="r4"></div><details class="raw"><summary>Raw R4 payload</summary><pre id="raw-r4">—</pre></details></div>
-  </details>
+  <details class="module" id="r4mod" open><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r4dot"></span>Frozen R4</div><div class="summary-sub" id="r4sub">control paper long account</div></div><div class="summary-state"><div class="state-main" id="r4main">—</div><div class="state-sub" id="r4age">—</div></div><span class="chev" aria-hidden="true">›</span></summary><div class="body"><div id="r4"></div><details class="raw"><summary>Raw R4 payload</summary><pre id="raw-r4">—</pre></details></div></details>
+  <details class="module" id="r5mod" open><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r5dot"></span>Rolling R5</div><div class="summary-sub" id="r5sub">fresh-pool shadow account</div></div><div class="summary-state"><div class="state-main" id="r5main">—</div><div class="state-sub" id="r5age">—</div></div><span class="chev" aria-hidden="true">›</span></summary><div class="body"><div id="r5"></div><details class="raw"><summary>Raw R5 payload</summary><pre id="raw-r5">—</pre></details></div></details>
+  <details class="module" id="researchmod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="researchdot"></span>Unified Research</div><div class="summary-sub">history · regimes · causal scoring</div></div><div class="summary-state"><div class="state-main" id="researchmain">—</div><div class="state-sub" id="researchage">—</div></div><span class="chev" aria-hidden="true">›</span></summary><div class="body"><div id="research"></div><details class="raw"><summary>Raw research payload</summary><pre id="raw-research">—</pre></details></div></details>
+  <details class="module" id="universemod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="universedot"></span>Universe</div><div class="summary-sub">candidate environment</div></div><div class="summary-state"><div class="state-main" id="universemain">—</div><div class="state-sub" id="universesub">—</div></div><span class="chev" aria-hidden="true">›</span></summary><div class="body"><div id="universe"></div><details class="raw"><summary>Raw universe payload</summary><pre id="raw-universe">—</pre></details></div></details>
+  <details class="module" id="systemmod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="systemdot"></span>System</div><div class="summary-sub">authority and publishing</div></div><div class="summary-state"><div class="state-main" id="systemmain">—</div><div class="state-sub" id="systemage">—</div></div><span class="chev" aria-hidden="true">›</span></summary><div class="body"><div id="system"></div><details class="raw"><summary>Raw system payload</summary><pre id="raw-system">—</pre></details></div></details>
 
-  <details class="module" id="r5mod" open>
-    <summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r5dot"></span>Rolling R5</div><div class="summary-sub" id="r5sub">fresh-pool shadow account</div></div><div class="summary-state"><div class="state-main" id="r5main">—</div><div class="state-sub" id="r5age">—</div></div><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body"><div id="r5"></div><details class="raw"><summary>Raw R5 payload</summary><pre id="raw-r5">—</pre></details></div>
-  </details>
-
-  <details class="module" id="researchmod">
-    <summary><div class="summary-left"><div class="summary-name"><span class="dot" id="researchdot"></span>Unified Research</div><div class="summary-sub">history · regimes · causal scoring</div></div><div class="summary-state"><div class="state-main" id="researchmain">—</div><div class="state-sub" id="researchage">—</div></div><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body"><div id="research"></div><details class="raw"><summary>Raw research payload</summary><pre id="raw-research">—</pre></details></div>
-  </details>
-
-  <details class="module" id="universemod">
-    <summary><div class="summary-left"><div class="summary-name"><span class="dot" id="universedot"></span>Universe</div><div class="summary-sub">candidate environment</div></div><div class="summary-state"><div class="state-main" id="universemain">—</div><div class="state-sub" id="universesub">—</div></div><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body"><div id="universe"></div><details class="raw"><summary>Raw universe payload</summary><pre id="raw-universe">—</pre></details></div>
-  </details>
-
-  <details class="module" id="systemmod">
-    <summary><div class="summary-left"><div class="summary-name"><span class="dot" id="systemdot"></span>System</div><div class="summary-sub">authority and publishing</div></div><div class="summary-state"><div class="state-main" id="systemmain">—</div><div class="state-sub" id="systemage">—</div></div><span class="chev" aria-hidden="true">›</span></summary>
-    <div class="body"><div id="system"></div><details class="raw"><summary>Raw system payload</summary><pre id="raw-system">—</pre></details></div>
-  </details>
-
-  <div class="readonly">Read-only surface. No trading authority or control writes.</div>
-  <footer>Auto-refreshes every 10 seconds. Sections and inspection state stay local to this page.</footer>
+  <div class="readonly">Read-only surface. No trading authority or control writes.</div><footer>Auto-refreshes every 10 seconds. Open Colab opens the notebook; it does not auto-run code.</footer>
 </main>
 <script>
 const API='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-live?format=json';
@@ -134,71 +94,37 @@ const fmtAge=s=>s==null?'—':s<60?Math.round(s)+'s':s<3600?Math.round(s/60)+'m'
 const val=(x,f='—')=>(x===undefined||x===null||x==='')?f:x;
 const esc=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const hc=h=>{h=String(h||'').toUpperCase();return h==='GREEN'?'green':h==='YELLOW'?'yellow':h==='RED'?'red':'gray'};
-const noteMap={
-  'Health':'Current health classification from the status publisher.',
-  'Stage':'Current persisted engine stage.',
-  'Heartbeat age':'Age of the last persisted component heartbeat.',
-  'Target session':'Session date this component is preparing or operating.',
-  'Watchlist':'Frozen candidate authority visible to this account.',
-  'Open positions':'Current paper positions reported by the account state.',
-  'Account equity':'Paper-account equity reported by the current ledger.',
-  'Pool progress':'Progress through the declared rolling discovery pool.',
-  'Candidate rows':'Pattern candidates generated during the rolling scan.',
-  'Scan errors':'Errors recorded during the current rolling scan.',
-  'Eligible watchlist':'Patterns and symbols that survived the rolling gates.',
-  'Historical universe':'Completed historical scoring items versus planned items.',
-  'Regime map':'Current persisted regime-mapping lane state.',
-  'Historical 1m':'Current persisted 1-minute recovery lane state.',
-  'Historical 5m':'Current persisted 5-minute historical lane state.',
-  'Publisher age':'Age of the last live-status publication.'
-};
+const money=x=>x==null?'—':(Number(x)<0?'-$':'$')+Math.abs(Number(x)).toFixed(2);
+const pct=x=>x==null?'—':(Number(x)>=0?'+':'')+Number(x).toFixed(2)+'%';
+const price=x=>x==null?'—':'$'+Number(x).toFixed(2);
+const tone=x=>Number(x)>0?'pos':Number(x)<0?'neg':'';
+function localTime(t){if(!t)return '—';const d=new Date(t);return Number.isNaN(d.getTime())?String(t).slice(11,16):d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}
+const noteMap={'Health':'Current health classification from the status publisher.','Stage':'Current persisted engine stage.','Heartbeat age':'Age of the last persisted component heartbeat.','Target session':'Session date this component is preparing or operating.','Watchlist':'Frozen candidate authority visible to this account.','Open positions':'Current paper positions reported by the paper ledger.','Account equity':'Paper-account equity reported by the current ledger.','Session return':'Compounded observed return across closed paper trades for the current session.','Pool progress':'Progress through the declared rolling discovery pool.','Candidate rows':'Pattern candidates generated during the rolling scan.','Scan errors':'Errors recorded during the current rolling scan.','Eligible watchlist':'Patterns and symbols that survived the rolling gates.','Historical universe':'Completed historical scoring items versus planned items.','Current research lane':'Most recently active research lane.','Publisher age':'Age of the last live-status publication.'};
 function row(k,v,note){return '<div class="metric" data-k="'+esc(k)+'" data-v="'+esc(val(v))+'" data-note="'+esc(note||noteMap[k]||'Persisted Argus status field.')+'"><span>'+esc(k)+'</span><b>'+esc(val(v))+'</b></div>'}
 function setDot(id,health){const e=document.getElementById(id);e.className='dot';const c=hc(health);if(c==='green')e.style.background='var(--good)';else if(c==='yellow')e.style.background='var(--warn)';else if(c==='red')e.style.background='var(--bad)';else e.style.background='var(--idle)'}
-function effectiveR5Health(b){const status=String(b.status||'').toUpperCase();if(b.watchlist_ready===true && status==='WATCHLIST_READY' && Number(b.scan_errors||0)===0)return 'GREEN';return String(b.health||'GRAY').toUpperCase()}
+function effectiveR5Health(b){const status=String(b.status||'').toUpperCase();if(b.watchlist_ready===true&&status==='WATCHLIST_READY'&&Number(b.scan_errors||0)===0)return 'GREEN';return String(b.health||'GRAY').toUpperCase()}
 function effectiveResearchHealth(c){const h=String(c.health||'GRAY').toUpperCase();if(h!=='GRAY')return h;return String(c.status||'').toUpperCase()==='RUNNING'?'YELLOW':'GRAY'}
 function effectiveOverall(s){const hs=[String(s.r4?.health||'GRAY').toUpperCase(),effectiveR5Health(s.r5||{}),effectiveResearchHealth(s.research||{})];if(hs.includes('RED'))return 'RED';if(hs.includes('YELLOW'))return 'YELLOW';if(hs.includes('GREEN'))return 'GREEN';return 'WAITING'}
-function pressureFrom(s){const ages=[s.r4?.heartbeat_age_seconds,s.research?.heartbeat_age_seconds,s.publisher_age_seconds].filter(x=>Number.isFinite(Number(x))).map(Number);if(!ages.length)return {v:'—',sub:'no heartbeat data'};const m=Math.max(...ages);return m<45?{v:'LOW',sub:fmtAge(m)+' max age'}:m<120?{v:'RISING',sub:fmtAge(m)+' max age'}:{v:'HIGH',sub:fmtAge(m)+' max age'}}
-function turbulenceFrom(s){let red=0,yellow=0,errs=0;const hs=[s.r4?.health,effectiveR5Health(s.r5||{}),effectiveResearchHealth(s.research||{})].map(x=>String(x||'').toUpperCase());red=hs.filter(x=>x==='RED').length;yellow=hs.filter(x=>x==='YELLOW').length;errs=[s.r4?.last_error,s.r5?.last_error,s.research?.last_error,s.universe?.error].filter(Boolean).length;const level=red||errs?'ROUGH':yellow?'CHOPPY':'CALM';return {v:level,sub:(red+yellow)+' stressed · '+errs+' errors'}}
-function bindMetrics(){document.querySelectorAll('.metric[data-note]').forEach(el=>{el.addEventListener('click',()=>{document.getElementById('inspectKey').textContent=el.dataset.k||'';document.getElementById('inspectValue').textContent=el.dataset.v||'';document.getElementById('inspectNote').textContent=el.dataset.note||'';document.getElementById('inspection').classList.add('show')},{once:true})})}
-function draw(s){
-  const pub=s.published_at_utc?new Date(s.published_at_utc):null;
-  document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';
-  const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;
-  document.getElementById('runtimeText').textContent=s.runtime&&s.runtime.engine_status?'engine '+s.runtime.engine_status:'engine state pending';
-
-  const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{};
-  const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pct=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0;
-  const p=pressureFrom(s),t=turbulenceFrom(s);
-  document.getElementById('gCurrent').textContent=val(a.stage,'—');document.getElementById('gCurrentSub').textContent='R4 · '+val(a.health,'unknown');
-  document.getElementById('gDepth').textContent=depthTotal?depthPct.toFixed(1)+'%':'—';document.getElementById('depthFill').style.width=depthPct+'%';
-  document.getElementById('gPressure').textContent=p.v;document.getElementById('gPressureSub').textContent=p.sub;
-  document.getElementById('gTurbulence').textContent=t.v;document.getElementById('gTurbulenceSub').textContent=t.sub;
-  document.getElementById('nodeR4').textContent=val(a.stage,'—')+' · '+val(a.health,'—');document.getElementById('nodeR5').textContent=val(b.status,'—')+' · '+r5h;document.getElementById('nodeResearch').textContent=val(c.status,'—')+' · '+val(c.health,'—');
-
-  setDot('r4dot',a.health);document.getElementById('r4main').textContent=val(a.stage,'—');document.getElementById('r4age').textContent='heartbeat '+fmtAge(a.heartbeat_age_seconds);document.getElementById('r4sub').textContent=val(a.watchlist_patterns,0)+' patterns · '+val(a.watchlist_symbols,0)+' symbols';
-  document.getElementById('r4').innerHTML=row('Health',a.health)+row('Stage',a.stage)+row('Heartbeat age',fmtAge(a.heartbeat_age_seconds))+row('Target session',a.target_session)+row('Watchlist',val(a.watchlist_patterns,0)+' patterns / '+val(a.watchlist_symbols,0)+' symbols')+row('Open positions',val(a.open_positions,0))+row('Account equity',a.equity!=null?'$'+Number(a.equity).toFixed(2):'—')+(a.last_error?'<div class="err">'+esc(a.last_error)+'</div>':'');
-
-  setDot('r5dot',r5h);document.getElementById('r5main').textContent=val(b.status,'—');document.getElementById('r5age').textContent=b.watchlist_ready?'watchlist ready':'heartbeat '+fmtAge(b.heartbeat_age_seconds);document.getElementById('r5sub').textContent=val(b.watchlist_rows,0)+' patterns · '+val(b.watchlist_symbols,0)+' symbols';
-  document.getElementById('r5').innerHTML=row('Health',r5h,'READY is treated as healthy after a clean completed scan; a finished worker is not required to keep heartbeating.')+row('Status',b.status)+row('Heartbeat age',fmtAge(b.heartbeat_age_seconds))+row('Pool progress',val(b.processed_symbols,0)+' / '+val(b.declared_pool_size,0)+' ('+pct.toFixed(1)+'%)')+'<div class="progress"><i style="width:'+Math.min(100,Math.max(0,pct))+'%"></i></div>'+row('Candidate rows',val(b.candidate_rows,0))+row('Scan errors',val(b.scan_errors,0))+row('Watchlist',b.watchlist_ready?'READY':'NOT READY')+row('Eligible watchlist',val(b.watchlist_rows,0)+' patterns / '+val(b.watchlist_symbols,0)+' symbols')+row('Daily core',val(b.daily_core_symbols,0))+row('Discovery',val(b.discovery_symbols,0))+row('Account equity',b.equity!=null?'$'+Number(b.equity).toFixed(2):'—')+(b.last_error?'<div class="err">'+esc(b.last_error)+'</div>':'');
-
-  setDot('researchdot',researchh);document.getElementById('researchmain').textContent=val(c.status,'—');document.getElementById('researchage').textContent='cycle '+fmtAge(c.heartbeat_age_seconds);
-  document.getElementById('research').innerHTML=row('Health',researchh, c.health==='GRAY'&&String(c.status||'').toUpperCase()==='RUNNING'?'Research is running, but this snapshot version does not expose a direct research heartbeat timestamp; shown YELLOW until the next backend restart adds it.':undefined)+row('Status',c.status)+row('Last cycle',val(c.cycle))+row('Cycle age',fmtAge(c.heartbeat_age_seconds))+row('Historical universe',val(c.historical_universe_completed,0)+' / '+val(c.historical_universe_total,0))+row('Regime map',c.regime_status)+row('Historical 1m',c.historical_1m_status)+row('Historical 5m',c.historical_5m_status)+(c.last_error?'<div class="err">'+esc(c.last_error)+'</div>':'');
-
-  setDot('universedot',u.error?'RED':'GREEN');document.getElementById('universemain').textContent=u.error?'ERROR':'AVAILABLE';document.getElementById('universesub').textContent=val(u.paper_eligible,0)+' paper eligible';
-  document.getElementById('universe').innerHTML=row('Paper eligible',val(u.paper_eligible,0))+row('Unscanned',val(u.unscanned,0))+row('Insufficient data',val(u.insufficient_data,0))+row('Scanned · no pattern',val(u.scanned_no_pattern,0))+row('Fresh scored',val(u.scored,0))+row('R5 qualified',val(u.qualified,0))+(u.error?'<div class="err">'+esc(u.error)+'</div>':'');
-
-  setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds)<120?'GREEN':'YELLOW');document.getElementById('systemmain').textContent=d.paper_only===false?'CHECK':'PAPER ONLY';document.getElementById('systemage').textContent='publisher '+fmtAge(s.publisher_age_seconds);
-  document.getElementById('system').innerHTML=row('Shutdown mode',d.shutdown_mode)+row('R4 control',d.r4_mode)+row('R5 control',d.r5_mode)+row('Paper only',d.paper_only===false?'NO':'YES')+row('Brokerage',d.brokerage_connection===true?'CONNECTED':'NONE')+row('Publisher age',fmtAge(s.publisher_age_seconds));
-
-  document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);
-  bindMetrics();
-}
+function pressureFrom(s){const ages=[s.r4?.heartbeat_age_seconds,s.research?.heartbeat_age_seconds,s.publisher_age_seconds].filter(x=>Number.isFinite(Number(x))).map(Number);if(!ages.length)return{v:'—',sub:'no heartbeat data'};const m=Math.max(...ages);return m<45?{v:'LOW',sub:fmtAge(m)+' max age'}:m<120?{v:'RISING',sub:fmtAge(m)+' max age'}:{v:'HIGH',sub:fmtAge(m)+' max age'}}
+function turbulenceFrom(s){const hs=[s.r4?.health,effectiveR5Health(s.r5||{}),effectiveResearchHealth(s.research||{})].map(x=>String(x||'').toUpperCase());const red=hs.filter(x=>x==='RED').length,yellow=hs.filter(x=>x==='YELLOW').length,errs=[s.r4?.last_error,s.r5?.last_error,s.research?.last_error,s.universe?.error].filter(Boolean).length;return{v:red||errs?'ROUGH':yellow?'CHOPPY':'CALM',sub:(red+yellow)+' stressed · '+errs+' errors'}}
+function bindMetrics(){document.querySelectorAll('.metric[data-note]').forEach(el=>{el.onclick=()=>{document.getElementById('inspectKey').textContent=el.dataset.k||'';document.getElementById('inspectValue').textContent=el.dataset.v||'';document.getElementById('inspectNote').textContent=el.dataset.note||'';document.getElementById('inspection').classList.add('show')}})}
+function sessionCard(prefix,obj){const s=obj?.session||{};const ret=Number(s.return_pct||0);const re=document.getElementById(prefix+'SessionReturn');re.textContent=pct(ret);re.className='big '+tone(ret);document.getElementById(prefix+'SessionSub').textContent=val(s.closed_trades,0)+' closed · '+val(s.wins,0)+'W '+val(s.losses,0)+'L · '+money(s.realized_pnl)}
+function renderPositions(s){const ps=Array.isArray(s.live_positions)?s.live_positions:[];const el=document.getElementById('positions');if(!ps.length){el.innerHTML='<div class="flat"><strong>FLAT</strong>No open R4 or R5 paper position right now.</div>';return}el.innerHTML=ps.map(p=>'<div class="positioncard"><div><div class="label">'+esc(p.engine||'')+' · '+esc(p.pattern_family||'pattern')+'</div><div class="symbol">'+esc(p.symbol||'—')+'</div><div class="mini">entry '+price(p.entry_price)+' · mark '+price(p.current_price)+' · '+esc(p.direction||'RISE')+'</div><div class="mini">age '+(p.age_minutes==null?'—':Number(p.age_minutes).toFixed(1)+'m')+' · horizon '+(p.horizon_minutes_left==null?'—':Math.max(0,Number(p.horizon_minutes_left)).toFixed(1)+'m')+' · stop room '+(p.stop_room_pct==null?'—':Number(p.stop_room_pct).toFixed(2)+'%')+'</div></div><div class="right"><div class="pnl '+tone(p.gross_pct)+'">'+pct(p.gross_pct)+'</div><div class="mini">'+price(p.current_price)+'</div></div></div>').join('')}
+function renderNow(a,b,c){const r4e=a.last_eval||{},r5e=b.last_eval||{};document.getElementById('nowR4').textContent=val(a.stage,'—');document.getElementById('nowR4Sub').textContent=val(a.phase_label,a.open_positions?'managing open position':'waiting for next eligible R4 signal');document.getElementById('nowR4Meta').textContent=a.last_eval_bar_et?'last eval '+localTime(a.last_eval_bar_et)+' · '+val(r4e.fired,0)+' fired · '+val(r4e.opened,0)+' opened':'heartbeat '+fmtAge(a.heartbeat_age_seconds);document.getElementById('nowR5').textContent=val(b.stage,b.status||'—');document.getElementById('nowR5Sub').textContent=b.open_positions?'managing '+b.open_positions+' open position':'authority '+val(b.watchlist_rows,0)+' patterns / '+val(b.watchlist_symbols,0)+' symbols';document.getElementById('nowR5Meta').textContent=b.last_eval_bar_et?'last eval '+localTime(b.last_eval_bar_et)+' · '+val(r5e.fired,0)+' fired · '+val(r5e.opened,0)+' opened':b.watchlist_ready?'watchlist ready · scan errors '+val(b.scan_errors,0):'heartbeat '+fmtAge(b.heartbeat_age_seconds);document.getElementById('nowResearch').textContent=val(c.current_lane,c.status||'—');document.getElementById('nowResearchSub').textContent=val(c.current_detail,'historical universe '+val(c.historical_universe_completed,0)+' / '+val(c.historical_universe_total,0));document.getElementById('nowResearchMeta').textContent=val(c.current_lane_status,c.status||'—')+' · age '+fmtAge(c.heartbeat_age_seconds)}
+function renderActivity(s){const events=Array.isArray(s.activity)?s.activity:[];const el=document.getElementById('activity');if(!events.length){el.innerHTML='<div class="flat"><strong>Telemetry waiting</strong>Activity tape will populate after the live publisher reloads the V2 telemetry source.</div>';return}el.innerHTML=events.map(e=>'<div class="event"><div class="eventtime">'+esc(localTime(e.time))+'</div><div><div class="eventhead">'+esc(e.headline||'event')+'<span class="eventtag">'+esc(e.kind||e.engine||'')+'</span></div><div class="eventdetail">'+esc(e.detail||'')+'</div></div></div>').join('')}
+function tradeLine(t){if(!t)return'—';return val(t.symbol,'—')+' '+pct(t.pct)+' · '+val(t.exit_reason,'closed')}
+function draw(s){const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?'engine '+s.runtime.engine_status:'engine state pending';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
+const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{};const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pp=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0,p=pressureFrom(s),t=turbulenceFrom(s);
+sessionCard('r4',a);sessionCard('r5',b);renderPositions(s);renderNow(a,b,c);renderActivity(s);
+document.getElementById('gCurrent').textContent=val(a.stage,'—');document.getElementById('gCurrentSub').textContent='R4 · '+val(a.health,'unknown');document.getElementById('gDepth').textContent=depthTotal?depthPct.toFixed(2)+'%':'—';document.getElementById('depthFill').style.width=depthPct+'%';document.getElementById('gPressure').textContent=p.v;document.getElementById('gPressureSub').textContent=p.sub;document.getElementById('gTurbulence').textContent=t.v;document.getElementById('gTurbulenceSub').textContent=t.sub;document.getElementById('nodeR4').textContent=val(a.stage,'—')+' · '+val(a.health,'—');document.getElementById('nodeR5').textContent=val(b.status,'—')+' · '+r5h;document.getElementById('nodeResearch').textContent=val(c.current_lane,c.status||'—')+' · '+researchh;
+setDot('r4dot',a.health);document.getElementById('r4main').textContent=val(a.stage,'—');document.getElementById('r4age').textContent='heartbeat '+fmtAge(a.heartbeat_age_seconds);document.getElementById('r4sub').textContent=val(a.watchlist_patterns,0)+' patterns · '+val(a.watchlist_symbols,0)+' symbols';const r4recent=Array.isArray(a.recent_trades)&&a.recent_trades.length?a.recent_trades[a.recent_trades.length-1]:null;document.getElementById('r4').innerHTML=row('Health',a.health)+row('Stage',a.stage)+row('Heartbeat age',fmtAge(a.heartbeat_age_seconds))+row('Target session',a.target_session)+row('Watchlist',val(a.watchlist_patterns,0)+' patterns / '+val(a.watchlist_symbols,0)+' symbols')+row('Open positions',val(a.open_positions,0))+row('Session return',pct(a.session?.return_pct))+row('Session record',val(a.session?.wins,0)+'W / '+val(a.session?.losses,0)+'L')+row('Last closed trade',tradeLine(r4recent))+row('Account equity',a.equity!=null?money(a.equity):'—')+(a.last_error?'<div class="err">'+esc(a.last_error)+'</div>':'');
+setDot('r5dot',r5h);document.getElementById('r5main').textContent=val(b.status,'—');document.getElementById('r5age').textContent=b.watchlist_ready?'watchlist ready':'heartbeat '+fmtAge(b.heartbeat_age_seconds);document.getElementById('r5sub').textContent=val(b.watchlist_rows,0)+' patterns · '+val(b.watchlist_symbols,0)+' symbols';const r5recent=Array.isArray(b.recent_trades)&&b.recent_trades.length?b.recent_trades[b.recent_trades.length-1]:null;document.getElementById('r5').innerHTML=row('Health',r5h,'READY is healthy after a clean completed scan; a finished nightly worker does not need a live heartbeat.')+row('Status',b.status)+row('Heartbeat age',fmtAge(b.heartbeat_age_seconds))+row('Pool progress',val(b.processed_symbols,0)+' / '+val(b.declared_pool_size,0)+' ('+pp.toFixed(1)+'%)')+'<div class="progress"><i style="width:'+Math.min(100,Math.max(0,pp))+'%"></i></div>'+row('Candidate rows',val(b.candidate_rows,0))+row('Scan errors',val(b.scan_errors,0))+row('Eligible watchlist',val(b.watchlist_rows,0)+' patterns / '+val(b.watchlist_symbols,0)+' symbols')+row('Open positions',val(b.open_positions,0))+row('Session return',pct(b.session?.return_pct))+row('Session record',val(b.session?.wins,0)+'W / '+val(b.session?.losses,0)+'L')+row('Last closed trade',tradeLine(r5recent))+row('Account equity',b.equity!=null?money(b.equity):'—')+(b.last_error?'<div class="err">'+esc(b.last_error)+'</div>':'');
+setDot('researchdot',researchh);document.getElementById('researchmain').textContent=val(c.status,'—');document.getElementById('researchage').textContent='activity '+fmtAge(c.heartbeat_age_seconds);document.getElementById('research').innerHTML=row('Health',researchh)+row('Status',c.status)+row('Current research lane',val(c.current_lane,'—'))+row('Current work',val(c.current_detail,'—'))+row('Activity age',fmtAge(c.heartbeat_age_seconds))+row('Historical universe',val(c.historical_universe_completed,0)+' / '+val(c.historical_universe_total,0))+row('Regime map',c.regime_status)+row('Historical 1m',c.historical_1m_status)+row('Historical 5m',c.historical_5m_status)+(c.last_error?'<div class="err">'+esc(c.last_error)+'</div>':'');
+setDot('universedot',u.error?'RED':'GREEN');document.getElementById('universemain').textContent=u.error?'ERROR':'AVAILABLE';document.getElementById('universesub').textContent=val(u.paper_eligible,0)+' paper eligible';document.getElementById('universe').innerHTML=row('Paper eligible',val(u.paper_eligible,0))+row('Unscanned',val(u.unscanned,0))+row('Insufficient data',val(u.insufficient_data,0))+row('Scanned · no pattern',val(u.scanned_no_pattern,0))+row('Fresh scored',val(u.scored,0))+row('R5 qualified',val(u.qualified,0))+(u.error?'<div class="err">'+esc(u.error)+'</div>':'');
+setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds)<120?'GREEN':'YELLOW');document.getElementById('systemmain').textContent=d.paper_only===false?'CHECK':'PAPER ONLY';document.getElementById('systemage').textContent='publisher '+fmtAge(s.publisher_age_seconds);document.getElementById('system').innerHTML=row('Telemetry schema',s.schema)+row('Shutdown mode',d.shutdown_mode)+row('R4 control',d.r4_mode)+row('R5 control',d.r5_mode)+row('Paper only',d.paper_only===false?'NO':'YES')+row('Brokerage',d.brokerage_connection===true?'CONNECTED':'NONE')+row('Publisher age',fmtAge(s.publisher_age_seconds));
+document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics()}
 async function refresh(){try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);draw(await r.json())}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent=e.message}}
-document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module').forEach(x=>x.open=true));
-document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module').forEach(x=>x.open=false));
-document.getElementById('refreshNow').addEventListener('click',refresh);
-document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));
-refresh();setInterval(refresh,10000);
+document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',refresh);document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));refresh();setInterval(refresh,10000);
 </script>
 </body>
 </html>
