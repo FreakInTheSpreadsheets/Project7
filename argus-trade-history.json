@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 158,
+  "count": 161,
   "trades": [
     {
       "trade_no": 1,
@@ -2531,9 +2531,57 @@
       "pct": 0.300386,
       "exit_reason": "FIXED_30_MINUTE_HORIZON",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 159,
+      "symbol": "ABNB",
+      "direction": "RISE",
+      "pattern_family": "FLOW",
+      "pattern_id": "86d322ebba45079583d2faaa",
+      "entry_time_et": "2026-10-02T09:39:00-04:00",
+      "exit_time_et": "2026-10-02T10:09:00-04:00",
+      "entry_price": 163.279999,
+      "exit_price": 163.960007,
+      "notional": 1092.222373,
+      "pnl": 4.54875,
+      "pct": 0.416467,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
+    },
+    {
+      "trade_no": 160,
+      "symbol": "VEU",
+      "direction": "RISE",
+      "pattern_family": "FLOW",
+      "pattern_id": "f207a4ffcc05a77df36520f7",
+      "entry_time_et": "2026-10-02T11:17:00-04:00",
+      "exit_time_et": "2026-10-02T11:47:00-04:00",
+      "entry_price": 83.114998,
+      "exit_price": 83.175003,
+      "notional": 1096.771123,
+      "pnl": 0.791818,
+      "pct": 0.072195,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
+    },
+    {
+      "trade_no": 161,
+      "symbol": "DIS",
+      "direction": "RISE",
+      "pattern_family": "FLOW",
+      "pattern_id": "01e7300a25a19cba6dfa63da",
+      "entry_time_et": "2026-10-02T14:27:00-04:00",
+      "exit_time_et": "2026-10-02T14:57:00-04:00",
+      "entry_price": 101.964996,
+      "exit_price": 102.330002,
+      "notional": 1097.562941,
+      "pnl": 3.928961,
+      "pct": 0.357971,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-10-02T13:14:38.139118+00:00",
+  "generated_at_utc": "2026-10-02T20:10:31.937560+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
