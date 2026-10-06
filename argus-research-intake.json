@@ -1,0 +1,23 @@
+{
+  "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
+  "generated_at_utc": "2026-10-06T01:07:54.285919+00:00",
+  "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
+  "status": "ERROR",
+  "phase": "UNKNOWN",
+  "working_on": "\u2014",
+  "progress_pct": null,
+  "progress_done": null,
+  "progress_total": null,
+  "progress_remaining": null,
+  "progress_basis": "",
+  "next_queued": null,
+  "queue_preview": [],
+  "current_batch_symbols": [],
+  "last_completed_symbols": [],
+  "worker_stage": "",
+  "watcher_status": "",
+  "heartbeat_age_seconds": null,
+  "telemetry_fresh": false,
+  "note": "Research intake telemetry is display-only.",
+  "error": "NameError: name 'readj' is not defined"
+}
