@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_R5_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 5,
+  "count": 6,
   "trades": [
     {
       "trade_no": 1,
@@ -83,9 +83,25 @@
       "pct": 4.757568,
       "exit_reason": "FIXED_30_MINUTE_HORIZON",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 6,
+      "symbol": "SPCH",
+      "direction": "RISE",
+      "pattern_family": "FULL",
+      "pattern_id": "510938c6b22be7fd055510a2",
+      "entry_time_et": "2026-10-06T09:37:00-04:00",
+      "exit_time_et": "2026-10-06T10:07:00-04:00",
+      "entry_price": 13.25,
+      "exit_price": 13.235,
+      "notional": 1121.421868,
+      "pnl": -1.269563,
+      "pct": -0.11321,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-10-06T13:37:29.946286+00:00",
+  "generated_at_utc": "2026-10-06T21:53:27.478374+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical R5 closed paper ledger; no trading authority or execution writes",
