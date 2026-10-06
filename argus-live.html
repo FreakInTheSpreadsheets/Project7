@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 -->
+<!-- ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 -->
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -186,6 +186,7 @@ const R4_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-trade-h
 const R5_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-r5-trade-history.json';
 
 const REGIME_CONTEXT_URL='https://freakinthespreadsheets.github.io/Project7/argus-v478-latest.json';
+const STRUCTURE_PRESSURE_URL='https://freakinthespreadsheets.github.io/Project7/argus-structure-pressure.json';
 const RESEARCH_INTAKE_URL='https://freakinthespreadsheets.github.io/Project7/argus-research-intake.json';
 const REGIME_PROXY_SYMBOLS=["DIA","IWM","KRE","QQQ","SMH","SPY","XBI","XLB","XLC","XLE","XLF","XLI","XLK","XLP","XLRE","XLU","XLV","XLY"];
 const REGIME_BASELINES={"disp":[0.0038175561,0.004567355,0.0047678194,0.0054229924,0.0057052837,0.0057079269,0.0057153512,0.0059749612,0.0060825622,0.0062356927,0.0062449753,0.0065092659,0.0065470839,0.0067399021,0.0067842587,0.0067931932,0.0068288272,0.006918603,0.0070799303,0.007083811,0.0071945152,0.0072456507,0.0072670119,0.0073814446,0.0074118443,0.0077000979,0.008100764,0.0081675883,0.0082046427,0.0082453269,0.0083247882,0.0085225976,0.0085493481,0.0089196591,0.0092001766,0.0092390301,0.0092641899,0.0093148617,0.0095413697,0.0095577968,0.0097269247,0.0097340388,0.0097796072,0.0098367825,0.0100391158,0.0101475601,0.0102340178,0.0102765933,0.0103592427,0.0104076457,0.0105210001,0.0105318038,0.0108531263,0.0108870267,0.0113035715,0.011716237,0.0117378197,0.0118457491,0.0119402062,0.0120343216,0.012396058,0.0124972907,0.0126656632,0.0129760474,0.0129934118,0.0133673711,0.0168355425,0.0180106129,0.0189484825],"dec":[0.0017517235,0.0018650561,0.0020308922,0.0031690695,0.0032920458,0.0033123887,0.0034560098,0.0035651541,0.0036710213,0.0039459513,0.0039731937,0.0040122479,0.0040395525,0.0041735591,0.0042885614,0.0044734813,0.0045300687,0.0045973015,0.0046626875,0.0047375566,0.0047379481,0.0047565338,0.0047834308,0.0048107932,0.0048673216,0.0049937811,0.0052777094,0.0053866779,0.0053988478,0.0055024538,0.0055043422,0.0055723472,0.0057256373,0.0058927596,0.0059313343,0.0059654691,0.0059916798,0.0060807343,0.0062148235,0.0062385259,0.0064108539,0.0064203375,0.0064925511,0.0065019657,0.0065593299,0.0067411792,0.0067692394,0.0069477871,0.0070041765,0.0074909789,0.0075734816,0.0079078489,0.0079740589,0.0080430518,0.0080491221,0.0083027107,0.0087108077,0.0087234039,0.0088340597,0.0089896023,0.0097682139,0.0098890044,0.0103216459,0.0104645893,0.0113684834,0.01172178,0.0140420483,0.0142710205,0.0143927512],"rot":[0.0625,0.1078431373,0.1176470588,0.125,0.1323529412,0.1323529412,0.1531862745,0.1740196078,0.181372549,0.1899509804,0.2009803922,0.2022058824,0.2034313725,0.2071078431,0.2193627451,0.2512254902,0.262254902,0.2659313725,0.2720588235,0.2855392157,0.2879901961,0.2990196078,0.3075980392,0.3137254902,0.3149509804,0.3149509804,0.3406862745,0.3566176471,0.3651960784,0.3823529412,0.3848039216,0.3933823529,0.4007352941,0.4056372549,0.4056372549,0.4154411765,0.4325980392,0.4411764706,0.443627451,0.4534313725,0.4607843137,0.4607843137,0.4828431373,0.4926470588,0.4926470588,0.5049019608,0.5073529412,0.5232843137,0.5330882353,0.5404411765,0.5453431373,0.550245098,0.5526960784,0.5661764706,0.5674019608,0.5674019608,0.568627451,0.5698529412,0.5894607843,0.6237745098,0.6299019608,0.6458333333,0.6887254902,0.7144607843,0.7267156863,0.7512254902,0.7536764706,0.7953431373,0.8664215686]};
@@ -265,10 +266,55 @@ function regimeLevel(score){return score>=80?'TRANSITION':score>=60?'HIGH':score
 function extractMarketContext(text){const key='"market_context":';const i=text.indexOf(key);if(i<0)return null;let p=i+key.length;while(p<text.length&&/\s/.test(text[p]))p++;if(text[p]!=='{')return null;let depth=0,inStr=false,escp=false;for(let j=p;j<text.length;j++){const ch=text[j];if(inStr){if(escp)escp=false;else if(ch==='\\')escp=true;else if(ch==='"')inStr=false;continue}if(ch==='"'){inStr=true;continue}if(ch==='{')depth++;else if(ch==='}'){depth--;if(depth===0){try{return JSON.parse(text.slice(p,j+1))}catch(e){return null}}}}return null}
 function computeRegimePressure(ctx){const pm=ctx?.proxy_metrics||{},rows=[];REGIME_PROXY_SYMBOLS.forEach(symbol=>{const m=pm[symbol]||{},sr=Number(m.session_return),r30=Number(m.return_30m);if(Number.isFinite(sr)&&Number.isFinite(r30))rows.push({symbol,sr,r30})});if(rows.length<12)return null;const spy=rows.find(x=>x.symbol==='SPY');if(!spy)return null;const x=rows.filter(z=>z.symbol!=='SPY'),disp=popStd(x.map(z=>z.sr)),dec=median(x.map(z=>Math.abs(z.sr-spy.sr))),rho=spearman(x.map(z=>z.sr),x.map(z=>z.r30));if(!Number.isFinite(disp)||!Number.isFinite(dec)||!Number.isFinite(rho))return null;const rot=(1-rho)/2,dp=empiricalPct(REGIME_BASELINES.disp,disp),cp=empiricalPct(REGIME_BASELINES.dec,dec),rp=empiricalPct(REGIME_BASELINES.rot,rot),score=.35*dp+.40*cp+.25*rp;return{score,level:regimeLevel(score),disp,dec,rot,dp,cp,rp,count:x.length,stamp:ctx.collected_at_utc||'',hash:ctx.context_hash||''}}
 function renderRegimePressure(r){const root=document.getElementById('regimePressure');if(!root)return;if(!r){root.classList.add('regime-unavailable');document.getElementById('regimeScore').textContent='—';document.getElementById('regimeLevel').textContent='UNAVAILABLE';return}root.classList.remove('regime-unavailable');root.dataset.level=r.level;const score=Math.max(0,Math.min(100,r.score));document.getElementById('regimeScore').textContent=Math.round(score);document.getElementById('regimeLevel').textContent=r.level;document.getElementById('regimeArc').setAttribute('stroke-dasharray',score.toFixed(1)+' 100');document.getElementById('regimeNeedle').setAttribute('transform','rotate('+(-90+score*1.8).toFixed(1)+' 90 90)');[['regimeDisp',r.dp,'regimeDispBar'],['regimeDec',r.cp,'regimeDecBar'],['regimeRot',r.rp,'regimeRotBar']].forEach(([id,p,b])=>{document.getElementById(id).textContent=Math.round(p)+'p';document.getElementById(b).style.setProperty('--p',Math.max(0,Math.min(100,p)).toFixed(1)+'%')});const stamp=r.stamp?new Date(r.stamp):null,when=stamp&&!Number.isNaN(stamp.getTime())?stamp.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'latest context';document.getElementById('regimeMeta').textContent=r.count+' equity/sector proxies · Argus 60d/5m context baseline · '+when+' · display-only'}
-async function refreshRegimePressure(force=false){const now=Date.now();if(!force&&now-regimeLastFetch<55000)return;regimeLastFetch=now;try{const r=await fetch(REGIME_CONTEXT_URL+'?t='+now,{cache:'no-store',headers:{'Range':'bytes=0-32767'}});if(!r.ok&&r.status!==206)throw new Error('context HTTP '+r.status);const text=await r.text(),ctx=extractMarketContext(text),g=computeRegimePressure(ctx);if(!g)throw new Error('context metrics unavailable');renderRegimePressure(g)}catch(e){renderRegimePressure(null);const meta=document.getElementById('regimeMeta');if(meta)meta.textContent='Regime context unavailable · '+String(e.message||e).slice(0,120)}}
+function structureSidecarToGauge(x){
+  if(!x||String(x.status||'').toUpperCase()!=='AVAILABLE'||!Number.isFinite(Number(x.score)))return null;
+  const c=x.components||{},d=c.dispersion||{},q=c.decoupling||{},r=c.leadership_rotation||{};
+  const score=Number(x.score);
+  return{
+    score,
+    level:String(x.label||regimeLevel(score)).toUpperCase(),
+    disp:Number(d.raw),
+    dec:Number(q.raw),
+    rot:Number(r.raw),
+    dp:Number(d.percentile),
+    cp:Number(q.percentile),
+    rp:Number(r.percentile),
+    count:Number(x.proxy_count||0),
+    stamp:x.current_context_at_utc||x.generated_at_utc||'',
+    baselineSessions:Number(x.baseline_sessions||0),
+    validated:x.validated_predictor===true,
+    source:'dedicated structure feed'
+  };
+}
+async function refreshRegimePressure(force=false){
+  const now=Date.now();if(!force&&now-regimeLastFetch<55000)return;regimeLastFetch=now;
+  try{
+    const r=await fetch(STRUCTURE_PRESSURE_URL+'?t='+now,{cache:'no-store'});
+    if(!r.ok)throw new Error('structure HTTP '+r.status);
+    const x=await r.json(),g=structureSidecarToGauge(x);
+    if(!g)throw new Error('structure payload unavailable');
+    renderRegimePressure(g);
+    const meta=document.getElementById('regimeMeta');
+    if(meta)meta.textContent=(g.count||'—')+' equity/sector proxies · '+(g.baselineSessions||'—')+' baseline sessions · '+(g.stamp?new Date(g.stamp).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'latest context')+' · descriptive precursor';
+    return;
+  }catch(primaryErr){
+    try{
+      const r=await fetch(REGIME_CONTEXT_URL+'?t='+now,{cache:'no-store',headers:{'Range':'bytes=0-131071'}});
+      if(!r.ok&&r.status!==206)throw new Error('context HTTP '+r.status);
+      const raw=await r.text(),ctx=extractMarketContext(raw),g=computeRegimePressure(ctx);
+      if(!g)throw new Error('context metrics unavailable');
+      renderRegimePressure(g);
+      const meta=document.getElementById('regimeMeta');if(meta)meta.textContent='fallback context calculation · '+meta.textContent;
+    }catch(fallbackErr){
+      renderRegimePressure(null);
+      const meta=document.getElementById('regimeMeta');
+      if(meta)meta.textContent='Regime structure feed unavailable · '+String(primaryErr.message||primaryErr).slice(0,80);
+    }
+  }
+}
 
 function renderResearchIntake(d){
-  const x=d?.research_intake||researchIntakeFallback||{},r=d?.research||{};
+  const x=d?.research_intake||d?.research?.intake||researchIntakeFallback||{},r=d?.research||{};
   const status=document.getElementById('riStatus'),now=document.getElementById('riNow'),nowSub=document.getElementById('riNowSub'),nowSyms=document.getElementById('riNowSymbols'),prog=document.getElementById('riProgress'),progSub=document.getElementById('riProgressSub'),bar=document.getElementById('riProgressBar'),next=document.getElementById('riNext'),nextSub=document.getElementById('riNextSub'),nextSyms=document.getElementById('riNextSymbols'),foot=document.getElementById('riFoot');
   if(!now)return;
 
@@ -298,7 +344,7 @@ function renderResearchIntake(d){
     nextSyms.textContent=qs.length?qs.join(' · '):'—';
 
     if(status)status.textContent=statusText+(Number.isFinite(age)?' · '+fmtAge(age)+' ago':'')+(fresh?'':' · STALE');
-    if(foot)foot.textContent=(x.progress_basis||'research intake')+' · unseen → strict validation → expansion → oldest maintenance rescan · display-only';
+    if(foot)foot.textContent=(x.progress_basis||'research intake')+' · exact scheduler queue · unseen → strict validation → expansion → oldest maintenance rescan · display-only';
     return;
   }
 
