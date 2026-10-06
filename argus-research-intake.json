@@ -1,10 +1,10 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T09:26:01.280506+00:00",
+  "generated_at_utc": "2026-10-06T09:27:30.949549+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "STRICT_VALIDATION_AUDIT",
-  "working_on": "STRICT_VALIDATION_AUDIT \u00b7 VFS",
+  "working_on": "STRICT_VALIDATION_AUDIT \u00b7 VG",
   "progress_pct": 84.42,
   "progress_done": 25416,
   "progress_total": 30105,
@@ -14,18 +14,18 @@
   "queue_preview": [],
   "queue_depth": null,
   "current_batch_symbols": [
-    "VFS"
+    "VG"
   ],
   "last_completed_symbols": [
     "UBIQ"
   ],
   "worker_stage": "SCANNING_SYMBOL",
   "watcher_status": "SCANNING",
-  "heartbeat_age_seconds": 20.8,
+  "heartbeat_age_seconds": 35.3,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-10-06T09:25:40.443148+00:00",
+  "worker_heartbeat_utc": "2026-10-06T09:26:55.681871+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
   "scan_in_progress": true,
   "last_completed_at_utc": "2026-10-06T09:25:23.579282+00:00",
