@@ -1,0 +1,55 @@
+{
+  "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V1",
+  "generated_at_utc": "2026-10-06T00:23:46.902820+00:00",
+  "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
+  "status": "AVAILABLE",
+  "metric": "STRUCTURE_CHURN",
+  "source": "R5_FROZEN_WATCHLIST_HISTORY",
+  "note": "Measured qualified-authority turnover; not a regime-switch probability.",
+  "band_basis": "Display heuristic only; calibration against completed regime map is pending.",
+  "previous_session": "2026-10-05",
+  "current_session": "2026-10-06",
+  "structure_churn_pct": 68.15625,
+  "structure_stability_pct": 31.84375,
+  "band": "ELEVATED",
+  "symbol_overlap_pct": 34.0,
+  "pattern_overlap_pct": 29.6875,
+  "signature_overlap_pct": 60.0,
+  "direction_mix_shift_pp": 6.815511,
+  "previous_symbols": 35,
+  "current_symbols": 32,
+  "previous_patterns": 37,
+  "current_patterns": 46,
+  "previous_signatures": 12,
+  "current_signatures": 12,
+  "history": [
+    {
+      "from_session": "2026-09-30",
+      "to_session": "2026-10-01",
+      "symbol_overlap_pct": 41.509434,
+      "pattern_overlap_pct": 36.507937,
+      "structure_churn_pct": 60.991315
+    },
+    {
+      "from_session": "2026-10-01",
+      "to_session": "2026-10-02",
+      "symbol_overlap_pct": 77.083333,
+      "pattern_overlap_pct": 76.785714,
+      "structure_churn_pct": 23.065477
+    },
+    {
+      "from_session": "2026-10-02",
+      "to_session": "2026-10-05",
+      "symbol_overlap_pct": 34.545455,
+      "pattern_overlap_pct": 29.6875,
+      "structure_churn_pct": 67.883522
+    },
+    {
+      "from_session": "2026-10-05",
+      "to_session": "2026-10-06",
+      "symbol_overlap_pct": 34.0,
+      "pattern_overlap_pct": 29.6875,
+      "structure_churn_pct": 68.15625
+    }
+  ]
+}
