@@ -1,10 +1,10 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T02:17:38.652650+00:00",
+  "generated_at_utc": "2026-10-06T02:19:11.440639+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
-  "status": "STALE",
+  "status": "ACTIVE",
   "phase": "CENSUS_SCAN",
-  "working_on": "CENSUS_SCAN \u00b7 TELEMETRY STALE",
+  "working_on": "CENSUS_SCAN \u00b7 WQEY, VFMV, VFQY, VFS",
   "progress_pct": 100.0,
   "progress_done": 30100,
   "progress_total": 30101,
@@ -13,22 +13,27 @@
   "next_queued": null,
   "queue_preview": [],
   "queue_depth": null,
-  "current_batch_symbols": [],
+  "current_batch_symbols": [
+    "WQEY",
+    "VFMV",
+    "VFQY",
+    "VFS"
+  ],
   "last_completed_symbols": [
     "RWAYM",
     "TBCV",
     "TBCVW",
     "VJET"
   ],
-  "worker_stage": "WAITING",
-  "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 1102.5,
-  "telemetry_fresh": false,
+  "worker_stage": "SCANNING_SYMBOL",
+  "watcher_status": "SCANNING",
+  "heartbeat_age_seconds": 75.7,
+  "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-10-06T01:59:16.223479+00:00",
+  "worker_heartbeat_utc": "2026-10-06T02:17:55.943283+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
-  "scan_in_progress": false,
+  "scan_in_progress": true,
   "last_completed_at_utc": "2026-10-06T01:59:16.123643+00:00",
   "last_error": ""
 }
