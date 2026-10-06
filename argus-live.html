@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- ARGUS_LIVE_STATUS_WEB_V24_MARKET_TREATMENT_20261005 · ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
+<!-- ARGUS_LIVE_STATUS_WEB_V25_RESEARCH_LANE_CLARITY_20261005 · ARGUS_LIVE_STATUS_WEB_V24_MARKET_TREATMENT_20261005 · ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -159,13 +159,13 @@
   <div class="regime-foot" id="climateMeta">100 = deployment behavior · below 100 = worse treatment · above 100 = better treatment · descriptive paper outcomes only</div>
 </section>
 <section class="research-intake" id="researchIntake" aria-label="Research intake status">
-  <div class="research-intake-head"><span>RESEARCH INTAKE</span><small id="riStatus">scheduler telemetry</small></div>
+  <div class="research-intake-head"><span>RESEARCH STATUS</span><small id="riStatus">live research telemetry</small></div>
   <div class="research-intake-grid">
-    <div class="ri-cell"><small>NOW</small><strong id="riNow">—</strong><em id="riNowSub">waiting for persisted intake state</em><div class="ri-symbols" id="riNowSymbols">—</div></div>
-    <div class="ri-cell"><small>PROGRESS</small><strong id="riProgress">—</strong><em id="riProgressSub">strict validation / census</em><div class="ri-track"><i id="riProgressBar"></i></div></div>
-    <div class="ri-cell"><small>NEXT</small><strong id="riNext">—</strong><em id="riNextSub">next scheduler lane</em><div class="ri-symbols" id="riNextSymbols">—</div></div>
+    <div class="ri-cell"><small>ACTIVE LANE</small><strong id="riNow">—</strong><em id="riNowSub">waiting for unified research state</em><div class="ri-symbols" id="riNowSymbols">—</div></div>
+    <div class="ri-cell"><small>UNIVERSE VALIDATION</small><strong id="riProgress">—</strong><em id="riProgressSub">strict validation coverage</em><div class="ri-track"><i id="riProgressBar"></i></div></div>
+    <div class="ri-cell"><small>UNIVERSE NEXT</small><strong id="riNext">—</strong><em id="riNextSub">next persisted intake item</em><div class="ri-symbols" id="riNextSymbols">—</div></div>
   </div>
-  <div class="ri-foot" id="riFoot">Read-only research telemetry · no trading authority write</div>
+  <div class="ri-foot" id="riFoot">Active lane and universe validation are separate · read-only telemetry · no trading authority write</div>
 </section>
 <div class="last-session" id="lastSessionStrip">
   <div class="last-session-head"><span>LAST SESSION</span><b id="lastSessionDate">—</b></div>
@@ -450,17 +450,13 @@ function renderResearchIntake(d){
   if(x.schema==='ARGUS_RESEARCH_INTAKE_STATUS_V1'){
     const xs=Array.isArray(x.current_batch_symbols)?x.current_batch_symbols:[],qs=Array.isArray(x.queue_preview)?x.queue_preview:[],ls=Array.isArray(x.last_completed_symbols)?x.last_completed_symbols:[];
     const age=Number(x.heartbeat_age_seconds),fresh=x.telemetry_fresh===true,statusText=String(x.status||'UNKNOWN').toUpperCase();
-    now.textContent=x.working_on||x.phase||x.worker_stage||'WAITING';
-    if(xs.length){
-      nowSub.textContent='current batch · '+xs.length+' symbol'+(xs.length===1?'':'s')+' · '+(x.watcher_status||x.worker_stage||'working');
-      nowSyms.textContent=xs.join(' · ');
-    }else if(x.scan_in_progress){
-      nowSub.textContent=(x.watcher_status||'SCANNING')+' · '+(x.worker_stage||'batch assignment pending');
-      nowSyms.textContent=ls.length?('last completed · '+ls.join(' · ')):'current batch symbols not persisted yet';
-    }else{
-      nowSub.textContent=(x.watcher_status||x.worker_stage||'WAITING')+(ls.length?' · last completed '+ls.join(' · '):'');
-      nowSyms.textContent='no active symbol batch';
-    }
+    const laneSyms=Array.isArray(r.historical_universe_batch_symbols)?r.historical_universe_batch_symbols:[];
+    now.textContent=r.current_lane||x.working_on||x.phase||x.worker_stage||'WAITING';
+    nowSub.textContent=r.current_detail||r.current_lane_status||x.working_on||x.worker_stage||'waiting for unified research state';
+    if(laneSyms.length) nowSyms.textContent='active batch · '+laneSyms.join(' · ');
+    else if(xs.length) nowSyms.textContent='universe intake · '+xs.join(' · ');
+    else if(ls.length) nowSyms.textContent='universe last completed · '+ls.join(' · ');
+    else nowSyms.textContent='no active symbol batch reported';
 
     const pp=Number(x.progress_pct),done=Number(x.progress_done),total=Number(x.progress_total),rem=Number(x.progress_remaining),qd=Number(x.queue_depth);
     const qSource=String(x.queue_source||'NOT_PERSISTED').toUpperCase();
@@ -476,7 +472,7 @@ function renderResearchIntake(d){
     nextSyms.textContent=qs.length?qs.join(' · '):'—';
 
     if(status)status.textContent=statusText+(Number.isFinite(age)?' · '+fmtAge(age)+' ago':'')+(fresh?'':' · STALE');
-    if(foot)foot.textContent=(x.progress_basis||'research intake')+' · '+(qSource==='PERSISTED_WORKER_STATE'?'worker-persisted scheduler state':'queue not yet worker-persisted')+' · unseen → strict validation → expansion → oldest maintenance rescan · display-only';
+    if(foot)foot.textContent='ACTIVE LANE: unified research supervisor · UNIVERSE VALIDATION: '+(x.progress_basis||'strict validation coverage')+' · '+(qSource==='PERSISTED_WORKER_STATE'?'next item from persisted worker queue':'universe queue not yet worker-persisted')+' · display-only';
     return;
   }
 
