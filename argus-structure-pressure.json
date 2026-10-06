@@ -1,55 +1,33 @@
 {
-  "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V1",
-  "generated_at_utc": "2026-10-06T00:24:15.528096+00:00",
-  "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
+  "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V2",
+  "generated_at_utc": "2026-10-06T00:26:00.559839+00:00",
+  "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
-  "metric": "STRUCTURE_CHURN",
-  "source": "R5_FROZEN_WATCHLIST_HISTORY",
-  "note": "Measured qualified-authority turnover; not a regime-switch probability.",
-  "band_basis": "Display heuristic only; calibration against completed regime map is pending.",
-  "previous_session": "2026-10-05",
-  "current_session": "2026-10-06",
-  "structure_churn_pct": 68.15625,
-  "structure_stability_pct": 31.84375,
-  "band": "ELEVATED",
-  "symbol_overlap_pct": 34.0,
-  "pattern_overlap_pct": 29.6875,
-  "signature_overlap_pct": 60.0,
-  "direction_mix_shift_pp": 6.815511,
-  "previous_symbols": 35,
-  "current_symbols": 32,
-  "previous_patterns": 37,
-  "current_patterns": 46,
-  "previous_signatures": 12,
-  "current_signatures": 12,
-  "history": [
-    {
-      "from_session": "2026-09-30",
-      "to_session": "2026-10-01",
-      "symbol_overlap_pct": 41.509434,
-      "pattern_overlap_pct": 36.507937,
-      "structure_churn_pct": 60.991315
+  "score": 4.9,
+  "label": "LOW",
+  "components": {
+    "decoupling": {
+      "percentile": 7.1,
+      "raw": 0.002656581937053426
     },
-    {
-      "from_session": "2026-10-01",
-      "to_session": "2026-10-02",
-      "symbol_overlap_pct": 77.083333,
-      "pattern_overlap_pct": 76.785714,
-      "structure_churn_pct": 23.065477
+    "dispersion": {
+      "percentile": 5.7,
+      "raw": 0.0042304786902291076
     },
-    {
-      "from_session": "2026-10-02",
-      "to_session": "2026-10-05",
-      "symbol_overlap_pct": 34.545455,
-      "pattern_overlap_pct": 29.6875,
-      "structure_churn_pct": 67.883522
-    },
-    {
-      "from_session": "2026-10-05",
-      "to_session": "2026-10-06",
-      "symbol_overlap_pct": 34.0,
-      "pattern_overlap_pct": 29.6875,
-      "structure_churn_pct": 68.15625
+    "leadership_rotation": {
+      "percentile": 0.0,
+      "raw": 0.0
     }
-  ]
+  },
+  "validated_predictor": false,
+  "note": "Descriptive precursor only; not yet validated as a forward regime classifier.",
+  "weights": {
+    "decoupling": 0.4,
+    "dispersion": 0.35,
+    "leadership_rotation": 0.25
+  },
+  "baseline_sessions": 70,
+  "current_context_at_utc": "2026-10-06T00:24:36.311280+00:00",
+  "previous_complete_session": "2026-10-05",
+  "proxy_count": 18
 }
