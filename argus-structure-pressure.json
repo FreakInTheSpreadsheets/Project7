@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V1",
-  "generated_at_utc": "2026-10-06T00:23:46.902820+00:00",
+  "generated_at_utc": "2026-10-06T00:24:15.528096+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "metric": "STRUCTURE_CHURN",
