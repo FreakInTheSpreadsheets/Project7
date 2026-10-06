@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V2",
-  "generated_at_utc": "2026-10-06T02:07:40.471145+00:00",
+  "generated_at_utc": "2026-10-06T02:09:08.413042+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 21.9,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 69,
-  "current_context_at_utc": "2026-10-06T02:02:14.743987+00:00",
+  "current_context_at_utc": "2026-10-06T02:07:50.110026+00:00",
   "previous_complete_session": "2026-10-02",
   "proxy_count": 18
 }
