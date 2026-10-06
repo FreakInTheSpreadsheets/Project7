@@ -1,10 +1,10 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T08:19:58.400323+00:00",
+  "generated_at_utc": "2026-10-06T08:21:21.531865+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
-  "status": "STALE",
+  "status": "ACTIVE",
   "phase": "CENSUS_SCAN",
-  "working_on": "CENSUS_SCAN \u00b7 TELEMETRY STALE",
+  "working_on": "CENSUS_SCAN \u00b7 HFIX, SKYD, UBIQ, VFS",
   "progress_pct": 99.99,
   "progress_done": 30102,
   "progress_total": 30105,
@@ -13,19 +13,24 @@
   "next_queued": null,
   "queue_preview": [],
   "queue_depth": null,
-  "current_batch_symbols": [],
+  "current_batch_symbols": [
+    "HFIX",
+    "SKYD",
+    "UBIQ",
+    "VFS"
+  ],
   "last_completed_symbols": [
     "GMAC"
   ],
-  "worker_stage": "WAITING",
-  "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 1677.5,
-  "telemetry_fresh": false,
+  "worker_stage": "SCANNING_SYMBOL",
+  "watcher_status": "SCANNING",
+  "heartbeat_age_seconds": 5.3,
+  "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-10-06T07:52:00.891747+00:00",
+  "worker_heartbeat_utc": "2026-10-06T08:21:16.252934+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
-  "scan_in_progress": false,
+  "scan_in_progress": true,
   "last_completed_at_utc": "2026-10-06T07:52:00.588124+00:00",
   "last_error": ""
 }
