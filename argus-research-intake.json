@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T11:26:28.424494+00:00",
+  "generated_at_utc": "2026-10-06T11:27:56.450194+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "STRICT_VALIDATION_AUDIT",
@@ -82,13 +82,13 @@
   "last_completed_symbols": [
     "UBIQ"
   ],
-  "worker_stage": "PROMOTION_COMPLETE",
+  "worker_stage": "CATALOG_COMMITTED",
   "watcher_status": "SCANNING",
-  "heartbeat_age_seconds": 46.3,
+  "heartbeat_age_seconds": 77.7,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-10-06T11:25:42.138012+00:00",
+  "worker_heartbeat_utc": "2026-10-06T11:26:38.736029+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
   "scan_in_progress": true,
   "last_completed_at_utc": "2026-10-06T09:25:23.579282+00:00",
