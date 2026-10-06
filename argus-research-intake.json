@@ -1,10 +1,10 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T01:10:45.235790+00:00",
+  "generated_at_utc": "2026-10-06T01:12:18.465709+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
-  "status": "STALE",
+  "status": "ACTIVE",
   "phase": "STRICT_VALIDATION_AUDIT",
-  "working_on": "STRICT_VALIDATION_AUDIT \u00b7 TELEMETRY STALE",
+  "working_on": "STRICT_VALIDATION_AUDIT \u00b7 BEGIN BATCH",
   "progress_pct": 84.42,
   "progress_done": 25402,
   "progress_total": 30091,
@@ -23,14 +23,14 @@
   "last_completed_symbols": [
     "VFMO"
   ],
-  "worker_stage": "WAITING",
-  "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 59616.7,
-  "telemetry_fresh": false,
+  "worker_stage": "BEGIN_BATCH",
+  "watcher_status": "SCANNING",
+  "heartbeat_age_seconds": 15.1,
+  "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
-  "worker_heartbeat_utc": "2026-10-05T08:37:08.514916+00:00",
+  "worker_heartbeat_utc": "2026-10-06T01:12:03.375536+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
-  "scan_in_progress": false,
+  "scan_in_progress": true,
   "last_completed_at_utc": "2026-10-05T08:37:08.476095+00:00",
   "last_error": ""
 }
