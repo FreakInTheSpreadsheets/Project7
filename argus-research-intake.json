@@ -1,14 +1,14 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T01:59:07.801464+00:00",
+  "generated_at_utc": "2026-10-06T02:00:29.572714+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "CENSUS_SCAN",
-  "working_on": "CENSUS_SCAN \u00b7 RWAYM, TBCV, TBCVW, VJET",
-  "progress_pct": 99.98,
-  "progress_done": 30096,
+  "working_on": "CENSUS_SCAN \u00b7 WAITING",
+  "progress_pct": 100.0,
+  "progress_done": 30100,
   "progress_total": 30101,
-  "progress_remaining": 5,
+  "progress_remaining": 1,
   "progress_basis": "market census coverage",
   "next_queued": "WQEY",
   "queue_preview": [
@@ -19,26 +19,21 @@
     "VFSWW",
     "VFVA"
   ],
-  "current_batch_symbols": [
+  "current_batch_symbols": [],
+  "last_completed_symbols": [
     "RWAYM",
     "TBCV",
     "TBCVW",
     "VJET"
   ],
-  "last_completed_symbols": [
-    "IPHX",
-    "IPHXW",
-    "MLRG",
-    "MSML"
-  ],
-  "worker_stage": "SYMBOL_SCAN_PERSISTED",
-  "watcher_status": "SCANNING",
-  "heartbeat_age_seconds": 0.6,
+  "worker_stage": "WAITING",
+  "watcher_status": "ACTIVE",
+  "heartbeat_age_seconds": 73.4,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
-  "worker_heartbeat_utc": "2026-10-06T01:59:07.240160+00:00",
+  "worker_heartbeat_utc": "2026-10-06T01:59:16.223479+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
-  "scan_in_progress": true,
-  "last_completed_at_utc": "2026-10-06T01:40:15.350436+00:00",
+  "scan_in_progress": false,
+  "last_completed_at_utc": "2026-10-06T01:59:16.123643+00:00",
   "last_error": ""
 }
