@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T11:10:03.455621+00:00",
+  "generated_at_utc": "2026-10-06T11:11:28.223795+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "STRICT_VALIDATION_AUDIT",
@@ -84,7 +84,7 @@
   ],
   "worker_stage": "MERGING_PARALLEL_SYMBOL",
   "watcher_status": "SCANNING",
-  "heartbeat_age_seconds": 26.7,
+  "heartbeat_age_seconds": 111.4,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
