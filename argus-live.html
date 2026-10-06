@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- ARGUS_LIVE_STATUS_WEB_V25_RESEARCH_LANE_CLARITY_20261005 · ARGUS_LIVE_STATUS_WEB_V24_MARKET_TREATMENT_20261005 · ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
+<!-- ARGUS_LIVE_STATUS_WEB_V26_RESEARCH_FEED_PRIORITY_20261006 · ARGUS_LIVE_STATUS_WEB_V25_RESEARCH_LANE_CLARITY_20261005 · ARGUS_LIVE_STATUS_WEB_V24_MARKET_TREATMENT_20261005 · ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -442,7 +442,15 @@ async function refreshStrategyClimate(force=false){
 }
 
 function renderResearchIntake(d){
-  const x=d?.research_intake||d?.research?.intake||researchIntakeFallback||{},r=d?.research||{};
+  const embedded=d?.research_intake||d?.research?.intake||{},direct=researchIntakeFallback||{},r=d?.research||{};
+  const candidates=[embedded,direct].filter(x=>x&&x.schema==='ARGUS_RESEARCH_INTAKE_STATUS_V1');
+  candidates.sort((a,b)=>{
+    const af=a.telemetry_fresh===true?1:0,bf=b.telemetry_fresh===true?1:0;if(af!==bf)return bf-af;
+    const at=Date.parse(a.generated_at_utc||a.worker_heartbeat_utc||a.last_completed_at_utc||0)||0;
+    const bt=Date.parse(b.generated_at_utc||b.worker_heartbeat_utc||b.last_completed_at_utc||0)||0;
+    return bt-at;
+  });
+  const x=candidates.length?candidates[0]:(Object.keys(embedded||{}).length?embedded:direct);
   const status=document.getElementById('riStatus'),now=document.getElementById('riNow'),nowSub=document.getElementById('riNowSub'),nowSyms=document.getElementById('riNowSymbols'),prog=document.getElementById('riProgress'),progSub=document.getElementById('riProgressSub'),bar=document.getElementById('riProgressBar'),next=document.getElementById('riNext'),nextSub=document.getElementById('riNextSub'),nextSyms=document.getElementById('riNextSymbols'),foot=document.getElementById('riFoot');
   if(!now)return;
 
@@ -451,11 +459,13 @@ function renderResearchIntake(d){
     const xs=Array.isArray(x.current_batch_symbols)?x.current_batch_symbols:[],qs=Array.isArray(x.queue_preview)?x.queue_preview:[],ls=Array.isArray(x.last_completed_symbols)?x.last_completed_symbols:[];
     const age=Number(x.heartbeat_age_seconds),fresh=x.telemetry_fresh===true,statusText=String(x.status||'UNKNOWN').toUpperCase();
     const laneSyms=Array.isArray(r.historical_universe_batch_symbols)?r.historical_universe_batch_symbols:[];
-    now.textContent=r.current_lane||x.working_on||x.phase||x.worker_stage||'WAITING';
-    nowSub.textContent=r.current_detail||r.current_lane_status||x.working_on||x.worker_stage||'waiting for unified research state';
-    if(laneSyms.length) nowSyms.textContent='active batch · '+laneSyms.join(' · ');
-    else if(xs.length) nowSyms.textContent='universe intake · '+xs.join(' · ');
+    // This panel is the Universe Intake surface. Dedicated intake telemetry owns it;
+    // broader unified-research status is fallback context only and may lag a cycle.
+    now.textContent=x.working_on||x.phase||x.worker_stage||r.current_lane||'WAITING';
+    nowSub.textContent=x.worker_stage||x.watcher_status||x.working_on||r.current_detail||r.current_lane_status||'waiting for universe intake state';
+    if(xs.length) nowSyms.textContent='universe intake · '+xs.join(' · ');
     else if(ls.length) nowSyms.textContent='universe last completed · '+ls.join(' · ');
+    else if(laneSyms.length) nowSyms.textContent='unified side-lane · '+laneSyms.join(' · ');
     else nowSyms.textContent='no active symbol batch reported';
 
     const pp=Number(x.progress_pct),done=Number(x.progress_done),total=Number(x.progress_total),rem=Number(x.progress_remaining),qd=Number(x.queue_depth);
