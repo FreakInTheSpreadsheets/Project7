@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T01:07:54.285919+00:00",
+  "generated_at_utc": "2026-10-06T01:09:20.557238+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ERROR",
   "phase": "UNKNOWN",
