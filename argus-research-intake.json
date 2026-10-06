@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-10-06T02:04:48.367413+00:00",
+  "generated_at_utc": "2026-10-06T02:06:14.993242+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "STALE",
   "phase": "CENSUS_SCAN",
@@ -28,7 +28,7 @@
   ],
   "worker_stage": "WAITING",
   "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 332.4,
+  "heartbeat_age_seconds": 418.9,
   "telemetry_fresh": false,
   "note": "Research intake telemetry is display-only.",
   "worker_heartbeat_utc": "2026-10-06T01:59:16.223479+00:00",
