@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
+<!-- ARGUS_LIVE_STATUS_WEB_V24_MARKET_TREATMENT_20261005 · ARGUS_LIVE_STATUS_WEB_V23_R4_R5_STRUCTURE_COMPARE_20261005 · ARGUS_LIVE_STATUS_WEB_V22_QUEUE_PROVENANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V2_20260930 · ARGUS_LIVE_STATUS_WEB_V3_20261001 · ARGUS_LIVE_STATUS_WEB_V5_COCKPIT_20261003 · ARGUS_LIVE_STATUS_WEB_V6_BLACKGREEN_COMMAND_20261005 · ARGUS_LIVE_STATUS_WEB_V7_JARVIS_CORTANA_20261005 · ARGUS_LIVE_STATUS_WEB_V8_SNAPSHOT_20261005 · ARGUS_LIVE_STATUS_WEB_V9_GLANCE_20261005 · ARGUS_LIVE_STATUS_WEB_V10_LASTSESSION_LEDGER_20261005 · ARGUS_LIVE_STATUS_WEB_V11_PERFORMANCE_CHARTS_20261005 · ARGUS_LIVE_STATUS_WEB_V12_MATCHED_WINDOWS_20261005 · ARGUS_LIVE_STATUS_WEB_V13_LEDGER_HOTFIX_20261005 · ARGUS_LIVE_STATUS_WEB_V14_BALANCED_ACCOUNTS_20261005 · ARGUS_LIVE_STATUS_WEB_V15_REGIME_PRESSURE_GAUGE_20261005 · ARGUS_LIVE_STATUS_WEB_V16_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V17_INTAKE_SEEDED_20261005 · ARGUS_LIVE_STATUS_WEB_V18_LIVE_RESEARCH_INTAKE_20261005 · ARGUS_LIVE_STATUS_WEB_V19_DIRECT_RESEARCH_FEEDS_20261005 · ARGUS_LIVE_STATUS_WEB_V20_GAUGE_CLIP_FIX_20261005 · ARGUS_LIVE_STATUS_WEB_V21_RESEARCH_TELEMETRY_INTEGRITY_20261005 -->
 <html>
 <head>
 <meta charset="utf-8"/>
@@ -49,42 +49,45 @@
 .research-intake-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}.ri-cell{padding:2px 13px;min-width:0}.ri-cell:first-child{padding-left:0}.ri-cell:last-child{padding-right:0}.ri-cell:not(:last-child){border-right:1px solid rgba(105,192,236,.10)}.ri-cell>small{display:block;font-size:7.5px;color:#5c7b8e;text-transform:uppercase;letter-spacing:.09em}.ri-cell>strong{display:block;margin-top:4px;font-size:15px;line-height:1.15;color:#dff8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ri-cell>em{display:block;margin-top:4px;min-height:24px;font-style:normal;font-size:8px;line-height:1.45;color:#607f91}.ri-symbols{margin-top:5px;font-size:8px;color:#8bcfe9;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ri-track{height:4px;margin-top:7px;background:rgba(102,180,220,.08);border-radius:999px;overflow:hidden}.ri-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#59d9ff,#768cff);transition:width .25s ease}.ri-foot{margin-top:9px;font-size:8px;color:#56788c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:560px){.research-intake-grid{grid-template-columns:1fr}.ri-cell{padding:9px 0}.ri-cell:not(:last-child){border-right:0;border-bottom:1px solid rgba(105,192,236,.08)}.ri-cell:first-child{padding-top:2px}.ri-cell:last-child{padding-bottom:2px}.ri-cell>em{min-height:0}.research-intake-head small{display:none}}
 
-/* V23: side-by-side R4/R5 structural pressure comparison. */
-.structure-pressure{margin:12px 0 16px;padding:14px 0 12px;border-top:1px solid rgba(127,230,255,.16);border-bottom:1px solid rgba(127,230,255,.10)}
-.structure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.structure-card{min-width:0;padding:10px 9px 9px;border:1px solid rgba(104,194,240,.11);border-radius:14px;background:linear-gradient(145deg,rgba(8,25,39,.58),rgba(4,14,24,.46))}
-.structure-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:2px}
-.structure-card-head span{font-size:8px;font-weight:780;letter-spacing:.11em;color:#8eddf6}
-.structure-card-head small{font-size:6.8px;color:#56778b;white-space:nowrap}
-.structure-card-body{display:block}
-.structure-dial{width:100%;max-width:128px;height:80px;margin:0 auto}
-.structure-dial svg{width:100%;height:84px;overflow:hidden}
-.structure-dial .regime-score{bottom:-1px}
-.structure-dial .regime-score strong{font-size:24px}
-.structure-dial .regime-score b{font-size:8px}
-.structure-components{gap:6px;margin-top:5px}
-.structure-components .regime-component{grid-template-columns:64px minmax(18px,1fr) 26px;gap:5px}
-.structure-components .regime-component span{font-size:6.6px;letter-spacing:.05em}
-.structure-components .regime-component b{font-size:7.8px}
-.structure-coverage{margin-top:7px;padding-top:6px;border-top:1px solid rgba(105,192,236,.08);font-size:6.8px;line-height:1.35;color:#55778b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.structure-card[data-level="LOW"] .regime-active{stroke:var(--cyan)}
-.structure-card[data-level="RISING"] .regime-active{stroke:#94dcff}
-.structure-card[data-level="HIGH"] .regime-active{stroke:#f1bd6a}
-.structure-card[data-level="TRANSITION"] .regime-active{stroke:#ff8b95}
-.structure-compare-strip{display:flex;align-items:baseline;gap:8px;margin-top:9px;padding:8px 2px 0;border-top:1px solid rgba(105,192,236,.08);font-size:7px;color:#5d7d90}
-.structure-compare-strip span{letter-spacing:.10em;font-weight:750;color:#7097ab}
-.structure-compare-strip strong{font-size:11px;color:#d9f6ff}
-.structure-compare-strip em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.structure-pressure>.regime-foot{padding:0 2px}
+/* V24: R4/R5 market-treatment gauges — realized strategy behavior vs deployment baseline. */
+.strategy-climate{margin:12px 0 16px;padding:14px 0 12px;border-top:1px solid rgba(127,230,255,.16);border-bottom:1px solid rgba(127,230,255,.10)}
+.climate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.climate-card{min-width:0;padding:10px 9px 9px;border:1px solid rgba(104,194,240,.11);border-radius:14px;background:linear-gradient(145deg,rgba(8,25,39,.58),rgba(4,14,24,.46))}
+.climate-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:2px}
+.climate-card-head span{font-size:8px;font-weight:780;letter-spacing:.11em;color:#8eddf6}
+.climate-card-head small{font-size:6.8px;color:#56778b;white-space:nowrap}
+.climate-dial{position:relative;width:100%;max-width:128px;height:80px;margin:0 auto}
+.climate-dial svg{width:100%;height:84px;overflow:hidden}
+.climate-dial .regime-score{bottom:-1px}
+.climate-dial .regime-score strong{font-size:24px}
+.climate-dial .regime-score b{font-size:8px}
+.climate-baseline{stroke:rgba(223,248,255,.42);stroke-width:1.2}
+.climate-components{display:grid;gap:6px;margin-top:5px}
+.climate-component{display:grid;grid-template-columns:64px minmax(18px,1fr) 28px;align-items:center;gap:5px}
+.climate-component span{font-size:6.6px;letter-spacing:.05em;color:#708fa2}
+.climate-component i{height:3px;background:rgba(110,177,205,.12);position:relative;overflow:hidden}
+.climate-component i:after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:linear-gradient(90deg,rgba(127,230,255,.45),rgba(165,146,255,.8));box-shadow:0 0 8px rgba(127,230,255,.25)}
+.climate-component b{font-size:7.8px;text-align:right;color:#cdeeff}
+.climate-evidence{margin-top:7px;padding-top:6px;border-top:1px solid rgba(105,192,236,.08);font-size:6.8px;line-height:1.35;color:#55778b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.climate-card[data-level="HOSTILE"] .regime-active{stroke:var(--bad)}
+.climate-card[data-level="HEADWIND"] .regime-active{stroke:var(--warn)}
+.climate-card[data-level="BASELINE"] .regime-active{stroke:var(--cyan)}
+.climate-card[data-level="FAVORABLE"] .regime-active{stroke:#91e8ff}
+.climate-card[data-level="TAILWIND"] .regime-active{stroke:#a592ff}
+.climate-compare-strip{display:flex;align-items:baseline;gap:8px;margin-top:9px;padding:8px 2px 0;border-top:1px solid rgba(105,192,236,.08);font-size:7px;color:#5d7d90}
+.climate-compare-strip span{letter-spacing:.10em;font-weight:750;color:#7097ab}
+.climate-compare-strip strong{font-size:11px;color:#d9f6ff}
+.climate-compare-strip em{font-style:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.strategy-climate>.regime-foot{padding:0 2px}
 @media(max-width:420px){
-  .structure-grid{gap:6px}
-  .structure-card{padding:8px 6px}
-  .structure-card-head span{font-size:7.4px}.structure-card-head small{font-size:6.1px}
-  .structure-dial{max-width:112px;height:72px}.structure-dial svg{height:76px}
-  .structure-dial .regime-score strong{font-size:22px}
-  .structure-components .regime-component{grid-template-columns:54px minmax(15px,1fr) 24px;gap:4px}
-  .structure-components .regime-component span{font-size:5.8px}.structure-components .regime-component b{font-size:7.2px}
-  .structure-coverage{font-size:6.2px}
+  .climate-grid{gap:6px}
+  .climate-card{padding:8px 6px}
+  .climate-card-head span{font-size:7.4px}.climate-card-head small{font-size:6.1px}
+  .climate-dial{max-width:112px;height:72px}.climate-dial svg{height:76px}
+  .climate-dial .regime-score strong{font-size:22px}
+  .climate-component{grid-template-columns:54px minmax(15px,1fr) 26px;gap:4px}
+  .climate-component span{font-size:5.8px}.climate-component b{font-size:7.2px}
+  .climate-evidence{font-size:6.2px}
 }
 
 </style>
@@ -108,52 +111,52 @@
 <div class="account-spread"><span>Account spread</span><strong id="expEquityGap">—</strong><em id="expEquityGapSub">R5 minus R4 equity</em></div>
 <div class="positionlist" id="positions"></div>
 </section>
-<section class="structure-pressure" id="structurePressure" aria-label="R4 and R5 structural pressure comparison">
-  <div class="regime-head"><span>STRUCTURAL PRESSURE</span><small>R4 vs R5 · same formula</small></div>
-  <div class="structure-grid">
-    <div class="structure-card regime-unavailable" id="pressureR4" data-level="LOW">
-      <div class="structure-card-head"><span>R4 CONTROL</span><small>frozen authority</small></div>
-      <div class="structure-card-body">
-        <div class="regime-dial structure-dial">
-          <svg viewBox="0 0 180 100" role="img" aria-label="R4 structural pressure 0 to 100">
-            <path class="regime-track" d="M20 90 A70 70 0 0 1 160 90" pathLength="100"></path>
-            <path class="regime-active" id="r4PressureArc" d="M20 90 A70 70 0 0 1 160 90" pathLength="100" stroke-dasharray="0 100"></path>
-            <line class="regime-needle" id="r4PressureNeedle" x1="90" y1="90" x2="31" y2="90" vector-effect="non-scaling-stroke"></line>
-            <circle class="regime-hub" cx="90" cy="90" r="3"></circle>
-          </svg>
-          <div class="regime-score"><strong id="r4PressureScore">—</strong><b id="r4PressureLevel">WAITING</b><em>0–100</em></div>
-        </div>
-        <div class="regime-components structure-components">
-          <div class="regime-component"><span>DISPERSION</span><i id="r4PressureDispBar"></i><b id="r4PressureDisp">—</b></div>
-          <div class="regime-component"><span>DECOUPLING</span><i id="r4PressureDecBar"></i><b id="r4PressureDec">—</b></div>
-          <div class="regime-component"><span>LEADERSHIP</span><i id="r4PressureRotBar"></i><b id="r4PressureRot">—</b></div>
-        </div>
+<section class="strategy-climate" id="strategyClimate" aria-label="R4 and R5 market treatment comparison">
+  <div class="regime-head"><span>MARKET TREATMENT</span><small>current strategy behavior vs deployment</small></div>
+  <div class="climate-grid">
+    <div class="climate-card regime-unavailable" id="climateR4" data-level="BASELINE">
+      <div class="climate-card-head"><span>R4 CONTROL</span><small>frozen strategy</small></div>
+      <div class="climate-dial">
+        <svg viewBox="0 0 180 100" role="img" aria-label="R4 market treatment score, 100 equals deployment baseline">
+          <path class="regime-track" d="M20 90 A70 70 0 0 1 160 90" pathLength="100"></path>
+          <path class="regime-active" id="r4ClimateArc" d="M20 90 A70 70 0 0 1 160 90" pathLength="100" stroke-dasharray="0 100"></path>
+          <line class="climate-baseline" x1="90" y1="16" x2="90" y2="27"></line>
+          <line class="regime-needle" id="r4ClimateNeedle" x1="90" y1="90" x2="90" y2="31" vector-effect="non-scaling-stroke"></line>
+          <circle class="regime-hub" cx="90" cy="90" r="3"></circle>
+        </svg>
+        <div class="regime-score"><strong id="r4ClimateScore">—</strong><b id="r4ClimateLevel">WAITING</b><em>100 = launch</em></div>
       </div>
-      <div class="structure-coverage" id="r4PressureCoverage">authority coverage waiting</div>
+      <div class="climate-components">
+        <div class="climate-component"><span>EXPECTANCY</span><i id="r4ClimateExpectancyBar"></i><b id="r4ClimateExpectancy">—</b></div>
+        <div class="climate-component"><span>WIN RATE</span><i id="r4ClimateWinBar"></i><b id="r4ClimateWin">—</b></div>
+        <div class="climate-component"><span>PAYOFF</span><i id="r4ClimatePayoffBar"></i><b id="r4ClimatePayoff">—</b></div>
+        <div class="climate-component"><span>LOSS CTRL</span><i id="r4ClimateLossBar"></i><b id="r4ClimateLoss">—</b></div>
+      </div>
+      <div class="climate-evidence" id="r4ClimateEvidence">ledger baseline waiting</div>
     </div>
-    <div class="structure-card regime-unavailable" id="pressureR5" data-level="LOW">
-      <div class="structure-card-head"><span>R5 ROLLING</span><small>fresh authority</small></div>
-      <div class="structure-card-body">
-        <div class="regime-dial structure-dial">
-          <svg viewBox="0 0 180 100" role="img" aria-label="R5 structural pressure 0 to 100">
-            <path class="regime-track" d="M20 90 A70 70 0 0 1 160 90" pathLength="100"></path>
-            <path class="regime-active" id="r5PressureArc" d="M20 90 A70 70 0 0 1 160 90" pathLength="100" stroke-dasharray="0 100"></path>
-            <line class="regime-needle" id="r5PressureNeedle" x1="90" y1="90" x2="31" y2="90" vector-effect="non-scaling-stroke"></line>
-            <circle class="regime-hub" cx="90" cy="90" r="3"></circle>
-          </svg>
-          <div class="regime-score"><strong id="r5PressureScore">—</strong><b id="r5PressureLevel">WAITING</b><em>0–100</em></div>
-        </div>
-        <div class="regime-components structure-components">
-          <div class="regime-component"><span>DISPERSION</span><i id="r5PressureDispBar"></i><b id="r5PressureDisp">—</b></div>
-          <div class="regime-component"><span>DECOUPLING</span><i id="r5PressureDecBar"></i><b id="r5PressureDec">—</b></div>
-          <div class="regime-component"><span>LEADERSHIP</span><i id="r5PressureRotBar"></i><b id="r5PressureRot">—</b></div>
-        </div>
+    <div class="climate-card regime-unavailable" id="climateR5" data-level="BASELINE">
+      <div class="climate-card-head"><span>R5 ROLLING</span><small>adaptive strategy</small></div>
+      <div class="climate-dial">
+        <svg viewBox="0 0 180 100" role="img" aria-label="R5 market treatment score, 100 equals deployment baseline">
+          <path class="regime-track" d="M20 90 A70 70 0 0 1 160 90" pathLength="100"></path>
+          <path class="regime-active" id="r5ClimateArc" d="M20 90 A70 70 0 0 1 160 90" pathLength="100" stroke-dasharray="0 100"></path>
+          <line class="climate-baseline" x1="90" y1="16" x2="90" y2="27"></line>
+          <line class="regime-needle" id="r5ClimateNeedle" x1="90" y1="90" x2="90" y2="31" vector-effect="non-scaling-stroke"></line>
+          <circle class="regime-hub" cx="90" cy="90" r="3"></circle>
+        </svg>
+        <div class="regime-score"><strong id="r5ClimateScore">—</strong><b id="r5ClimateLevel">WAITING</b><em>100 = launch</em></div>
       </div>
-      <div class="structure-coverage" id="r5PressureCoverage">authority coverage waiting</div>
+      <div class="climate-components">
+        <div class="climate-component"><span>EXPECTANCY</span><i id="r5ClimateExpectancyBar"></i><b id="r5ClimateExpectancy">—</b></div>
+        <div class="climate-component"><span>WIN RATE</span><i id="r5ClimateWinBar"></i><b id="r5ClimateWin">—</b></div>
+        <div class="climate-component"><span>PAYOFF</span><i id="r5ClimatePayoffBar"></i><b id="r5ClimatePayoff">—</b></div>
+        <div class="climate-component"><span>LOSS CTRL</span><i id="r5ClimateLossBar"></i><b id="r5ClimateLoss">—</b></div>
+      </div>
+      <div class="climate-evidence" id="r5ClimateEvidence">ledger baseline waiting</div>
     </div>
   </div>
-  <div class="structure-compare-strip"><span>R5 − R4</span><strong id="pressureDelta">—</strong><em id="pressureDeltaSub">authority-weighted pressure spread</em></div>
-  <div class="regime-foot" id="pressureMeta">Descriptive precursor only; not yet validated as a forward regime classifier.</div>
+  <div class="climate-compare-strip"><span>R5 − R4</span><strong id="climateDelta">—</strong><em id="climateDeltaSub">relative market treatment</em></div>
+  <div class="regime-foot" id="climateMeta">100 = deployment behavior · below 100 = worse treatment · above 100 = better treatment · descriptive paper outcomes only</div>
 </section>
 <section class="research-intake" id="researchIntake" aria-label="Research intake status">
   <div class="research-intake-head"><span>RESEARCH INTAKE</span><small id="riStatus">scheduler telemetry</small></div>
@@ -251,13 +254,9 @@ const API='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-live?form
 const R4_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-trade-history.json';
 const R5_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-r5-trade-history.json';
 
-const REGIME_CONTEXT_URL='https://freakinthespreadsheets.github.io/Project7/argus-v478-latest.json';
-const STRUCTURE_PRESSURE_URL='https://freakinthespreadsheets.github.io/Project7/argus-structure-pressure.json';
 const RESEARCH_INTAKE_URL='https://freakinthespreadsheets.github.io/Project7/argus-research-intake.json';
-const REGIME_PROXY_SYMBOLS=["DIA","IWM","KRE","QQQ","SMH","SPY","XBI","XLB","XLC","XLE","XLF","XLI","XLK","XLP","XLRE","XLU","XLV","XLY"];
-const REGIME_BASELINES={"disp":[0.0038175561,0.004567355,0.0047678194,0.0054229924,0.0057052837,0.0057079269,0.0057153512,0.0059749612,0.0060825622,0.0062356927,0.0062449753,0.0065092659,0.0065470839,0.0067399021,0.0067842587,0.0067931932,0.0068288272,0.006918603,0.0070799303,0.007083811,0.0071945152,0.0072456507,0.0072670119,0.0073814446,0.0074118443,0.0077000979,0.008100764,0.0081675883,0.0082046427,0.0082453269,0.0083247882,0.0085225976,0.0085493481,0.0089196591,0.0092001766,0.0092390301,0.0092641899,0.0093148617,0.0095413697,0.0095577968,0.0097269247,0.0097340388,0.0097796072,0.0098367825,0.0100391158,0.0101475601,0.0102340178,0.0102765933,0.0103592427,0.0104076457,0.0105210001,0.0105318038,0.0108531263,0.0108870267,0.0113035715,0.011716237,0.0117378197,0.0118457491,0.0119402062,0.0120343216,0.012396058,0.0124972907,0.0126656632,0.0129760474,0.0129934118,0.0133673711,0.0168355425,0.0180106129,0.0189484825],"dec":[0.0017517235,0.0018650561,0.0020308922,0.0031690695,0.0032920458,0.0033123887,0.0034560098,0.0035651541,0.0036710213,0.0039459513,0.0039731937,0.0040122479,0.0040395525,0.0041735591,0.0042885614,0.0044734813,0.0045300687,0.0045973015,0.0046626875,0.0047375566,0.0047379481,0.0047565338,0.0047834308,0.0048107932,0.0048673216,0.0049937811,0.0052777094,0.0053866779,0.0053988478,0.0055024538,0.0055043422,0.0055723472,0.0057256373,0.0058927596,0.0059313343,0.0059654691,0.0059916798,0.0060807343,0.0062148235,0.0062385259,0.0064108539,0.0064203375,0.0064925511,0.0065019657,0.0065593299,0.0067411792,0.0067692394,0.0069477871,0.0070041765,0.0074909789,0.0075734816,0.0079078489,0.0079740589,0.0080430518,0.0080491221,0.0083027107,0.0087108077,0.0087234039,0.0088340597,0.0089896023,0.0097682139,0.0098890044,0.0103216459,0.0104645893,0.0113684834,0.01172178,0.0140420483,0.0142710205,0.0143927512],"rot":[0.0625,0.1078431373,0.1176470588,0.125,0.1323529412,0.1323529412,0.1531862745,0.1740196078,0.181372549,0.1899509804,0.2009803922,0.2022058824,0.2034313725,0.2071078431,0.2193627451,0.2512254902,0.262254902,0.2659313725,0.2720588235,0.2855392157,0.2879901961,0.2990196078,0.3075980392,0.3137254902,0.3149509804,0.3149509804,0.3406862745,0.3566176471,0.3651960784,0.3823529412,0.3848039216,0.3933823529,0.4007352941,0.4056372549,0.4056372549,0.4154411765,0.4325980392,0.4411764706,0.443627451,0.4534313725,0.4607843137,0.4607843137,0.4828431373,0.4926470588,0.4926470588,0.5049019608,0.5073529412,0.5232843137,0.5330882353,0.5404411765,0.5453431373,0.550245098,0.5526960784,0.5661764706,0.5674019608,0.5674019608,0.568627451,0.5698529412,0.5894607843,0.6237745098,0.6299019608,0.6458333333,0.6887254902,0.7144607843,0.7267156863,0.7512254902,0.7536764706,0.7953431373,0.8664215686]};
 const RESEARCH_INTAKE_SEED={schema:"ARGUS_RESEARCH_INTAKE_DASHBOARD_SEED_V1",generated_at_utc:"2026-10-06T00:37:00.950018+00:00",source_state_heartbeat_utc:"2026-10-05T08:37:08.514916+00:00",status:"ACTIVE",worker_stage:"WAITING",scan_in_progress:false,heartbeat_utc:"2026-10-05T08:37:08.514916+00:00",current_batch_started_utc:"",current_batch_requested:0,current_batch_completed:0,current_batch_progress_pct:null,current_batch_symbols:[],last_batch_symbols:["VFMO"],last_batch_id:"UI3_20261005T082802Z_dab468ea",last_completed_at_utc:"2026-10-05T08:37:08.476095+00:00",catalog_count:30091,scanned_count:30091,census_progress_pct:100,strict_validated_count:25402,strict_unvalidated_count:4689,validation_progress_pct:84.42,qualified_symbols_rolling:20,hypothesis_population:196137,next_lane:"STRICT VALIDATION",next_detail:"4,689 symbols still need current validation contract",next_symbols:["VFMV","VFQY","VFS","VFSWW","VFVA","VG","VGAS","VGASW"],scheduler_rule:"unseen → strict validation → expansion → oldest maintenance rescan",authority:"CANDIDATE_SCORING_ONLY_NO_LIVE_AUTHORITY_WRITE"};
-let regimeLastFetch=0,researchIntakeLastFetch=0,researchIntakeFallback=RESEARCH_INTAKE_SEED;
+let climateLastFetch=0,researchIntakeLastFetch=0,researchIntakeFallback=RESEARCH_INTAKE_SEED;
 let ledgerCache=null,ledgerPromise=null,lastStatus=null;
 const fmtAge=s=>s==null?'—':s<60?Math.round(s)+'s':s<3600?Math.round(s/60)+'m':(s/3600).toFixed(1)+'h';
 const val=(x,f='—')=>(x===undefined||x===null||x==='')?f:x;
@@ -318,7 +317,45 @@ function aggregateSession(trades,engine,date){const z=trades.filter(t=>t.engine=
 function renderLastSessionFromLedger(trades){const dates=[...new Set(trades.map(tradeSessionDate).filter(Boolean))].sort();if(!dates.length)return;const date=dates[dates.length-1],a=aggregateSession(trades,'R4',date),b=aggregateSession(trades,'R5',date),fmt=x=>x==null?'—':pct(x),rec=x=>x.count?x.count+' trades · '+x.wins+'W '+x.losses+'L · '+money(x.pnl):'no trades';document.getElementById('lastSessionDate').textContent=new Date(date+'T12:00:00').toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'});const ar=document.getElementById('lastR4Return'),br=document.getElementById('lastR5Return'),dr=document.getElementById('lastSessionDelta');ar.textContent=fmt(a.ret);ar.className=tone(a.ret);br.textContent=fmt(b.ret);br.className=tone(b.ret);document.getElementById('lastR4Record').textContent=rec(a);document.getElementById('lastR5Record').textContent=rec(b);const delta=(a.ret!=null&&b.ret!=null)?b.ret-a.ret:null;dr.textContent=fmt(delta);dr.className=tone(delta);document.getElementById('lastSessionDeltaSub').textContent=(a.count||b.count)?'R5 minus R4 · '+date:'session spread'}
 function ledgerDetail(t){return labRows([['Engine',t.engine],['Trade #',t.trade_no],['Direction',t.direction],['Pattern',t.pattern_family||'—'],['Pattern ID',t.pattern_id||'—'],['Entry time',t.entry_time_et||'—'],['Exit time',t.exit_time_et||'—'],['Entry',t.entry_price==null?'—':price(t.entry_price)],['Exit',t.exit_price==null?'—':price(t.exit_price)],['Notional',t.notional==null?'—':money(t.notional)],['Return',t.pct==null?'—':pct(t.pct)],['P&L',t.pnl==null?'—':money(t.pnl)],['Exit reason',t.exit_reason||'—'],['Horizon',t.horizon_minutes?String(t.horizon_minutes)+'m':'—']])}
 function renderLedger(trades){const el=document.getElementById('ledgerList');document.getElementById('ledgerCount').textContent=trades.length.toLocaleString()+' closed trades';if(!trades.length){el.innerHTML='<div class="ledger-empty">No closed trades were returned by the ledger feeds.</div>';return}el.innerHTML=trades.map(t=>{const dt=t.exit_time_et||t.entry_time_et||'',d=tradeSessionDate(t),time=localTime(dt);return '<details class="ledger-row"><summary><span class="ledger-date">'+esc(d.slice(5)+(time!=='—'?' · '+time:''))+'</span><span class="ledger-engine">'+esc(t.engine)+'</span><span class="ledger-symbol">'+esc(t.symbol||'—')+'</span><span class="ledger-ret '+tone(t.pct)+'">'+esc(t.pct==null?'—':pct(t.pct))+'</span><span class="ledger-pnl '+tone(t.pnl)+'">'+esc(t.pnl==null?'—':money(t.pnl))+'</span></summary><div class="ledger-more">'+ledgerDetail(t)+'</div></details>'}).join('')}
-async function loadLedgers(renderFull=false){if(ledgerCache){if(renderFull)renderLedger(ledgerCache);renderLastSessionFromLedger(ledgerCache);renderPerformanceCharts(ledgerCache);return ledgerCache}if(ledgerPromise)return ledgerPromise.then(x=>{if(renderFull)renderLedger(x);renderLastSessionFromLedger(x);renderPerformanceCharts(x);return x});const stamp=Date.now();ledgerPromise=Promise.allSettled([fetch(R4_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R4 ledger HTTP '+r.status);return r.json()}),fetch(R5_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R5 ledger HTTP '+r.status);return r.json()})]).then(parts=>{const out=[];for(const [i,p] of parts.entries()){if(p.status!=='fulfilled')continue;const rows=Array.isArray(p.value?.trades)?p.value.trades:[];const engine=i===0?'R4':'R5';rows.forEach(t=>out.push({...t,engine}))}if(!out.some(t=>t.engine==='R5')&&Array.isArray(lastStatus?.r5?.recent_trades))lastStatus.r5.recent_trades.forEach(t=>out.push({...t,engine:'R5'}));out.sort((a,b)=>String(b.exit_time_et||b.entry_time_et||'').localeCompare(String(a.exit_time_et||a.entry_time_et||'')));ledgerCache=out;document.getElementById('ledgerLoadState').textContent=out.length?'loaded':'unavailable';document.getElementById('ledgerLoadState').className=out.length?'pos':'neg';document.getElementById('ledgerBasis').textContent='Gross observed paper accounting · execution costs not broker-measured';document.getElementById('ledgerCount').textContent=out.length?out.length.toLocaleString()+' closed trades':'ledger unavailable';renderLastSessionFromLedger(out);renderPerformanceCharts(out);if(renderFull)renderLedger(out);return out}).catch(e=>{document.getElementById('ledgerLoadState').textContent='load error';document.getElementById('ledgerList').innerHTML='<div class="ledger-empty">Ledger feed unavailable: '+esc(e.message)+'</div>';document.getElementById('r4PerformanceChart').innerHTML='<div class="perf-empty">Ledger feed unavailable.</div>';document.getElementById('r5PerformanceChart').innerHTML='<div class="perf-empty">Ledger feed unavailable.</div>';return[]}).finally(()=>{ledgerPromise=null});return ledgerPromise}
+async function loadLedgers(renderFull=false,force=false){
+ if(force)ledgerCache=null;
+ if(ledgerCache){if(renderFull)renderLedger(ledgerCache);renderLastSessionFromLedger(ledgerCache);renderPerformanceCharts(ledgerCache);renderStrategyClimate(ledgerCache);return ledgerCache}
+ if(ledgerPromise)return ledgerPromise.then(x=>{if(renderFull)renderLedger(x);renderLastSessionFromLedger(x);renderPerformanceCharts(x);renderStrategyClimate(x);return x});
+ const stamp=Date.now();
+ ledgerPromise=Promise.allSettled([
+   fetch(R4_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R4 ledger HTTP '+r.status);return r.json()}),
+   fetch(R5_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R5 ledger HTTP '+r.status);return r.json()})
+ ]).then(parts=>{
+   const out=[];
+   for(const [i,p] of parts.entries()){
+     if(p.status!=='fulfilled')continue;
+     const rows=Array.isArray(p.value?.trades)?p.value.trades:[];
+     const engine=i===0?'R4':'R5';
+     rows.forEach(t=>out.push({...t,engine}));
+   }
+   if(!out.some(t=>t.engine==='R5')&&Array.isArray(lastStatus?.r5?.recent_trades))lastStatus.r5.recent_trades.forEach(t=>out.push({...t,engine:'R5'}));
+   out.sort((a,b)=>String(b.exit_time_et||b.entry_time_et||'').localeCompare(String(a.exit_time_et||a.entry_time_et||'')));
+   ledgerCache=out;
+   document.getElementById('ledgerLoadState').textContent=out.length?'loaded':'unavailable';
+   document.getElementById('ledgerLoadState').className=out.length?'pos':'neg';
+   document.getElementById('ledgerBasis').textContent='Gross observed paper accounting · execution costs not broker-measured';
+   document.getElementById('ledgerCount').textContent=out.length?out.length.toLocaleString()+' closed trades':'ledger unavailable';
+   renderLastSessionFromLedger(out);
+   renderPerformanceCharts(out);
+   renderStrategyClimate(out);
+   if(renderFull)renderLedger(out);
+   return out;
+ }).catch(e=>{
+   document.getElementById('ledgerLoadState').textContent='load error';
+   document.getElementById('ledgerList').innerHTML='<div class="ledger-empty">Ledger feed unavailable: '+esc(e.message)+'</div>';
+   document.getElementById('r4PerformanceChart').innerHTML='<div class="perf-empty">Ledger feed unavailable.</div>';
+   document.getElementById('r5PerformanceChart').innerHTML='<div class="perf-empty">Ledger feed unavailable.</div>';
+   renderStrategyClimate([]);
+   return[];
+ }).finally(()=>{ledgerPromise=null});
+ return ledgerPromise;
+}
+
 
 
 function mean(a){return a.length?a.reduce((x,y)=>x+y,0)/a.length:null}
@@ -327,67 +364,81 @@ function popStd(a){const m=mean(a);return m==null?null:Math.sqrt(mean(a.map(x=>(
 function ranks(a){const pairs=a.map((v,i)=>({v,i})).sort((x,y)=>x.v-y.v),r=new Array(a.length);for(let i=0;i<pairs.length;){let j=i+1;while(j<pairs.length&&pairs[j].v===pairs[i].v)j++;const rr=(i+j-1)/2+1;for(let k=i;k<j;k++)r[pairs[k].i]=rr;i=j}return r}
 function corr(a,b){if(a.length!==b.length||a.length<3)return null;const ma=mean(a),mb=mean(b);let num=0,da=0,db=0;for(let i=0;i<a.length;i++){const x=a[i]-ma,y=b[i]-mb;num+=x*y;da+=x*x;db+=y*y}return da>0&&db>0?num/Math.sqrt(da*db):null}
 function spearman(a,b){return corr(ranks(a),ranks(b))}
-function empiricalPct(arr,x){if(!Array.isArray(arr)||!arr.length||!Number.isFinite(x))return null;let lo=0,hi=arr.length;while(lo<hi){const mid=(lo+hi)>>1;if(arr[mid]<=x)lo=mid+1;else hi=mid}return lo/arr.length*100}
-function regimeLevel(score){return score>=80?'TRANSITION':score>=60?'HIGH':score>=35?'RISING':'LOW'}
-function extractMarketContext(text){const key='"market_context":';const i=text.indexOf(key);if(i<0)return null;let p=i+key.length;while(p<text.length&&/\s/.test(text[p]))p++;if(text[p]!=='{')return null;let depth=0,inStr=false,escp=false;for(let j=p;j<text.length;j++){const ch=text[j];if(inStr){if(escp)escp=false;else if(ch==='\\')escp=true;else if(ch==='"')inStr=false;continue}if(ch==='"'){inStr=true;continue}if(ch==='{')depth++;else if(ch==='}'){depth--;if(depth===0){try{return JSON.parse(text.slice(p,j+1))}catch(e){return null}}}}return null}
-function computeRegimePressure(ctx){const pm=ctx?.proxy_metrics||{},rows=[];REGIME_PROXY_SYMBOLS.forEach(symbol=>{const m=pm[symbol]||{},sr=Number(m.session_return),r30=Number(m.return_30m);if(Number.isFinite(sr)&&Number.isFinite(r30))rows.push({symbol,sr,r30})});if(rows.length<12)return null;const spy=rows.find(x=>x.symbol==='SPY');if(!spy)return null;const x=rows.filter(z=>z.symbol!=='SPY'),disp=popStd(x.map(z=>z.sr)),dec=median(x.map(z=>Math.abs(z.sr-spy.sr))),rho=spearman(x.map(z=>z.sr),x.map(z=>z.r30));if(!Number.isFinite(disp)||!Number.isFinite(dec)||!Number.isFinite(rho))return null;const rot=(1-rho)/2,dp=empiricalPct(REGIME_BASELINES.disp,disp),cp=empiricalPct(REGIME_BASELINES.dec,dec),rp=empiricalPct(REGIME_BASELINES.rot,rot),score=.35*dp+.40*cp+.25*rp;return{score,level:regimeLevel(score),disp,dec,rot,dp,cp,rp,count:x.length,stamp:ctx.collected_at_utc||'',hash:ctx.context_hash||''}}
-function structureAccountFromSidecar(a){
-  if(!a||String(a.status||'').toUpperCase()!=='AVAILABLE'||!Number.isFinite(Number(a.score)))return null;
-  const c=a.components||{},d=c.dispersion||{},q=c.decoupling||{},r=c.leadership_rotation||{},cov=a.coverage||{},auth=a.authority||{};
-  return{
-    score:Number(a.score),level:String(a.label||regimeLevel(Number(a.score))).toUpperCase(),
-    dp:Number(d.percentile),cp:Number(q.percentile),rp:Number(r.percentile),
-    disp:Number(d.raw),dec:Number(q.raw),rot:Number(r.raw),
-    baselineSessions:Number(a.baseline_sessions||0),stamp:a.current_context_at_utc||'',
-    authoritySymbols:Number(cov.authority_symbols||auth.symbols||0),mappedSymbols:Number(cov.mapped_symbols||0),
-    mappedPct:Number(cov.mapped_pct||0),sectorCount:Number(cov.sector_count||0),
-    session:String(auth.session||''),sourceFile:String(auth.source_file||'')
-  };
+function climateClamp(x){return Math.max(0,Math.min(200,Number(x)||0))}
+function climateLevel(score){return score>=130?'TAILWIND':score>=110?'FAVORABLE':score>=90?'BASELINE':score>=70?'HEADWIND':'HOSTILE'}
+function climateTradeStats(rows){
+ const rs=rows.map(t=>Number(t?.pct)).filter(Number.isFinite),wins=rs.filter(x=>x>0),losses=rs.filter(x=>x<0);
+ const avg=mean(rs),wr=rs.length?wins.length/rs.length:null,ag=mean(wins),al=mean(losses),absMean=mean(rs.map(Math.abs));
+ const payoff=(ag!=null&&al!=null&&al<0)?ag/Math.abs(al):null;
+ return{n:rs.length,wins:wins.length,losses:losses.length,avg,wr,ag,al,absMean,payoff};
 }
-function renderPressureAccount(prefix,r){
-  const p=prefix.toLowerCase(),root=document.getElementById('pressure'+prefix);
-  if(!root)return;
-  const scoreEl=document.getElementById(p+'PressureScore'),levelEl=document.getElementById(p+'PressureLevel'),arc=document.getElementById(p+'PressureArc'),needle=document.getElementById(p+'PressureNeedle'),coverage=document.getElementById(p+'PressureCoverage');
-  if(!r){
-    root.classList.add('regime-unavailable');root.dataset.level='LOW';
-    scoreEl.textContent='—';levelEl.textContent='UNAVAILABLE';arc.setAttribute('stroke-dasharray','0 100');
-    needle.setAttribute('x2','31');needle.setAttribute('y2','90');
-    [['Disp','DispBar'],['Dec','DecBar'],['Rot','RotBar']].forEach(([v,b])=>{document.getElementById(p+'Pressure'+v).textContent='—';document.getElementById(p+'Pressure'+b).style.setProperty('--p','0%')});
-    coverage.textContent='engine-specific pressure feed unavailable';return;
-  }
-  root.classList.remove('regime-unavailable');root.dataset.level=r.level;
-  const score=Math.max(0,Math.min(100,r.score));scoreEl.textContent=Math.round(score);levelEl.textContent=r.level;
-  arc.setAttribute('stroke-dasharray',score.toFixed(1)+' 100');
-  const theta=Math.PI*(1-score/100);needle.setAttribute('x2',(90+59*Math.cos(theta)).toFixed(2));needle.setAttribute('y2',(90-59*Math.sin(theta)).toFixed(2));
-  [['Disp',r.dp,'DispBar'],['Dec',r.cp,'DecBar'],['Rot',r.rp,'RotBar']].forEach(([v,n,b])=>{document.getElementById(p+'Pressure'+v).textContent=Number.isFinite(n)?Math.round(n)+'p':'—';document.getElementById(p+'Pressure'+b).style.setProperty('--p',(Number.isFinite(n)?Math.max(0,Math.min(100,n)):0).toFixed(1)+'%')});
-  const parts=[];
-  if(r.authoritySymbols)parts.push(r.mappedSymbols+'/'+r.authoritySymbols+' mapped');
-  if(r.sectorCount)parts.push(r.sectorCount+' sectors');
-  if(r.session)parts.push(r.session);
-  coverage.textContent=parts.join(' · ')||'authority coverage available';
+function climateForEngine(trades,engine){
+ const rows=trades.filter(t=>t.engine===engine&&Number.isFinite(Number(t?.pct))).slice().sort((a,b)=>String(a.exit_time_et||a.entry_time_et||'').localeCompare(String(b.exit_time_et||b.entry_time_et||'')));
+ const n=rows.length;
+ if(n<4)return{engine,n,available:false};
+ const k=Math.min(10,Math.floor(n/2)),base=climateTradeStats(rows.slice(0,k)),cur=climateTradeStats(rows.slice(-k));
+ const scale=Math.max(base.absMean||0,.25);
+ const expectancy=climateClamp(100+100*((cur.avg||0)-(base.avg||0))/scale);
+ const win=climateClamp(100+200*((cur.wr??.5)-(base.wr??.5)));
+ let payoff=100;
+ if(cur.losses===0&&cur.wins>0)payoff=160;
+ else if(cur.wins===0&&cur.losses>0)payoff=40;
+ else if(base.payoff!=null&&cur.payoff!=null)payoff=climateClamp(100*cur.payoff/Math.max(base.payoff,.05));
+ else if(base.payoff==null&&cur.payoff!=null)payoff=130;
+ else if(base.payoff!=null&&cur.payoff==null)payoff=70;
+ let loss=100;
+ if(cur.losses===0&&cur.wins>0)loss=150;
+ else if(base.al!=null&&cur.al!=null)loss=climateClamp(100*Math.abs(base.al)/Math.max(Math.abs(cur.al),.05));
+ else if(base.al==null&&cur.al!=null)loss=70;
+ else if(base.al!=null&&cur.al==null)loss=150;
+ const raw=.40*expectancy+.20*win+.20*payoff+.20*loss;
+ const confidence=Math.min(1,k/10);
+ const score=climateClamp(100+confidence*(raw-100));
+ return{engine,n,k,available:true,score,raw,confidence,level:climateLevel(score),base,cur,components:{expectancy,win,payoff,loss}};
 }
-function renderStructuralPressure(x){
-  const a=structureAccountFromSidecar(x?.accounts?.r4),b=structureAccountFromSidecar(x?.accounts?.r5);
-  renderPressureAccount('R4',a);renderPressureAccount('R5',b);
-  const deltaEl=document.getElementById('pressureDelta'),sub=document.getElementById('pressureDeltaSub'),meta=document.getElementById('pressureMeta');
-  const delta=(a&&b)?b.score-a.score:null;
-  deltaEl.textContent=delta==null?'—':(delta>=0?'+':'')+delta.toFixed(1)+'p';
-  deltaEl.className=delta==null?'':tone(delta);
-  sub.textContent=delta==null?'waiting for matched engine pressure':'R5 minus R4 · same 40/35/25 formula';
-  const baseline=a&&b?Math.min(a.baselineSessions||0,b.baselineSessions||0):0;
-  const stamp=(a?.stamp||b?.stamp)?new Date(a?.stamp||b?.stamp):null,when=stamp&&!Number.isNaN(stamp.getTime())?stamp.toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'latest context';
-  meta.textContent=(baseline?baseline+' matched market sessions · ':'')+when+' · authority-sector weighted · descriptive precursor only; not yet validated as a forward regime classifier';
+function renderClimateAccount(prefix,r){
+ const p=prefix.toLowerCase(),root=document.getElementById('climate'+prefix);
+ if(!root)return;
+ const scoreEl=document.getElementById(p+'ClimateScore'),levelEl=document.getElementById(p+'ClimateLevel'),arc=document.getElementById(p+'ClimateArc'),needle=document.getElementById(p+'ClimateNeedle'),evidence=document.getElementById(p+'ClimateEvidence');
+ const componentMap=[['Expectancy','expectancy'],['Win','win'],['Payoff','payoff'],['Loss','loss']];
+ if(!r||!r.available){
+   root.classList.add('regime-unavailable');root.dataset.level='BASELINE';scoreEl.textContent='—';levelEl.textContent=r&&r.n?'BASELINING':'UNAVAILABLE';
+   arc.setAttribute('stroke-dasharray','0 100');needle.setAttribute('x2','90');needle.setAttribute('y2','31');
+   componentMap.forEach(([id])=>{document.getElementById(p+'Climate'+id).textContent='—';document.getElementById(p+'Climate'+id+'Bar').style.setProperty('--p','0%')});
+   evidence.textContent=r&&r.n?(r.n+' closed trades · needs 4 for provisional read'):'closed-trade ledger unavailable';return;
+ }
+ root.classList.remove('regime-unavailable');root.dataset.level=r.level;
+ const score=Math.max(0,Math.min(200,r.score)),arcPct=score/2;
+ scoreEl.textContent=Math.round(score);
+ levelEl.textContent=r.level+(r.confidence<1?'*':'');
+ arc.setAttribute('stroke-dasharray',arcPct.toFixed(1)+' 100');
+ const theta=Math.PI*(1-score/200);
+ needle.setAttribute('x2',(90+59*Math.cos(theta)).toFixed(2));
+ needle.setAttribute('y2',(90-59*Math.sin(theta)).toFixed(2));
+ componentMap.forEach(([id,key])=>{
+   const n=Number(r.components[key]);
+   document.getElementById(p+'Climate'+id).textContent=Number.isFinite(n)?Math.round(n):'—';
+   document.getElementById(p+'Climate'+id+'Bar').style.setProperty('--p',(Number.isFinite(n)?Math.max(0,Math.min(100,n/2)):0).toFixed(1)+'%');
+ });
+ const baseAvg=r.base.avg==null?'—':pct(r.base.avg),curAvg=r.cur.avg==null?'—':pct(r.cur.avg);
+ const sample=r.confidence<1?'PROVISIONAL · '+Math.round(r.confidence*100)+'% evidence weight':'FULL 10 vs 10 window';
+ evidence.textContent=sample+' · first '+r.k+' avg '+baseAvg+' → latest '+r.k+' '+curAvg+' · '+r.n+' total';
 }
-async function refreshRegimePressure(force=false){
-  const now=Date.now();if(!force&&now-regimeLastFetch<55000)return;regimeLastFetch=now;
-  try{
-    const r=await fetch(STRUCTURE_PRESSURE_URL+'?t='+now,{cache:'no-store'});if(!r.ok)throw new Error('structure HTTP '+r.status);
-    const x=await r.json();if(!x||!x.accounts||!x.accounts.r4||!x.accounts.r5)throw new Error('R4/R5 structure split not published yet');
-    renderStructuralPressure(x);
-  }catch(e){
-    renderStructuralPressure(null);
-    const meta=document.getElementById('pressureMeta');if(meta)meta.textContent='R4/R5 structural pressure feed unavailable · '+String(e.message||e).slice(0,100);
-  }
+function renderStrategyClimate(trades){
+ const a=climateForEngine(trades,'R4'),b=climateForEngine(trades,'R5');
+ renderClimateAccount('R4',a);renderClimateAccount('R5',b);
+ const deltaEl=document.getElementById('climateDelta'),sub=document.getElementById('climateDeltaSub'),meta=document.getElementById('climateMeta');
+ const delta=(a.available&&b.available)?b.score-a.score:null;
+ deltaEl.textContent=delta==null?'—':(delta>=0?'+':'')+delta.toFixed(1);
+ deltaEl.className=delta==null?'':tone(delta);
+ const provisional=[a,b].filter(x=>x.available&&x.confidence<1).map(x=>x.engine);
+ sub.textContent=delta==null?'waiting for both strategy ledgers':'R5 minus R4 market treatment'+(provisional.length?' · '+provisional.join('/')+' provisional':'');
+ meta.textContent='100 = each strategy’s deployment behavior · <100 market is treating it worse · >100 better · 40% expectancy / 20% win rate / 20% payoff / 20% loss control · gross observed paper outcomes'+(provisional.length?' · * low-sample score shrunk toward 100':'');
+}
+async function refreshStrategyClimate(force=false){
+ const now=Date.now();if(!force&&now-climateLastFetch<55000)return;
+ climateLastFetch=now;
+ return loadLedgers(false,true);
 }
 
 function renderResearchIntake(d){
@@ -483,7 +534,7 @@ setDot('universedot',u.error?'RED':'GREEN');document.getElementById('universemai
 setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds)<120?'GREEN':'YELLOW');document.getElementById('systemmain').textContent=d.paper_only===false?'CHECK':'PAPER ONLY';document.getElementById('systemage').textContent='publisher '+fmtAge(s.publisher_age_seconds);document.getElementById('system').innerHTML=row('Telemetry schema',s.schema)+row('Shutdown mode',d.shutdown_mode)+row('R4 control',d.r4_mode)+row('R5 control',d.r5_mode)+row('Paper only',d.paper_only===false?'NO':'YES')+row('Brokerage',d.brokerage_connection===true?'CONNECTED':'NONE')+row('Publisher age',fmtAge(s.publisher_age_seconds))+row('R4 heartbeat',fmtAge(a.heartbeat_age_seconds))+row('R5 heartbeat',fmtAge(b.heartbeat_age_seconds))+row('Research heartbeat',fmtAge(c.heartbeat_age_seconds))+row('Last R4 eval bar',val(d.r4_last_eval_bar_et||a.last_eval_bar_et,'—'))+row('Last R5 eval bar',val(d.r5_last_eval_bar_et||b.last_eval_bar_et,'—'))+row('R5 scan errors',val(d.r5_scan_errors,b.scan_errors||0))+(a.last_error?'<div class="err">R4 · '+esc(a.last_error)+'</div>':'')+(b.last_error?'<div class="err">R5 · '+esc(b.last_error)+'</div>':'')+(c.last_error?'<div class="err">RESEARCH · '+esc(c.last_error)+'</div>':'');
 document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},experiment:e,observatory:o,accounting:s.accounting||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics();hideUnavailable();if(!ledgerCache&&!ledgerPromise)loadLedgers(false)}
 async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='DISPLAY ERROR';document.getElementById('runtimeText').textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message}}
-document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshRegimePressure(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));refresh();refreshRegimePressure(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshRegimePressure,60000);setInterval(refreshResearchIntake,30000);
+document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);
 </script>
 </body>
 </html>
