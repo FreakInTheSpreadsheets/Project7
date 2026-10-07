@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-07T00:41:25.435186+00:00",
+  "generated_at_utc": "2026-10-07T11:40:43.333391+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 64.3,
@@ -33,22 +33,152 @@
   "accounts": {
     "r4": {
       "engine": "R4",
-      "status": "ERROR",
-      "score": null,
-      "label": "UNAVAILABLE",
-      "error": "RuntimeError: insufficient current sector context (0/12)"
+      "status": "AVAILABLE",
+      "score": 13.3,
+      "label": "LOW",
+      "components": {
+        "decoupling": {
+          "percentile": 12.9,
+          "raw": 0.0037270282589264184
+        },
+        "dispersion": {
+          "percentile": 17.1,
+          "raw": 0.0045135221051810495
+        },
+        "leadership_rotation": {
+          "percentile": 8.8,
+          "raw": 0.2809917355371901
+        }
+      },
+      "weights": {
+        "decoupling": 0.4,
+        "dispersion": 0.35,
+        "leadership_rotation": 0.25
+      },
+      "authority": {
+        "source": "R4_FROZEN_WATCHLIST",
+        "source_file": "Argus_V478_Frozen_Watchlist.csv",
+        "session": "2026-10-07",
+        "patterns": 170,
+        "symbols": 153
+      },
+      "coverage": {
+        "authority_symbols": 153,
+        "mapped_symbols": 121,
+        "unmapped_symbols": 32,
+        "mapped_pct": 79.1,
+        "sector_count": 11,
+        "sector_counts": {
+          "Communication Services": 1,
+          "Consumer Discretionary": 16,
+          "Consumer Staples": 1,
+          "Energy": 7,
+          "Financials": 7,
+          "Health Care": 14,
+          "Industrials": 29,
+          "Materials": 14,
+          "Real Estate": 3,
+          "Technology": 26,
+          "Utilities": 3
+        }
+      },
+      "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
+      "baseline_sessions": 68,
+      "current_context_at_utc": "2026-10-07T00:37:01.189495+00:00",
+      "previous_complete_session": "2026-10-05",
+      "top_sector_weights": [
+        {
+          "sector": "Industrials",
+          "weight": 0.2397
+        },
+        {
+          "sector": "Technology",
+          "weight": 0.2149
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.1322
+        },
+        {
+          "sector": "Health Care",
+          "weight": 0.1157
+        }
+      ]
     },
     "r5": {
       "engine": "R5",
-      "status": "ERROR",
-      "score": null,
-      "label": "UNAVAILABLE",
-      "error": "RuntimeError: insufficient current sector context (0/12)"
+      "status": "AVAILABLE",
+      "score": 10.1,
+      "label": "LOW",
+      "components": {
+        "decoupling": {
+          "percentile": 14.3,
+          "raw": 0.0025223603692652837
+        },
+        "dispersion": {
+          "percentile": 11.4,
+          "raw": 0.0029204148936528675
+        },
+        "leadership_rotation": {
+          "percentile": 1.5,
+          "raw": 0.0
+        }
+      },
+      "weights": {
+        "decoupling": 0.4,
+        "dispersion": 0.35,
+        "leadership_rotation": 0.25
+      },
+      "authority": {
+        "source": "R5_FROZEN_WATCHLIST",
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-10-07.csv",
+        "session": "2026-10-07",
+        "patterns": 28,
+        "symbols": 24
+      },
+      "coverage": {
+        "authority_symbols": 24,
+        "mapped_symbols": 21,
+        "unmapped_symbols": 3,
+        "mapped_pct": 87.5,
+        "sector_count": 6,
+        "sector_counts": {
+          "Communication Services": 2,
+          "Consumer Discretionary": 3,
+          "Energy": 1,
+          "Financials": 1,
+          "Industrials": 1,
+          "Technology": 13
+        }
+      },
+      "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
+      "baseline_sessions": 68,
+      "current_context_at_utc": "2026-10-07T00:37:01.189495+00:00",
+      "previous_complete_session": "2026-10-05",
+      "top_sector_weights": [
+        {
+          "sector": "Technology",
+          "weight": 0.619
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.1429
+        },
+        {
+          "sector": "Communication Services",
+          "weight": 0.0952
+        },
+        {
+          "sector": "Energy",
+          "weight": 0.0476
+        }
+      ]
     }
   },
   "comparison": {
-    "r5_minus_r4": null,
-    "higher_pressure": "UNAVAILABLE"
+    "r5_minus_r4": -3.2,
+    "higher_pressure": "R4",
+    "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
-  "account_metric_note": "R4/R5 authority-weighted pressure unavailable; global market context retained for diagnostics only."
+  "account_metric_note": "R4 and R5 are computed independently from their own frozen authority populations. A duplicated market-wide score is not used as an account comparison."
 }
