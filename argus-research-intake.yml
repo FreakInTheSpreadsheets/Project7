@@ -1,0 +1,230 @@
+# ARGUS / GITHUB RESEARCH INTAKE V1 — isolated, manual pilot
+# Only official public symbol-directory data. No Colab, Supabase, dashboard,
+# paper accounts, pattern selectors, trading logic, or trading authority writes.
+# Data is checkpointed to argus-research-intake-data, NEVER to main.
+name: Argus Research Intake (Independent)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: argus-research-intake
+  cancel-in-progress: false
+
+jobs:
+  catalog-intake:
+    name: Validate public US symbol intake
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout research workflow from main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Restore previous catalog (research branch only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p research-intake/out
+          if git ls-remote --exit-code --heads origin argus-research-intake-data >/dev/null 2>&1; then
+            git fetch -q --depth=1 origin refs/heads/argus-research-intake-data
+            git show FETCH_HEAD:research-intake/out/catalog.json > research-intake/out/catalog.json || rm -f research-intake/out/catalog.json
+          fi
+
+      - name: Fetch, validate and shard public listings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import csv
+          import hashlib
+          import io
+          import json
+          import re
+          import time
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          OUT = Path('research-intake/out')
+          OUT.mkdir(parents=True, exist_ok=True)
+          PREVIOUS = OUT / 'catalog.json'
+          NOW = datetime.now(timezone.utc).isoformat(timespec='seconds')
+          SOURCES = (
+              ('NASDAQ', 'https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt', 'Symbol', 1500),
+              ('OTHER', 'https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt', 'ACT Symbol', 1500),
+          )
+          SAFE_SYMBOL = re.compile(r'^[A-Z0-9][A-Z0-9.\-\^/$]{0,15}$')
+          SHARDS = 8
+          # Intake is not validation or trading eligibility; no price/volume gates here.
+          def put(name, obj):
+              path = OUT / name
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(json.dumps(obj, sort_keys=True, ensure_ascii=False,
+                                         separators=(',', ':')) + '\n', encoding='utf-8')
+          def fetch(url):
+              for attempt in range(3):
+                  try:
+                      req = urllib.request.Request(url, headers={
+                          'User-Agent': 'Mozilla/5.0 (compatible; ArgusResearchIntakeV1/1.0)',
+                          'Accept': 'text/plain,*/*',
+                          'Cache-Control': 'no-cache',
+                      })
+                      with urllib.request.urlopen(req, timeout=32) as resp:
+                          raw = resp.read(4_000_001)
+                          if len(raw) > 4_000_000:
+                              raise ValueError('directory exceeds 4MB ceiling')
+                          return raw
+                  except (OSError, urllib.error.URLError, ValueError) as exc:
+                      if attempt == 2:
+                          raise RuntimeError(f'official feed unavailable: {url} / {exc}') from exc
+                      time.sleep(2 ** attempt)
+              raise AssertionError('unreachable')
+          def parse(raw, source, symbol_col, expected_min):
+              content = raw.decode('utf-8-sig', errors='strict')
+              lines = content.splitlines()
+              if not lines or '|' not in lines[0]:
+                  raise ValueError(f'{source}: unexpected directory format')
+              records = []
+              file_time = None
+              rejected = 0
+              for row in csv.DictReader(io.StringIO(content), delimiter='|'):
+                  if not row:
+                      continue
+                  if any(str(v).startswith('File Creation Time:') for v in row.values() if v):
+                      file_time = next((str(v) for v in row.values() if v and str(v).startswith('File Creation Time:')), None)
+                      continue
+                  symbol = str(row.get(symbol_col) or '').strip().upper()
+                  if str(row.get('Test Issue') or '').strip().upper() == 'Y':
+                      rejected += 1
+                      continue
+                  if not SAFE_SYMBOL.fullmatch(symbol):
+                      rejected += 1
+                      continue
+                  records.append({
+                      'symbol': symbol,
+                      'name': str(row.get('Security Name') or '')[:160],
+                      'exchange': 'NASDAQ' if source == 'NASDAQ' else str(row.get('Exchange') or '').strip(),
+                      'etf': str(row.get('ETF') or '').strip().upper() == 'Y',
+                      'source': source,
+                  })
+              if len(records) < expected_min or not file_time:
+                  raise ValueError(f'{source}: feed integrity check failed: count={len(records)}, footer={bool(file_time)}')
+              return records, {'url': next(u for key,u,_,_ in SOURCES if key == source),
+                               'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
+                               'creation_time': file_time, 'accepted': len(records), 'rejected': rejected}
+          old_symbols = set()
+          old_count = 0
+          if PREVIOUS.exists():
+              try:
+                  old = json.loads(PREVIOUS.read_text(encoding='utf-8'))
+                  if old.get('schema') == 'ARGUS_GITHUB_PUBLIC_SYMBOL_INTAKE_V1':
+                      old_symbols = {s['symbol'] for s in old.get('symbols', [])}
+                      old_count = len(old_symbols)
+              except (OSError, ValueError, KeyError, TypeError) as exc:
+                  raise RuntimeError(f'prior checkpoint corrupt; refusing to overwrite: {exc}') from exc
+          gathered = {}
+          provenance = {}
+          for name, url, field, min_count in SOURCES:
+              rows, meta = parse(fetch(url), name, field, min_count)
+              provenance[name] = meta
+              for item in rows:
+                  symbol = item['symbol']
+                  prior = gathered.get(symbol)
+                  if prior:
+                      # Rare cross-directory duplicates are merged, not counted twice.
+                      prior['sources'] = sorted(set(prior['sources'] + [name]))
+                  else:
+                      item['sources'] = [name]
+                      item.pop('source')
+                      gathered[symbol] = item
+          if len(gathered) < 4000:
+              raise RuntimeError(f'intake too small ({len(gathered)} symbols); refusing checkpoint')
+          if old_count and len(gathered) < old_count * 0.80:
+              raise RuntimeError('catalog shrank by >20%; refusing destructive intake checkpoint')
+          symbols = sorted(gathered)
+          added = sorted(set(symbols) - old_symbols) if old_count else []
+          removed = sorted(old_symbols - set(symbols)) if old_count else []
+          digest = hashlib.sha256('\n'.join(symbols).encode()).hexdigest()
+          catalog = {'schema': 'ARGUS_GITHUB_PUBLIC_SYMBOL_INTAKE_V1',
+                     'generated_at_utc': NOW, 'authority': 'RESEARCH_ONLY_NOT_TRADE_ELIGIBLE',
+                     'coverage': 'CURRENT_NASDAQ_TRADER_EXCHANGE_LISTINGS_ONLY',
+                     'count': len(symbols), 'symbol_digest_sha256': digest,
+                     'sources': provenance, 'symbols': [gathered[k] for k in symbols]}
+          put('catalog.json', catalog)
+          queues = [[] for _ in range(SHARDS)]
+          for symbol in symbols:
+              idx = int(hashlib.sha256(symbol.encode()).hexdigest()[:8], 16) % SHARDS
+              queues[idx].append(symbol)
+          for i, queue in enumerate(queues):
+              put(f'queue-{i:02}.json', {
+                  'schema': 'ARGUS_GITHUB_RESEARCH_QUEUE_SHARD_V1',
+                  'authority': 'RESEARCH_ONLY_NO_LIVE_AUTHORITY_WRITE',
+                  'shard': i, 'shards_total': SHARDS,
+                  'source_digest_sha256': digest, 'count': len(queue),
+                  'symbols': queue, 'status': 'UNASSIGNED_RESEARCH_CANDIDATES',
+              })
+          put('changes.json', {
+              'schema': 'ARGUS_GITHUB_INTAKE_CHANGES_V1',
+              'baseline': old_count == 0, 'previous_count': old_count,
+              'current_count': len(symbols),
+              'added_count': len(added) if old_count else None,
+              'removed_count': len(removed) if old_count else None,
+              'added_sample': added[:100], 'removed_sample': removed[:100],
+          })
+          put('status.json', {
+              'schema': 'ARGUS_GITHUB_RESEARCH_INTAKE_STATUS_V1',
+              'generated_at_utc': NOW, 'state': 'CATALOG_READY',
+              'universe_symbols': len(symbols), 'research_queue_shards': SHARDS,
+              'queue_sizes': [len(q) for q in queues],
+              'source_digest_sha256': digest, 'official_directory_provenance': provenance,
+              'colab_modified': False, 'trading_authority_modified': False,
+              'dashboard_modified': False, 'worker_status': 'NOT_ATTACHED',
+              'canonical_drive_universe_replaced': False,
+              'caution': 'Public exchange-listing intake ONLY. Not liquidity-screened, backtested, approved, or an input to running accounts.',
+          })
+          print('ARGUS GITHUB INTAKE READY')
+          print('Public symbols:', len(symbols), '| Research batches:', SHARDS)
+          print('Prior baseline:', old_count, '| New:', len(added), '| Removed:', len(removed))
+          print('Catalog SHA256:', digest)
+          PY
+
+      - name: Preserve intake outputs as run artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: argus-research-intake-${{ github.run_number }}
+          path: research-intake/out/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Checkpoint to isolated research-data branch (never main)
+        shell: bash
+        run: |
+          set -euo pipefail
+          checkpoint_dir="$(mktemp -d)"
+          cp -a research-intake/out "$checkpoint_dir/out"
+          rm -rf research-intake/out
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin argus-research-intake-data >/dev/null 2>&1; then
+            git fetch -q --depth=1 origin refs/heads/argus-research-intake-data:refs/remotes/origin/argus-research-intake-data
+            git switch -c argus-research-intake-data --track origin/argus-research-intake-data
+          else
+            git switch -c argus-research-intake-data
+          fi
+          mkdir -p research-intake/out
+          cp -a "$checkpoint_dir/out/." research-intake/out/
+          git add -- research-intake/out
+          if ! git diff --cached --quiet; then
+            git commit -m 'research: checkpoint independent public symbol intake' --quiet
+          fi
+          git push origin HEAD:refs/heads/argus-research-intake-data
+          echo 'Only branch argus-research-intake-data was updated. Trading and dashboard remain unchanged.'
