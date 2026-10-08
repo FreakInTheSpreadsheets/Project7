@@ -1,0 +1,232 @@
+# Argus Daily Research Intake V2 -- source ingestion and feature preparation only.
+# No R4/R5/R7, Colab, Supabase, dashboard or Google Drive writes.
+# Artifacts: 30-day retention; private scoring/Drive handoff requires a later human/ChatGPT review.
+name: Argus Daily Research Intake V2 (Independent)
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'One shard pilot or all eight shards'
+        type: choice
+        options: [one, all]
+        default: one
+        required: true
+      shard:
+        description: 'Used only when scope=one'
+        type: choice
+        options: ['0', '1', '2', '3', '4', '5', '6', '7']
+        default: '7'
+        required: true
+      symbols_per_shard:
+        description: 'Maximum symbols in each research batch'
+        type: choice
+        options: ['4', '16', '64', '256']
+        default: '16'
+        required: true
+      budget_minutes:
+        description: 'Time budget PER worker; 330 allows safe stopping before six hours'
+        type: choice
+        options: ['5', '45', '180', '330']
+        default: '45'
+        required: true
+  # UTC; 10:25-17:25 ET depending on daylight saving. Weekdays only.
+  # Schedules are best effort and may start late; no trading critical path.
+  schedule:
+    - cron: '25 15,18,21 * * 1-5'
+
+permissions:
+  contents: read
+
+# Coordinate ALL branch checkpoints with established intake and prescreen workflows.
+concurrency:
+  group: argus-research-intake
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: Prepare isolated research shards
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      limit: ${{ steps.plan.outputs.limit }}
+      budget: ${{ steps.plan.outputs.budget }}
+    steps:
+      - id: plan
+        shell: bash
+        env:
+          SCOPE: ${{ inputs.scope || 'all' }}
+          SHARD: ${{ inputs.shard || '0' }}
+          COUNT: ${{ inputs.symbols_per_shard || '16' }}
+          BUDGET: ${{ inputs.budget_minutes || '45' }}
+        run: |
+          set -euo pipefail
+          [[ "$COUNT" =~ ^(4|16|64|256)$ ]]
+          [[ "$BUDGET" =~ ^(5|45|180|330)$ ]]
+          if [[ "$SCOPE" == 'all' ]]; then
+            echo 'matrix={"shard":[0,1,2,3,4,5,6,7]}' >> "$GITHUB_OUTPUT"
+          else
+            [[ "$SHARD" =~ ^[0-7]$ ]]
+            echo "matrix={\"shard\":[$SHARD]}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "limit=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "budget=$BUDGET" >> "$GITHUB_OUTPUT"
+
+  ingest:
+    name: 'Build research-ready data / shard ${{ matrix.shard }}'
+    needs: plan
+    if: needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install bounded public-source dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet 'pandas>=2.2,<3' 'yfinance>=0.2.65,<1'
+      - name: Fetch queue and previous checkpoint, READ ONLY
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          tag=$(printf '%02d' "$SHARD")
+          mkdir -p research-work/input research-work/out
+          git fetch --depth=1 origin refs/heads/argus-research-intake-data:refs/remotes/origin/argus-research-intake-data
+          git show 'origin/argus-research-intake-data:research-intake/out/status.json' > research-work/input/intake-status.json
+          git show "origin/argus-research-intake-data:research-intake/out/queue-$tag.json" > research-work/input/queue.json
+          if git cat-file -e "origin/argus-research-intake-data:research-intake/v2/state/shard-$tag.json" 2>/dev/null; then
+            git show "origin/argus-research-intake-data:research-intake/v2/state/shard-$tag.json" > research-work/input/previous.json
+          fi
+      - name: Collect historic bars and deterministic research features
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+          COUNT: ${{ needs.plan.outputs.limit }}
+          BUDGET: ${{ needs.plan.outputs.budget }}
+        run: |
+          set -euo pipefail
+          tag=$(printf '%02d' "$SHARD")
+          python research-intake/argus_intake_v2.py \
+            --queue research-work/input/queue.json \
+            --intake-status research-work/input/intake-status.json \
+            --prior research-work/input/previous.json \
+            --output "research-work/out/shard-$tag" \
+            --shard "$SHARD" --count "$COUNT" \
+            --budget-minutes "$BUDGET" --run-id "$GITHUB_RUN_ID"
+      - name: Upload research-ready artifact (30-day retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: argus-intake-v2-success-shard-${{ matrix.shard }}-run-${{ github.run_id }}
+          path: research-work/out/shard-*/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Retain any failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: argus-intake-v2-diagnostic-shard-${{ matrix.shard }}-run-${{ github.run_id }}
+          path: research-work/out/shard-*/
+          if-no-files-found: warn
+          retention-days: 14
+
+  checkpoint:
+    name: 'Commit metadata to data branch, never main'
+    needs: [plan, ingest]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: argus-intake-v2-success-shard-*-run-${{ github.run_id }}
+          path: research-work/merged
+          merge-multiple: false
+      - name: Validate receipts and save only isolated metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os
+          root=Path('research-work/merged')
+          found=list(root.rglob('manifest.json'))
+          if not found:
+              raise SystemExit('No successful worker artifact to checkpoint.')
+          manifest={
+              'schema':'ARGUS_RESEARCH_INTAKE_V2_RUN_RECEIPT',
+              'run_id':os.environ['GITHUB_RUN_ID'],
+              'repository':'FreakInTheSpreadsheets/Project7',
+              'status':'AWAITING_PRIVATE_CHATGPT_SCORING',
+              'live_authority_modified':False,
+              'dashboard_modified':False,
+              'drive_saved':False,
+              'shards':[]}
+          dest=Path('research-work/staged')
+          (dest/'state').mkdir(parents=True,exist_ok=True)
+          for src in found:
+              folder=src.parent
+              m=json.loads(src.read_text())
+              st=json.loads((folder/'next-state.json').read_text())
+              checksums=json.loads((folder/'sha256.json').read_text())
+              assert m['schema']=='ARGUS_GITHUB_INTAKE_RESEARCH_BATCH_V2'
+              assert st['schema']=='ARGUS_GITHUB_INTAKE_SHARD_STATE_V2'
+              assert str(m['run_id'])==os.environ['GITHUB_RUN_ID']
+              assert m['source_health_verified'] is True
+              assert m['input_digest_sha256']==st['source_digest_sha256']
+              assert m['shard']==st['shard']
+              assert 0<=st['cursor']<st['queue_size']
+              for fname,expected in checksums.items():
+                  data=(folder/fname).read_bytes()
+                  assert hashlib.sha256(data).hexdigest()==expected, (folder,fname)
+              tag=f"{m['shard']:02d}"
+              target=dest/'state'/f'shard-{tag}.json'
+              target.write_text(json.dumps(st,indent=2,sort_keys=True)+'\n')
+              manifest['shards'].append({
+                  'shard':m['shard'],
+                  'symbols_processed':m['symbols_processed'],
+                  'rth_five_minute_bars':m['rth_five_minute_bars'],
+                  'counts':m['counts'],
+                  'artifact_name':src.relative_to(root).parts[0],
+                  'cursor_after':st['cursor'],
+                  'generated_at_utc':m['generated_at_utc']})
+          manifest['shards'].sort(key=lambda x:x['shard'])
+          manifest['completed_shards']=len(manifest['shards'])
+          manifest['symbols_processed']=sum(i['symbols_processed'] for i in manifest['shards'])
+          manifest['historical_bars']=sum(i['rth_five_minute_bars'] for i in manifest['shards'])
+          (dest/'receipt.json').write_text(json.dumps(manifest,indent=2,sort_keys=True)+'\n')
+          print('Checkpoint validation:',manifest['completed_shards'],'shards',manifest['symbols_processed'],'symbols')
+          PY
+          git fetch --depth=1 origin refs/heads/argus-research-intake-data:refs/remotes/origin/argus-research-intake-data
+          git switch --detach origin/argus-research-intake-data
+          mkdir -p research-intake/v2/state research-intake/v2/pending
+          cp research-work/staged/state/shard-*.json research-intake/v2/state/
+          cp research-work/staged/receipt.json "research-intake/v2/pending/${GITHUB_RUN_ID}.json"
+          cp research-work/staged/receipt.json research-intake/v2/latest.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- research-intake/v2
+          if ! git diff --cached --quiet; then
+            git commit --quiet -m "research intake V2: checkpoint run ${GITHUB_RUN_ID} (unscored)"
+            git push origin HEAD:refs/heads/argus-research-intake-data
+          fi
+          echo 'Research data artifacts retained; scores remain unwritten pending private review.'
