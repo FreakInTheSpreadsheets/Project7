@@ -1,0 +1,25 @@
+{
+  "completed_shards": 1,
+  "dashboard_modified": false,
+  "drive_saved": false,
+  "historical_bars": 1112,
+  "live_authority_modified": false,
+  "repository": "FreakInTheSpreadsheets/Project7",
+  "run_id": "37836262420",
+  "schema": "ARGUS_RESEARCH_INTAKE_V2_RUN_RECEIPT",
+  "shards": [
+    {
+      "artifact_name": "argus-intake-v2-success-shard-7-run-37836262420",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 4
+      },
+      "cursor_after": 4,
+      "generated_at_utc": "2026-10-08T20:01:27.114225+00:00",
+      "rth_five_minute_bars": 1112,
+      "shard": 7,
+      "symbols_processed": 4
+    }
+  ],
+  "status": "AWAITING_PRIVATE_CHATGPT_SCORING",
+  "symbols_processed": 4
+}
