@@ -1,22 +1,22 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-08T20:10:20.711476+00:00",
+  "generated_at_utc": "2026-10-08T20:11:36.554075+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
-  "score": 38.3,
-  "label": "LOW",
+  "score": 79.8,
+  "label": "HIGH",
   "components": {
     "decoupling": {
-      "percentile": 15.5,
-      "raw": 0.0030964980927189467
+      "percentile": 97.2,
+      "raw": 0.010078657700781313
     },
     "dispersion": {
-      "percentile": 25.4,
-      "raw": 0.00604713823750752
+      "percentile": 66.7,
+      "raw": 0.008482700090914641
     },
     "leadership_rotation": {
-      "percentile": 92.9,
-      "raw": 0.7692307692307692
+      "percentile": 70.4,
+      "raw": 0.6666666666666667
     }
   },
   "validated_predictor": false,
@@ -26,28 +26,28 @@
     "dispersion": 0.35,
     "leadership_rotation": 0.25
   },
-  "baseline_sessions": 71,
-  "current_context_at_utc": "2026-10-08T13:14:11.829487+00:00",
-  "previous_complete_session": "2026-10-06",
+  "baseline_sessions": 72,
+  "current_context_at_utc": "2026-10-08T20:10:34.614223+00:00",
+  "previous_complete_session": "2026-10-07",
   "proxy_count": 18,
   "accounts": {
     "r4": {
       "engine": "R4",
       "status": "AVAILABLE",
-      "score": 64.7,
-      "label": "RISING",
+      "score": 80.1,
+      "label": "TRANSITION",
       "components": {
         "decoupling": {
-          "percentile": 60.6,
-          "raw": 0.005999767737980853
+          "percentile": 91.7,
+          "raw": 0.00979662878445312
         },
         "dispersion": {
-          "percentile": 57.7,
-          "raw": 0.0068249539811055795
+          "percentile": 79.2,
+          "raw": 0.008604482633150912
         },
         "leadership_rotation": {
-          "percentile": 81.2,
-          "raw": 0.6859504132231405
+          "percentile": 62.9,
+          "raw": 0.5454545454545454
         }
       },
       "weights": {
@@ -83,9 +83,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 69,
-      "current_context_at_utc": "2026-10-08T13:14:11.829487+00:00",
-      "previous_complete_session": "2026-10-06",
+      "baseline_sessions": 70,
+      "current_context_at_utc": "2026-10-08T20:10:34.614223+00:00",
+      "previous_complete_session": "2026-10-07",
       "top_sector_weights": [
         {
           "sector": "Industrials",
@@ -108,20 +108,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 33.9,
-      "label": "LOW",
+      "score": 78.3,
+      "label": "HIGH",
       "components": {
         "decoupling": {
-          "percentile": 14.1,
-          "raw": 0.0027644682377223123
+          "percentile": 88.9,
+          "raw": 0.009947808896857965
         },
         "dispersion": {
-          "percentile": 31.0,
-          "raw": 0.004358479576956753
+          "percentile": 87.5,
+          "raw": 0.010118887074393136
         },
         "leadership_rotation": {
-          "percentile": 69.6,
-          "raw": 0.7222222222222222
+          "percentile": 48.6,
+          "raw": 0.5555555555555556
         }
       },
       "weights": {
@@ -152,9 +152,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 69,
-      "current_context_at_utc": "2026-10-08T13:14:11.829487+00:00",
-      "previous_complete_session": "2026-10-06",
+      "baseline_sessions": 70,
+      "current_context_at_utc": "2026-10-08T20:10:34.614223+00:00",
+      "previous_complete_session": "2026-10-07",
       "top_sector_weights": [
         {
           "sector": "Technology",
@@ -176,7 +176,7 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": -30.8,
+    "r5_minus_r4": -1.8,
     "higher_pressure": "R4",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
