@@ -1,0 +1,280 @@
+# ARGUS HISTORICAL PRESCREEN V1.1 -- isolated, bounded GitHub Actions research job.
+# Processes existing GitHub intake queue symbols against 60-day / 5-minute
+# market-data coverage. NO R4/R5/R6/R7, Colab, Supabase, or dashboard writes.
+# Does NOT grant trading authority or claim to replicate strict V11 validation.
+name: Argus Historical Prescreen V1.1 (Independent)
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Pilot one shard first; use all only after pilot succeeds'
+        required: true
+        default: one
+        type: choice
+        options: [one, all]
+      shard:
+        description: 'Shard number when scope=one'
+        required: true
+        default: '0'
+        type: choice
+        options: ['0','1','2','3','4','5','6','7']
+      symbols_per_shard:
+        description: 'Bounded batch per shard'
+        required: true
+        default: '4'
+        type: choice
+        options: ['4','8','16']
+
+permissions:
+  contents: read
+
+# Serialize updates to the same isolated data branch as intake V1.
+concurrency:
+  group: argus-research-intake
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: Prepare bounded research matrix
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - id: matrix
+        shell: bash
+        env:
+          SCOPE: ${{ inputs.scope }}
+          SHARD: ${{ inputs.shard }}
+        run: |
+          set -euo pipefail
+          if [[ "$SCOPE" == 'all' ]]; then
+            echo 'matrix={"shard":[0,1,2,3,4,5,6,7]}' >> "$GITHUB_OUTPUT"
+          else
+            [[ "$SHARD" =~ ^[0-7]$ ]]
+            echo "matrix={\"shard\":[$SHARD]}" >> "$GITHUB_OUTPUT"
+          fi
+
+  prescreen:
+    name: '60-day 5m research prescreen / shard ${{ matrix.shard }}'
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - name: Checkout repository (read-only)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install isolated research dependencies
+        run: python -m pip install --quiet 'yfinance>=0.2.60,<1' 'pandas>=2.2,<3'
+      - name: Read immutable intake queues / prior checkpoint
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin refs/heads/argus-research-intake-data:refs/remotes/origin/argus-research-intake-data
+          mkdir -p research-work/input research-work/out
+          tag=$(printf '%02d' "$SHARD")
+          git show "origin/argus-research-intake-data:research-intake/out/queue-$tag.json" > "research-work/input/queue.json"
+          git show "origin/argus-research-intake-data:research-intake/out/status.json" > "research-work/input/intake-status.json"
+          if git cat-file -e "origin/argus-research-intake-data:research-intake/coverage/shard-$tag.json" 2>/dev/null; then
+            git show "origin/argus-research-intake-data:research-intake/coverage/shard-$tag.json" > 'research-work/input/previous.json'
+          fi
+
+      - name: Research 60-day 5-minute data coverage (no trading writes)
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+          COUNT: ${{ inputs.symbols_per_shard }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, os, time
+          from datetime import datetime, timezone
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          import pandas as pd
+          import yfinance as yf
+
+          inp=Path('research-work/input'); outdir=Path('research-work/out')
+          queue=json.loads((inp/'queue.json').read_text())
+          intake=json.loads((inp/'intake-status.json').read_text())
+          assert queue['schema']=='ARGUS_GITHUB_RESEARCH_QUEUE_SHARD_V1'
+          assert queue['source_digest_sha256']==intake['source_digest_sha256'], 'Stale/mixed intake sources'
+          assert intake['state']=='CATALOG_READY'
+          shard=int(os.environ['SHARD']); count=int(os.environ['COUNT'])
+          assert shard==queue['shard'] and 1<=count<=16
+          symbols=queue['symbols']; assert len(symbols)>0
+          previous={}
+          if (inp/'previous.json').exists():
+            previous=json.loads((inp/'previous.json').read_text())
+            assert previous.get('schema')=='ARGUS_GITHUB_HISTORICAL_PRESCREEN_V1'
+            if previous.get('source_digest_sha256')!=queue['source_digest_sha256']:
+              previous={}  # Reset cursor when input population changes.
+          cursor=int(previous.get('next_index',0))%len(symbols)
+          selected=[symbols[(cursor+i)%len(symbols)] for i in range(count)]
+          now=datetime.now(timezone.utc)
+          today_et=datetime.now(ZoneInfo('America/New_York')).date()
+          results=[]
+          for sym in selected:
+            row={'symbol':sym,'status':'SOURCE_ERROR','research_priority':None,'last_price':None,
+                 'average_dollar_volume_20_complete_sessions':None,
+                 'complete_sessions':0,'rth_5m_rows':0,'note':'No eligible history obtained'}
+            try:
+              bars=yf.Ticker(sym).history(period='60d',interval='5m',auto_adjust=False,
+                                          actions=False,prepost=False,timeout=30)
+              if not isinstance(bars,pd.DataFrame) or bars.empty:
+                row.update(status='NO_BARS',note='Source returned no 5-minute bars')
+              elif not isinstance(bars.index,pd.DatetimeIndex) or bars.index.tz is None:
+                row.update(status='INVALID_TIMESTAMPS',note='Timestamp timezone missing; rejected')
+              elif not {'Close','Volume'}.issubset(bars.columns):
+                row.update(status='INVALID_SCHEMA',note='Missing Close or Volume')
+              else:
+                bars=bars.tz_convert('America/New_York')
+                clock=bars.index.hour*60+bars.index.minute
+                bars=bars[(clock>=570)&(clock<960)].copy()  # regular session only
+                bars=bars[bars.index.date<today_et].copy()  # never use an incomplete current day
+                bars['Close']=pd.to_numeric(bars['Close'],errors='coerce')
+                bars['Volume']=pd.to_numeric(bars['Volume'],errors='coerce')
+                bars=bars.dropna(subset=['Close','Volume'])
+                bars=bars[(bars['Close']>0)&(bars['Volume']>=0)].copy()
+                row['rth_5m_rows']=int(len(bars))
+                if len(bars):
+                  bars['dollar_turnover']=bars['Close']*bars['Volume']
+                  daily=bars.groupby(bars.index.date).agg(
+                    bars=('Close','size'),last_close=('Close','last'),
+                    dollar_turnover=('dollar_turnover','sum')).sort_index()
+                  good=daily[daily['bars']>=60]
+                  row['observed_sessions']=int(len(daily))
+                  row['complete_sessions']=int(len(good))
+                  row['last_observation_session_et']=str(daily.index[-1])
+                  row['last_price']=round(float(daily.iloc[-1]['last_close']),6)
+                  if len(good)>=20:
+                    last20=good.tail(20)
+                    price=float(last20.iloc[-1]['last_close'])
+                    adv=float(last20['dollar_turnover'].mean())
+                    row['last_price']=round(price,6)
+                    row['average_dollar_volume_20_complete_sessions']=round(adv,2)
+                    row['last_complete_session_age_calendar_days']=(today_et-good.index[-1]).days
+                    # Historical coverage prioritization, NOT live trade eligibility.
+                    if row['last_complete_session_age_calendar_days']>7:
+                      row.update(status='STALE_HISTORY',research_priority='LOW')
+                    elif price<1.0: row.update(status='LOW_PRICE',research_priority='LOW')
+                    elif adv<1_000_000: row.update(status='LOW_DOLLAR_VOLUME',research_priority='LOW')
+                    else: row.update(status='COVERAGE_AND_LIQUIDITY_PASS',research_priority='HIGH')
+                    row['note']='Research pre-screen only; never replaces V11 gates/validation'
+                  else:
+                    row.update(status='INSUFFICIENT_COMPLETE_SESSIONS',research_priority='UNKNOWN',
+                               note='Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV')
+                else:
+                  row.update(status='NO_RTH_BARS',research_priority='UNKNOWN',note='No valid regular-session bars')
+            except Exception as exc:
+              row.update(status='SOURCE_ERROR',research_priority='UNKNOWN',note=f'{type(exc).__name__}: {str(exc)[:160]}')
+            results.append(row)
+            print(sym, row['status'], 'bars=',row['rth_5m_rows'], 'ADV=',row['average_dollar_volume_20_complete_sessions'],flush=True)
+            time.sleep(0.6)  # conservative request pacing; no hammering source
+          counts={}
+          for r in results: counts[r['status']]=counts.get(r['status'],0)+1
+          # Merge, never discard prior batches. A changed intake digest resets this archive.
+          records=previous.get('records',{}) if isinstance(previous.get('records'),dict) else {}
+          for r in results: records[r['symbol']]=r
+          cumulative_counts={}
+          for r in records.values():
+            st=r.get('status','UNKNOWN'); cumulative_counts[st]=cumulative_counts.get(st,0)+1
+          verified=sum(1 for r in results if r['status'] in ('COVERAGE_AND_LIQUIDITY_PASS','LOW_PRICE','LOW_DOLLAR_VOLUME'))
+          # Valid but thin, stale, or partial histories are still legitimate prescreen outcomes.
+          # Requiring one liquid/complete symbol caused entire shards to fail on sparse listings.
+          observed_history=sum(1 for r in results if (r.get('rth_5m_rows') or 0)>0)
+          source_health='BAR_DATA_OBSERVED' if observed_history else 'UNVERIFIED'
+          if observed_history==0:
+            # Zero bars for obscure/delisted symbols does NOT automatically mean Yahoo is down.
+            # Probe an unrelated liquid control so all-NO_BARS can advance, while an actual
+            # source outage still blocks cursor advancement (no silent false success).
+            try:
+              canary=yf.Ticker('SPY').history(period='5d',interval='5m',auto_adjust=False,
+                                             actions=False,prepost=False,timeout=25)
+              canary_ok=(isinstance(canary,pd.DataFrame) and len(canary)>=20
+                         and {'Close','Volume'}.issubset(canary.columns))
+              source_health='CANARY_PASSED' if canary_ok else 'CANARY_NO_VALID_BARS'
+            except Exception as exc:
+              source_health=f'CANARY_ERROR:{type(exc).__name__}:{str(exc)[:100]}'
+          source_ok=source_health in ('BAR_DATA_OBSERVED','CANARY_PASSED')
+          # Save all results, including unknowns. Never claim success on an unverified source.
+          status={
+            'schema':'ARGUS_GITHUB_HISTORICAL_PRESCREEN_V1','generated_at_utc':now.isoformat(),
+            'authority':'RESEARCH_PRIORITY_ONLY_NO_TRADING_WRITE','source':'YAHOO_YFINANCE_60D_5M',
+            'source_digest_sha256':queue['source_digest_sha256'],'shard':shard,'queue_size':len(symbols),
+            'batch_start_index':cursor,'batch_size':len(selected),
+            'next_index':((cursor+len(selected))%len(symbols)) if source_ok else cursor,
+            'verified_symbols_in_batch':verified,'symbols_with_any_valid_bars':observed_history,
+            'source_health':source_health,'source_ok':source_ok,
+            'counts':counts,'batch_results':results,
+            'cumulative_symbols_checked':len(records),'cumulative_counts':cumulative_counts,
+            'records':records,
+            'colab_modified':False,'dashboard_modified':False,'live_authority_modified':False,
+            'historical_strict_v11_validated':False,
+            'note':'Read-only data-coverage triage. Yahoo feed quality/rate limits may produce UNKNOWN. Do not use as trade signals.'}
+          tag=f'{shard:02d}'
+          (outdir/f'shard-{tag}.json').write_text(json.dumps(status,sort_keys=True,indent=2,allow_nan=False)+'\n')
+          print('SUMMARY:',json.dumps({'shard':shard,'counts':counts,'verified_symbols':verified,'next_index':status['next_index']}))
+          if not source_ok:
+            raise RuntimeError('No valid bars in batch AND independent SPY data-source canary failed; cursor preserved. Inspect artifact diagnostics.')
+          PY
+
+      - name: Upload research result or failure diagnostic artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: argus-historical-prescreen-shard-${{ matrix.shard }}
+          path: research-work/out/shard-*.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  checkpoint:
+    name: Checkpoint research summaries (never main)
+    needs: [plan, prescreen]
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: argus-historical-prescreen-shard-*
+          path: research-work/merged
+          merge-multiple: true
+      - name: Commit separate research data branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=$(find research-work/merged -maxdepth 1 -name 'shard-*.json' | wc -l)
+          [[ "$count" -ge 1 ]]
+          mkdir -p "$RUNNER_TEMP/argus-prescreen"
+          cp research-work/merged/shard-*.json "$RUNNER_TEMP/argus-prescreen/"
+          git fetch --depth=1 origin refs/heads/argus-research-intake-data:refs/remotes/origin/argus-research-intake-data
+          git switch --detach origin/argus-research-intake-data
+          mkdir -p research-intake/coverage
+          cp "$RUNNER_TEMP"/argus-prescreen/shard-*.json research-intake/coverage/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- research-intake/coverage
+          if ! git diff --cached --quiet; then
+            git commit --quiet -m 'research: checkpoint bounded historical prescreen'
+            git push origin HEAD:refs/heads/argus-research-intake-data
+          fi
+          echo 'Research checkpoint saved only on argus-research-intake-data. Trading and dashboard files untouched.'
