@@ -1,0 +1,126 @@
+{
+  "authority": "RESEARCH_PRIORITY_ONLY_NO_TRADING_WRITE",
+  "batch_results": [
+    {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AAC.U"
+    },
+    {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AAC.W"
+    },
+    {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 10.66,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 10,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 12,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "AACPU"
+    },
+    {
+      "average_dollar_volume_20_complete_sessions": 26718721.67,
+      "complete_sessions": 59,
+      "last_complete_session_age_calendar_days": 1,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 92.57,
+      "note": "Research pre-screen only; never replaces V11 gates/validation",
+      "observed_sessions": 59,
+      "research_priority": "HIGH",
+      "rth_5m_rows": 4354,
+      "status": "COVERAGE_AND_LIQUIDITY_PASS",
+      "symbol": "AAMI"
+    }
+  ],
+  "batch_size": 4,
+  "batch_start_index": 0,
+  "colab_modified": false,
+  "counts": {
+    "COVERAGE_AND_LIQUIDITY_PASS": 1,
+    "INSUFFICIENT_COMPLETE_SESSIONS": 1,
+    "NO_BARS": 2
+  },
+  "cumulative_counts": {
+    "COVERAGE_AND_LIQUIDITY_PASS": 1,
+    "INSUFFICIENT_COMPLETE_SESSIONS": 1,
+    "NO_BARS": 2
+  },
+  "cumulative_symbols_checked": 4,
+  "dashboard_modified": false,
+  "generated_at_utc": "2026-10-08T19:11:41.187986+00:00",
+  "historical_strict_v11_validated": false,
+  "live_authority_modified": false,
+  "next_index": 4,
+  "note": "Read-only data-coverage triage. Yahoo feed quality/rate limits may produce UNKNOWN. Do not use as trade signals.",
+  "queue_size": 1630,
+  "records": {
+    "AAC.U": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AAC.U"
+    },
+    "AAC.W": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AAC.W"
+    },
+    "AACPU": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 10.66,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 10,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 12,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "AACPU"
+    },
+    "AAMI": {
+      "average_dollar_volume_20_complete_sessions": 26718721.67,
+      "complete_sessions": 59,
+      "last_complete_session_age_calendar_days": 1,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 92.57,
+      "note": "Research pre-screen only; never replaces V11 gates/validation",
+      "observed_sessions": 59,
+      "research_priority": "HIGH",
+      "rth_5m_rows": 4354,
+      "status": "COVERAGE_AND_LIQUIDITY_PASS",
+      "symbol": "AAMI"
+    }
+  },
+  "schema": "ARGUS_GITHUB_HISTORICAL_PRESCREEN_V1",
+  "shard": 3,
+  "source": "YAHOO_YFINANCE_60D_5M",
+  "source_digest_sha256": "c68b68c65fb65cd940d7a3aad1f8ab876727a17dab8cb040ad2d0a8e45b14ccf",
+  "source_health": "BAR_DATA_OBSERVED",
+  "source_ok": true,
+  "symbols_with_any_valid_bars": 2,
+  "verified_symbols_in_batch": 1
+}

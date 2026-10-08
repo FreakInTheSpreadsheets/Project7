@@ -2,72 +2,70 @@
   "authority": "RESEARCH_PRIORITY_ONLY_NO_TRADING_WRITE",
   "batch_results": [
     {
-      "average_dollar_volume_20_complete_sessions": 282236001.72,
-      "complete_sessions": 59,
-      "last_complete_session_age_calendar_days": 1,
-      "last_observation_session_et": "2026-10-07",
-      "last_price": 169.039993,
-      "note": "Research pre-screen only; never replaces V11 gates/validation",
-      "observed_sessions": 59,
-      "research_priority": "HIGH",
-      "rth_5m_rows": 4600,
-      "status": "COVERAGE_AND_LIQUIDITY_PASS",
-      "symbol": "A"
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AACIW"
     },
     {
       "average_dollar_volume_20_complete_sessions": null,
       "complete_sessions": 0,
       "last_observation_session_et": "2026-10-06",
-      "last_price": 20.045,
+      "last_price": 0.37,
       "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
-      "observed_sessions": 7,
+      "observed_sessions": 22,
       "research_priority": "UNKNOWN",
-      "rth_5m_rows": 8,
+      "rth_5m_rows": 39,
       "status": "INSUFFICIENT_COMPLETE_SESSIONS",
-      "symbol": "AAAC"
-    },
-    {
-      "average_dollar_volume_20_complete_sessions": null,
-      "complete_sessions": 0,
-      "last_observation_session_et": "2026-10-01",
-      "last_price": 47.965302,
-      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
-      "observed_sessions": 12,
-      "research_priority": "UNKNOWN",
-      "rth_5m_rows": 14,
-      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
-      "symbol": "AAAD"
+      "symbol": "AACOW"
     },
     {
       "average_dollar_volume_20_complete_sessions": null,
       "complete_sessions": 0,
       "last_observation_session_et": "2026-10-07",
-      "last_price": 10.05,
+      "last_price": 81.544502,
       "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
-      "observed_sessions": 22,
+      "observed_sessions": 59,
       "research_priority": "UNKNOWN",
-      "rth_5m_rows": 81,
+      "rth_5m_rows": 885,
       "status": "INSUFFICIENT_COMPLETE_SESSIONS",
-      "symbol": "AAC"
+      "symbol": "ABFL"
+    },
+    {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 36.09,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 39,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 93,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "ABIG"
     }
   ],
   "batch_size": 4,
-  "batch_start_index": 0,
+  "batch_start_index": 4,
   "colab_modified": false,
   "counts": {
-    "COVERAGE_AND_LIQUIDITY_PASS": 1,
-    "INSUFFICIENT_COMPLETE_SESSIONS": 3
+    "INSUFFICIENT_COMPLETE_SESSIONS": 3,
+    "NO_BARS": 1
   },
   "cumulative_counts": {
     "COVERAGE_AND_LIQUIDITY_PASS": 1,
-    "INSUFFICIENT_COMPLETE_SESSIONS": 3
+    "INSUFFICIENT_COMPLETE_SESSIONS": 6,
+    "NO_BARS": 1
   },
-  "cumulative_symbols_checked": 4,
+  "cumulative_symbols_checked": 8,
   "dashboard_modified": false,
-  "generated_at_utc": "2026-10-08T18:51:56.557980+00:00",
+  "generated_at_utc": "2026-10-08T19:11:43.220027+00:00",
   "historical_strict_v11_validated": false,
   "live_authority_modified": false,
-  "next_index": 4,
+  "next_index": 8,
   "note": "Read-only data-coverage triage. Yahoo feed quality/rate limits may produce UNKNOWN. Do not use as trade signals.",
   "queue_size": 1658,
   "records": {
@@ -119,11 +117,60 @@
       "rth_5m_rows": 81,
       "status": "INSUFFICIENT_COMPLETE_SESSIONS",
       "symbol": "AAC"
+    },
+    "AACIW": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_price": null,
+      "note": "Source returned no 5-minute bars",
+      "research_priority": null,
+      "rth_5m_rows": 0,
+      "status": "NO_BARS",
+      "symbol": "AACIW"
+    },
+    "AACOW": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-06",
+      "last_price": 0.37,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 22,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 39,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "AACOW"
+    },
+    "ABFL": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 81.544502,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 59,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 885,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "ABFL"
+    },
+    "ABIG": {
+      "average_dollar_volume_20_complete_sessions": null,
+      "complete_sessions": 0,
+      "last_observation_session_et": "2026-10-07",
+      "last_price": 36.09,
+      "note": "Fewer than 20 near-complete RTH sessions; cannot compute 20-session ADV",
+      "observed_sessions": 39,
+      "research_priority": "UNKNOWN",
+      "rth_5m_rows": 93,
+      "status": "INSUFFICIENT_COMPLETE_SESSIONS",
+      "symbol": "ABIG"
     }
   },
   "schema": "ARGUS_GITHUB_HISTORICAL_PRESCREEN_V1",
   "shard": 0,
   "source": "YAHOO_YFINANCE_60D_5M",
   "source_digest_sha256": "c68b68c65fb65cd940d7a3aad1f8ab876727a17dab8cb040ad2d0a8e45b14ccf",
-  "verified_symbols_in_batch": 1
+  "source_health": "BAR_DATA_OBSERVED",
+  "source_ok": true,
+  "symbols_with_any_valid_bars": 3,
+  "verified_symbols_in_batch": 0
 }
