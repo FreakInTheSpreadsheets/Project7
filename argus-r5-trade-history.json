@@ -2,7 +2,7 @@
   "schema": "ARGUS_V478_R5_TRADE_HISTORY_V1",
   "available": true,
   "book": "long",
-  "count": 7,
+  "count": 8,
   "trades": [
     {
       "trade_no": 1,
@@ -115,9 +115,25 @@
       "pct": -0.584804,
       "exit_reason": "FIXED_30_MINUTE_HORIZON",
       "horizon_minutes": 30
+    },
+    {
+      "trade_no": 8,
+      "symbol": "SN",
+      "direction": "RISE",
+      "pattern_family": "CORE",
+      "pattern_id": "1d927dea971e7ba6dd0dfe82",
+      "entry_time_et": "2026-10-08T09:40:00-04:00",
+      "exit_time_et": "2026-10-08T10:11:00-04:00",
+      "entry_price": 183.742996,
+      "exit_price": 184.625,
+      "notional": 1113.601613,
+      "pnl": 5.345514,
+      "pct": 0.48002,
+      "exit_reason": "FIXED_30_MINUTE_HORIZON",
+      "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-10-08T13:28:36.064167+00:00",
+  "generated_at_utc": "2026-10-08T20:10:18.730335+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical R5 closed paper ledger; no trading authority or execution writes",
