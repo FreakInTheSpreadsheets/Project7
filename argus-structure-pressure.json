@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-09T07:10:03.184125+00:00",
+  "generated_at_utc": "2026-10-09T07:11:25.046513+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 79.8,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 72,
-  "current_context_at_utc": "2026-10-09T07:05:15.953028+00:00",
+  "current_context_at_utc": "2026-10-09T07:10:48.595880+00:00",
   "previous_complete_session": "2026-10-07",
   "proxy_count": 18,
   "accounts": {
@@ -84,7 +84,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 70,
-      "current_context_at_utc": "2026-10-09T07:05:15.953028+00:00",
+      "current_context_at_utc": "2026-10-09T07:10:48.595880+00:00",
       "previous_complete_session": "2026-10-07",
       "top_sector_weights": [
         {
@@ -152,7 +152,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 70,
-      "current_context_at_utc": "2026-10-09T07:05:15.953028+00:00",
+      "current_context_at_utc": "2026-10-09T07:10:48.595880+00:00",
       "previous_complete_session": "2026-10-07",
       "top_sector_weights": [
         {
