@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-12T21:04:34.691211+00:00",
+  "generated_at_utc": "2026-10-12T21:06:46.854997+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 12.8,
@@ -12,7 +12,7 @@
     },
     "dispersion": {
       "percentile": 9.5,
-      "raw": 0.00488546686502277
+      "raw": 0.004885466865022777
     },
     "leadership_rotation": {
       "percentile": 35.6,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 74,
-  "current_context_at_utc": "2026-10-12T20:58:49.134326+00:00",
+  "current_context_at_utc": "2026-10-12T21:04:40.934346+00:00",
   "previous_complete_session": "2026-10-09",
   "proxy_count": 18,
   "accounts": {
@@ -39,11 +39,11 @@
       "components": {
         "decoupling": {
           "percentile": 2.7,
-          "raw": 0.002726073425938426
+          "raw": 0.0027260734259384497
         },
         "dispersion": {
           "percentile": 5.4,
-          "raw": 0.0036578408554188207
+          "raw": 0.0036578408554188506
         },
         "leadership_rotation": {
           "percentile": 58.3,
@@ -84,7 +84,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 72,
-      "current_context_at_utc": "2026-10-12T20:58:49.134326+00:00",
+      "current_context_at_utc": "2026-10-12T21:04:40.934346+00:00",
       "previous_complete_session": "2026-10-09",
       "top_sector_weights": [
         {
@@ -113,11 +113,11 @@
       "components": {
         "decoupling": {
           "percentile": 27.0,
-          "raw": 0.00355188766939026
+          "raw": 0.003551887669390343
         },
         "dispersion": {
           "percentile": 9.5,
-          "raw": 0.0014524662927097966
+          "raw": 0.0014524662927098415
         },
         "leadership_rotation": {
           "percentile": 83.3,
@@ -150,7 +150,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 72,
-      "current_context_at_utc": "2026-10-12T20:58:49.134326+00:00",
+      "current_context_at_utc": "2026-10-12T21:04:40.934346+00:00",
       "previous_complete_session": "2026-10-09",
       "top_sector_weights": [
         {
