@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-12T08:01:27.789212+00:00",
+  "generated_at_utc": "2026-10-12T08:02:55.519543+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 67.1,
@@ -12,7 +12,7 @@
     },
     "dispersion": {
       "percentile": 57.5,
-      "raw": 0.00813744338948527
+      "raw": 0.008137870939313441
     },
     "leadership_rotation": {
       "percentile": 100.0,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 73,
-  "current_context_at_utc": "2026-10-12T07:56:38.085096+00:00",
+  "current_context_at_utc": "2026-10-12T08:02:27.258795+00:00",
   "previous_complete_session": "2026-10-08",
   "proxy_count": 18,
   "accounts": {
@@ -39,11 +39,11 @@
       "components": {
         "decoupling": {
           "percentile": 17.8,
-          "raw": 0.00410460519583215
+          "raw": 0.004116362505158184
         },
         "dispersion": {
           "percentile": 12.3,
-          "raw": 0.0043930175491439525
+          "raw": 0.004392463569738774
         },
         "leadership_rotation": {
           "percentile": 49.3,
@@ -84,7 +84,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 71,
-      "current_context_at_utc": "2026-10-12T07:56:38.085096+00:00",
+      "current_context_at_utc": "2026-10-12T08:02:27.258795+00:00",
       "previous_complete_session": "2026-10-08",
       "top_sector_weights": [
         {
@@ -108,20 +108,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 48.3,
-      "label": "RISING",
+      "score": 32.8,
+      "label": "LOW",
       "components": {
         "decoupling": {
-          "percentile": 37.0,
-          "raw": 0.004277794392561437
+          "percentile": 26.0,
+          "raw": 0.0034639519095427027
         },
         "dispersion": {
-          "percentile": 38.4,
-          "raw": 0.004596019505755681
+          "percentile": 28.8,
+          "raw": 0.00270096646314724
         },
         "leadership_rotation": {
-          "percentile": 80.3,
-          "raw": 0.7619047619047619
+          "percentile": 49.3,
+          "raw": 0.75
         }
       },
       "weights": {
@@ -131,51 +131,45 @@
       },
       "authority": {
         "source": "R5_FROZEN_WATCHLIST",
-        "source_file": "Argus_R5_Frozen_Watchlist_2026-10-09.csv",
-        "session": "2026-10-09",
-        "patterns": 30,
-        "symbols": 23
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-10-12.csv",
+        "session": "2026-10-12",
+        "patterns": 18,
+        "symbols": 14
       },
       "coverage": {
-        "authority_symbols": 23,
-        "mapped_symbols": 21,
+        "authority_symbols": 14,
+        "mapped_symbols": 12,
         "unmapped_symbols": 2,
-        "mapped_pct": 91.3,
-        "sector_count": 5,
+        "mapped_pct": 85.7,
+        "sector_count": 3,
         "sector_counts": {
           "Consumer Discretionary": 2,
-          "Financials": 3,
-          "Health Care": 2,
-          "Industrials": 3,
-          "Technology": 11
+          "Industrials": 1,
+          "Technology": 9
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 71,
-      "current_context_at_utc": "2026-10-12T07:56:38.085096+00:00",
+      "current_context_at_utc": "2026-10-12T08:02:27.258795+00:00",
       "previous_complete_session": "2026-10-08",
       "top_sector_weights": [
         {
           "sector": "Technology",
-          "weight": 0.5238
-        },
-        {
-          "sector": "Financials",
-          "weight": 0.1429
-        },
-        {
-          "sector": "Industrials",
-          "weight": 0.1429
+          "weight": 0.75
         },
         {
           "sector": "Consumer Discretionary",
-          "weight": 0.0952
+          "weight": 0.1667
+        },
+        {
+          "sector": "Industrials",
+          "weight": 0.0833
         }
       ]
     }
   },
   "comparison": {
-    "r5_minus_r4": 24.5,
+    "r5_minus_r4": 9.0,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
