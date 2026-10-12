@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-12T21:17:05.241333+00:00",
+  "generated_at_utc": "2026-10-12T21:18:55.048075+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 12.8,
@@ -108,20 +108,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 35.0,
+      "score": 29.5,
       "label": "LOW",
       "components": {
         "decoupling": {
-          "percentile": 27.0,
-          "raw": 0.003551887669390343
+          "percentile": 14.9,
+          "raw": 0.0028505124938571712
         },
         "dispersion": {
-          "percentile": 9.5,
-          "raw": 0.0014524662927098415
+          "percentile": 10.8,
+          "raw": 0.0027001071871438314
         },
         "leadership_rotation": {
-          "percentile": 83.3,
-          "raw": 0.9166666666666666
+          "percentile": 79.2,
+          "raw": 0.75
         }
       },
       "weights": {
@@ -131,21 +131,24 @@
       },
       "authority": {
         "source": "R5_FROZEN_WATCHLIST",
-        "source_file": "Argus_R5_Frozen_Watchlist_2026-10-12.csv",
-        "session": "2026-10-12",
-        "patterns": 18,
-        "symbols": 14
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-10-13.csv",
+        "session": "2026-10-13",
+        "patterns": 26,
+        "symbols": 23
       },
       "coverage": {
-        "authority_symbols": 14,
-        "mapped_symbols": 12,
-        "unmapped_symbols": 2,
-        "mapped_pct": 85.7,
-        "sector_count": 3,
+        "authority_symbols": 23,
+        "mapped_symbols": 20,
+        "unmapped_symbols": 3,
+        "mapped_pct": 87.0,
+        "sector_count": 6,
         "sector_counts": {
-          "Consumer Discretionary": 2,
-          "Industrials": 1,
-          "Technology": 9
+          "Communication Services": 1,
+          "Consumer Discretionary": 3,
+          "Financials": 1,
+          "Health Care": 1,
+          "Industrials": 4,
+          "Technology": 10
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
@@ -155,21 +158,25 @@
       "top_sector_weights": [
         {
           "sector": "Technology",
-          "weight": 0.75
-        },
-        {
-          "sector": "Consumer Discretionary",
-          "weight": 0.1667
+          "weight": 0.5
         },
         {
           "sector": "Industrials",
-          "weight": 0.0833
+          "weight": 0.2
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.15
+        },
+        {
+          "sector": "Communication Services",
+          "weight": 0.05
         }
       ]
     }
   },
   "comparison": {
-    "r5_minus_r4": 17.4,
+    "r5_minus_r4": 11.9,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
