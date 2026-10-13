@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-13T20:16:10.457143+00:00",
+  "generated_at_utc": "2026-10-13T20:18:04.107455+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 74.3,
@@ -12,7 +12,7 @@
     },
     "dispersion": {
       "percentile": 84.0,
-      "raw": 0.009748337290942025
+      "raw": 0.00974732217544368
     },
     "leadership_rotation": {
       "percentile": 36.5,
@@ -27,23 +27,23 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 75,
-  "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+  "current_context_at_utc": "2026-10-13T20:17:55.305251+00:00",
   "previous_complete_session": "2026-10-12",
   "proxy_count": 18,
   "accounts": {
     "r4": {
       "engine": "R4",
       "status": "AVAILABLE",
-      "score": 64.2,
-      "label": "RISING",
+      "score": 65.2,
+      "label": "HIGH",
       "components": {
         "decoupling": {
-          "percentile": 54.7,
-          "raw": 0.005804511153950312
+          "percentile": 57.3,
+          "raw": 0.0058630638702315534
         },
         "dispersion": {
           "percentile": 68.0,
-          "raw": 0.00721015949183725
+          "raw": 0.0072090451725372135
         },
         "leadership_rotation": {
           "percentile": 74.0,
@@ -84,7 +84,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 73,
-      "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+      "current_context_at_utc": "2026-10-13T20:17:55.305251+00:00",
       "previous_complete_session": "2026-10-12",
       "top_sector_weights": [
         {
@@ -108,16 +108,16 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 70.3,
+      "score": 70.8,
       "label": "HIGH",
       "components": {
         "decoupling": {
-          "percentile": 65.3,
-          "raw": 0.00606996601771227
+          "percentile": 66.7,
+          "raw": 0.006101670943820492
         },
         "dispersion": {
           "percentile": 69.3,
-          "raw": 0.006699412457742643
+          "raw": 0.006715781408431716
         },
         "leadership_rotation": {
           "percentile": 79.5,
@@ -153,7 +153,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 73,
-      "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+      "current_context_at_utc": "2026-10-13T20:17:55.305251+00:00",
       "previous_complete_session": "2026-10-12",
       "top_sector_weights": [
         {
@@ -176,7 +176,7 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": 6.1,
+    "r5_minus_r4": 5.6,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
