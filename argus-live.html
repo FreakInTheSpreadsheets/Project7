@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- ARGUS_R5S_SHORT_PAPER_LIVE_CARD_V1_20261013 · DISPLAY ONLY -->
 <!-- ARGUS_PRIVATE_CHAMBER_RESEARCH_COVERAGE_SPLIT_V34_20261007 -->
 <!-- ARGUS_PRIVATE_CHAMBER_R7_MISSING_IS_NOT_ZERO_V33_20261007 -->
 
@@ -272,6 +273,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <div class="pc-grid">
       <article class="pc-card pc-capital"><h3>R4 capital</h3><div class="pc-value" id="pcR4Equity">—</div><div class="pc-note" id="pcR4Return">control account</div></article>
       <article class="pc-card pc-capital"><h3>R5 capital</h3><div class="pc-value" id="pcR5Equity">—</div><div class="pc-note" id="pcR5Return">rolling account</div></article>
+      <article class="pc-card pc-capital" id="r5sCapitalCard"><h3>R5-S capital · short paper</h3><div class="pc-value" id="pcR5SEquity">—</div><div class="pc-note" id="pcR5SReturn">Unverified gross; not an executable short account</div></article>
       <article class="pc-card pc-capital"><h3>R7 capital</h3><div class="pc-value" id="pcR7Equity">—</div><div class="pc-note" id="pcR7Return">adaptive-duration account</div></article>
       <article class="pc-card pc-judgment ox"><h3>Current judgment</h3><div class="pc-value" id="pcCurrentJudgment">Waiting for live telemetry.</div><div class="pc-note" id="pcCurrentJudgmentWhy">The chamber will explain the system state here instead of making you infer it from raw counters.</div></article>
     </div>
@@ -282,6 +284,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <div class="pc-grid">
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R4 / frozen control</h3><span class="pc-book-state" id="pcR4State">—</span></div><div class="pc-book-main" id="pcR4Main">—</div><div class="pc-book-why" id="pcR4Why">Waiting for R4.</div><div class="pc-book-foot"><span id="pcR4Authority">authority —</span><span id="pcR4Heartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R5 / rolling</h3><span class="pc-book-state" id="pcR5State">—</span></div><div class="pc-book-main" id="pcR5Main">—</div><div class="pc-book-why" id="pcR5Why">Waiting for R5.</div><div class="pc-book-foot"><span id="pcR5Authority">authority —</span><span id="pcR5Heartbeat">heartbeat —</span></div></article>
+      <article class="pc-card pc-book" id="r5sBookCard"><div class="pc-book-top"><h3>R5-S / short paper</h3><span class="pc-book-state" id="pcR5SState">UNKNOWN</span></div><div class="pc-book-main" id="pcR5SMain">Awaiting independent telemetry</div><div class="pc-book-why" id="pcR5SWhy">Reads approved FALL patterns from the frozen R5 authority. Borrow/locate, margin, live fills and execution costs are not modeled.</div><div class="pc-book-foot"><span id="pcR5SAuthority">FALL authority —</span><span id="pcR5SHeartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book ox"><div class="pc-book-top"><h3>R7 / adaptive duration</h3><span class="pc-book-state" id="pcR7State">—</span></div><div class="pc-book-main" id="pcR7Main">—</div><div class="pc-book-why" id="pcR7Why">Waiting for R7 telemetry to surface.</div><div class="pc-book-foot"><span id="pcR7Authority">path authority —</span><span id="pcR7Heartbeat">heartbeat —</span></div></article>
     </div>
   </section>
@@ -876,6 +879,46 @@ setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds
 document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},experiment:e,observatory:o,accounting:s.accounting||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics();hideUnavailable();if(!ledgerCache&&!ledgerPromise)loadLedgers(false)}
 async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');if(ob){ob.className='badge red';const z=ob.querySelector('span:last-child');if(z)z.textContent='DISPLAY ERROR'}const rt=document.getElementById('runtimeText');if(rt)rt.textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message;pcPut('pcCurrentJudgmentWhy','Live telemetry arrived, but a legacy diagnostic renderer failed: '+String(e.message||e)+'. The Private Chamber remains live.');const ph=pcEl('pcPhaseChip');if(ph){const ps=ph.querySelector('span');if(ps)ps.textContent='PHASE DISPLAY WARNING';pcClassChip('pcPhaseChip','YELLOW')}}}
 document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.getElementById('pcRefresh')?.addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));const _pcRi=pcEl('researchIntake');if(_pcRi)new MutationObserver(()=>pcMirrorResearch()).observe(_pcRi,{subtree:true,childList:true,characterData:true,attributes:true});refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);
+
+// R5-S telemetry is strictly independent. A missing/stale feed is UNKNOWN, never zero.
+const R5S_FEED='https://raw.githubusercontent.com/FreakInTheSpreadsheets/Project7/main/argus-r5s-status.json';
+const r5sNode=(id)=>document.getElementById(id);
+function r5sWrite(id,value){const el=r5sNode(id);if(el)el.textContent=String(value);}
+async function refreshR5S(){
+  try{
+    const res=await fetch(R5S_FEED+'?t='+Date.now(),{cache:'no-store'});
+    if(!res.ok)throw new Error('TELEMETRY HTTP '+res.status);
+    const data=await res.json();
+    if(!data||data.schema!=='ARGUS_R5S_PUBLIC_STATUS_V1'||data.paper_only!==true)
+      throw new Error('R5-S telemetry schema/paper authority mismatch');
+    const stamp=Date.parse(data.heartbeat_utc||'');
+    const age=Number.isFinite(stamp)?Math.max(0,(Date.now()-stamp)/1000):Infinity;
+    const fresh=age<=120;
+    const status=String(data.status||'UNKNOWN').toUpperCase();
+    const eq=Number(data.account&&data.account.equity);
+    if(Number.isFinite(eq)&&data.account&&data.account.starting_equity){
+      r5sWrite('pcR5SEquity', '$'+eq.toFixed(2));
+      const initial=Number(data.account.starting_equity);
+      const pct=(eq/initial-1)*100;
+      r5sWrite('pcR5SReturn','Theoretical short gross '+(pct>=0?'+':'')+pct.toFixed(2)+'% · '+Number(data.closed_trades||0)+' closed; NO borrow/locate/margin/fills');
+    }else{r5sWrite('pcR5SEquity','—');r5sWrite('pcR5SReturn','Account evidence not yet available');}
+    r5sWrite('pcR5SState',fresh?status:'STALE');
+    r5sWrite('pcR5SMain',fresh?(data.open_count>0?'PAPER SHORT · '+String(data.open_symbol||'UNKNOWN'):(status.includes('RUNNING')?'FLAT / WATCHING FALL':'FLAT / '+status)):'Telemetry not current');
+    r5sWrite('pcR5SWhy',fresh?(data.open_count>0?'Gross short paper only; locate, borrow, margin and fills unmodeled.':'FALL-only authority; no brokerage connection. Gross results are not executable net returns.'):'Last published R5-S state is stale. Do not infer a flat book or $0 P&L.');
+    r5sWrite('pcR5SAuthority',data.watchlist_ready?(String(data.frozen_fall_patterns)+' FALL patterns / '+String(data.frozen_fall_symbols)+' symbols'):'FALL authority NOT READY');
+    r5sWrite('pcR5SHeartbeat',Number.isFinite(age)?'heartbeat '+Math.round(age)+'s ago':'heartbeat UNKNOWN');
+  }catch(err){
+    r5sWrite('pcR5SState','UNKNOWN');
+    r5sWrite('pcR5SMain','Telemetry unavailable');
+    r5sWrite('pcR5SWhy','No verified R5-S feed. This does not establish zero positions or zero performance. '+String(err.message||err).slice(0,90));
+    r5sWrite('pcR5SAuthority','FALL authority UNKNOWN');
+    r5sWrite('pcR5SHeartbeat','heartbeat UNKNOWN');
+    r5sWrite('pcR5SEquity','—');
+    r5sWrite('pcR5SReturn','No verified short paper performance');
+  }
+}
+refreshR5S();setInterval(refreshR5S,30000);
+
 </script>
 </body>
 </html>
