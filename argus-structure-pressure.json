@@ -1,21 +1,21 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-10-13T20:10:33.141133+00:00",
+  "generated_at_utc": "2026-10-13T20:12:15.048277+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
-  "score": 12.8,
-  "label": "LOW",
+  "score": 74.3,
+  "label": "HIGH",
   "components": {
     "decoupling": {
-      "percentile": 1.4,
-      "raw": 0.0018701360842309223
+      "percentile": 89.3,
+      "raw": 0.007780793800511554
     },
     "dispersion": {
-      "percentile": 9.5,
-      "raw": 0.004885620990216242
+      "percentile": 84.0,
+      "raw": 0.009748337290942025
     },
     "leadership_rotation": {
-      "percentile": 35.6,
+      "percentile": 36.5,
       "raw": 0.5454545454545454
     }
   },
@@ -26,28 +26,28 @@
     "dispersion": 0.35,
     "leadership_rotation": 0.25
   },
-  "baseline_sessions": 74,
-  "current_context_at_utc": "2026-10-13T13:11:06.647139+00:00",
-  "previous_complete_session": "2026-10-09",
+  "baseline_sessions": 75,
+  "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+  "previous_complete_session": "2026-10-12",
   "proxy_count": 18,
   "accounts": {
     "r4": {
       "engine": "R4",
       "status": "AVAILABLE",
-      "score": 17.6,
-      "label": "LOW",
+      "score": 64.2,
+      "label": "RISING",
       "components": {
         "decoupling": {
-          "percentile": 2.7,
-          "raw": 0.00272851627042049
+          "percentile": 54.7,
+          "raw": 0.005804511153950312
         },
         "dispersion": {
-          "percentile": 5.4,
-          "raw": 0.0036578408554188506
+          "percentile": 68.0,
+          "raw": 0.00721015949183725
         },
         "leadership_rotation": {
-          "percentile": 58.3,
-          "raw": 0.5371900826446281
+          "percentile": 74.0,
+          "raw": 0.6115702479338843
         }
       },
       "weights": {
@@ -83,9 +83,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 72,
-      "current_context_at_utc": "2026-10-13T13:11:06.647139+00:00",
-      "previous_complete_session": "2026-10-09",
+      "baseline_sessions": 73,
+      "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+      "previous_complete_session": "2026-10-12",
       "top_sector_weights": [
         {
           "sector": "Industrials",
@@ -108,19 +108,19 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 29.5,
-      "label": "LOW",
+      "score": 70.3,
+      "label": "HIGH",
       "components": {
         "decoupling": {
-          "percentile": 14.9,
-          "raw": 0.0028466570480007334
+          "percentile": 65.3,
+          "raw": 0.00606996601771227
         },
         "dispersion": {
-          "percentile": 10.8,
-          "raw": 0.0027001071871438314
+          "percentile": 69.3,
+          "raw": 0.006699412457742643
         },
         "leadership_rotation": {
-          "percentile": 79.2,
+          "percentile": 79.5,
           "raw": 0.75
         }
       },
@@ -152,9 +152,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 72,
-      "current_context_at_utc": "2026-10-13T13:11:06.647139+00:00",
-      "previous_complete_session": "2026-10-09",
+      "baseline_sessions": 73,
+      "current_context_at_utc": "2026-10-13T20:11:18.073013+00:00",
+      "previous_complete_session": "2026-10-12",
       "top_sector_weights": [
         {
           "sector": "Technology",
@@ -176,7 +176,7 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": 11.9,
+    "r5_minus_r4": 6.1,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
