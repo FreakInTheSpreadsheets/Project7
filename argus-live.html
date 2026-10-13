@@ -1,7 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!-- ARGUS_R5S_SHORT_PAPER_LIVE_CARD_V1_20261013 · DISPLAY ONLY -->
+<!-- ARGUS_R7_PATTERN_TOD_V3_DISPLAY_20261013 · R6 EXCLUDED -->
 <!-- ARGUS_PRIVATE_CHAMBER_RESEARCH_COVERAGE_SPLIT_V34_20261007 -->
 <!-- ARGUS_PRIVATE_CHAMBER_R7_MISSING_IS_NOT_ZERO_V33_20261007 -->
+
+
+
+
 
 
 
@@ -21,6 +26,10 @@
 
 
 
+
+
+
+
 /* V10: last-session strip + lazy full ledger. */
 .last-session{margin:12px 0 0;padding:10px 2px 11px;border-top:1px solid rgba(104,194,240,.11);border-bottom:1px solid rgba(104,194,240,.08)}
 .last-session-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px}.last-session-head span{font-size:8px;color:#6eb5d5;letter-spacing:.13em;text-transform:uppercase;font-weight:750}.last-session-head b{font-size:9px;color:#7497aa;font-weight:600}
@@ -31,11 +40,19 @@
 
 
 
+
+
+
+
 /* V11: separate R4/R5 performance charts with daily/weekly aggregation. */
 .performance-charts{margin:18px 0 0;padding-top:2px}
 .performance-chart-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}.performance-chart-title{font-size:9px;color:#6eb5d5;letter-spacing:.14em;text-transform:uppercase;font-weight:750}.performance-controls{display:flex;flex-direction:column;align-items:flex-end;gap:6px;min-width:0}.period-toggle,.window-toggle{display:inline-flex;border:1px solid rgba(108,200,247,.14);border-radius:999px;padding:2px;background:rgba(5,18,29,.42);max-width:100%}.period-toggle button,.window-toggle button{border:0;background:transparent;color:#5f8498;font-size:8px;font-weight:750;letter-spacing:.06em;padding:6px 9px;border-radius:999px;cursor:pointer;white-space:nowrap}.period-toggle button.active,.window-toggle button.active{background:rgba(105,217,255,.10);color:#bdefff;box-shadow:inset 0 0 0 1px rgba(112,222,255,.12)}.window-note{font-size:8px;color:#5a7d91;text-align:right;line-height:1.3}.window-toggle-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.window-toggle-wrap::-webkit-scrollbar{display:none}
 .performance-chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.perf-chart-card{border:1px solid rgba(104,194,240,.11);border-radius:14px;background:linear-gradient(145deg,rgba(8,25,39,.58),rgba(4,14,24,.46));padding:12px 12px 10px;min-width:0}.perf-chart-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px}.perf-chart-name{font-size:9px;color:#769bb0;text-transform:uppercase;letter-spacing:.10em}.perf-chart-value{text-align:right;font-size:17px;font-weight:760;color:#e7fbff}.perf-chart-sub{font-size:8px;color:#5e7f92;margin-top:2px}.perf-svg{display:block;width:100%;height:150px;overflow:visible}.perf-gridline{stroke:rgba(109,196,240,.08);stroke-width:1}.perf-zero{stroke:rgba(131,226,255,.18);stroke-width:1;stroke-dasharray:4 5}.perf-line{fill:none;stroke:#7fe6ff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px rgba(100,218,255,.20))}.perf-area{fill:url(#perfFade)}.perf-label{fill:#56788d;font-size:8px}.perf-end{fill:#dff9ff}.perf-empty{height:150px;display:flex;align-items:center;justify-content:center;color:#5f7f92;font-size:9px}.perf-chart-foot{display:flex;justify-content:space-between;gap:8px;color:#56778b;font-size:8px;margin-top:3px}.perf-chart-foot strong{color:#8bcfe9;font-weight:650}
 @media(max-width:680px){.performance-chart-grid{grid-template-columns:1fr}.performance-chart-head{display:block}.performance-controls{align-items:flex-start;margin-top:8px}.window-note{text-align:left}.window-toggle-wrap{width:100%}}
+
+
+
+
 
 
 
@@ -59,8 +76,16 @@
 
 
 
+
+
+
+
 /* V15 regime pressure gauge */
 .regime-pressure{margin:12px 0 16px;padding:14px 14px 12px;border-top:1px solid rgba(127,230,255,.16);border-bottom:1px solid rgba(127,230,255,.10);background:linear-gradient(90deg,rgba(31,91,130,.06),rgba(4,14,25,.14),rgba(74,72,140,.035))}.regime-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:6px}.regime-head span{font-size:9px;letter-spacing:.16em;color:#739aae}.regime-head small{font-size:8px;color:#4e7083;letter-spacing:.08em}.regime-main{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center}.regime-dial{position:relative;width:150px;height:92px}.regime-dial svg{width:150px;height:96px;overflow:hidden}.regime-track{fill:none;stroke:rgba(106,164,191,.15);stroke-width:8;stroke-linecap:round}.regime-active{fill:none;stroke:var(--cyan);stroke-width:8;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(127,230,255,.30));transition:stroke-dasharray .5s ease,stroke .3s ease}.regime-needle{stroke:#eafaff;stroke-width:1.6;filter:drop-shadow(0 0 4px rgba(127,230,255,.7))}.regime-hub{fill:#dff8ff}.regime-score{position:absolute;left:0;right:0;bottom:0;text-align:center}.regime-score strong{font-size:27px;letter-spacing:-.04em}.regime-score b{display:block;margin-top:-2px;font-size:9px;letter-spacing:.16em;color:#86dff5}.regime-score em{font-style:normal;font-size:7px;color:#547489}.regime-components{display:grid;gap:8px}.regime-component{display:grid;grid-template-columns:98px 1fr 34px;align-items:center;gap:8px}.regime-component span{font-size:8px;letter-spacing:.08em;color:#708fa2}.regime-component i{height:3px;background:rgba(110,177,205,.12);position:relative;overflow:hidden}.regime-component i:after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:linear-gradient(90deg,rgba(127,230,255,.45),rgba(165,146,255,.8));box-shadow:0 0 8px rgba(127,230,255,.25)}.regime-component b{font-size:9px;text-align:right;color:#cdeeff}.regime-foot{margin-top:9px;font-size:7px;letter-spacing:.06em;color:#4f6f82}.regime-pressure[data-level="RISING"] .regime-active{stroke:#94dcff}.regime-pressure[data-level="HIGH"] .regime-active{stroke:#f1bd6a}.regime-pressure[data-level="TRANSITION"] .regime-active{stroke:#ff8b95}.regime-unavailable{opacity:.55}@media(max-width:520px){.regime-main{grid-template-columns:128px 1fr;gap:10px}.regime-dial,.regime-dial svg{width:128px}.regime-component{grid-template-columns:82px 1fr 30px}}
+
+
+
+
 
 
 
@@ -70,6 +95,10 @@
 .research-intake-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}.research-intake-head span{font-size:9px;color:#6eb5d5;letter-spacing:.14em;text-transform:uppercase;font-weight:750}.research-intake-head small{font-size:8px;color:#55788d}
 .research-intake-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}.ri-cell{padding:2px 13px;min-width:0}.ri-cell:first-child{padding-left:0}.ri-cell:last-child{padding-right:0}.ri-cell:not(:last-child){border-right:1px solid rgba(105,192,236,.10)}.ri-cell>small{display:block;font-size:7.5px;color:#5c7b8e;text-transform:uppercase;letter-spacing:.09em}.ri-cell>strong{display:block;margin-top:4px;font-size:15px;line-height:1.15;color:#dff8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ri-cell>em{display:block;margin-top:4px;min-height:24px;font-style:normal;font-size:8px;line-height:1.45;color:#607f91}.ri-symbols{margin-top:5px;font-size:8px;color:#8bcfe9;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ri-track{height:4px;margin-top:7px;background:rgba(102,180,220,.08);border-radius:999px;overflow:hidden}.ri-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#59d9ff,#768cff);transition:width .25s ease}.ri-foot{margin-top:9px;font-size:8px;color:#56788c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:560px){.research-intake-grid{grid-template-columns:1fr}.ri-cell{padding:9px 0}.ri-cell:not(:last-child){border-right:0;border-bottom:1px solid rgba(105,192,236,.08)}.ri-cell:first-child{padding-top:2px}.ri-cell:last-child{padding-bottom:2px}.ri-cell>em{min-height:0}.research-intake-head small{display:none}}
+
+
+
+
 
 
 
@@ -114,6 +143,11 @@
   .climate-component span{font-size:5.8px}.climate-component b{font-size:7.2px}
   .climate-evidence{font-size:6.2px}
 }
+
+
+
+
+
 
 
 
@@ -185,6 +219,8 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 @media(max-width:520px){.pc-title{font-size:36px}.pc-research-grid{grid-template-columns:1fr}.pc-path{grid-template-columns:1fr}.pc-card{border-radius:14px;padding:13px}.performance-chart-grid{grid-template-columns:1fr!important}}
 
 
+
+
 /* ARGUS_PRIVATE_CHAMBER_SLEEK_TYPE_V32_20261007 */
 .pc-shell{
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -249,6 +285,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 .pc-note,.pc-book-why,.pc-list-row{line-height:1.45}
 @media(max-width:520px){.pc-title{font-size:34px}}
 
+
 /* R7_STARTUP_PROOF_20261013 · read-only diagnostics */
 .pc-r7-gate{margin-top:10px;border-top:1px solid rgba(173,190,210,.22);padding-top:10px;font-size:11px;line-height:1.5;color:#a6bac9}
 .pc-r7-head{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
@@ -263,6 +300,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 </head>
 <body>
 <main>
+
 
 <div class="pc-shell" id="privateChamber">
   <header class="pc-mast">
@@ -279,6 +317,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <div class="pc-sync"><button id="pcRefresh" type="button">Refresh chamber</button><div class="pc-sync-time" id="pcUpdated">waiting for snapshot</div></div>
   </header>
 
+
   <section class="pc-section">
     <div class="pc-section-head"><h2>Capital &amp; judgment</h2><span>what matters first</span></div>
     <div class="pc-grid">
@@ -290,18 +329,20 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     </div>
   </section>
 
+
   <section class="pc-section">
     <div class="pc-section-head"><h2>Live books</h2><span>state / reason / next action</span></div>
     <div class="pc-grid">
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R4 / frozen control</h3><span class="pc-book-state" id="pcR4State">—</span></div><div class="pc-book-main" id="pcR4Main">—</div><div class="pc-book-why" id="pcR4Why">Waiting for R4.</div><div class="pc-book-foot"><span id="pcR4Authority">authority —</span><span id="pcR4Heartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R5 / rolling</h3><span class="pc-book-state" id="pcR5State">—</span></div><div class="pc-book-main" id="pcR5Main">—</div><div class="pc-book-why" id="pcR5Why">Waiting for R5.</div><div class="pc-book-foot"><span id="pcR5Authority">authority —</span><span id="pcR5Heartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book" id="r5sBookCard"><div class="pc-book-top"><h3>R5-S / short paper</h3><span class="pc-book-state" id="pcR5SState">UNKNOWN</span></div><div class="pc-book-main" id="pcR5SMain">Awaiting independent telemetry</div><div class="pc-book-why" id="pcR5SWhy">Reads approved FALL patterns from the frozen R5 authority. Borrow/locate, margin, live fills and execution costs are not modeled.</div><div class="pc-book-foot"><span id="pcR5SAuthority">FALL authority —</span><span id="pcR5SHeartbeat">heartbeat —</span></div></article>
-      <article class="pc-card pc-book ox"><div class="pc-book-top"><h3>R7 / adaptive duration</h3><span class="pc-book-state" id="pcR7State">—</span></div><div class="pc-book-main" id="pcR7Main">—</div><div class="pc-book-why" id="pcR7Why">Waiting for R7 telemetry to surface.</div><div class="pc-book-foot"><span id="pcR7Authority">path authority —</span><span id="pcR7Heartbeat">heartbeat —</span></div>
+      <article class="pc-card pc-book ox"><div class="pc-book-top"><h3>R7 / R5 pattern × time horizon</h3><span class="pc-book-state" id="pcR7State">—</span></div><div class="pc-book-main" id="pcR7Main">—</div><div class="pc-book-why" id="pcR7Why">Waiting for R7 telemetry to surface.</div><div class="pc-book-foot"><span id="pcR7Authority">path authority —</span><span id="pcR7Heartbeat">heartbeat —</span></div>
 <div class="pc-r7-gate" aria-live="polite"><div class="pc-r7-head"><strong id="pcR7Gate">UNVERIFIED</strong><small id="pcR7Session">session —</small><small id="pcR7Thread">worker —</small></div>
-<div class="pc-r7-grid"><span>Entry authority <b id="pcR7Entry">—</b></span><span>Path authority <b id="pcR7PathRows">—</b></span></div>
+<div class="pc-r7-grid"><span>Entry authority <b id="pcR7Entry">—</b></span><span><span id="pcR7PathLabel">Path authority</span> <b id="pcR7PathRows">—</b></span></div>
 <div id="pcR7Build" class="pc-r7-detail">Build receipt missing.</div><div id="pcR7Error" class="pc-r7-detail">Last error —</div></div></article>
     </div>
   </section>
+
 
   <section class="pc-section">
     <div class="pc-grid">
@@ -311,29 +352,32 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
         <div class="pc-research-stat"><small>R5 nightly scan</small><b id="pcR5Scan">—</b><div class="pc-track"><i id="pcR5ScanBar"></i></div></div>
         <div class="pc-research-stat"><small>Pattern evidence coverage</small><b id="pcPatternEvidence">—</b><div class="pc-track"><i id="pcPatternEvidenceBar"></i></div></div>
         <div class="pc-research-stat"><small>Historical universe sweep</small><b id="pcHistoricalSweep">—</b><div class="pc-track"><i id="pcHistoricalSweepBar"></i></div></div>
-        <div class="pc-research-stat"><small>R7 path states</small><b id="pcR7PathStates">—</b><div class="pc-track"><i id="pcR7PathBar"></i></div></div>
-        <div class="pc-research-stat"><small>R7 path authority</small><b id="pcR7PathAuthority">—</b></div>
-        <div class="pc-research-stat"><small>R7 approved patterns</small><b id="pcR7Approved">—</b></div>
+        <div class="pc-research-stat"><small>R7 historical evidence</small><b id="pcR7PathStates">—</b><div class="pc-track"><i id="pcR7PathBar"></i></div></div>
+        <div class="pc-research-stat"><small>R7 timing/path authority</small><b id="pcR7PathAuthority">—</b></div>
+        <div class="pc-research-stat"><small>R7 inherited/approved patterns</small><b id="pcR7Approved">—</b></div>
         <div class="pc-research-stat"><small>Next research item</small><b id="pcResearchNext">—</b></div>
       </div><div class="pc-note pc-mono" id="pcResearchDetail">No research detail yet.</div></article>
     </div>
   </section>
 
-  <section class="pc-section"><div class="pc-section-head"><h2>Path intelligence</h2><span>minute-by-minute capital decision</span></div><div class="pc-grid"><article class="pc-card pc-path">
+
+  <section class="pc-section"><div class="pc-section-head"><h2>Position timing</h2><span>completed-minute monitoring</span></div><div class="pc-grid"><article class="pc-card pc-path">
     <div class="pc-path-main"><h3>R7 open position</h3><div class="pc-value" id="pcPathPosition">FLAT</div><div class="pc-note" id="pcPathReason">No adaptive-duration position is currently reported.</div></div>
     <div class="pc-kv"><small>Minute</small><strong id="pcPathMinute">—</strong></div><div class="pc-kv"><small>Current return</small><strong id="pcPathReturn">—</strong></div><div class="pc-kv"><small>Remaining EV</small><strong id="pcPathStayEV">—</strong></div><div class="pc-kv"><small>Decision</small><strong id="pcPathDecision">—</strong></div>
   </article></div></section>
 
+
   <section class="pc-section"><div class="pc-section-head"><h2>The chronicle</h2><span>latest machine events</span></div><div class="pc-grid"><article class="pc-card pc-chronicle"><div class="pc-list" id="pcChronicle"><div class="pc-list-row"><time>—</time><div><strong>Waiting for activity tape</strong><small>Live events will appear here.</small></div></div></div></article></div></section>
   <div class="pc-dossiers"><div class="pc-dossiers-label">Dossiers / historical evidence / diagnostics</div></div>
 </div>
+
 
 <div class="top"><div class="brand"><span aria-hidden="true" class="argus-mark"><i></i></span><h1>ARGUS</h1><div class="kicker">ADAPTIVE MARKET INTELLIGENCE // LIVE</div></div><div class="stamp" id="stamp">Loading…</div></div>
 <div class="protocol-strip"><span>R5 // ADAPTIVE AUTHORITY</span><span>R4 // CONTROL BASELINE</span><span>READ ONLY</span></div><div class="statusbar">
 <span class="badge gray" id="overall"><span class="dot"></span><span>LOADING</span></span>
 <span class="runtime" id="runtimeText"></span>
 <div class="tools">
-<a class="tool primary" href="https://colab.research.google.com/drive/1IrXhBNwIkxywZDctvEm_Z4cmi0fZ90jv" id="colabLink" rel="noopener" target="_blank">CONTROL</a>
+<a class="tool primary" href="https://colab.research.google.com/drive/10HbtxeQUSBaQq8hegOf4aUQgWIHlTh1q" id="colabLink" rel="noopener" target="_blank">CONTROL</a>
 <a class="tool" href="https://drive.google.com/file/d/1T21aITvd2PD0yGXaLg-CBp2Darc2nwqy/view?usp=drivesdk" id="observatoryLink" rel="noopener" target="_blank">DEEP LAB</a>
 <a class="tool" href="https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-live?format=json" rel="noopener" target="_blank">RAW TELEMETRY</a>
 <button class="tool" id="expandAll" type="button">Expand all</button><button class="tool" id="collapseAll" type="button">Collapse</button><button class="tool" id="refreshNow" type="button">SYNC</button>
@@ -413,6 +457,10 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
 
 
+
+
+
+
 <section aria-label="Account performance charts" class="performance-charts">
   <div class="performance-chart-head"><span class="performance-chart-title">PERFORMANCE</span><div class="performance-controls"><div class="period-toggle" id="performancePeriod"><button class="active" data-period="daily" type="button">DAILY</button><button data-period="weekly" type="button">WEEKLY</button></div><div class="window-toggle-wrap"><div class="window-toggle" id="performanceWindow"><button class="active" data-window="matched" type="button">MATCHED</button><button data-window="5" type="button">5</button><button data-window="10" type="button">10</button><button data-window="20" type="button">20</button><button data-window="30" type="button">30</button><button data-window="all" type="button">ALL</button></div></div><div class="window-note" id="performanceWindowNote">same session window for both accounts</div></div></div>
   <div class="performance-chart-grid">
@@ -420,6 +468,10 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <div class="perf-chart-card"><div class="perf-chart-top"><div><div class="perf-chart-name">R5 rolling</div><div class="perf-chart-sub" id="r5ChartSub">equity curve</div></div><div class="perf-chart-value" id="r5ChartValue">—</div></div><div id="r5PerformanceChart" class="perf-empty">Loading ledger…</div><div class="perf-chart-foot"><span id="r5ChartRange">—</span><strong id="r5ChartReturn">—</strong></div></div>
   </div>
 </section>
+
+
+
+
 
 
 
@@ -457,6 +509,10 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
 
 
+
+
+
+
 <div class="cockpitcard wide"><div class="k">Staleness signal</div><div class="v" id="degradeState">—</div><div class="s" id="degradeSub">is stale authority losing calibration?</div><div class="pillrow" id="degradePills"></div></div>
 <div class="cockpitcard wide"><div class="k">Run separation</div><div class="v" id="multiSession">—</div><div class="s" id="multiSessionSub">session-by-session R5 vs R4</div></div>
 </div>
@@ -483,7 +539,35 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
 
 
+
+
+
+
 <div hidden="hidden" id="observatoryBindings"><div id="obsLane"></div><div id="obsLaneSub"></div><div id="obsDepth"></div><div id="obsDepthSub"></div><i id="obsDepthBar"></i><div id="obsRegime"></div><div id="obsReplay"></div><div id="obsReplaySub"></div><div id="researchProgressDeep"></div><div id="patternBiographyDeep"></div><div id="movementAtlasDeep"></div><div id="marketContextDeep"></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -514,12 +598,20 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
 
 
+
+
+
+
 <div class="readonly">READ-ONLY INTELLIGENCE SURFACE // TRADING AUTHORITY UNCHANGED</div><footer>Snapshot refreshes every 10 seconds. Open Details only when you need the machinery underneath.</footer>
 </main>
 <script>
 const API='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-live?format=json';
 const R4_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-trade-history.json';
 const R5_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-r5-trade-history.json';
+
+
+
+
 
 
 
@@ -563,6 +655,10 @@ function tradeLine(t){if(!t)return'—';return val(t.symbol,'—')+' '+pct(t.pct
 
 
 
+
+
+
+
 function renderExperiment(a,b,e){
  const ar=Number(a?.session?.return_pct||0),br=Number(b?.session?.return_pct||0),spread=br-ar;
  const se=document.getElementById('expSpread');se.textContent=pct(spread);se.className='v '+tone(spread);document.getElementById('expSpreadSub').textContent='R4 '+pct(ar)+' · R5 '+pct(br);
@@ -585,6 +681,14 @@ function renderTradeAnatomy(a,b){
 function renderObservatory(){}
 function perfDetail(x){const p=x?.performance||{};return labRows([['Current equity',x?.equity!=null?money(x.equity):'—'],['Realized P&L',x?.realized_pnl!=null?money(x.realized_pnl):'—'],['Observed compounded return',p.compounded_return_pct!=null?pct(p.compounded_return_pct):'—'],['Trades',val(p.trades,x?.total_trades??'—')],['Wins / losses',val(p.wins,'—')+' / '+val(p.losses,'—')],['Win rate',fracPct(p.win_rate)],['Average gain',p.avg_gain_pct!=null?pct(p.avg_gain_pct):'—'],['Average loss',p.avg_loss_pct!=null?pct(p.avg_loss_pct):'—'],['Average trade',p.avg_trade_pct!=null?pct(p.avg_trade_pct):'—'],['Profit factor',val(p.profit_factor,'—')],['Trade-sequence max DD',p.max_trade_sequence_drawdown_pct!=null?pct(-Math.abs(Number(p.max_trade_sequence_drawdown_pct))):'—'],['Accounting','GROSS OBSERVED']])}
 function renderPerformance(a,b){document.getElementById('perfR4Equity').textContent=a?.equity!=null?money(a.equity):'—';document.getElementById('perfR4Equity').className='v '+tone(a?.realized_pnl);document.getElementById('perfR4Sub').textContent='realized '+(a?.realized_pnl!=null?money(a.realized_pnl):'—')+' · today '+pct(a?.session?.return_pct);document.getElementById('perfR5Equity').textContent=b?.equity!=null?money(b.equity):'—';document.getElementById('perfR5Equity').className='v '+tone(b?.realized_pnl);document.getElementById('perfR5Sub').textContent='realized '+(b?.realized_pnl!=null?money(b.realized_pnl):'—')+' · today '+pct(b?.session?.return_pct);document.getElementById('perfR4Trades').textContent=val(a?.total_trades,0);document.getElementById('perfR5Trades').textContent=val(b?.total_trades,0);document.getElementById('perfR4Detail').innerHTML=perfDetail(a);document.getElementById('perfR5Detail').innerHTML=perfDetail(b);const ah=Array.isArray(a?.session_history)?a.session_history:[],bh=Array.isArray(b?.session_history)?b.session_history:[],keys=[...new Set([...ah.map(x=>x.session),...bh.map(x=>x.session)])].sort().slice(-5);document.getElementById('perfRecentSessions').innerHTML=keys.length?'<strong>Recent sessions</strong><br>'+keys.map(k=>{const x=ah.find(z=>z.session===k),y=bh.find(z=>z.session===k);return esc(k)+' · R4 '+esc(x?pct(x.return_pct):'—')+' · R5 '+esc(y?pct(y.return_pct):'—')}).join('<br>'):'Recent session history not yet available.'}
+
+
+
+
+
+
+
+
 
 
 
@@ -637,6 +741,18 @@ async function loadLedgers(renderFull=false,force=false){
  }).finally(()=>{ledgerPromise=null});
  return ledgerPromise;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -735,6 +851,10 @@ async function refreshStrategyClimate(force=false){
 
 
 
+
+
+
+
 function renderResearchIntake(d){
   const embedded=d?.research_intake||d?.research?.intake||{},direct=researchIntakeFallback||{},r=d?.research||{};
   const candidates=[embedded,direct].filter(x=>x&&x.schema==='ARGUS_RESEARCH_INTAKE_STATUS_V1');
@@ -747,6 +867,10 @@ function renderResearchIntake(d){
   const x=candidates.length?candidates[0]:(Object.keys(embedded||{}).length?embedded:direct);
   const status=document.getElementById('riStatus'),now=document.getElementById('riNow'),nowSub=document.getElementById('riNowSub'),nowSyms=document.getElementById('riNowSymbols'),prog=document.getElementById('riProgress'),progSub=document.getElementById('riProgressSub'),bar=document.getElementById('riProgressBar'),next=document.getElementById('riNext'),nextSub=document.getElementById('riNextSub'),nextSyms=document.getElementById('riNextSymbols'),foot=document.getElementById('riFoot');
   if(!now)return;
+
+
+
+
 
 
 
@@ -768,12 +892,20 @@ function renderResearchIntake(d){
 
 
 
+
+
+
+
     const pp=Number(x.progress_pct),done=Number(x.progress_done),total=Number(x.progress_total),rem=Number(x.progress_remaining),qd=Number(x.queue_depth);
     const qSource=String(x.queue_source||'NOT_PERSISTED').toUpperCase();
     const exactPct=(Number.isFinite(done)&&Number.isFinite(total)&&total>0)?(100*done/total):(Number.isFinite(pp)?pp:null);
     prog.textContent=exactPct==null?'—':((Number.isFinite(rem)&&rem>0&&exactPct>99.99)?exactPct.toFixed(3):exactPct.toFixed(2))+'%';
     progSub.textContent=(Number.isFinite(done)&&Number.isFinite(total))?(done.toLocaleString()+' / '+total.toLocaleString()+(Number.isFinite(rem)?' · '+rem.toLocaleString()+' remaining':'')):(x.progress_basis||'progress unavailable');
     if(bar)bar.style.width=(exactPct==null?0:Math.max(0,Math.min(100,exactPct)))+'%';
+
+
+
+
 
 
 
@@ -787,10 +919,18 @@ function renderResearchIntake(d){
 
 
 
+
+
+
+
     if(status)status.textContent=statusText+(Number.isFinite(age)?' · '+fmtAge(age)+' ago':'')+(fresh?'':' · STALE');
     if(foot)foot.textContent='ACTIVE LANE: unified research supervisor · UNIVERSE VALIDATION: '+(x.progress_basis||'strict validation coverage')+' · '+(qSource==='PERSISTED_WORKER_STATE'?'next item from persisted worker queue':'universe queue not yet worker-persisted')+' · display-only';
     return;
   }
+
+
+
+
 
 
 
@@ -817,6 +957,10 @@ function renderResearchIntake(d){
 
 
 
+
+
+
+
 async function refreshResearchIntake(force=false){
   const now=Date.now();if(!force&&now-researchIntakeLastFetch<25000)return;researchIntakeLastFetch=now;
   try{
@@ -834,6 +978,10 @@ async function refreshResearchIntake(force=false){
 
 
 
+
+
+
+
 let performancePeriod='daily',performanceWindow='matched';
 function isoWeekKey(dateStr){const d=new Date(dateStr+'T12:00:00Z');if(Number.isNaN(d.getTime()))return dateStr;const x=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y0=new Date(Date.UTC(x.getUTCFullYear(),0,1));const w=Math.ceil((((x-y0)/86400000)+1)/7);return x.getUTCFullYear()+'-W'+String(w).padStart(2,'0')}
 function allSessionDates(trades){return[...new Set(trades.map(tradeSessionDate).filter(Boolean))].sort()}
@@ -843,6 +991,11 @@ function chartSeries(trades,engine,period,sessionDates){if(!sessionDates.length)
 function svgPerformance(series,id){if(series.length<2)return'<div class="perf-empty">Not enough closed-trade history yet.</div>';const W=520,H=150,pL=6,pR=7,pT=10,pB=21,vals=series.map(x=>x.equity),mn0=Math.min(...vals),mx0=Math.max(...vals),pad=Math.max(4,(mx0-mn0)*.16),mn=mn0-pad,mx=mx0+pad,yr=Math.max(1e-9,mx-mn),x=i=>pL+(W-pL-pR)*(i/(series.length-1)),y=v=>pT+(H-pT-pB)*(1-(v-mn)/yr),pts=series.map((d,i)=>x(i).toFixed(2)+','+y(d.equity).toFixed(2)).join(' '),base=y(1000),area='M '+x(0)+' '+base+' L '+series.map((d,i)=>x(i).toFixed(2)+' '+y(d.equity).toFixed(2)).join(' L ')+' L '+x(series.length-1)+' '+base+' Z',ticks=[0,.5,1].map(q=>mn+yr*q),last=series[series.length-1],grad='perfFade'+id;const labels=series.length<=6?series.map((d,i)=>[i,d.label]):[[0,series[0].label],[series.length-1,last.label]];return '<svg class="perf-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="account equity curve"><defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe6ff" stop-opacity=".15"/><stop offset="1" stop-color="#7fe6ff" stop-opacity="0"/></linearGradient></defs>'+ticks.map(v=>'<line class="perf-gridline" x1="'+pL+'" y1="'+y(v)+'" x2="'+(W-pR)+'" y2="'+y(v)+'"/>').join('')+(1000>=mn&&1000<=mx?'<line class="perf-zero" x1="'+pL+'" y1="'+base+'" x2="'+(W-pR)+'" y2="'+base+'"/>':'')+'<path class="perf-area" style="fill:url(#'+grad+')" d="'+area+'"/><polyline class="perf-line" points="'+pts+'"/><circle class="perf-end" cx="'+x(series.length-1)+'" cy="'+y(last.equity)+'" r="3"/>'+labels.map(([i,l])=>'<text class="perf-label" x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(i===0?'start':i===series.length-1?'end':'middle')+'">'+esc(String(l).replace(/^\d{4}-/,''))+'</text>').join('')+'</svg>'}
 function renderPerformanceChart(trades,engine,period,sessionDates){const low=engine.toLowerCase(),series=chartSeries(trades,engine,period,sessionDates),el=document.getElementById(low+'PerformanceChart'),value=document.getElementById(low+'ChartValue'),ret=document.getElementById(low+'ChartReturn'),range=document.getElementById(low+'ChartRange'),sub=document.getElementById(low+'ChartSub');if(!el)return;if(series.length<2){el.className='perf-empty';el.innerHTML='Not enough closed-trade history yet.';value.textContent='—';ret.textContent='—';range.textContent='—';sub.textContent=period+' equity curve';return}el.className='';el.innerHTML=svgPerformance(series,engine);const last=series[series.length-1],total=(last.equity/1000-1)*100;value.textContent=money(last.equity);value.className='perf-chart-value '+tone(total);ret.textContent=pct(total)+' window';ret.className=tone(total);range.textContent=(period==='weekly'?series.length-1+' weeks':sessionDates.length+' sessions');sub.textContent=(period==='weekly'?'week-ending':'session-ending')+' equity · rebased $1,000'}
 function renderPerformanceCharts(trades){const dates=selectedSessionDates(trades,performanceWindow);renderPerformanceChart(trades,'R4',performancePeriod,dates);renderPerformanceChart(trades,'R5',performancePeriod,dates);const note=document.getElementById('performanceWindowNote');if(!note)return;if(!dates.length){note.textContent='no comparable sessions available';return}const first=dates[0],last=dates[dates.length-1],label=performanceWindow==='matched'?'MATCHED R5 ERA':performanceWindow==='all'?'ALL AVAILABLE':performanceWindow+' SESSIONS';note.textContent=label+' · '+dates.length+' sessions · '+first+' → '+last}
+
+
+
+
+
 
 
 
@@ -864,6 +1017,8 @@ function pcR7Gate(s){
  const r=pcR7(s),has=Object.keys(r||{}).length>0;
  const v=paths=>pcDeep(r,paths);
  const state=String(v(['status','state.status','registry_status'])||'UNKNOWN').toUpperCase();
+ const version=String(v(['version','state.version','controller_version'])||'').toUpperCase();
+ const tod=version.includes('PATTERN_TOD_HORIZON_V3')||String(v(['pattern_pool','state.pattern_pool'])||'').includes('R5_FRESH_ROLLING_FROZEN_RISE');
  const stage=String(v(['stage','state.stage'])||'UNKNOWN').toUpperCase();
  const target=String(v(['target_session_key_et','target_session','state.target_session_key_et','last_build.target_session_key_et'])||'').slice(0,10);
  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
@@ -878,24 +1033,27 @@ function pcR7Gate(s){
  const alive=rawAlive===true||rawAlive==='true'?true:rawAlive===false||rawAlive==='false'?false:null;
  const rawReady=v(['current_session_authority_ready','authority_ready','state.current_session_authority_ready']);
  const ready=rawReady===true||rawReady==='true'?true:rawReady===false||rawReady==='false'?false:null;
- const entry=pcNum(v(['current_session_authority_rows','entry_authority_rows','state.current_session_authority_rows','last_build.approved_pattern_horizons']));
+ const entry=pcNum(v(['current_session_authority_rows','entry_authority_rows','state.current_session_authority_rows','state.entry_authority_rows','last_build.entry_authority_rows','last_build.approved_pattern_horizons']));
  const path=pcNum(v(['path_authority_rows','state.path_authority_rows','last_build.path_authority_rows']));
- const approved=pcNum(v(['approved_patterns','state.approved_patterns','last_build.approved_patterns']));
+ const approved=pcNum(v(['approved_patterns','state.approved_patterns','entry_authority_patterns','state.entry_authority_patterns','last_build.entry_authority_patterns','last_build.approved_patterns']));
+ const adaptive=pcNum(v(['adaptive_pattern_bucket_rows','state.adaptive_pattern_bucket_rows','last_build.adaptive_pattern_bucket_rows']));
+ const fallback=pcNum(v(['fallback_pattern_bucket_rows','state.fallback_pattern_bucket_rows','last_build.fallback_pattern_bucket_rows']));
  const done=pcNum(v(['build_progress_done','build_processed','build.completed','last_build.processed_symbols']));
  const total=pcNum(v(['build_progress_total','build_total','build.total','last_build.declared_pool_size']));
  const errorValue=v(['last_error','error','state.last_error','last_build.error']);
  const error=errorValue&&typeof errorValue==='object'?JSON.stringify(errorValue):String(errorValue||'');
  const stale=age!=null&&age>180,old=target!==''&&target!==today;
+ const provenReady=ready===true||(tod&&state==='AUTHORITY_READY'&&entry!=null&&entry>0);
  let label,why;
  if(!has){label='NO FEED';why='No R7 worker telemetry is published. Readiness cannot be confirmed.';}
  else if(stale||old){label='STALE';why=(old?'Authority session '+target+' differs from today '+today+'. ':'')+(stale?'Heartbeat '+Math.round(age/60)+' minutes old. ':'')+'Dashboard snapshot freshness does not prove a worker is running.';}
  else if(alive===false){label='OFFLINE';why='The last published worker thread is stopped.';}
  else if(/ERROR|FAIL|EXCEPTION|CRASH/.test(state+' '+stage)){label='ERROR';why='R7 reported an execution or build failure.';}
- else if(/BUILD|FETCH|SCAN|REPLAY|RESEARCH/.test(state+' '+stage)){label='BUILDING';why='R7 is building isolated entry and path authority.';}
+ else if(provenReady&&target===today&&age!=null&&age<=180&&alive===true){label=/LIVE|TRADING/.test(state+' '+stage)?'RUNNING':'READY';why=tod?'R5-qualified entry authority is frozen; per-pattern time-bucket horizons are frozen, with a 30m fallback.':'Same-session entry/path authority ready and R7 thread heartbeat fresh.';}
+ else if(/BUILD|FETCH|SCAN|REPLAY|RESEARCH/.test(state+' '+stage)){label='BUILDING';why=tod?'R7 is evaluating R5 pattern/time-of-day holding horizons.':'R7 is building isolated entry and path authority.';}
  else if(ready===false||/BLOCK|NOT_READY|MISSING|QUIESCE/.test(state+' '+stage)){label='BLOCKED';why='R7 current-session authority is not approved.';}
- else if(ready===true&&target===today&&age!=null&&age<=180&&alive===true){label=/LIVE|TRADING/.test(state+' '+stage)?'RUNNING':'READY';why='Same-session authority ready and R7 thread heartbeat fresh.';}
  else{label='UNVERIFIED';why='The feed has not proved same-session authority and a fresh live worker.';}
- return{label,why,state,stage,target,age,alive,ready,entry,path,approved,done,total,error,verified:['READY','RUNNING'].includes(label)};
+ return{label,why,state,stage,target,age,alive,ready,entry,path,approved,adaptive,fallback,tod,done,total,error,verified:['READY','RUNNING'].includes(label)};
 }
 function pcR7StatusText(r7,s){return s?pcR7Gate(s).label:String(pcDeep(r7,['status','stage','state.status','registry_status'])||'TELEMETRY NOT PUBLISHED').toUpperCase()}
 function pcSnapshot(s){const a=s?.r4||{},b=s?.r5||{},c=s?.research||{},r=pcR7(s);return{r4stage:a.stage,r4open:a.open_positions,r4ret:a?.session?.return_pct,r5status:b.status||b.stage,r5scan:b.processed_symbols,r5auth:b.watchlist_rows,research:c.current_lane||c.status,researchdone:c.historical_universe_completed,r7status:pcR7StatusText(r,s),r7path:pcDeep(r,['path_authority_rows','state.path_authority_rows','last_build.path_authority_rows']),r7approved:pcDeep(r,['approved_patterns','state.approved_patterns','last_build.approved_patterns'])}}
@@ -916,19 +1074,20 @@ function renderPrivateChamber(s){
  pcPut('pcR7State',r7status);
  pcPut('pcR7Main',r7gate.verified?(r7open>0?'POSITION OPEN':'READY / FLAT'):r7status);
  pcPut('pcR7Why',r7gate.why);
- pcPut('pcR7Authority',(r7gate.path==null?'—':r7gate.path.toLocaleString())+' path rows · '+(r7gate.approved==null?'—':r7gate.approved.toLocaleString())+' approved');
+ pcPut('pcR7Authority',r7gate.tod?((r7gate.approved==null?'—':r7gate.approved.toLocaleString())+' inherited R5 patterns · '+(r7gate.adaptive==null?'—':r7gate.adaptive.toLocaleString())+' adaptive buckets'):((r7gate.path==null?'—':r7gate.path.toLocaleString())+' path rows · '+(r7gate.approved==null?'—':r7gate.approved.toLocaleString())+' approved'));
  pcPut('pcR7Heartbeat','worker heartbeat '+(r7gate.age==null?'NOT REPORTED':fmtAge(r7gate.age)));
  pcPut('pcR7Gate',r7status);const r7GateEl=pcEl('pcR7Gate');if(r7GateEl)r7GateEl.dataset.gate=r7status;
  pcPut('pcR7Session',r7gate.target?'session '+r7gate.target:'session NOT REPORTED');
  pcPut('pcR7Thread',r7gate.alive===true?'worker alive':r7gate.alive===false?'worker stopped':'worker UNVERIFIED');
  pcPut('pcR7Entry',r7gate.entry==null?'—':r7gate.entry.toLocaleString());
- pcPut('pcR7PathRows',r7gate.path==null?'—':r7gate.path.toLocaleString());
- pcPut('pcR7Build','Stage: '+r7gate.stage+' · '+r7gate.state+(r7gate.total>0&&r7gate.done!=null?' · '+r7gate.done+'/'+r7gate.total:'') );
+ pcPut('pcR7PathLabel',r7gate.tod?'Adaptive buckets':'Path authority');pcPut('pcR7PathRows',r7gate.tod?(r7gate.adaptive==null?'—':r7gate.adaptive.toLocaleString()):(r7gate.path==null?'—':r7gate.path.toLocaleString()));
+ pcPut('pcR7Build','Stage: '+r7gate.stage+' · '+r7gate.state+(r7gate.tod?' · '+(r7gate.adaptive??'—')+' adaptive / '+(r7gate.fallback??'—')+' 30m fallback buckets':'')+(r7gate.total>0&&r7gate.done!=null?' · '+r7gate.done+'/'+r7gate.total:''));
  pcPut('pcR7Error',r7gate.error?'Last error: '+r7gate.error.slice(0,250):'No R7 error published (does not prove success).');
- const pool=pcNum(b.declared_pool_size),done=pcNum(b.processed_symbols),scanPct=(pool&&done!=null)?100*done/pool:null;pcPut('pcR5Scan',scanPct==null?'—':scanPct.toFixed(1)+'%');const sb=pcEl('pcR5ScanBar');if(sb)sb.style.width=(scanPct==null?0:Math.max(0,Math.min(100,scanPct)))+'%';pcPut('pcR7PathStates',pcDeep(r,['historical_path_state_rows','state.historical_path_state_rows','last_build.historical_path_state_rows'])??'—');pcPut('pcR7PathAuthority',pcDeep(r,['path_authority_rows','state.path_authority_rows','last_build.path_authority_rows'])??'—');pcPut('pcR7Approved',pcDeep(r,['approved_patterns','state.approved_patterns','last_build.approved_patterns'])??'—');const r7bar=pcEl('pcR7PathBar');if(r7bar)r7bar.style.width=r7gate.verified?'100%':r7gate.done!=null&&r7gate.total>0?Math.min(100,100*r7gate.done/r7gate.total)+'%':'0%';const pec=pcNum(c.pattern_evidence_completed),pet=pcNum(c.pattern_evidence_total),huc=pcNum(c.historical_universe_completed),hut=pcNum(c.historical_universe_total);pcPut('pcPatternEvidence',(pec!=null&&pet)?pec.toLocaleString()+' / '+pet.toLocaleString():'—');const peb=pcEl('pcPatternEvidenceBar');if(peb)peb.style.width=(pec!=null&&pet?Math.max(0,Math.min(100,100*pec/pet)):0)+'%';pcPut('pcHistoricalSweep',(huc!=null&&hut)?huc.toLocaleString()+' / '+hut.toLocaleString():'—');const hsb=pcEl('pcHistoricalSweepBar');if(hsb)hsb.style.width=(huc!=null&&hut?Math.max(0,Math.min(100,100*huc/hut)):0)+'%';pcPut('pcResearchDetail',(c.current_detail||'research detail unavailable')+(pec!=null&&pet?' · pattern evidence '+pec.toLocaleString()+' / '+pet.toLocaleString():'')+(huc!=null&&hut?' · universe sweep '+huc.toLocaleString()+' / '+hut.toLocaleString():''));
+ const pool=pcNum(b.declared_pool_size),done=pcNum(b.processed_symbols),scanPct=(pool&&done!=null)?100*done/pool:null;pcPut('pcR5Scan',scanPct==null?'—':scanPct.toFixed(1)+'%');const sb=pcEl('pcR5ScanBar');if(sb)sb.style.width=(scanPct==null?0:Math.max(0,Math.min(100,scanPct)))+'%';pcPut('pcR7PathStates',pcDeep(r,['historical_path_state_rows','state.historical_path_state_rows','last_build.historical_path_state_rows'])??'—');pcPut('pcR7PathAuthority',pcDeep(r,['path_authority_rows','state.path_authority_rows','last_build.path_authority_rows'])??'—');pcPut('pcR7Approved',r7gate.approved??'—');const r7bar=pcEl('pcR7PathBar');if(r7bar)r7bar.style.width=r7gate.verified?'100%':r7gate.done!=null&&r7gate.total>0?Math.min(100,100*r7gate.done/r7gate.total)+'%':'0%';const pec=pcNum(c.pattern_evidence_completed),pet=pcNum(c.pattern_evidence_total),huc=pcNum(c.historical_universe_completed),hut=pcNum(c.historical_universe_total);pcPut('pcPatternEvidence',(pec!=null&&pet)?pec.toLocaleString()+' / '+pet.toLocaleString():'—');const peb=pcEl('pcPatternEvidenceBar');if(peb)peb.style.width=(pec!=null&&pet?Math.max(0,Math.min(100,100*pec/pet)):0)+'%';pcPut('pcHistoricalSweep',(huc!=null&&hut)?huc.toLocaleString()+' / '+hut.toLocaleString():'—');const hsb=pcEl('pcHistoricalSweepBar');if(hsb)hsb.style.width=(huc!=null&&hut?Math.max(0,Math.min(100,100*huc/hut)):0)+'%';pcPut('pcResearchDetail',(c.current_detail||'research detail unavailable')+(pec!=null&&pet?' · pattern evidence '+pec.toLocaleString()+' / '+pet.toLocaleString():'')+(huc!=null&&hut?' · universe sweep '+huc.toLocaleString()+' / '+hut.toLocaleString():''));
  const pos=((Array.isArray(s?.live_positions)?s.live_positions:[]).find(p=>/R7/i.test(String(p.engine||p.authority||p.controller_version||''))))||pcDeep(r,['open_position','live_position','position']);if(pos&&r7gate.verified){pcPut('pcPathPosition',(pos.symbol||'R7')+' · '+pcPct(pos.gross_pct));pcPut('pcPathMinute',pos.age_minutes==null?'—':Number(pos.age_minutes).toFixed(1)+' / 30');pcPut('pcPathReturn',pcPct(pos.gross_pct));pcPut('pcPathStayEV',pos.stay_risk_adjusted_delta_pct!=null?pcPct(pos.stay_risk_adjusted_delta_pct):'—');pcPut('pcPathDecision',pos.minute_decision||pos.decision||'HOLD');pcPut('pcPathReason',pos.minute_reason||'R7 is re-scoring this position on each completed minute.')}else{pcPut('pcPathPosition',r7gate.verified?'FLAT':'UNVERIFIED');pcPut('pcPathMinute','—');pcPut('pcPathReturn','—');pcPut('pcPathStayEV','—');pcPut('pcPathDecision',r7gate.verified?'WAIT':'NO LIVE PROOF');pcPut('pcPathReason',r7gate.verified?'No R7 position is reported for the verified session.':r7gate.why);}
  const snap=pcSnapshot(s);pcRenderList('pcChanges',pcDiff(snap,pcPreviousSnapshot));pcPreviousSnapshot=snap;const ev=Array.isArray(s?.activity)?s.activity.slice(0,8):[];pcRenderList('pcChronicle',ev.length?ev.map(x=>({time:localTime(x.time),head:x.headline||x.kind||x.engine||'event',detail:x.detail||''})):[{time:'—',head:'Activity tape waiting',detail:'No published machine events in the current snapshot.'}]);pcMirrorResearch();
 }
+
 
 function draw(s){lastStatus=s;renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
 const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{},e=s.experiment||{},o=s.observatory||{};const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pp=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0,p=pressureFrom(s),t=turbulenceFrom(s);
@@ -942,6 +1101,7 @@ setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds
 document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},experiment:e,observatory:o,accounting:s.accounting||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics();hideUnavailable();if(!ledgerCache&&!ledgerPromise)loadLedgers(false)}
 async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');if(ob){ob.className='badge red';const z=ob.querySelector('span:last-child');if(z)z.textContent='DISPLAY ERROR'}const rt=document.getElementById('runtimeText');if(rt)rt.textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message;pcPut('pcCurrentJudgmentWhy','Live telemetry arrived, but a legacy diagnostic renderer failed: '+String(e.message||e)+'. The Private Chamber remains live.');const ph=pcEl('pcPhaseChip');if(ph){const ps=ph.querySelector('span');if(ps)ps.textContent='PHASE DISPLAY WARNING';pcClassChip('pcPhaseChip','YELLOW')}}}
 document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.getElementById('pcRefresh')?.addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));const _pcRi=pcEl('researchIntake');if(_pcRi)new MutationObserver(()=>pcMirrorResearch()).observe(_pcRi,{subtree:true,childList:true,characterData:true,attributes:true});refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);
+
 
 // R5-S telemetry is strictly independent. A missing/stale feed is UNKNOWN, never zero.
 const R5S_FEED='https://raw.githubusercontent.com/FreakInTheSpreadsheets/Project7/main/argus-r5s-status.json';
@@ -981,6 +1141,7 @@ async function refreshR5S(){
   }
 }
 refreshR5S();setInterval(refreshR5S,30000);
+
 
 </script>
 </body>
