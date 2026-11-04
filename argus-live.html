@@ -297,6 +297,12 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 .pc-r7-grid b{color:#e1ebef}
 .pc-r7-detail{font-size:10px;overflow-wrap:anywhere;margin-top:3px}
 /* ARGUS_SOURCE_INTEGRITY_20261104 */ .pc-audit-tag{font-size:10px;border:1px solid #66553c;border-radius:9px;padding:7px 10px;margin:8px 0;color:#ecc991;background:#111e26;line-height:1.5}.pc-audit-tag.ok{color:#95dabb;border-color:#416858}
+
+/* ARGUS_SYNTHETIC_REPLAY_CHART_V1_20261104: dashboard legend only */
+.argus-perf-legend{display:flex;gap:10px;flex-wrap:wrap;font-size:8px;color:#789aac;margin-top:0;line-height:1.6}
+.argus-perf-legend .argus-synth-key{color:#e5b475}
+.argus-perf-tip{font-size:9px;min-height:15px;line-height:1.4;color:#b2a78b;padding-top:3px}
+.perf-chart-sub{max-width:400px;line-height:1.4}
 </style>
 </head>
 <body>
@@ -983,24 +989,138 @@ async function refreshResearchIntake(force=false){
 
 
 
+/* ARGUS_SYNTHETIC_REPLAY_CHART_V1_20261104 — DISPLAY ONLY; NO LEDGER / PAPER ACCOUNT WRITES */
 let performancePeriod='daily',performanceWindow='matched';
+/* Nov 3 retrospective 5-minute replay estimates: NOT observed paper trades.
+   R5 replay reuses the Oct 16 frozen pool (no daily R5 authority refresh).
+   Rounded daily GROSS returns; original 117-entry execution ledger not reproduced.
+   Keep this dataset permanently separate from paper ledgers and P&L accounting. */
+const ARGUS_SYNTHETIC_REPLAY=[
+ ['2026-10-19',.49,-1.07],['2026-10-20',3.28,.16],['2026-10-21',5.23,-2.23],
+ ['2026-10-22',-5.54,-.72],['2026-10-23',3.01,-.75],['2026-10-26',1.81,0],
+ ['2026-10-27',-.34,-2.57],['2026-10-28',3.19,-.59],['2026-10-29',.93,-.39],
+ ['2026-10-30',-2.81,-1.30],['2026-11-02',1.03,4.34],['2026-11-03',2.42,3.17]
+];
+const argusSyntheticByDate=new Map(ARGUS_SYNTHETIC_REPLAY.map(([date,r4,r5])=>[date,{R4:r4,R5:r5}]));
+const argusReplayEnd='2026-11-03';
 function isoWeekKey(dateStr){const d=new Date(dateStr+'T12:00:00Z');if(Number.isNaN(d.getTime()))return dateStr;const x=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));const day=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-day);const y0=new Date(Date.UTC(x.getUTCFullYear(),0,1));const w=Math.ceil((((x-y0)/86400000)+1)/7);return x.getUTCFullYear()+'-W'+String(w).padStart(2,'0')}
-function allSessionDates(trades){return[...new Set(trades.map(tradeSessionDate).filter(Boolean))].sort()}
-function selectedSessionDates(trades,windowKey){const dates=allSessionDates(trades);if(!dates.length)return[];if(windowKey==='all')return dates;if(windowKey==='matched'){const r5=trades.filter(t=>t.engine==='R5').map(tradeSessionDate).filter(Boolean).sort();if(!r5.length)return dates.slice(-Math.min(5,dates.length));const first=r5[0],last=dates[dates.length-1];return dates.filter(d=>d>=first&&d<=last)}const n=Math.max(1,Number(windowKey)||5);return dates.slice(-n)}
-function sessionReturnMap(trades,engine){const map={};for(const t of trades){if(t.engine!==engine)continue;const d=tradeSessionDate(t),r=Number(t.pct);if(!d||!Number.isFinite(r))continue;if(!map[d])map[d]=[];map[d].push(r)}const out={};for(const [d,rs] of Object.entries(map)){out[d]=(rs.reduce((a,x)=>a*(1+x/100),1)-1)*100}return out}
-function chartSeries(trades,engine,period,sessionDates){if(!sessionDates.length)return[];const daily=sessionReturnMap(trades,engine);let equity=1000;const dailyPts=[{label:'START',equity:1000,ret:0}];for(const d of sessionDates){equity*=1+(daily[d]||0)/100;dailyPts.push({label:d,equity,ret:(equity/1000-1)*100})}if(period!=='weekly')return dailyPts;const groups=[];for(const d of sessionDates){const k=isoWeekKey(d);if(!groups.length||groups[groups.length-1].key!==k)groups.push({key:k,dates:[]});groups[groups.length-1].dates.push(d)}equity=1000;const out=[{label:'START',equity:1000,ret:0}];for(const g of groups){for(const d of g.dates)equity*=1+(daily[d]||0)/100;out.push({label:g.key,equity,ret:(equity/1000-1)*100})}return out}
-function svgPerformance(series,id){if(series.length<2)return'<div class="perf-empty">Not enough closed-trade history yet.</div>';const W=520,H=150,pL=6,pR=7,pT=10,pB=21,vals=series.map(x=>x.equity),mn0=Math.min(...vals),mx0=Math.max(...vals),pad=Math.max(4,(mx0-mn0)*.16),mn=mn0-pad,mx=mx0+pad,yr=Math.max(1e-9,mx-mn),x=i=>pL+(W-pL-pR)*(i/(series.length-1)),y=v=>pT+(H-pT-pB)*(1-(v-mn)/yr),pts=series.map((d,i)=>x(i).toFixed(2)+','+y(d.equity).toFixed(2)).join(' '),base=y(1000),area='M '+x(0)+' '+base+' L '+series.map((d,i)=>x(i).toFixed(2)+' '+y(d.equity).toFixed(2)).join(' L ')+' L '+x(series.length-1)+' '+base+' Z',ticks=[0,.5,1].map(q=>mn+yr*q),last=series[series.length-1],grad='perfFade'+id;const labels=series.length<=6?series.map((d,i)=>[i,d.label]):[[0,series[0].label],[series.length-1,last.label]];return '<svg class="perf-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="account equity curve"><defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe6ff" stop-opacity=".15"/><stop offset="1" stop-color="#7fe6ff" stop-opacity="0"/></linearGradient></defs>'+ticks.map(v=>'<line class="perf-gridline" x1="'+pL+'" y1="'+y(v)+'" x2="'+(W-pR)+'" y2="'+y(v)+'"/>').join('')+(1000>=mn&&1000<=mx?'<line class="perf-zero" x1="'+pL+'" y1="'+base+'" x2="'+(W-pR)+'" y2="'+base+'"/>':'')+'<path class="perf-area" style="fill:url(#'+grad+')" d="'+area+'"/><polyline class="perf-line" points="'+pts+'"/><circle class="perf-end" cx="'+x(series.length-1)+'" cy="'+y(last.equity)+'" r="3"/>'+labels.map(([i,l])=>'<text class="perf-label" x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(i===0?'start':i===series.length-1?'end':'middle')+'">'+esc(String(l).replace(/^\d{4}-/,''))+'</text>').join('')+'</svg>'}
-function renderPerformanceChart(trades,engine,period,sessionDates){const low=engine.toLowerCase(),series=chartSeries(trades,engine,period,sessionDates),el=document.getElementById(low+'PerformanceChart'),value=document.getElementById(low+'ChartValue'),ret=document.getElementById(low+'ChartReturn'),range=document.getElementById(low+'ChartRange'),sub=document.getElementById(low+'ChartSub');if(!el)return;if(series.length<2){el.className='perf-empty';el.innerHTML='Not enough closed-trade history yet.';value.textContent='—';ret.textContent='—';range.textContent='—';sub.textContent=period+' equity curve';return}el.className='';el.innerHTML=svgPerformance(series,engine);const last=series[series.length-1],total=(last.equity/1000-1)*100;value.textContent=money(last.equity);value.className='perf-chart-value '+tone(total);ret.textContent=pct(total)+' window';ret.className=tone(total);range.textContent=(period==='weekly'?series.length-1+' weeks':sessionDates.length+' sessions');sub.textContent=(period==='weekly'?'week-ending':'session-ending')+' equity · rebased $1,000'}
-function renderPerformanceCharts(trades){const dates=selectedSessionDates(trades,performanceWindow);renderPerformanceChart(trades,'R4',performancePeriod,dates);renderPerformanceChart(trades,'R5',performancePeriod,dates);const note=document.getElementById('performanceWindowNote');if(!note)return;if(!dates.length){note.textContent='no comparable sessions available';return}const first=dates[0],last=dates[dates.length-1],label=performanceWindow==='matched'?'MATCHED R5 ERA':performanceWindow==='all'?'ALL AVAILABLE':performanceWindow+' SESSIONS';note.textContent=label+' · '+dates.length+' sessions · '+first+' → '+last}
-
-
-
-
-
-
-
-
-
+function argusLiveDate(){
+ const st=lastStatus||{},t=Date.parse(st.published_at_utc||'');
+ if(!Number.isFinite(t)||Date.now()-t>180000||Date.now()-t< -30000)return '';
+ const a=String(st?.r4?.session?.session||'').slice(0,10),b=String(st?.r5?.session?.session||'').slice(0,10);
+ const d=a&&b&&a===b?a:'';
+ return d>argusReplayEnd?d:'';
+}
+function allSessionDates(trades){
+ const dates=trades.map(tradeSessionDate).filter(Boolean);
+ dates.push(...ARGUS_SYNTHETIC_REPLAY.map(x=>x[0]));
+ const live=argusLiveDate();if(live)dates.push(live);
+ return [...new Set(dates)].sort();
+}
+function selectedSessionDates(trades,windowKey){
+ const dates=allSessionDates(trades);if(!dates.length)return [];
+ if(windowKey==='all')return dates;
+ if(windowKey==='matched'){
+   const r5=trades.filter(t=>t.engine==='R5').map(tradeSessionDate).filter(Boolean).sort();
+   if(!r5.length)return dates.filter(d=>d>=ARGUS_SYNTHETIC_REPLAY[0][0]);
+   return dates.filter(d=>d>=r5[0]);
+ }
+ const n=Math.max(1,Number(windowKey)||5);return dates.slice(-n);
+}
+function sessionReturnMap(trades,engine){
+ const map={};for(const t of trades){
+   if(t.engine!==engine)continue;
+   const d=tradeSessionDate(t),r=Number(t.pct);
+   if(!d||!Number.isFinite(r))continue;
+   if(!map[d])map[d]=[];map[d].push(r);
+ }
+ const out={};for(const [d,rs] of Object.entries(map))out[d]=(rs.reduce((a,x)=>a*(1+x/100),1)-1)*100;
+ return out;
+}
+function argusDayReturn(date,engine,actual){
+ if(Object.prototype.hasOwnProperty.call(actual,date))return {pct:actual[date],kind:'OBSERVED',detail:'Closed forward paper trade ledger'};
+ const syn=argusSyntheticByDate.get(date);
+ if(syn)return {pct:syn[engine],kind:'SYNTHETIC',detail:'Retrospective 5m gross replay; unverified, not actual paper P&L'};
+ const live=argusLiveDate(),session=lastStatus?.[engine.toLowerCase()]?.session;
+ if(date===live&&session&&Number.isFinite(Number(session.return_pct))){
+   return {pct:Number(session.return_pct),kind:'LIVE',detail:'Current-session gross paper result; provisional until close'};
+ }
+ return {pct:0,kind:'NO_LEDGER_TRADE',detail:'No trade recorded for this account on the selected ledger session'};
+}
+function chartSeries(trades,engine,period,sessionDates){
+ if(!sessionDates.length)return[];
+ const real=sessionReturnMap(trades,engine);
+ let equity=1000;
+ const dailyPts=[{label:'START',date:'',equity:1000,ret:0,dayPct:0,day:0,kind:'START',detail:'Window rebased to $1,000'}];
+ for(const d of sessionDates){
+   const v=argusDayReturn(d,engine,real);
+   equity*=1+v.pct/100;
+   dailyPts.push({label:d,date:d,equity,ret:(equity/1000-1)*100,dayPct:v.pct,day:dailyPts.length,kind:v.kind,detail:v.detail});
+ }
+ if(period!=='weekly')return dailyPts;
+ const groups=[];for(const d of sessionDates){const k=isoWeekKey(d);if(!groups.length||groups[groups.length-1].key!==k)groups.push({key:k,dates:[]});groups[groups.length-1].dates.push(d)}
+ const out=[{label:'START',date:'',equity:1000,ret:0,dayPct:0,day:0,kind:'START',detail:'Window rebased to $1,000'}];equity=1000;
+ for(const g of groups){
+   let n=1;const types=new Set();for(const d of g.dates){const v=argusDayReturn(d,engine,real);n*=1+v.pct/100;types.add(v.kind)}
+   equity*=n;
+   const kind=types.has('SYNTHETIC')?(types.size>1?'MIXED':'SYNTHETIC'):(types.has('LIVE')?'LIVE':'OBSERVED');
+   out.push({label:g.key,date:g.dates[g.dates.length-1],equity,ret:(equity/1000-1)*100,dayPct:(n-1)*100,day:out.length,kind,detail:'Weekly aggregation · '+[...types].join(' + ')});
+ }
+ return out;
+}
+function svgPerformance(series,id){
+ if(series.length<2)return'<div class="perf-empty">Not enough trade-day data yet.</div>';
+ const W=520,H=158,pL=7,pR=8,pT=14,pB=24,vals=series.map(z=>z.equity);
+ const vmin=Math.min(...vals),vmax=Math.max(...vals),pad=Math.max(4,(vmax-vmin)*.16),min=vmin-pad,max=vmax+pad,dy=Math.max(1e-9,max-min);
+ const x=i=>pL+(W-pL-pR)*(i/(series.length-1)),y=v=>pT+(H-pT-pB)*(1-(v-min)/dy);
+ const y0=y(1000),last=series[series.length-1],grad='perfFade'+id;
+ const outline=series.map((p,i)=>x(i).toFixed(2)+','+y(p.equity).toFixed(2)).join(' ');
+ const area='M '+x(0)+' '+y0+' L '+series.map((d,i)=>x(i).toFixed(2)+' '+y(d.equity).toFixed(2)).join(' L ')+' L '+x(series.length-1)+' '+y0+' Z';
+ const firstSynthetic=series.findIndex(z=>z.kind==='SYNTHETIC'||z.kind==='MIXED'),endSynthetic=series.findLastIndex(z=>z.kind==='SYNTHETIC'||z.kind==='MIXED');
+ const bg=firstSynthetic>0?'<rect x="'+x(firstSynthetic-.5)+'" y="'+pT+'" width="'+(x(Math.min(series.length-1,endSynthetic+.5))-x(firstSynthetic-.5))+'" height="'+(H-pT-pB)+'" fill="#dca65b" opacity=".10"/>':'';
+ const grid=[0,.5,1].map(q=>{const v=min+dy*q;return '<line class="perf-gridline" x1="'+pL+'" y1="'+y(v)+'" x2="'+(W-pR)+'" y2="'+y(v)+'"/>'}).join('');
+ const zero=1000>=min&&1000<=max?'<line class="perf-zero" x1="'+pL+'" y1="'+y0+'" x2="'+(W-pR)+'" y2="'+y0+'"/>':'';
+ const links=series.slice(1).map((d,j)=>{
+   const i=j+1,synthetic=d.kind==='SYNTHETIC'||d.kind==='MIXED',live=d.kind==='LIVE';
+   return '<line x1="'+x(i-1)+'" y1="'+y(series[i-1].equity)+'" x2="'+x(i)+'" y2="'+y(d.equity)+'" stroke="'+(synthetic?'#e5b475':live?'#a2e5e6':'#7fe6ff')+'" stroke-width="'+(synthetic?2.8:2.5)+'" '+(synthetic?'stroke-dasharray="6 5"':live?'stroke-dasharray="3 3"':'')+' stroke-linecap="round"/>';
+ }).join('');
+ const points=series.slice(1).map((d,j)=>{
+   const i=j+1,synthetic=d.kind==='SYNTHETIC'||d.kind==='MIXED';
+   return '<circle cx="'+x(i)+'" cy="'+y(d.equity)+'" r="2.8" fill="'+(synthetic?'#e5b475':d.kind==='LIVE'?'#bdeef5':'#dff9ff')+'"/>'
+   +'<circle cx="'+x(i)+'" cy="'+y(d.equity)+'" r="11" fill="transparent" pointer-events="all" data-argus-point="'+i+'"><title>'+esc(d.date+' · '+d.kind+' · '+d.dayPct.toFixed(2)+'% · '+money(d.equity))+'</title></circle>';
+ }).join('');
+ const labels=series.length<=7?series.map((d,i)=>[i,i===0?'START':'D'+i]):[[0,'START'],[series.length-1,'D'+(series.length-1)]];
+ const ticks=labels.map(([i,l])=>'<text class="perf-label" x="'+x(i)+'" y="'+(H-6)+'" text-anchor="'+(i===0?'start':i===series.length-1?'end':'middle')+'">'+l+'</text>').join('');
+ return '<svg class="perf-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="'+id+' equity curve; dashed amber is unverified synthetic replay"><defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe6ff" stop-opacity=".13"/><stop offset="1" stop-color="#7fe6ff" stop-opacity="0"/></linearGradient></defs>'
+ +grid+zero+bg+'<path d="'+area+'" fill="url(#'+grad+')"/>'+links+points+ticks+'</svg>';
+}
+function renderPerformanceChart(trades,engine,period,sessionDates){
+ const low=engine.toLowerCase(),series=chartSeries(trades,engine,period,sessionDates),el=document.getElementById(low+'PerformanceChart'),value=document.getElementById(low+'ChartValue'),ret=document.getElementById(low+'ChartReturn'),range=document.getElementById(low+'ChartRange'),sub=document.getElementById(low+'ChartSub');
+ if(!el)return;
+ if(series.length<2){el.className='perf-empty';el.innerHTML='Not enough data.';value.textContent='—';ret.textContent='—';range.textContent='—';sub.textContent='No completed session history';return}
+ el.className='';
+ el.innerHTML=svgPerformance(series,engine)+'<div class="argus-perf-legend"><span>━ observed</span><span class="argus-synth-key">┄ 5m replay (unverified)</span><span>┄ live provisional</span></div><div class="argus-perf-tip">Tap a point: date · source · daily return · model equity.</div>';
+ el.onclick=e=>{const node=e.target.closest?.('[data-argus-point]');if(!node)return;const p=series[Number(node.dataset.argusPoint)];if(!p)return;const tip=el.querySelector('.argus-perf-tip');if(tip)tip.textContent=(period==='weekly'?'WEEK '+p.label:'DAY '+p.day+' · '+p.date)+' · '+p.kind+' · '+p.dayPct.toFixed(2)+'% · modeled '+money(p.equity)};
+ const last=series[series.length-1],total=(last.equity/1000-1)*100;
+ value.textContent=money(last.equity);value.className='perf-chart-value '+tone(total);
+ ret.textContent=pct(total)+' modeled window';ret.className=tone(total);
+ const synth=sessionDates.filter(d=>argusSyntheticByDate.has(d)).length,live=series.some(x=>x.kind==='LIVE');
+ range.textContent=(period==='weekly'?series.length-1+' weeks':sessionDates.length+' trading days')+(synth?' · '+synth+' synthetic':'')+(live?' · live provisional':'');
+ sub.textContent='BLENDED MODEL · observed paper + synthetic 5m replay · $1k rebased, NOT account equity';
+}
+function renderPerformanceCharts(trades){
+ const dates=selectedSessionDates(trades,performanceWindow);
+ renderPerformanceChart(trades,'R4',performancePeriod,dates);
+ renderPerformanceChart(trades,'R5',performancePeriod,dates);
+ const note=document.getElementById('performanceWindowNote');if(!note)return;
+ if(!dates.length){note.textContent='no comparable sessions available';return}
+ const label=performanceWindow==='matched'?'MATCHED R5 ERA':performanceWindow==='all'?'ALL AVAILABLE':performanceWindow+' SESSION WINDOW';
+ const syn=dates.filter(d=>argusSyntheticByDate.has(d));
+ note.textContent=label+' · '+dates.length+' sequential trade days · '+dates[0]+' → '+dates[dates.length-1]
+   +(syn.length?' · '+syn.length+' SYNTHETIC 5M REPLAY DAYS (OCT 19–NOV 3, UNVERIFIED)':'')
+   +(argusLiveDate()&&dates.includes(argusLiveDate())?' · CURRENT SESSION PROVISIONAL':'')
+   +' · NO IMPUTED RETURNS FOR MISSING SESSIONS';
+}
 
 let pcPreviousSnapshot=null;
 function pcEl(id){return document.getElementById(id)}
@@ -1090,7 +1210,7 @@ function renderPrivateChamber(s){
 }
 
 
-function draw(s){argusMirrorRefresh(s).catch(()=>{});lastStatus=s;renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
+function draw(s){argusMirrorRefresh(s).catch(()=>{});lastStatus=s;if(ledgerCache)renderPerformanceCharts(ledgerCache);renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
 const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{},e=s.experiment||{},o=s.observatory||{};const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pp=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0,p=pressureFrom(s),t=turbulenceFrom(s);
 sessionCard('r4',a);sessionCard('r5',b);renderPositions(s);renderNow(a,b,c);renderExperiment(a,b,e);renderAuthority(a,b,u);renderTradeAnatomy(a,b);renderObservatory(c,o);renderPerformance(a,b);renderActivity(s);
 document.getElementById('gCurrent').textContent=val(a.stage,'—');document.getElementById('gCurrentSub').textContent='R4 · '+val(a.health,'unknown');document.getElementById('gDepth').textContent=depthTotal?depthPct.toFixed(2)+'%':'—';document.getElementById('depthFill').style.width=depthPct+'%';document.getElementById('gPressure').textContent=p.v;document.getElementById('gPressureSub').textContent=p.sub;document.getElementById('gTurbulence').textContent=t.v;document.getElementById('gTurbulenceSub').textContent=t.sub;document.getElementById('nodeR4').textContent=val(a.stage,'—')+' · '+val(a.health,'—');document.getElementById('nodeR5').textContent=val(b.status,'—')+' · '+r5h;document.getElementById('nodeResearch').textContent=val(c.current_lane,c.status||'—')+' · '+researchh;
