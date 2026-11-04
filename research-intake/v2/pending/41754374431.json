@@ -1,0 +1,118 @@
+{
+  "completed_shards": 8,
+  "dashboard_modified": false,
+  "drive_saved": false,
+  "historical_bars": 258655,
+  "live_authority_modified": false,
+  "repository": "FreakInTheSpreadsheets/Project7",
+  "run_id": "41754374431",
+  "schema": "ARGUS_RESEARCH_INTAKE_V2_RUN_RECEIPT",
+  "shards": [
+    {
+      "artifact_name": "argus-intake-v2-success-shard-0-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 9,
+        "NO_BARS": 1,
+        "RESEARCH_DATA_READY": 5,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 489,
+      "generated_at_utc": "2026-11-04T01:29:56.343905+00:00",
+      "rth_five_minute_bars": 33717,
+      "shard": 0,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-1-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 8,
+        "RESEARCH_DATA_READY": 8
+      },
+      "cursor_after": 483,
+      "generated_at_utc": "2026-11-04T01:29:58.132973+00:00",
+      "rth_five_minute_bars": 39843,
+      "shard": 1,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-2-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 11,
+        "NO_BARS": 1,
+        "RESEARCH_DATA_READY": 3,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 507,
+      "generated_at_utc": "2026-11-04T01:30:01.534204+00:00",
+      "rth_five_minute_bars": 21905,
+      "shard": 2,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-3-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 9,
+        "NO_BARS": 1,
+        "RESEARCH_DATA_READY": 6
+      },
+      "cursor_after": 512,
+      "generated_at_utc": "2026-11-04T01:29:53.706762+00:00",
+      "rth_five_minute_bars": 37139,
+      "shard": 3,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-4-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 13,
+        "RESEARCH_DATA_READY": 3
+      },
+      "cursor_after": 449,
+      "generated_at_utc": "2026-11-04T01:30:38.200372+00:00",
+      "rth_five_minute_bars": 17490,
+      "shard": 4,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-5-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 6,
+        "LOW_PRICE": 1,
+        "NO_BARS": 5,
+        "RESEARCH_DATA_READY": 4
+      },
+      "cursor_after": 492,
+      "generated_at_utc": "2026-11-04T01:30:43.066984+00:00",
+      "rth_five_minute_bars": 31922,
+      "shard": 5,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-6-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 9,
+        "RESEARCH_DATA_READY": 6,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 566,
+      "generated_at_utc": "2026-11-04T01:30:38.913419+00:00",
+      "rth_five_minute_bars": 34929,
+      "shard": 6,
+      "symbols_processed": 16
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-7-run-41754374431",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 11,
+        "RESEARCH_DATA_READY": 5
+      },
+      "cursor_after": 427,
+      "generated_at_utc": "2026-11-04T01:30:44.082177+00:00",
+      "rth_five_minute_bars": 41710,
+      "shard": 7,
+      "symbols_processed": 16
+    }
+  ],
+  "status": "AWAITING_PRIVATE_CHATGPT_SCORING",
+  "symbols_processed": 128
+}
