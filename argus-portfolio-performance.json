@@ -9,48 +9,48 @@
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "inception_et": "2026-08-24T10:30:41.599917-04:00",
-  "generated_at_utc": "2026-10-16T21:12:14.828793+00:00",
+  "generated_at_utc": "2026-11-04T06:05:21.213529+00:00",
   "missing_timestamp_trades": 0,
   "windows": {
     "day": {
-      "pct": -1.96902,
-      "pnl": -21.397967,
-      "start_equity": 1086.731845,
+      "pct": 0.0,
+      "pnl": 0.0,
+      "start_equity": 1065.333878,
       "end_equity": 1065.333878,
-      "trades": 6,
+      "trades": 0,
       "complete": true,
-      "window_start_et": "2026-10-16T00:00:00-04:00",
-      "coverage_start_et": "2026-10-16T00:00:00-04:00"
+      "window_start_et": "2026-11-04T00:00:00-05:00",
+      "coverage_start_et": "2026-11-04T00:00:00-05:00"
     },
     "week": {
-      "pct": -1.345266,
-      "pnl": -14.527,
-      "start_equity": 1079.860878,
+      "pct": 0.0,
+      "pnl": 0.0,
+      "start_equity": 1065.333878,
       "end_equity": 1065.333878,
-      "trades": 18,
+      "trades": 0,
       "complete": true,
-      "window_start_et": "2026-10-12T00:00:00-04:00",
-      "coverage_start_et": "2026-10-12T00:00:00-04:00"
+      "window_start_et": "2026-11-02T00:00:00-05:00",
+      "coverage_start_et": "2026-11-02T00:00:00-05:00"
     },
     "two_weeks": {
+      "pct": 0.0,
+      "pnl": 0.0,
+      "start_equity": 1065.333878,
+      "end_equity": 1065.333878,
+      "trades": 0,
+      "complete": true,
+      "window_start_et": "2026-10-21T02:05:21.160492-04:00",
+      "coverage_start_et": "2026-10-21T02:05:21.160492-04:00"
+    },
+    "month": {
       "pct": -3.282641,
       "pnl": -36.158024,
       "start_equity": 1101.491902,
       "end_equity": 1065.333878,
       "trades": 44,
       "complete": true,
-      "window_start_et": "2026-10-02T17:12:14.729343-04:00",
-      "coverage_start_et": "2026-10-02T17:12:14.729343-04:00"
-    },
-    "month": {
-      "pct": -7.129597,
-      "pnl": -81.784946,
-      "start_equity": 1147.118824,
-      "end_equity": 1065.333878,
-      "trades": 112,
-      "complete": true,
-      "window_start_et": "2026-09-16T17:12:14.729343-04:00",
-      "coverage_start_et": "2026-09-16T17:12:14.729343-04:00"
+      "window_start_et": "2026-10-05T02:05:21.160492-04:00",
+      "coverage_start_et": "2026-10-05T02:05:21.160492-04:00"
     }
   },
   "semantics": "display-only realized paper performance; no trading, qualification, sizing, stop, horizon, or authority changes"
