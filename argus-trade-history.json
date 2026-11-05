@@ -3365,7 +3365,7 @@
       "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-11-05T14:14:49.857131+00:00",
+  "generated_at_utc": "2026-11-05T19:21:30.545652+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical closed paper ledger; frozen trading authority unchanged"
