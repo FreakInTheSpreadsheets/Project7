@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-06T22:22:54.091047+00:00",
+  "generated_at_utc": "2026-11-06T22:27:05.597973+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 54.7,
@@ -108,20 +108,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 46.5,
+      "score": 43.0,
       "label": "RISING",
       "components": {
         "decoupling": {
-          "percentile": 47.7,
-          "raw": 0.005187305819615112
+          "percentile": 46.5,
+          "raw": 0.005284919407798831
         },
         "dispersion": {
-          "percentile": 29.1,
-          "raw": 0.004411861317675615
+          "percentile": 25.6,
+          "raw": 0.004572793992586397
         },
         "leadership_rotation": {
-          "percentile": 69.0,
-          "raw": 0.6486486486486487
+          "percentile": 61.9,
+          "raw": 0.5833333333333333
         }
       },
       "weights": {
@@ -131,25 +131,26 @@
       },
       "authority": {
         "source": "R5_FROZEN_WATCHLIST",
-        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-06.csv",
-        "session": "2026-11-06",
-        "patterns": 62,
-        "symbols": 53
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-09.csv",
+        "session": "2026-11-09",
+        "patterns": 52,
+        "symbols": 50
       },
       "coverage": {
-        "authority_symbols": 53,
-        "mapped_symbols": 37,
-        "unmapped_symbols": 16,
-        "mapped_pct": 69.8,
-        "sector_count": 9,
+        "authority_symbols": 50,
+        "mapped_symbols": 36,
+        "unmapped_symbols": 14,
+        "mapped_pct": 72.0,
+        "sector_count": 10,
         "sector_counts": {
-          "Communication Services": 1,
-          "Consumer Discretionary": 15,
+          "Communication Services": 2,
+          "Consumer Discretionary": 12,
+          "Consumer Staples": 1,
           "Energy": 1,
           "Financials": 5,
-          "Health Care": 1,
           "Industrials": 5,
           "Materials": 1,
+          "Real Estate": 1,
           "Technology": 7,
           "Utilities": 1
         }
@@ -161,25 +162,25 @@
       "top_sector_weights": [
         {
           "sector": "Consumer Discretionary",
-          "weight": 0.4054
+          "weight": 0.3333
         },
         {
           "sector": "Technology",
-          "weight": 0.1892
+          "weight": 0.1944
         },
         {
           "sector": "Financials",
-          "weight": 0.1351
+          "weight": 0.1389
         },
         {
           "sector": "Industrials",
-          "weight": 0.1351
+          "weight": 0.1389
         }
       ]
     }
   },
   "comparison": {
-    "r5_minus_r4": 7.7,
+    "r5_minus_r4": 4.2,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
