@@ -1,0 +1,54 @@
+{
+  "schema": "ARGUS_SHADOW_TRADE_HISTORY_V1",
+  "engine": "R7",
+  "available": true,
+  "trades": [
+    {
+      "engine": "R7",
+      "trade_no": 1,
+      "symbol": "MRNA",
+      "entry_time_et": "2026-11-04T09:35:11.716316-05:00",
+      "exit_time_et": "2026-11-04T09:41:13.652400-05:00",
+      "exit_reason": "R7_V2_BETTER_CAPITAL_USE",
+      "pct": 1.7877718205301818,
+      "pnl": 17.877718205301818
+    },
+    {
+      "engine": "R7",
+      "trade_no": 2,
+      "symbol": "MRNA",
+      "entry_time_et": "2026-11-04T09:41:15.874340-05:00",
+      "exit_time_et": "2026-11-04T09:46:08.707103-05:00",
+      "exit_reason": "R7_V2_BETTER_CAPITAL_USE",
+      "pct": 3.218752543131509,
+      "pnl": 32.762964940702126
+    },
+    {
+      "engine": "R7",
+      "trade_no": 3,
+      "symbol": "MRNA",
+      "entry_time_et": "2026-11-04T09:46:10.636089-05:00",
+      "exit_time_et": "2026-11-04T09:51:16.233074-05:00",
+      "exit_reason": "R7_V2_NO_RELIABLE_PATH_AUTHORITY_AT_CHECKPOINT",
+      "pct": 1.3485430368215925,
+      "pnl": 14.168341774580243
+    },
+    {
+      "engine": "R7",
+      "trade_no": 4,
+      "symbol": "MRNA",
+      "entry_time_et": "2026-11-04T09:55:09.840040-05:00",
+      "exit_time_et": "2026-11-04T09:58:36.597123-05:00",
+      "exit_reason": "R7_V2_STOP_0_75_PCT",
+      "pct": -0.8460121724855774,
+      "pnl": -9.008413964553128
+    }
+  ],
+  "count": 4,
+  "generated_at_utc": "2026-11-06T07:50:09.499195+00:00",
+  "source_file": "14_R7_R4_Staircase/06_Paper/Argus_R7_Closed_Trades.csv",
+  "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
+  "execution_cost_status": "UNMEASURED",
+  "short_cost_warning": null,
+  "semantics": "display-only, independent paper ledger, does not modify any trading rules"
+}
