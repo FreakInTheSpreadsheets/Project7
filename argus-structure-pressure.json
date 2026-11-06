@@ -1,22 +1,22 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-06T21:10:24.794305+00:00",
+  "generated_at_utc": "2026-11-06T21:11:50.510709+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
-  "score": 64.5,
+  "score": 60.3,
   "label": "RISING",
   "components": {
     "decoupling": {
-      "percentile": 72.9,
-      "raw": 0.006521000619778061
+      "percentile": 65.1,
+      "raw": 0.00521576228324605
     },
     "dispersion": {
-      "percentile": 94.1,
-      "raw": 0.012601030407665033
+      "percentile": 31.4,
+      "raw": 0.006241826971779991
     },
     "leadership_rotation": {
-      "percentile": 9.5,
-      "raw": 0.4
+      "percentile": 92.9,
+      "raw": 0.7692307692307692
     }
   },
   "validated_predictor": false,
@@ -26,28 +26,28 @@
     "dispersion": 0.35,
     "leadership_rotation": 0.25
   },
-  "baseline_sessions": 85,
-  "current_context_at_utc": "2026-11-06T14:10:56.627256+00:00",
-  "previous_complete_session": "2026-11-04",
+  "baseline_sessions": 86,
+  "current_context_at_utc": "2026-11-06T21:10:48.577705+00:00",
+  "previous_complete_session": "2026-11-05",
   "proxy_count": 18,
   "accounts": {
     "r4": {
       "engine": "R4",
       "status": "AVAILABLE",
-      "score": 71.8,
-      "label": "HIGH",
+      "score": 45.4,
+      "label": "RISING",
       "components": {
         "decoupling": {
-          "percentile": 56.5,
-          "raw": 0.005949605875541536
+          "percentile": 39.5,
+          "raw": 0.005262754663375622
         },
         "dispersion": {
-          "percentile": 75.3,
-          "raw": 0.008275130122703351
+          "percentile": 26.7,
+          "raw": 0.004807543439086911
         },
         "leadership_rotation": {
-          "percentile": 91.6,
-          "raw": 0.7603305785123967
+          "percentile": 81.0,
+          "raw": 0.6611570247933884
         }
       },
       "weights": {
@@ -83,9 +83,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 83,
-      "current_context_at_utc": "2026-11-06T14:10:56.627256+00:00",
-      "previous_complete_session": "2026-11-04",
+      "baseline_sessions": 84,
+      "current_context_at_utc": "2026-11-06T21:10:48.577705+00:00",
+      "previous_complete_session": "2026-11-05",
       "top_sector_weights": [
         {
           "sector": "Industrials",
@@ -108,20 +108,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 67.2,
-      "label": "HIGH",
+      "score": 47.9,
+      "label": "RISING",
       "components": {
         "decoupling": {
-          "percentile": 43.5,
-          "raw": 0.004961772753418785
+          "percentile": 46.5,
+          "raw": 0.005125631391443481
         },
         "dispersion": {
-          "percentile": 71.8,
-          "raw": 0.007220854292880304
+          "percentile": 30.2,
+          "raw": 0.00442276959660243
         },
         "leadership_rotation": {
-          "percentile": 98.8,
-          "raw": 0.918918918918919
+          "percentile": 75.0,
+          "raw": 0.7027027027027027
         }
       },
       "weights": {
@@ -155,9 +155,9 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 83,
-      "current_context_at_utc": "2026-11-06T14:10:56.627256+00:00",
-      "previous_complete_session": "2026-11-04",
+      "baseline_sessions": 84,
+      "current_context_at_utc": "2026-11-06T21:10:48.577705+00:00",
+      "previous_complete_session": "2026-11-05",
       "top_sector_weights": [
         {
           "sector": "Consumer Discretionary",
@@ -179,8 +179,8 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": -4.6,
-    "higher_pressure": "R4",
+    "r5_minus_r4": 2.5,
+    "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
   "account_metric_note": "R4 and R5 are computed independently from their own frozen authority populations. A duplicated market-wide score is not used as an account comparison."
