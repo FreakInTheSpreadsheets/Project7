@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!-- ARGUS_R5S_SHORT_PAPER_LIVE_CARD_V1_20261013 · DISPLAY ONLY -->
 <!-- ARGUS_R7_PATTERN_TOD_V3_DISPLAY_20261013 · R6 EXCLUDED -->
 <!-- ARGUS_PRIVATE_CHAMBER_RESEARCH_COVERAGE_SPLIT_V34_20261007 -->
@@ -296,6 +296,23 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 .pc-r7-grid{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px}
 .pc-r7-grid b{color:#e1ebef}
 .pc-r7-detail{font-size:10px;overflow-wrap:anywhere;margin-top:3px}
+
+/* ARGUS_DASHBOARD_EVIDENCE_V1 — four independent books, actionable research, mobile-safe. */
+.pc-research-action{display:inline-flex;justify-content:center;align-items:center;min-height:42px;padding:8px 12px;margin-top:9px;border:1px solid rgba(116,220,255,.37);border-radius:9px;background:rgba(33,100,138,.15);color:#b9eafa;font:600 11px/1.25 inherit;cursor:pointer;text-align:center;max-width:100%;white-space:normal}
+.pc-research-action:disabled{opacity:.47;cursor:not-allowed}
+.pc-research-action:focus-visible{outline:2px solid #b4e5ff;outline-offset:2px}
+.pc-research-stat .pc-research-action{width:100%}
+.pc-research-stat{min-width:0;overflow-wrap:anywhere}
+.pc-change .pc-list-row{min-height:57px}
+#pcResearchControlState{overflow-wrap:anywhere;font-size:11px}
+.pc-chart-evidence{font-size:10px;opacity:.83;margin-top:8px}
+@media(max-width:540px){.performance-chart-grid{grid-template-columns:minmax(0,1fr)}.pc-research-action{font-size:11px}}
+/* Research jobs: read-only receipts, not inferred success. */
+.pc-research-job-state{font-size:9px;color:#9c8f80;line-height:1.5;margin-top:8px;min-height:23px;overflow-wrap:anywhere}
+.pc-research-job-state[data-result="running"]{color:#c2a164}
+.pc-research-job-state[data-result="completed"]{color:#8fae8b}
+.pc-research-job-state[data-result="failed"]{color:#db8888}
+.pc-research-action[disabled]{opacity:.55;cursor:wait}
 </style>
 </head>
 <body>
@@ -336,7 +353,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R4 / frozen control</h3><span class="pc-book-state" id="pcR4State">—</span></div><div class="pc-book-main" id="pcR4Main">—</div><div class="pc-book-why" id="pcR4Why">Waiting for R4.</div><div class="pc-book-foot"><span id="pcR4Authority">authority —</span><span id="pcR4Heartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book"><div class="pc-book-top"><h3>R5 / rolling</h3><span class="pc-book-state" id="pcR5State">—</span></div><div class="pc-book-main" id="pcR5Main">—</div><div class="pc-book-why" id="pcR5Why">Waiting for R5.</div><div class="pc-book-foot"><span id="pcR5Authority">authority —</span><span id="pcR5Heartbeat">heartbeat —</span></div></article>
       <article class="pc-card pc-book" id="r5sBookCard"><div class="pc-book-top"><h3>R5-S / short paper</h3><span class="pc-book-state" id="pcR5SState">UNKNOWN</span></div><div class="pc-book-main" id="pcR5SMain">Awaiting independent telemetry</div><div class="pc-book-why" id="pcR5SWhy">Reads approved FALL patterns from the frozen R5 authority. Borrow/locate, margin, live fills and execution costs are not modeled.</div><div class="pc-book-foot"><span id="pcR5SAuthority">FALL authority —</span><span id="pcR5SHeartbeat">heartbeat —</span></div></article>
-      <article class="pc-card pc-book ox"><div class="pc-book-top"><h3>R7 / R5 pattern × time horizon</h3><span class="pc-book-state" id="pcR7State">—</span></div><div class="pc-book-main" id="pcR7Main">—</div><div class="pc-book-why" id="pcR7Why">Waiting for R7 telemetry to surface.</div><div class="pc-book-foot"><span id="pcR7Authority">path authority —</span><span id="pcR7Heartbeat">heartbeat —</span></div>
+      <article class="pc-card pc-book ox"><div class="pc-book-top"><h3>R7 / adaptive paper (verify authority)</h3><span class="pc-book-state" id="pcR7State">—</span></div><div class="pc-book-main" id="pcR7Main">—</div><div class="pc-book-why" id="pcR7Why">Waiting for R7 telemetry to surface.</div><div class="pc-book-foot"><span id="pcR7Authority">path authority —</span><span id="pcR7Heartbeat">heartbeat —</span></div>
 <div class="pc-r7-gate" aria-live="polite"><div class="pc-r7-head"><strong id="pcR7Gate">UNVERIFIED</strong><small id="pcR7Session">session —</small><small id="pcR7Thread">worker —</small></div>
 <div class="pc-r7-grid"><span>Entry authority <b id="pcR7Entry">—</b></span><span><span id="pcR7PathLabel">Path authority</span> <b id="pcR7PathRows">—</b></span></div>
 <div id="pcR7Build" class="pc-r7-detail">Build receipt missing.</div><div id="pcR7Error" class="pc-r7-detail">Last error —</div></div></article>
@@ -346,28 +363,28 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
   <section class="pc-section">
     <div class="pc-grid">
-      <article class="pc-card pc-change"><div class="pc-section-head"><h2>What changed</h2><span>material deltas</span></div><div class="pc-list" id="pcChanges"><div class="pc-list-row"><time>NOW</time><div><strong>Snapshot establishing</strong><small>Changes will appear after the next telemetry refresh.</small></div></div></div></article>
-      <article class="pc-card pc-research ox"><div class="pc-section-head"><h2>Research</h2><span id="pcResearchStatus">after-market intelligence</span></div><div class="pc-note" id="pcResearchNow">Waiting for research supervisor.</div><div class="pc-research-grid">
-        <div class="pc-research-stat"><small>Universe validation</small><b id="pcUniverseProgress">—</b><div class="pc-track"><i id="pcUniverseBar"></i></div></div>
-        <div class="pc-research-stat"><small>R5 nightly scan</small><b id="pcR5Scan">—</b><div class="pc-track"><i id="pcR5ScanBar"></i></div></div>
-        <div class="pc-research-stat"><small>Pattern evidence coverage</small><b id="pcPatternEvidence">—</b><div class="pc-track"><i id="pcPatternEvidenceBar"></i></div></div>
-        <div class="pc-research-stat"><small>Historical universe sweep</small><b id="pcHistoricalSweep">—</b><div class="pc-track"><i id="pcHistoricalSweepBar"></i></div></div>
-        <div class="pc-research-stat"><small>R7 historical evidence</small><b id="pcR7PathStates">—</b><div class="pc-track"><i id="pcR7PathBar"></i></div></div>
-        <div class="pc-research-stat"><small>R7 timing/path authority</small><b id="pcR7PathAuthority">—</b></div>
-        <div class="pc-research-stat"><small>R7 inherited/approved patterns</small><b id="pcR7Approved">—</b></div>
-        <div class="pc-research-stat"><small>Next research item</small><b id="pcResearchNext">—</b></div>
+      <article class="pc-card pc-change"><div class="pc-section-head"><h2>What changed</h2><span>daily paper trading · verified records</span></div><div class="pc-list" id="pcChanges"><div class="pc-list-row"><time>NOW</time><div><strong>Snapshot establishing</strong><small>Daily trade summary loads from the independent account ledgers.</small></div></div></div></article>
+      <article class="pc-card pc-research ox"><div class="pc-section-head"><h2>Research</h2><span id="pcResearchStatus">after-market intelligence</span></div><div class="pc-note" id="pcResearchNow">Research state is checked separately from trading. Each research button now submits a distinct, research-only job. Colab-owned jobs will queue until the guarded off-market worker connects.</div><div class="pc-note" id="pcResearchControlState" role="status" aria-live="polite">Checking remote research controls…</div><div class="pc-research-grid">
+        <div class="pc-research-stat"><small>Universe validation</small><b id="pcUniverseProgress">—</b><div class="pc-track"><i id="pcUniverseBar"></i><button type="button" class="pc-research-action" data-research-action="github-intake">GitHub intake</button></div></div>
+        <div class="pc-research-stat"><small>R5 nightly scan</small><b id="pcR5Scan">—</b><div class="pc-track"><i id="pcR5ScanBar"></i><button type="button" class="pc-research-action" data-research-action="queue:r5_nightly">Advance R5 scan</button></div></div>
+        <div class="pc-research-stat"><small>Pattern evidence coverage</small><b id="pcPatternEvidence">—</b><div class="pc-track"><i id="pcPatternEvidenceBar"></i><button type="button" class="pc-research-action" data-research-action="queue:pattern_evidence">Advance evidence</button></div></div>
+        <div class="pc-research-stat"><small>Historical universe sweep</small><b id="pcHistoricalSweep">—</b><div class="pc-track"><i id="pcHistoricalSweepBar"></i><button type="button" class="pc-research-action" data-research-action="queue:historical_universe">Advance historical sweep</button></div></div>
+        <div class="pc-research-stat"><small>R7 historical evidence</small><b id="pcR7PathStates">—</b><div class="pc-track"><i id="pcR7PathBar"></i><button type="button" class="pc-research-action" data-research-action="queue:r7_minute_archive">Fetch minute evidence</button></div></div>
+        <div class="pc-research-stat"><small>R7 timing/path authority</small><b id="pcR7PathAuthority">—</b><button type="button" class="pc-research-action" data-research-action="queue:r7_path_build">Build timing authority</button></div>
+        <div class="pc-research-stat"><small>R7 inherited/approved patterns</small><b id="pcR7Approved">—</b><button type="button" class="pc-research-action" data-research-action="queue:r7_pool_verify">Verify frozen R4 pool</button></div>
+        <div class="pc-research-stat"><small>Next research item</small><b id="pcResearchNext">—</b><button type="button" class="pc-research-action" data-research-action="queue:universe_next">Advance next item</button></div>
       </div><div class="pc-note pc-mono" id="pcResearchDetail">No research detail yet.</div></article>
     </div>
   </section>
 
 
-  <section class="pc-section"><div class="pc-section-head"><h2>Position timing</h2><span>completed-minute monitoring</span></div><div class="pc-grid"><article class="pc-card pc-path">
-    <div class="pc-path-main"><h3>R7 open position</h3><div class="pc-value" id="pcPathPosition">FLAT</div><div class="pc-note" id="pcPathReason">No adaptive-duration position is currently reported.</div></div>
+  <section class="pc-section"><div class="pc-section-head"><h2>Position timing</h2><span>verified R7 position evidence, not a simulated live feed</span></div><div class="pc-grid"><article class="pc-card pc-path">
+    <div class="pc-path-main"><h3>R7 open position</h3><div class="pc-value" id="pcPathPosition">Checking R7</div><div class="pc-note" id="pcPathReason">A current-session worker receipt is required before showing an open position.</div></div>
     <div class="pc-kv"><small>Minute</small><strong id="pcPathMinute">—</strong></div><div class="pc-kv"><small>Current return</small><strong id="pcPathReturn">—</strong></div><div class="pc-kv"><small>Remaining EV</small><strong id="pcPathStayEV">—</strong></div><div class="pc-kv"><small>Decision</small><strong id="pcPathDecision">—</strong></div>
   </article></div></section>
 
 
-  <section class="pc-section"><div class="pc-section-head"><h2>The chronicle</h2><span>latest machine events</span></div><div class="pc-grid"><article class="pc-card pc-chronicle"><div class="pc-list" id="pcChronicle"><div class="pc-list-row"><time>—</time><div><strong>Waiting for activity tape</strong><small>Live events will appear here.</small></div></div></div></article></div></section>
+  <section class="pc-section"><div class="pc-section-head"><h2>Trading &amp; system timeline</h2><span>ledger-based activity</span></div><div class="pc-grid"><article class="pc-card pc-chronicle"><div class="pc-list" id="pcChronicle"><div class="pc-list-row"><time>—</time><div><strong>Waiting for activity tape</strong><small>Trades and published system events will appear here.</small></div></div></div></article></div></section>
   <div class="pc-dossiers"><div class="pc-dossiers-label">Dossiers / historical evidence / diagnostics</div></div>
 </div>
 
@@ -462,10 +479,12 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 
 
 <section aria-label="Account performance charts" class="performance-charts">
-  <div class="performance-chart-head"><span class="performance-chart-title">PERFORMANCE</span><div class="performance-controls"><div class="period-toggle" id="performancePeriod"><button class="active" data-period="daily" type="button">DAILY</button><button data-period="weekly" type="button">WEEKLY</button></div><div class="window-toggle-wrap"><div class="window-toggle" id="performanceWindow"><button class="active" data-window="matched" type="button">MATCHED</button><button data-window="5" type="button">5</button><button data-window="10" type="button">10</button><button data-window="20" type="button">20</button><button data-window="30" type="button">30</button><button data-window="all" type="button">ALL</button></div></div><div class="window-note" id="performanceWindowNote">same session window for both accounts</div></div></div>
+  <div class="performance-chart-head"><span class="performance-chart-title">PERFORMANCE</span><div class="performance-controls"><div class="period-toggle" id="performancePeriod"><button class="active" data-period="daily" type="button">DAILY</button><button data-period="weekly" type="button">WEEKLY</button></div><div class="window-toggle-wrap"><div class="window-toggle" id="performanceWindow"><button class="active" data-window="matched" type="button">MATCHED</button><button data-window="5" type="button">5</button><button data-window="10" type="button">10</button><button data-window="20" type="button">20</button><button data-window="30" type="button">30</button><button data-window="all" type="button">ALL</button></div></div><div class="window-note" id="performanceWindowNote">aligned session window · four independent paper books</div></div></div>
   <div class="performance-chart-grid">
     <div class="perf-chart-card"><div class="perf-chart-top"><div><div class="perf-chart-name">R4 control</div><div class="perf-chart-sub" id="r4ChartSub">equity curve</div></div><div class="perf-chart-value" id="r4ChartValue">—</div></div><div id="r4PerformanceChart" class="perf-empty">Loading ledger…</div><div class="perf-chart-foot"><span id="r4ChartRange">—</span><strong id="r4ChartReturn">—</strong></div></div>
     <div class="perf-chart-card"><div class="perf-chart-top"><div><div class="perf-chart-name">R5 rolling</div><div class="perf-chart-sub" id="r5ChartSub">equity curve</div></div><div class="perf-chart-value" id="r5ChartValue">—</div></div><div id="r5PerformanceChart" class="perf-empty">Loading ledger…</div><div class="perf-chart-foot"><span id="r5ChartRange">—</span><strong id="r5ChartReturn">—</strong></div></div>
+    <div class="perf-chart-card"><div class="perf-chart-top"><div><div class="perf-chart-name">R5-S · theoretical short</div><div class="perf-chart-sub" id="r5sChartSub">gross only · borrow, locate, margin unmodeled</div></div><div class="perf-chart-value" id="r5sChartValue">—</div></div><div id="r5sPerformanceChart" class="perf-empty">Checking independent paper ledger…</div><div class="perf-chart-foot"><span id="r5sChartRange">—</span><strong id="r5sChartReturn">—</strong></div></div>
+    <div class="perf-chart-card"><div class="perf-chart-top"><div><div class="perf-chart-name">R7 · adaptive-duration</div><div class="perf-chart-sub" id="r7ChartSub">independent paper · gross observed</div></div><div class="perf-chart-value" id="r7ChartValue">—</div></div><div id="r7PerformanceChart" class="perf-empty">Checking independent paper ledger…</div><div class="perf-chart-foot"><span id="r7ChartRange">—</span><strong id="r7ChartReturn">—</strong></div></div>
   </div>
 </section>
 
@@ -492,11 +511,13 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
   <div class="ledger-meta"><span id="ledgerBasis">Gross observed paper accounting</span><b id="ledgerLoadState">not loaded</b></div>
 </div></details>
 <details class="intel-drawer" id="deepDiagnostics"><summary><span>Details / Diagnostics</span><small>engine · trades · history · system</small></summary><div class="intel-drawer-body"><section aria-label="Current engine work" class="field">
-<div class="fieldhead"><span class="fieldtitle">ENGINE STATE</span><span class="fieldnote">what each engine is doing</span></div>
+<div class="fieldhead"><span class="fieldtitle">ENGINE STATE</span><span class="fieldnote">latest verified controller state · unavailable is not zero</span><button class="pc-research-action" type="button" id="argusDiagnoseNow">Refresh evidence</button></div>
 <div class="nowgrid">
 <div class="nowcard"><div class="label">Frozen R4</div><div class="big" id="nowR4">—</div><div class="sub" id="nowR4Sub">—</div><div class="nowmeta" id="nowR4Meta">—</div></div>
 <div class="nowcard"><div class="label">Rolling R5</div><div class="big" id="nowR5">—</div><div class="sub" id="nowR5Sub">—</div><div class="nowmeta" id="nowR5Meta">—</div></div>
 <div class="nowcard"><div class="label">Research</div><div class="big" id="nowResearch">—</div><div class="sub" id="nowResearchSub">—</div><div class="nowmeta" id="nowResearchMeta">—</div></div>
+<div class="nowcard"><div class="label">Short R5-S</div><div class="big" id="nowR5S">Checking feed</div><div class="sub" id="nowR5SSub">Independent short-paper heartbeat</div><div class="nowmeta" id="nowR5SMeta">—</div></div>
+<div class="nowcard"><div class="label">Adaptive R7</div><div class="big" id="nowR7">Checking feed</div><div class="sub" id="nowR7Sub">Fresh authority and worker proof required</div><div class="nowmeta" id="nowR7Meta">—</div></div>
 </div>
 </section><section aria-label="R4 R5 experiment monitor" class="field">
 <div class="fieldhead"><span class="fieldtitle">CONTROL / ADAPTIVE</span><span class="fieldnote">comparison detail</span></div>
@@ -710,7 +731,7 @@ async function loadLedgers(renderFull=false,force=false){
  ledgerPromise=Promise.allSettled([
    fetch(R4_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R4 ledger HTTP '+r.status);return r.json()}),
    fetch(R5_LEDGER+'?t='+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('R5 ledger HTTP '+r.status);return r.json()})
- ]).then(parts=>{
+ ]).then(async parts=>{
    const out=[];
    for(const [i,p] of parts.entries()){
      if(p.status!=='fulfilled')continue;
@@ -719,6 +740,7 @@ async function loadLedgers(renderFull=false,force=false){
      rows.forEach(t=>out.push({...t,engine}));
    }
    if(!out.some(t=>t.engine==='R5')&&Array.isArray(lastStatus?.r5?.recent_trades))lastStatus.r5.recent_trades.forEach(t=>out.push({...t,engine:'R5'}));
+   argusShadowTrades=await argusFetchShadowLedgers();
    out.sort((a,b)=>String(b.exit_time_et||b.entry_time_et||'').localeCompare(String(a.exit_time_et||a.entry_time_et||'')));
    ledgerCache=out;
    document.getElementById('ledgerLoadState').textContent=out.length?'loaded':'unavailable';
@@ -727,6 +749,7 @@ async function loadLedgers(renderFull=false,force=false){
    document.getElementById('ledgerCount').textContent=out.length?out.length.toLocaleString()+' closed trades':'ledger unavailable';
    renderLastSessionFromLedger(out);
    renderPerformanceCharts(out);
+   if(lastStatus)argusRenderDayAndTimeline(lastStatus);
    renderStrategyClimate(out);
    if(lastStatus)renderPositions(lastStatus);
    if(renderFull)renderLedger(out);
@@ -988,9 +1011,9 @@ function allSessionDates(trades){return[...new Set(trades.map(tradeSessionDate).
 function selectedSessionDates(trades,windowKey){const dates=allSessionDates(trades);if(!dates.length)return[];if(windowKey==='all')return dates;if(windowKey==='matched'){const r5=trades.filter(t=>t.engine==='R5').map(tradeSessionDate).filter(Boolean).sort();if(!r5.length)return dates.slice(-Math.min(5,dates.length));const first=r5[0],last=dates[dates.length-1];return dates.filter(d=>d>=first&&d<=last)}const n=Math.max(1,Number(windowKey)||5);return dates.slice(-n)}
 function sessionReturnMap(trades,engine){const map={};for(const t of trades){if(t.engine!==engine)continue;const d=tradeSessionDate(t),r=Number(t.pct);if(!d||!Number.isFinite(r))continue;if(!map[d])map[d]=[];map[d].push(r)}const out={};for(const [d,rs] of Object.entries(map)){out[d]=(rs.reduce((a,x)=>a*(1+x/100),1)-1)*100}return out}
 function chartSeries(trades,engine,period,sessionDates){if(!sessionDates.length)return[];const daily=sessionReturnMap(trades,engine);let equity=1000;const dailyPts=[{label:'START',equity:1000,ret:0}];for(const d of sessionDates){equity*=1+(daily[d]||0)/100;dailyPts.push({label:d,equity,ret:(equity/1000-1)*100})}if(period!=='weekly')return dailyPts;const groups=[];for(const d of sessionDates){const k=isoWeekKey(d);if(!groups.length||groups[groups.length-1].key!==k)groups.push({key:k,dates:[]});groups[groups.length-1].dates.push(d)}equity=1000;const out=[{label:'START',equity:1000,ret:0}];for(const g of groups){for(const d of g.dates)equity*=1+(daily[d]||0)/100;out.push({label:g.key,equity,ret:(equity/1000-1)*100})}return out}
-function svgPerformance(series,id){if(series.length<2)return'<div class="perf-empty">Not enough closed-trade history yet.</div>';const W=520,H=150,pL=6,pR=7,pT=10,pB=21,vals=series.map(x=>x.equity),mn0=Math.min(...vals),mx0=Math.max(...vals),pad=Math.max(4,(mx0-mn0)*.16),mn=mn0-pad,mx=mx0+pad,yr=Math.max(1e-9,mx-mn),x=i=>pL+(W-pL-pR)*(i/(series.length-1)),y=v=>pT+(H-pT-pB)*(1-(v-mn)/yr),pts=series.map((d,i)=>x(i).toFixed(2)+','+y(d.equity).toFixed(2)).join(' '),base=y(1000),area='M '+x(0)+' '+base+' L '+series.map((d,i)=>x(i).toFixed(2)+' '+y(d.equity).toFixed(2)).join(' L ')+' L '+x(series.length-1)+' '+base+' Z',ticks=[0,.5,1].map(q=>mn+yr*q),last=series[series.length-1],grad='perfFade'+id;const labels=series.length<=6?series.map((d,i)=>[i,d.label]):[[0,series[0].label],[series.length-1,last.label]];return '<svg class="perf-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="account equity curve"><defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe6ff" stop-opacity=".15"/><stop offset="1" stop-color="#7fe6ff" stop-opacity="0"/></linearGradient></defs>'+ticks.map(v=>'<line class="perf-gridline" x1="'+pL+'" y1="'+y(v)+'" x2="'+(W-pR)+'" y2="'+y(v)+'"/>').join('')+(1000>=mn&&1000<=mx?'<line class="perf-zero" x1="'+pL+'" y1="'+base+'" x2="'+(W-pR)+'" y2="'+base+'"/>':'')+'<path class="perf-area" style="fill:url(#'+grad+')" d="'+area+'"/><polyline class="perf-line" points="'+pts+'"/><circle class="perf-end" cx="'+x(series.length-1)+'" cy="'+y(last.equity)+'" r="3"/>'+labels.map(([i,l])=>'<text class="perf-label" x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(i===0?'start':i===series.length-1?'end':'middle')+'">'+esc(String(l).replace(/^\d{4}-/,''))+'</text>').join('')+'</svg>'}
-function renderPerformanceChart(trades,engine,period,sessionDates){const low=engine.toLowerCase(),series=chartSeries(trades,engine,period,sessionDates),el=document.getElementById(low+'PerformanceChart'),value=document.getElementById(low+'ChartValue'),ret=document.getElementById(low+'ChartReturn'),range=document.getElementById(low+'ChartRange'),sub=document.getElementById(low+'ChartSub');if(!el)return;if(series.length<2){el.className='perf-empty';el.innerHTML='Not enough closed-trade history yet.';value.textContent='—';ret.textContent='—';range.textContent='—';sub.textContent=period+' equity curve';return}el.className='';el.innerHTML=svgPerformance(series,engine);const last=series[series.length-1],total=(last.equity/1000-1)*100;value.textContent=money(last.equity);value.className='perf-chart-value '+tone(total);ret.textContent=pct(total)+' window';ret.className=tone(total);range.textContent=(period==='weekly'?series.length-1+' weeks':sessionDates.length+' sessions');sub.textContent=(period==='weekly'?'week-ending':'session-ending')+' equity · rebased $1,000'}
-function renderPerformanceCharts(trades){const dates=selectedSessionDates(trades,performanceWindow);renderPerformanceChart(trades,'R4',performancePeriod,dates);renderPerformanceChart(trades,'R5',performancePeriod,dates);const note=document.getElementById('performanceWindowNote');if(!note)return;if(!dates.length){note.textContent='no comparable sessions available';return}const first=dates[0],last=dates[dates.length-1],label=performanceWindow==='matched'?'MATCHED R5 ERA':performanceWindow==='all'?'ALL AVAILABLE':performanceWindow+' SESSIONS';note.textContent=label+' · '+dates.length+' sessions · '+first+' → '+last}
+function svgPerformance(series,id){if(series.length<2)return'<div class="perf-empty">Not enough closed-trade history yet.</div>';const W=520,H=150,pL=6,pR=7,pT=10,pB=21,vals=series.map(x=>x.equity),mn0=Math.min(...vals),mx0=Math.max(...vals),pad=Math.max(4,(mx0-mn0)*.16),mn=mn0-pad,mx=mx0+pad,yr=Math.max(1e-9,mx-mn),x=i=>pL+(W-pL-pR)*(i/(series.length-1)),y=v=>pT+(H-pT-pB)*(1-(v-mn)/yr),pts=series.map((d,i)=>x(i).toFixed(2)+','+y(d.equity).toFixed(2)).join(' '),base=y(1000),area='M '+x(0)+' '+base+' L '+series.map((d,i)=>x(i).toFixed(2)+' '+y(d.equity).toFixed(2)).join(' L ')+' L '+x(series.length-1)+' '+base+' Z',ticks=[0,.5,1].map(q=>mn+yr*q),last=series[series.length-1],grad='perfFade'+id;const labels=series.length<=6?series.map((d,i)=>[i,d.label]):[[0,series[0].label],[series.length-1,last.label]];return '<svg class="perf-svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="gross paper account equity curve"><defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe6ff" stop-opacity=".15"/><stop offset="1" stop-color="#7fe6ff" stop-opacity="0"/></linearGradient></defs>'+ticks.map(v=>'<line class="perf-gridline" x1="'+pL+'" y1="'+y(v)+'" x2="'+(W-pR)+'" y2="'+y(v)+'"/>').join('')+(1000>=mn&&1000<=mx?'<line class="perf-zero" x1="'+pL+'" y1="'+base+'" x2="'+(W-pR)+'" y2="'+base+'"/>':'')+'<path class="perf-area" style="fill:url(#'+grad+')" d="'+area+'"/><polyline class="perf-line" points="'+pts+'"/><circle class="perf-end" cx="'+x(series.length-1)+'" cy="'+y(last.equity)+'" r="3"/>'+labels.map(([i,l])=>'<text class="perf-label" x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(i===0?'start':i===series.length-1?'end':'middle')+'">'+esc(String(l).replace(/^\d{4}-/,''))+'</text>').join('')+'</svg>'}
+function renderPerformanceChart(trades,engine,period,sessionDates){const low=engine.toLowerCase(),series=chartSeries(trades,engine,period,sessionDates),el=document.getElementById(low+'PerformanceChart'),value=document.getElementById(low+'ChartValue'),ret=document.getElementById(low+'ChartReturn'),range=document.getElementById(low+'ChartRange'),sub=document.getElementById(low+'ChartSub');if(!el)return;if(series.length<2){el.className='perf-empty';el.innerHTML='Not enough closed-trade history yet.';value.textContent='—';ret.textContent='—';range.textContent='—';sub.textContent=period+' equity curve';return}el.className='';el.innerHTML=svgPerformance(series,engine);const last=series[series.length-1],total=(last.equity/1000-1)*100;value.textContent=money(last.equity);value.className='perf-chart-value '+tone(total);ret.textContent=pct(total)+' window';ret.className=tone(total);range.textContent=(period==='weekly'?series.length-1+' weeks':sessionDates.length+' sessions');sub.textContent=(engine==='R5S'?'Theoretical short gross · borrow, margin and fills unmeasured · ':'')+(period==='weekly'?'week-ending':'session-ending')+' equity · rebased $1,000'}
+function renderPerformanceCharts(trades){const full=[...trades.filter(t=>t.engine==='R4'||t.engine==='R5'),...argusShadowTrades];const dates=selectedSessionDates(full,performanceWindow);renderPerformanceChart(full,'R4',performancePeriod,dates);renderPerformanceChart(full,'R5',performancePeriod,dates);for(const engine of ['R5S','R7']){const relevant=full.filter(t=>t.engine===engine&&dates.includes(tradeSessionDate(t)));if(!relevant.length){const e=document.getElementById(engine.toLowerCase()+'PerformanceChart');if(e){e.className='perf-empty';e.textContent='No recorded closed trades for this account in the selected session window.'}pcPut(engine.toLowerCase()+'ChartValue','—');pcPut(engine.toLowerCase()+'ChartReturn','No fills in window');pcPut(engine.toLowerCase()+'ChartRange',dates.length+' sessions');pcPut(engine.toLowerCase()+'ChartSub',engine==='R5S'?'Gross theoretical short; costs unmodeled':'Independent paper; source-provenance limited');continue}renderPerformanceChart(full,engine,performancePeriod,dates)}const note=document.getElementById('performanceWindowNote');if(!note)return;if(!dates.length){note.textContent='no ledger-backed sessions available';return}const first=dates[0],last=dates[dates.length-1],label=performanceWindow==='matched'?'MATCHED R5 ERA':performanceWindow==='all'?'ALL AVAILABLE':performanceWindow+' SESSIONS';note.textContent=label+' · '+dates.length+' sessions · '+first+' → '+last+' · gross paper only'}
 
 
 
@@ -1046,10 +1069,10 @@ function pcR7Gate(s){
  const provenReady=ready===true||(tod&&state==='AUTHORITY_READY'&&entry!=null&&entry>0);
  let label,why;
  if(!has){label='NO FEED';why='No R7 worker telemetry is published. Readiness cannot be confirmed.';}
- else if(stale||old){label='STALE';why=(old?'Authority session '+target+' differs from today '+today+'. ':'')+(stale?'Heartbeat '+Math.round(age/60)+' minutes old. ':'')+'Dashboard snapshot freshness does not prove a worker is running.';}
+ else if(stale||old){label='LAST SESSION';why=(old?'Last known authority session '+target+'; current session '+today+'. ':'')+(stale?'Heartbeat '+Math.round(age/60)+' minutes old. ':'')+'Dashboard snapshot freshness does not prove a worker is running.';}
  else if(alive===false){label='OFFLINE';why='The last published worker thread is stopped.';}
  else if(/ERROR|FAIL|EXCEPTION|CRASH/.test(state+' '+stage)){label='ERROR';why='R7 reported an execution or build failure.';}
- else if(provenReady&&target===today&&age!=null&&age<=180&&alive===true){label=/LIVE|TRADING/.test(state+' '+stage)?'RUNNING':'READY';why=tod?'R5-qualified entry authority is frozen; per-pattern time-bucket horizons are frozen, with a 30m fallback.':'Same-session entry/path authority ready and R7 thread heartbeat fresh.';}
+ else if(provenReady&&target===today&&age!=null&&age<=180&&alive===true){label=tod?'AUTHORITY MISMATCH':(/LIVE|TRADING/.test(state+' '+stage)?'RUNNING':'READY');why=tod?'This R7 source reports R5-derived V3 authority, not the required R4-frozen authority. The UI will not certify it as the intended R7 experiment.':'Same-session entry/path authority ready and R7 thread heartbeat fresh.';}
  else if(/BUILD|FETCH|SCAN|REPLAY|RESEARCH/.test(state+' '+stage)){label='BUILDING';why=tod?'R7 is evaluating R5 pattern/time-of-day holding horizons.':'R7 is building isolated entry and path authority.';}
  else if(ready===false||/BLOCK|NOT_READY|MISSING|QUIESCE/.test(state+' '+stage)){label='BLOCKED';why='R7 current-session authority is not approved.';}
  else{label='UNVERIFIED';why='The feed has not proved same-session authority and a fresh live worker.';}
@@ -1085,13 +1108,13 @@ function renderPrivateChamber(s){
  pcPut('pcR7Error',r7gate.error?'Last error: '+r7gate.error.slice(0,250):'No R7 error published (does not prove success).');
  const pool=pcNum(b.declared_pool_size),done=pcNum(b.processed_symbols),scanPct=(pool&&done!=null)?100*done/pool:null;pcPut('pcR5Scan',scanPct==null?'—':scanPct.toFixed(1)+'%');const sb=pcEl('pcR5ScanBar');if(sb)sb.style.width=(scanPct==null?0:Math.max(0,Math.min(100,scanPct)))+'%';pcPut('pcR7PathStates',pcDeep(r,['historical_path_state_rows','state.historical_path_state_rows','last_build.historical_path_state_rows'])??'—');pcPut('pcR7PathAuthority',pcDeep(r,['path_authority_rows','state.path_authority_rows','last_build.path_authority_rows'])??'—');pcPut('pcR7Approved',r7gate.approved??'—');const r7bar=pcEl('pcR7PathBar');if(r7bar)r7bar.style.width=r7gate.verified?'100%':r7gate.done!=null&&r7gate.total>0?Math.min(100,100*r7gate.done/r7gate.total)+'%':'0%';const pec=pcNum(c.pattern_evidence_completed),pet=pcNum(c.pattern_evidence_total),huc=pcNum(c.historical_universe_completed),hut=pcNum(c.historical_universe_total);pcPut('pcPatternEvidence',(pec!=null&&pet)?pec.toLocaleString()+' / '+pet.toLocaleString():'—');const peb=pcEl('pcPatternEvidenceBar');if(peb)peb.style.width=(pec!=null&&pet?Math.max(0,Math.min(100,100*pec/pet)):0)+'%';pcPut('pcHistoricalSweep',(huc!=null&&hut)?huc.toLocaleString()+' / '+hut.toLocaleString():'—');const hsb=pcEl('pcHistoricalSweepBar');if(hsb)hsb.style.width=(huc!=null&&hut?Math.max(0,Math.min(100,100*huc/hut)):0)+'%';pcPut('pcResearchDetail',(c.current_detail||'research detail unavailable')+(pec!=null&&pet?' · pattern evidence '+pec.toLocaleString()+' / '+pet.toLocaleString():'')+(huc!=null&&hut?' · universe sweep '+huc.toLocaleString()+' / '+hut.toLocaleString():''));
  const pos=((Array.isArray(s?.live_positions)?s.live_positions:[]).find(p=>/R7/i.test(String(p.engine||p.authority||p.controller_version||''))))||pcDeep(r,['open_position','live_position','position']);if(pos&&r7gate.verified){pcPut('pcPathPosition',(pos.symbol||'R7')+' · '+pcPct(pos.gross_pct));pcPut('pcPathMinute',pos.age_minutes==null?'—':Number(pos.age_minutes).toFixed(1)+' / 30');pcPut('pcPathReturn',pcPct(pos.gross_pct));pcPut('pcPathStayEV',pos.stay_risk_adjusted_delta_pct!=null?pcPct(pos.stay_risk_adjusted_delta_pct):'—');pcPut('pcPathDecision',pos.minute_decision||pos.decision||'HOLD');pcPut('pcPathReason',pos.minute_reason||'R7 is re-scoring this position on each completed minute.')}else{pcPut('pcPathPosition',r7gate.verified?'FLAT':'UNVERIFIED');pcPut('pcPathMinute','—');pcPut('pcPathReturn','—');pcPut('pcPathStayEV','—');pcPut('pcPathDecision',r7gate.verified?'WAIT':'NO LIVE PROOF');pcPut('pcPathReason',r7gate.verified?'No R7 position is reported for the verified session.':r7gate.why);}
- const snap=pcSnapshot(s);pcRenderList('pcChanges',pcDiff(snap,pcPreviousSnapshot));pcPreviousSnapshot=snap;const ev=Array.isArray(s?.activity)?s.activity.slice(0,8):[];pcRenderList('pcChronicle',ev.length?ev.map(x=>({time:localTime(x.time),head:x.headline||x.kind||x.engine||'event',detail:x.detail||''})):[{time:'—',head:'Activity tape waiting',detail:'No published machine events in the current snapshot.'}]);pcMirrorResearch();
+ argusRenderDayAndTimeline(s);pcMirrorResearch();argusRenderVerifiedStates(s);
 }
 
 
 function draw(s){lastStatus=s;renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
 const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{},e=s.experiment||{},o=s.observatory||{};const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pp=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0,p=pressureFrom(s),t=turbulenceFrom(s);
-sessionCard('r4',a);sessionCard('r5',b);renderPositions(s);renderNow(a,b,c);renderExperiment(a,b,e);renderAuthority(a,b,u);renderTradeAnatomy(a,b);renderObservatory(c,o);renderPerformance(a,b);renderActivity(s);
+sessionCard('r4',a);sessionCard('r5',b);renderPositions(s);renderNow(a,b,c);argusRenderVerifiedStates(s);renderExperiment(a,b,e);renderAuthority(a,b,u);renderTradeAnatomy(a,b);renderObservatory(c,o);renderPerformance(a,b);renderActivity(s);
 document.getElementById('gCurrent').textContent=val(a.stage,'—');document.getElementById('gCurrentSub').textContent='R4 · '+val(a.health,'unknown');document.getElementById('gDepth').textContent=depthTotal?depthPct.toFixed(2)+'%':'—';document.getElementById('depthFill').style.width=depthPct+'%';document.getElementById('gPressure').textContent=p.v;document.getElementById('gPressureSub').textContent=p.sub;document.getElementById('gTurbulence').textContent=t.v;document.getElementById('gTurbulenceSub').textContent=t.sub;document.getElementById('nodeR4').textContent=val(a.stage,'—')+' · '+val(a.health,'—');document.getElementById('nodeR5').textContent=val(b.status,'—')+' · '+r5h;document.getElementById('nodeResearch').textContent=val(c.current_lane,c.status||'—')+' · '+researchh;
 setDot('r4dot',a.health);document.getElementById('r4main').textContent=val(a.stage,'—');document.getElementById('r4age').textContent='heartbeat '+fmtAge(a.heartbeat_age_seconds);document.getElementById('r4sub').textContent=val(a.watchlist_patterns,0)+' patterns · '+val(a.watchlist_symbols,0)+' symbols';const r4recent=Array.isArray(a.recent_trades)&&a.recent_trades.length?a.recent_trades[a.recent_trades.length-1]:null;document.getElementById('r4').innerHTML=row('Health',a.health)+row('Stage',a.stage)+row('Heartbeat age',fmtAge(a.heartbeat_age_seconds))+row('Target session',a.target_session)+row('Watchlist',val(a.watchlist_patterns,0)+' patterns / '+val(a.watchlist_symbols,0)+' symbols')+row('Open positions',val(a.open_positions,0))+row('Session return',pct(a.session?.return_pct))+row('Session record',val(a.session?.wins,0)+'W / '+val(a.session?.losses,0)+'L')+row('Last closed trade',tradeLine(r4recent))+row('Account equity',a.equity!=null?money(a.equity):'—')+(a.last_error?'<div class="err">'+esc(a.last_error)+'</div>':'');
 setDot('r5dot',r5h);document.getElementById('r5main').textContent=val(b.status,'—');document.getElementById('r5age').textContent=b.watchlist_ready?'watchlist ready':'heartbeat '+fmtAge(b.heartbeat_age_seconds);document.getElementById('r5sub').textContent=val(b.watchlist_rows,0)+' patterns · '+val(b.watchlist_symbols,0)+' symbols';const r5recent=Array.isArray(b.recent_trades)&&b.recent_trades.length?b.recent_trades[b.recent_trades.length-1]:null;document.getElementById('r5').innerHTML=row('Health',r5h,'READY is healthy after a clean completed scan; a finished nightly worker does not need a live heartbeat.')+row('Status',b.status)+row('Heartbeat age',fmtAge(b.heartbeat_age_seconds))+row('Pool progress',val(b.processed_symbols,0)+' / '+val(b.declared_pool_size,0)+' ('+pp.toFixed(1)+'%)')+'<div class="progress"><i style="width:'+Math.min(100,Math.max(0,pp))+'%"></i></div>'+row('Candidate rows',val(b.candidate_rows,0))+row('Scan errors',val(b.scan_errors,0))+row('Eligible watchlist',val(b.watchlist_rows,0)+' patterns / '+val(b.watchlist_symbols,0)+' symbols')+row('Open positions',val(b.open_positions,0))+row('Session return',pct(b.session?.return_pct))+row('Session record',val(b.session?.wins,0)+'W / '+val(b.session?.losses,0)+'L')+row('Last closed trade',tradeLine(r5recent))+row('Account equity',b.equity!=null?money(b.equity):'—')+(b.last_error?'<div class="err">'+esc(b.last_error)+'</div>':'');
@@ -1100,6 +1123,152 @@ setDot('universedot',u.error?'RED':'GREEN');document.getElementById('universemai
 setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds)<120?'GREEN':'YELLOW');document.getElementById('systemmain').textContent=d.paper_only===false?'CHECK':'PAPER ONLY';document.getElementById('systemage').textContent='publisher '+fmtAge(s.publisher_age_seconds);document.getElementById('system').innerHTML=row('Telemetry schema',s.schema)+row('Shutdown mode',d.shutdown_mode)+row('R4 control',d.r4_mode)+row('R5 control',d.r5_mode)+row('Paper only',d.paper_only===false?'NO':'YES')+row('Brokerage',d.brokerage_connection===true?'CONNECTED':'NONE')+row('Publisher age',fmtAge(s.publisher_age_seconds))+row('R4 heartbeat',fmtAge(a.heartbeat_age_seconds))+row('R5 heartbeat',fmtAge(b.heartbeat_age_seconds))+row('Research heartbeat',fmtAge(c.heartbeat_age_seconds))+row('Last R4 eval bar',val(d.r4_last_eval_bar_et||a.last_eval_bar_et,'—'))+row('Last R5 eval bar',val(d.r5_last_eval_bar_et||b.last_eval_bar_et,'—'))+row('R5 scan errors',val(d.r5_scan_errors,b.scan_errors||0))+(a.last_error?'<div class="err">R4 · '+esc(a.last_error)+'</div>':'')+(b.last_error?'<div class="err">R5 · '+esc(b.last_error)+'</div>':'')+(c.last_error?'<div class="err">RESEARCH · '+esc(c.last_error)+'</div>':'');
 document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},experiment:e,observatory:o,accounting:s.accounting||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics();hideUnavailable();if(!ledgerCache&&!ledgerPromise)loadLedgers(false)}
 async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');if(ob){ob.className='badge red';const z=ob.querySelector('span:last-child');if(z)z.textContent='DISPLAY ERROR'}const rt=document.getElementById('runtimeText');if(rt)rt.textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message;pcPut('pcCurrentJudgmentWhy','Live telemetry arrived, but a legacy diagnostic renderer failed: '+String(e.message||e)+'. The Private Chamber remains live.');const ph=pcEl('pcPhaseChip');if(ph){const ps=ph.querySelector('span');if(ps)ps.textContent='PHASE DISPLAY WARNING';pcClassChip('pcPhaseChip','YELLOW')}}}
+// Verified frozen historical paper trades snapshot from original Drive ledgers, used only
+// if independent live-published ledgers have not yet appeared. Never treated as live.
+const ARGUS_SHADOW_SEED={"R5S":[{"engine":"R5S","trade_no":1,"symbol":"MPWR","entry_time_et":"2026-10-16T13:06:00.437623-04:00","exit_time_et":"2026-10-16T13:36:04.713112-04:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":0.06558904,"pnl":0.6558904},{"engine":"R5S","trade_no":2,"symbol":"SNDQ","entry_time_et":"2026-11-05T09:36:02.388582-05:00","exit_time_et":"2026-11-05T09:37:02.292701-05:00","exit_reason":"STOP_0_75_PCT_OBSERVED_MARK","pct":-2.11859106,"pnl":-21.19980626},{"engine":"R5S","trade_no":3,"symbol":"FND","entry_time_et":"2026-11-05T09:46:01.188985-05:00","exit_time_et":"2026-11-05T10:16:09.188109-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":1.5040235,"pnl":14.7312497},{"engine":"R5S","trade_no":4,"symbol":"COP","entry_time_et":"2026-11-05T10:16:09.188109-05:00","exit_time_et":"2026-11-05T10:46:15.803910-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":-0.00717803,"pnl":-0.07136309},{"engine":"R5S","trade_no":5,"symbol":"COP","entry_time_et":"2026-11-05T11:46:08.199378-05:00","exit_time_et":"2026-11-05T12:16:14.677526-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":0.27221255,"pnl":2.70610848}],"R7":[{"engine":"R7","trade_no":1,"symbol":"MRNA","entry_time_et":"2026-11-04T09:35:11.716316-05:00","exit_time_et":"2026-11-04T09:41:13.652400-05:00","exit_reason":"R7_V2_BETTER_CAPITAL_USE","pct":1.78777182,"pnl":17.87771821},{"engine":"R7","trade_no":2,"symbol":"MRNA","entry_time_et":"2026-11-04T09:41:15.874340-05:00","exit_time_et":"2026-11-04T09:46:08.707103-05:00","exit_reason":"R7_V2_BETTER_CAPITAL_USE","pct":3.21875254,"pnl":32.76296494},{"engine":"R7","trade_no":3,"symbol":"MRNA","entry_time_et":"2026-11-04T09:46:10.636089-05:00","exit_time_et":"2026-11-04T09:51:16.233074-05:00","exit_reason":"R7_V2_NO_RELIABLE_PATH_AUTHORITY_AT_CHECKPOINT","pct":1.34854304,"pnl":14.16834177},{"engine":"R7","trade_no":4,"symbol":"MRNA","entry_time_et":"2026-11-04T09:55:09.840040-05:00","exit_time_et":"2026-11-04T09:58:36.597123-05:00","exit_reason":"R7_V2_STOP_0_75_PCT","pct":-0.84601217,"pnl":-9.00841396}]};
+let argusShadowTrades=[...ARGUS_SHADOW_SEED.R5S,...ARGUS_SHADOW_SEED.R7];
+const ARGUS_R7_FEED='https://raw.githubusercontent.com/FreakInTheSpreadsheets/Project7/main/argus-r7-trade-history.json';
+const ARGUS_R5S_FEED='https://raw.githubusercontent.com/FreakInTheSpreadsheets/Project7/main/argus-r5s-trade-history.json';
+const ARGUS_RESEARCH_DISPATCH='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-intake-control';
+const ARGUS_RESEARCH_JOBS_URL='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-research-jobs';
+let argusResearchKeyInMemory='';
+let argusResearchControlReady=false,argusLastR5S=null;
+function argusSessionET(){const x=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const p=k=>x.find(v=>v.type===k)?.value||'';return p('year')+'-'+p('month')+'-'+p('day')}
+function argusValidRow(t){return t&&['R4','R5','R5S','R7'].includes(t.engine)&&Number.isFinite(Number(t.pct))&&Number.isFinite(Number(t.pnl))&&tradeSessionDate(t)}
+function argusDaySummary(trades,engine,date){const rows=trades.filter(t=>t.engine===engine&&tradeSessionDate(t)===date);const pctValue=rows.length?(rows.reduce((v,t)=>v*(1+Number(t.pct)/100),1)-1)*100:null;const total=rows.reduce((v,t)=>v+Number(t.pnl),0);return {engine,date,count:rows.length,wins:rows.filter(t=>Number(t.pct)>0).length,losses:rows.filter(t=>Number(t.pct)<0).length,pct:pctValue,pnl:total,top:rows.slice().sort((a,b)=>Number(b.pnl)-Number(a.pnl))[0]||null,bottom:rows.slice().sort((a,b)=>Number(a.pnl)-Number(b.pnl))[0]||null,rows}}
+function argusRenderDayAndTimeline(s){
+ const trades=[...(ledgerCache||[]),...argusShadowTrades].filter(argusValidRow),now=argusSessionET();
+ const dates=[...new Set(trades.map(tradeSessionDate))].filter(d=>d<=now).sort();
+ const date=dates.includes(now)?now:(dates[dates.length-1]||now);
+ const dayHasTrades=dates.includes(now);
+ const titles={R4:'R4 frozen',R5:'R5 rolling',R5S:'R5-S short',R7:'R7 adaptive'};
+ let rows=[{time:'ET',head:dayHasTrades?'Paper trading · '+date:'Last recorded trading · '+date,detail:dayHasTrades?'Gross observed paper results; four separate accounts, not a pooled account.':'No confirmed closed fills for '+now+'. Showing last session with recorded fills; do not treat missing trades as proof of inactivity.'}];
+ let any=false;
+ for(const engine of ['R4','R5','R5S','R7']){const x=argusDaySummary(trades,engine,date);any=any||x.count>0;
+   const gross=x.count?(money(x.pnl)+' · '+pct(x.pct)):'no verified closed fills';
+   const detail=x.count?(x.count+' trades · '+x.wins+'W/'+x.losses+'L · '+gross+(x.top&&x.bottom?' · best '+x.top.symbol+' '+money(x.top.pnl)+' · worst '+x.bottom.symbol+' '+money(x.bottom.pnl):'')):'No trade found in available '+engine+' ledger for '+date+'.';
+   rows.push({time:engine,head:titles[engine]+': '+gross,detail});
+ }
+ const r4=s?.r4||{},r5=s?.r5||{},r7=pcR7(s);const runtime=String(s?.runtime?.engine_status||'').toUpperCase();
+ rows.push({time:'OPS',head:runtime==='NOT_CONFIRMED_RUNNING'?'Runtime not verified running':'Runtime '+(runtime||'status not published'),detail:'R4: '+String(r4.stage||'stage not reported').replaceAll('_',' ')+' · R5: '+String(r5.status||r5.stage||'state not reported').replaceAll('_',' ')+' · R7: '+String(r7.status||'state not reported').replaceAll('_',' ')});
+ const blocked=[['R4',r4],['R5',r5],['R7',r7]].filter(([n,x])=>/ERROR|BLOCKED|FAIL_CLOSED/.test(String(x.status||x.stage||'').toUpperCase()));
+ blocked.forEach(([n,x])=>rows.push({time:n,head:n+' needs attention',detail:String(x.last_error||x.status||x.stage||'').slice(0,200)}));
+ if(!trades.length)rows.unshift({time:'DATA',head:'Independent ledgers not yet loaded',detail:'The dashboard cannot honestly calculate today’s dollars or trade count until a ledger responds.'});
+ pcRenderList('pcChanges',rows.slice(0,9));
+ const history=trades.filter(t=>tradeSessionDate(t)===date).map(t=>({time:(String(t.exit_time_et).slice(11,16)+' ET'),head:t.engine+' '+t.symbol+' '+(Number(t.pnl)>=0?'GAIN':'LOSS')+' · '+money(t.pnl),detail:pct(t.pct)+' gross · '+String(t.exit_reason||'closed paper trade').replaceAll('_',' ')}));
+ const liveEv=Array.isArray(s?.activity)?s.activity.map(e=>({time:localTime(e.time),head:e.headline||e.kind||'System event',detail:e.detail||''})):[];
+ pcRenderList('pcChronicle',[...history.slice(-10).reverse(),...liveEv.slice(0,5)].slice(0,14).length?[...history.slice(-10).reverse(),...liveEv.slice(0,5)].slice(0,14):[{time:'DATA',head:'No ledger-backed events',detail:'No timestamped trade exits were published for '+date+'. This is not proof that the engine was running or flat.'}]);
+}
+async function argusFetchShadowLedgers(){
+ const feeds=[['R5S',ARGUS_R5S_FEED],['R7',ARGUS_R7_FEED]];
+ const all=[];
+ for(const [engine,url] of feeds){let rows=ARGUS_SHADOW_SEED[engine].map(x=>({...x,source:'Drive ledger snapshot · Nov 5'}));
+  try{const req=await fetch(url+'?t='+Date.now(),{cache:'no-store'});if(req.ok){const j=await req.json();if(Array.isArray(j.trades)&&j.engine===engine)rows=j.trades.map(t=>({...t,engine,source:'Published ledger '+String(j.generated_at_utc||'')})).filter(argusValidRow)}}catch(e){}
+  rows.forEach(x=>all.push(x));
+ }
+ return all;
+}
+async function argusCheckResearchControls(){const e=document.getElementById('pcResearchControlState');if(!e)return;
+ try{const r=await fetch(ARGUS_RESEARCH_DISPATCH+'?control=1&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();argusResearchControlReady=d.ready===true;e.textContent=argusResearchControlReady?'GitHub intake dispatcher is connected. Separate notebook-owned R4/R5/R7 research still requires a running Argus controller.':'Remote GitHub intake is not configured. Local research requires the Argus controller.';}
+ catch(x){argusResearchControlReady=false;e.textContent='Cannot verify research controls: '+String(x.message||x).slice(0,100)}
+}
+// ARGUS_RESEARCH_QUEUE_CONTROL_UI_V1_20261105
+async function argusResearchUnlock(){
+ if(argusResearchKeyInMemory.length>=32)return argusResearchKeyInMemory;
+ const key=window.prompt('Argus research-only operator key (kept only in this page memory):');
+ if(!key)return '';
+ if(key.length<32){const el=document.getElementById('pcResearchControlState');if(el)el.textContent='Operator key must contain at least 32 characters; no job submitted.';return '';}
+ argusResearchKeyInMemory=key;
+ return argusResearchKeyInMemory;
+}
+function argusResearchTime(t){if(!t)return '';const d=new Date(t);return Number.isNaN(+d)?'':d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});}
+async function argusRefreshCommandStatuses(){
+ const banner=document.getElementById('pcResearchControlState');
+ try{
+  const r=await fetch(ARGUS_RESEARCH_JOBS_URL+'?status=1&t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error('Research-job status HTTP '+r.status);
+  const data=await r.json(); if(!data.ready)throw new Error('Research-job API not configured');
+  const online=data.worker?.connected===true;
+  const onlineNote=online?'Off-market worker connected · '+String(data.worker.phase||'').replaceAll('_',' '):'Off-market worker disconnected · Colab jobs will remain queued';
+  if(banner)banner.textContent=(argusResearchControlReady?'GitHub intake enabled. ':'GitHub intake needs operator configuration. ')+onlineNote+'. No research command changes trading authority.';
+  const tasks=Array.isArray(data.jobs)?data.jobs:[];
+  for(const card of document.querySelectorAll('.pc-research-stat')){
+   const button=card.querySelector('.pc-research-action');if(!button)continue;
+   const action=String(button.dataset.researchAction||'');
+   let state=card.querySelector('.pc-research-job-state');
+   if(!state){state=document.createElement('div');state.className='pc-research-job-state';state.setAttribute('role','status');card.appendChild(state)}
+   if(action==='github-intake'){
+     state.textContent=argusResearchControlReady?'Independent GitHub intake · dispatcher ready':'GitHub intake unavailable';
+     continue;
+   }
+   if(!action.startsWith('queue:')){state.textContent='No executable job bound';continue;}
+   const task=action.slice(6),found=tasks.find(x=>x.task===task);
+   if(!found){state.textContent=online?'Ready to submit to off-market worker':'Ready to queue · Colab not connected';state.dataset.result='idle';continue;}
+   const stamp=argusResearchTime(found.finished_at||found.started_at||found.requested_at);
+   state.dataset.result=String(found.status||'').toLowerCase();
+   const label={QUEUED:'Queued',RUNNING:'Running',COMPLETED:'Completed',FAILED:'Failed',CANCELLED:'Cancelled'}[found.status]||String(found.status||'Unknown');
+   state.textContent=label+(stamp?' · '+stamp:'')+(found.status==='QUEUED'&&!online?' · waits for Colab':'')+(found.note?' · '+String(found.note).slice(0,86):'');
+   const more=found.result?.last_error||found.result?.reason||'';
+   if(more&&found.status==='FAILED')state.textContent+=' · '+String(more).slice(0,140);
+  }
+ }catch(e){
+   if(banner)banner.textContent='Research-job status unavailable: '+String(e.message||e).slice(0,130)+' · No result is assumed.';
+ }
+}
+async function argusResearchAction(action,btn){
+ const el=document.getElementById('pcResearchControlState');
+ const key=await argusResearchUnlock();if(!key)return;
+ if(btn)btn.disabled=true;
+ try{
+  if(action.startsWith('queue:')){
+    const task=action.slice(6);
+    const r=await fetch(ARGUS_RESEARCH_JOBS_URL,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'enqueue',task,operator_key:key})});
+    const d=await r.json();if(!r.ok)throw new Error(d.error||'Research queue HTTP '+r.status);
+    if(el)el.textContent=d.duplicate?'This research job is already queued or running; no duplicate worker started.':'Research job queued: '+task.replaceAll('_',' ')+'. The off-market Argus supervisor will execute it when connected.';
+    await argusRefreshCommandStatuses();return;
+  }
+  if(action==='github-intake'){
+    if(!argusResearchControlReady)throw new Error('GitHub research dispatcher unavailable');
+    const r=await fetch(ARGUS_RESEARCH_DISPATCH,{method:'POST',mode:'cors',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'run_research_all',operator_key:key})});
+    const d=await r.json();if(!r.ok)throw new Error(d.error||'Research request HTTP '+r.status);
+    if(el)el.textContent=d.dispatched?'Independent GitHub intake dispatched · eight research shards.':d.already_running?'GitHub intake already running · no duplicate.':'GitHub intake response: '+(d.note||'request accepted');
+    return;
+  }
+  throw new Error('Research operation has no executable binding');
+ }catch(e){
+    if(el)el.textContent='Research NOT launched: '+String(e.message||e).slice(0,170);
+    if(/401|authorization|operator/i.test(String(e.message||e)))argusResearchKeyInMemory='';
+ }finally{if(btn)btn.disabled=false}
+}
+
+function argusRenderVerifiedStates(s){
+ const offline=/NOT_CONFIRMED_RUNNING|STOPPED/.test(String(s?.runtime?.engine_status||'').toUpperCase());
+ const age=Number(s?.publisher_age_seconds),stale=Number.isFinite(age)&&age>120;
+ const state=(name,x)=>{const raw=String(x?.status||x?.stage||'').toUpperCase(),err=String(x?.last_error||'');const field=Number(x?.heartbeat_age_seconds);
+  if(stale)return {label:'DATA OLD',detail:'Last main snapshot '+fmtAge(age)+' old. Latest engine evaluation cannot be verified.'};
+  if(offline)return {label:'HOST OFFLINE',detail:'No active controller confirmed. Last reported state: '+(raw||'not supplied')+'.'+(err?' Error: '+err.slice(0,120):'')};
+  if(/FAIL_CLOSED|ERROR|BLOCKED/.test(raw))return {label:'NEEDS REPAIR',detail:(err||raw).slice(0,190)};
+  if(/OFF_MARKET|RESEARCH/.test(raw))return {label:'RESEARCH WINDOW',detail:'Closed market; '+(raw||'research')+' is the last engine stage. No live entry is expected.'};
+  if(/BUILD|RETRY|PREPAR/.test(raw))return {label:'PREPARING',detail:'Controller reports '+raw.replaceAll('_',' ')+(err?' · '+err.slice(0,130):'')};
+  if(Number(x?.open_positions)>0)return {label:'MANAGING',detail:Number(x.open_positions)+' open paper position(s).'};
+  if(Number.isFinite(field)&&field<=180)return {label:'WATCHING',detail:'Fresh last-reported worker heartbeat '+fmtAge(field)+' old · '+(raw||'no stage')};
+  return {label:'NOT VERIFIED',detail:'No fresh evaluation or worker-heartbeat proof. Last published stage '+(raw||'missing')};
+ };
+ const r4=state('R4',s?.r4||{}),r5=state('R5',s?.r5||{});
+ pcPut('pcR4State',r4.label);pcPut('pcR4Main',r4.label==='WATCHING'?'Awaiting qualified signal':r4.label);pcPut('pcR4Why',r4.detail);
+ pcPut('pcR5State',r5.label);pcPut('pcR5Main',r5.label==='WATCHING'?'Awaiting rolling signal':r5.label);pcPut('pcR5Why',r5.detail);
+ pcPut('nowR4',r4.label);pcPut('nowR4Sub',r4.detail);pcPut('nowR4Meta',s?.r4?.last_eval_bar_et?'Last evaluated bar: '+s.r4.last_eval_bar_et:'No last-evaluated bar in current source');
+ pcPut('nowR5',r5.label);pcPut('nowR5Sub',r5.detail);pcPut('nowR5Meta',s?.r5?.last_eval_bar_et?'Last evaluated bar: '+s.r5.last_eval_bar_et:'No last-evaluated bar in current source');
+ const gate=pcR7Gate(s); const state7=offline?'HOST OFFLINE':gate.label;
+ pcPut('pcR7State',state7);pcPut('pcR7Main',state7);pcPut('pcR7Why',(offline?'Argus host is not confirmed running. Last R7 authority: '+(gate.target||'not published')+'. ':'')+gate.why);
+ pcPut('nowR7',state7);pcPut('nowR7Sub',gate.why);pcPut('nowR7Meta','Authority '+(gate.target||'no date')+' · worker '+(gate.age==null?'no timestamp':fmtAge(gate.age)+' old'));
+ const e=document.getElementById('pcPathPosition');if(e&&!gate.verified){e.textContent=offline?'NOT MONITORING':'NO VERIFIED LIVE POSITION';pcPut('pcPathDecision','WAIT FOR WORKER');pcPut('pcPathReason','R7 cannot report live minute decisions without current-session authority and a fresh engine heartbeat. Last recorded: '+(gate.target||'not dated')+' · '+gate.why)}
+ const research=s?.research||{};pcPut('nowResearch',offline?'HOST OFFLINE':String(research.current_lane||research.status||'No supervisor receipt').replaceAll('_',' '));pcPut('nowResearchSub',offline?'On-host research cannot be started until the controller resumes.':String(research.current_detail||'Latest research lane not published'));pcPut('nowResearchMeta','Research heartbeat '+(research.heartbeat_age_seconds==null?'not reported':fmtAge(research.heartbeat_age_seconds)));
+}
+
+
 document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.getElementById('pcRefresh')?.addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));const _pcRi=pcEl('researchIntake');if(_pcRi)new MutationObserver(()=>pcMirrorResearch()).observe(_pcRi,{subtree:true,childList:true,characterData:true,attributes:true});refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);
 
 
@@ -1125,21 +1294,27 @@ async function refreshR5S(){
       const pct=(eq/initial-1)*100;
       r5sWrite('pcR5SReturn','Theoretical short gross '+(pct>=0?'+':'')+pct.toFixed(2)+'% · '+Number(data.closed_trades||0)+' closed; NO borrow/locate/margin/fills');
     }else{r5sWrite('pcR5SEquity','—');r5sWrite('pcR5SReturn','Account evidence not yet available');}
-    r5sWrite('pcR5SState',fresh?status:'STALE');
-    r5sWrite('pcR5SMain',fresh?(data.open_count>0?'PAPER SHORT · '+String(data.open_symbol||'UNKNOWN'):(status.includes('RUNNING')?'FLAT / WATCHING FALL':'FLAT / '+status)):'Telemetry not current');
-    r5sWrite('pcR5SWhy',fresh?(data.open_count>0?'Gross short paper only; locate, borrow, margin and fills unmodeled.':'FALL-only authority; no brokerage connection. Gross results are not executable net returns.'):'Last published R5-S state is stale. Do not infer a flat book or $0 P&L.');
+    argusLastR5S=data;const offlineNow=/NOT_CONFIRMED_RUNNING|STOPPED/.test(String(lastStatus?.runtime?.engine_status||'').toUpperCase());r5sWrite('pcR5SState',fresh?status:(offlineNow?'HOST OFFLINE':'FEED OLD'));
+    r5sWrite('pcR5SMain',fresh?(data.open_count>0?'PAPER SHORT · '+String(data.open_symbol||'NOT REPORTED'):(status.includes('RUNNING')?'FLAT / WATCHING FALL':'FLAT / '+status)):'Last observed '+(data.target_session_key_et||'no session')+' · '+status);
+    r5sWrite('pcR5SWhy',fresh?(data.open_count>0?'Gross short paper only; locate, borrow, margin and fills unmodeled.':'FALL-only authority; no brokerage connection. Gross results are not executable net returns.'):'No current R5-S worker proof. Showing the last recorded account, not a live or executable short position.');
     r5sWrite('pcR5SAuthority',data.watchlist_ready?(String(data.frozen_fall_patterns)+' FALL patterns / '+String(data.frozen_fall_symbols)+' symbols'):'FALL authority NOT READY');
-    r5sWrite('pcR5SHeartbeat',Number.isFinite(age)?'heartbeat '+Math.round(age)+'s ago':'heartbeat UNKNOWN');
+    r5sWrite('pcR5SHeartbeat',Number.isFinite(age)?'last worker heartbeat '+fmtAge(age)+' ago · '+String(data.heartbeat_utc||'no timestamp'):'worker heartbeat not reported');pcPut('nowR5S',fresh?status:(offlineNow?'HOST OFFLINE':'FEED OLD'));pcPut('nowR5SSub',data.watchlist_ready?'FALL authority available · '+data.frozen_fall_patterns+' patterns':'FALL authority not verified');pcPut('nowR5SMeta',Number.isFinite(age)?'last worker heartbeat '+fmtAge(age)+' ago':'no heartbeat reported');
   }catch(err){
-    r5sWrite('pcR5SState','UNKNOWN');
-    r5sWrite('pcR5SMain','Telemetry unavailable');
+    r5sWrite('pcR5SState','FEED ERROR');
+    r5sWrite('pcR5SMain','Cannot fetch R5-S receipt');
     r5sWrite('pcR5SWhy','No verified R5-S feed. This does not establish zero positions or zero performance. '+String(err.message||err).slice(0,90));
-    r5sWrite('pcR5SAuthority','FALL authority UNKNOWN');
+    r5sWrite('pcR5SAuthority','FALL authority not verified');
     r5sWrite('pcR5SHeartbeat','heartbeat UNKNOWN');
     r5sWrite('pcR5SEquity','—');
     r5sWrite('pcR5SReturn','No verified short paper performance');
   }
 }
+
+
+document.querySelectorAll('[data-research-action]').forEach(btn=>btn.addEventListener('click',()=>argusResearchAction(btn.dataset.researchAction,btn)));
+document.getElementById('argusDiagnoseNow')?.addEventListener('click',()=>{refresh();refreshR5S();loadLedgers(false,true);argusCheckResearchControls();refreshResearchIntake(true)});
+argusCheckResearchControls();setInterval(argusCheckResearchControls,120000);
+argusRefreshCommandStatuses();setInterval(argusRefreshCommandStatuses,30000);
 refreshR5S();setInterval(refreshR5S,30000);
 
 
