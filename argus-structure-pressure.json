@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-12T21:56:33.090652+00:00",
+  "generated_at_utc": "2026-11-12T21:58:21.431598+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 81.9,
@@ -27,14 +27,14 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 90,
-  "current_context_at_utc": "2026-11-12T21:50:33.524066+00:00",
+  "current_context_at_utc": "2026-11-12T21:57:01.995269+00:00",
   "previous_complete_session": "2026-11-11",
   "proxy_count": 18,
   "accounts": {
     "r4": {
       "engine": "R4",
       "status": "AVAILABLE",
-      "score": 85.5,
+      "score": 85.4,
       "label": "TRANSITION",
       "components": {
         "decoupling": {
@@ -46,7 +46,7 @@
           "raw": 0.01065517790756068
         },
         "leadership_rotation": {
-          "percentile": 61.4,
+          "percentile": 60.9,
           "raw": 0.5537190082644629
         }
       },
@@ -83,8 +83,8 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-12T21:50:33.524066+00:00",
+      "baseline_sessions": 87,
+      "current_context_at_utc": "2026-11-12T21:57:01.995269+00:00",
       "previous_complete_session": "2026-11-11",
       "top_sector_weights": [
         {
@@ -120,7 +120,7 @@
           "raw": 0.009902979897516423
         },
         "leadership_rotation": {
-          "percentile": 85.2,
+          "percentile": 85.1,
           "raw": 0.7586206896551724
         }
       },
@@ -152,8 +152,8 @@
         }
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-12T21:50:33.524066+00:00",
+      "baseline_sessions": 87,
+      "current_context_at_utc": "2026-11-12T21:57:01.995269+00:00",
       "previous_complete_session": "2026-11-11",
       "top_sector_weights": [
         {
@@ -176,7 +176,7 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": 6.3,
+    "r5_minus_r4": 6.4,
     "higher_pressure": "R5",
     "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
   },
