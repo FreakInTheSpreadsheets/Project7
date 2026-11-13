@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-13T14:14:11.216135+00:00",
+  "generated_at_utc": "2026-11-13T21:10:29.450157+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
   "score": 81.9,
@@ -58,7 +58,7 @@
       "authority": {
         "source": "R4_FROZEN_WATCHLIST",
         "source_file": "Argus_V478_Frozen_Watchlist.csv",
-        "session": "2026-11-13",
+        "session": "2026-11-16",
         "patterns": 170,
         "symbols": 153
       },
