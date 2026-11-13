@@ -313,6 +313,21 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 .pc-research-job-state[data-result="completed"]{color:#8fae8b}
 .pc-research-job-state[data-result="failed"]{color:#db8888}
 .pc-research-action[disabled]{opacity:.55;cursor:wait}
+/* ARGUS_CLOCK_DISTINCTION_V1_20261113: UI-only, operational freshness is not wall time. */
+.argus-time-rail{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.argus-time-box{min-width:0;padding:13px 14px 12px;border:1px solid rgba(117,185,204,.19);border-radius:12px;background:linear-gradient(155deg,rgba(52,103,133,.13),rgba(5,19,30,.42))}
+.argus-time-box.engine{border-color:rgba(218,170,105,.26);background:linear-gradient(155deg,rgba(109,82,55,.14),rgba(5,19,30,.42))}
+.argus-time-label{font-size:10px;letter-spacing:.11em;font-weight:700;text-transform:uppercase;color:#9bb8c7}
+.argus-time-value{font-size:clamp(19px,4vw,27px);font-weight:750;line-height:1.2;letter-spacing:-.035em;margin-top:7px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.argus-time-box.engine .argus-time-value{color:#e5c6a2}
+.argus-time-meta{font-size:10px;color:#a4bac5;margin-top:7px;line-height:1.5;overflow-wrap:anywhere}
+.argus-time-explain{font-size:10px;color:#7c9aa8;margin-top:4px;line-height:1.4}
+.argus-time-integrity{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:7px 11px;padding:10px 13px;border:1px solid rgba(127,197,220,.13);border-radius:10px;background:rgba(8,25,39,.35);font-size:10px;line-height:1.5;color:#a8bac4}
+.argus-time-integrity strong{font-size:10px;letter-spacing:.05em;font-weight:750;color:#f0c689}
+.argus-time-integrity[data-freshness="fresh"] strong{color:#95d6b9}
+.argus-time-integrity[data-freshness="stale"] strong,.argus-time-integrity[data-freshness="error"] strong{color:#f09ba0}
+.argus-time-integrity .argus-time-detail{grid-column:1/-1;color:#7f9da9;overflow-wrap:anywhere}
+@media(max-width:420px){.argus-time-rail{gap:7px;margin-bottom:12px}.argus-time-box{padding:11px 10px}.argus-time-value{font-size:18px}.argus-time-label{font-size:9px}.argus-time-meta,.argus-time-explain{font-size:9px}.argus-time-integrity{padding:9px 10px}}
 </style>
 </head>
 <body>
@@ -334,6 +349,27 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <div class="pc-sync"><button id="pcRefresh" type="button">Refresh chamber</button><div class="pc-sync-time" id="pcUpdated">waiting for snapshot</div></div>
   </header>
 
+<!-- ARGUS_CLOCK_DISTINCTION_V1_20261113: real wall time != latest Argus engine heartbeat. -->
+<section class="argus-time-rail" aria-label="Real time and Argus system time">
+  <div class="argus-time-box">
+    <div class="argus-time-label">REAL TIME · PT</div>
+    <div class="argus-time-value" id="argusClockRealPT" aria-live="off">--:--:--</div>
+    <div class="argus-time-meta" id="argusClockRealET">Market timezone (ET): --:--:--</div>
+    <div class="argus-time-explain">Current device clock · advances every second</div>
+  </div>
+  <div class="argus-time-box engine">
+    <div class="argus-time-label">SYSTEM TIME · ET</div>
+    <div class="argus-time-value" id="argusClockEngineET" aria-live="off">Not reported</div>
+    <div class="argus-time-meta" id="argusClockEngineDate">Last observed engine activity</div>
+    <div class="argus-time-explain">Last Argus heartbeat · does not advance without new telemetry</div>
+  </div>
+  <div class="argus-time-integrity" id="argusClockIntegrity" data-freshness="unknown" aria-live="off">
+    <strong id="argusClockLag">LAG: UNKNOWN</strong>
+    <span id="argusClockFeed">Snapshot time: awaiting feed</span>
+    <span class="argus-time-detail" id="argusClockData">R4/R5 completed market-bar times: not reported</span>
+    <span class="argus-time-detail" id="argusClockSource">System time source: waiting for R4 heartbeat</span>
+  </div>
+</section>
 
   <section class="pc-section">
     <div class="pc-section-head"><h2>Capital &amp; judgment</h2><span>what matters first</span></div>
@@ -1112,7 +1148,92 @@ function renderPrivateChamber(s){
 }
 
 
-function draw(s){lastStatus=s;renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Updated '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
+// ARGUS_CLOCK_DISTINCTION_V1_20261113: display telemetry age without manufacturing a ticking engine clock.
+const argusClockTelemetry={engineMs:null,engineName:'',engineEvidence:'',publisherMs:null,r4BarMs:null,r5BarMs:null,fetchOk:null,fetchError:''};
+function argusClockParse(value){
+  if(value===undefined||value===null||value==='')return null;
+  const d=new Date(value);const n=d.getTime();return Number.isFinite(n)?n:null;
+}
+function argusClockString(ms,zone,withDate=false){
+  if(ms==null)return 'Not reported';
+  try{return new Intl.DateTimeFormat('en-US',{timeZone:zone,
+    ...(withDate?{month:'short',day:'numeric',year:'numeric'}:{}),
+    hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}).format(new Date(ms));}
+  catch{return 'Invalid time';}
+}
+function argusClockAge(sec){
+  if(!Number.isFinite(sec)||sec<0)return 'UNKNOWN';
+  if(sec<60)return Math.round(sec)+'s';
+  if(sec<3600)return Math.floor(sec/60)+'m '+Math.round(sec%60)+'s';
+  if(sec<86400)return Math.floor(sec/3600)+'h '+Math.floor((sec%3600)/60)+'m';
+  return Math.floor(sec/86400)+'d '+Math.floor((sec%86400)/3600)+'h';
+}
+function argusClockText(id,value){const e=document.getElementById(id);if(e)e.textContent=value;}
+function argusClockIngest(snapshot){
+  if(!snapshot||typeof snapshot!=='object')return;
+  const r4=snapshot.r4||{},r5=snapshot.r5||{};
+  const pub=argusClockParse(snapshot.published_at_utc);
+  const candidates=[
+    ['R4 controller',r4.controller_heartbeat_et],['R4 controller',r4.worker_heartbeat_utc],
+    ['R4 controller',r4.heartbeat_utc],['R4 controller',r4.heartbeat_et],
+    ['R4 controller',r4.heartbeat],['R4 controller',r4.updated_at_et],
+    ['R4 controller',r4.updated_at_utc],['R4 controller',r4.state?.controller_heartbeat_et],
+    ['R4 controller',snapshot.system?.controller_heartbeat_et],
+    ['R5 rolling',r5.worker_heartbeat_utc],['R5 rolling',r5.heartbeat_utc],
+    ['R5 rolling',r5.heartbeat_et],['R5 rolling',r5.updated_at_utc]
+  ];
+  let engine=null,name='',evidence='';
+  for(const [n,value] of candidates){const t=argusClockParse(value);if(t!==null){engine=t;name=n;evidence='direct heartbeat timestamp';break;}}
+  // Most compact Argus feeds provide R4 heartbeat AGE, not the original timestamp.
+  // Recover event time relative to when that report was published, never relative to now.
+  if(engine===null&&pub!==null){
+    for(const [n,age] of [['R4 controller',r4.heartbeat_age_seconds],['R5 rolling',r5.heartbeat_age_seconds]]){
+      if(age!==''&&age!==null&&age!==undefined&&Number.isFinite(Number(age))&&Number(age)>=0){
+        engine=pub-Number(age)*1000;name=n;evidence='estimated from published snapshot + reported heartbeat age';break;
+      }
+    }
+  }
+  argusClockTelemetry.engineMs=engine;
+  argusClockTelemetry.engineName=name;
+  argusClockTelemetry.engineEvidence=evidence;
+  argusClockTelemetry.publisherMs=pub;
+  argusClockTelemetry.r4BarMs=argusClockParse(r4.last_eval_bar_et);
+  argusClockTelemetry.r5BarMs=argusClockParse(r5.last_eval_bar_et);
+  argusClockTelemetry.fetchOk=true;
+  argusClockTelemetry.fetchError='';
+  argusClockRender();
+}
+function argusClockRender(){
+  const now=Date.now(),st=argusClockTelemetry;
+  argusClockText('argusClockRealPT',argusClockString(now,'America/Los_Angeles'));
+  argusClockText('argusClockRealET','Exchange time: '+argusClockString(now,'America/New_York'));
+  argusClockText('argusClockEngineET',st.engineMs===null?'NO REPORT':argusClockString(st.engineMs,'America/New_York'));
+  argusClockText('argusClockEngineDate',st.engineMs===null?'No engine heartbeat timestamp available':argusClockString(st.engineMs,'America/New_York',true)+' ET');
+  const age=st.engineMs===null?null:(now-st.engineMs)/1000;
+  const feedAge=st.publisherMs===null?null:(now-st.publisherMs)/1000;
+  let label='LAG: UNKNOWN',freshness='unknown';
+  if(st.fetchOk===false){label='FEED ERROR';freshness='error';}
+  else if(age!==null&&age < -60){label='CLOCK MISMATCH';freshness='error';}
+  else if(age!==null){
+    label='ENGINE LAG: '+argusClockAge(Math.max(0,age));
+    freshness=(feedAge!==null&&feedAge>=-60&&feedAge<=90&&age<=90)?'fresh':
+      (feedAge!==null&&feedAge<=240&&age<=240)?'lagging':'stale';
+  }
+  else if(st.fetchOk===true){label='NO ENGINE PROOF';freshness='unknown';}
+  const rail=document.getElementById('argusClockIntegrity');if(rail)rail.dataset.freshness=freshness;
+  argusClockText('argusClockLag',label+' · '+freshness.toUpperCase());
+  const feedLabel=st.publisherMs===null?'Snapshot: no publication time reported':
+     'Published: '+argusClockString(st.publisherMs,'America/New_York',true)+' ET · '+argusClockAge(Math.max(0,feedAge))+' ago';
+  argusClockText('argusClockFeed',st.fetchOk===false?'Telemetry refresh failed · last known '+feedLabel:feedLabel);
+  const bars=[];
+  if(st.r4BarMs!==null)bars.push('R4 last completed evaluation bar: '+argusClockString(st.r4BarMs,'America/New_York')+' ET');
+  if(st.r5BarMs!==null)bars.push('R5 last completed evaluation bar: '+argusClockString(st.r5BarMs,'America/New_York')+' ET');
+  argusClockText('argusClockData',bars.length?bars.join(' · '):'Completed market-bar times: not reported (do not assume current)');
+  argusClockText('argusClockSource',st.engineMs===null?'System time source: no verified R4/R5 heartbeat in snapshot':
+    'Source: '+st.engineName+' · '+st.engineEvidence+'. The clock stops at the last event.');
+}
+
+function draw(s){argusClockIngest(s);lastStatus=s;renderPrivateChamber(s);renderResearchIntake(s);const pub=s.published_at_utc?new Date(s.published_at_utc):null;document.getElementById('stamp').textContent=pub?'Published '+pub.toLocaleTimeString():'Waiting for first snapshot';const oh=effectiveOverall(s),ob=document.getElementById('overall');ob.className='badge '+hc(oh);ob.querySelector('span:last-child').textContent=oh;document.getElementById('runtimeText').textContent=s.runtime?.engine_status?String(s.runtime.engine_status).toUpperCase():'WAITING';if(s.runtime?.colab_url)document.getElementById('colabLink').href=s.runtime.colab_url;
 const a=s.r4||{},b=s.r5||{},c=s.research||{},u=s.universe||{},d=s.system||{},e=s.experiment||{},o=s.observatory||{};const r5h=effectiveR5Health(b),researchh=effectiveResearchHealth(c),pp=Number(b.progress_pct||0),depthTotal=Number(c.historical_universe_total||0),depthDone=Number(c.historical_universe_completed||0),depthPct=depthTotal>0?Math.max(0,Math.min(100,100*depthDone/depthTotal)):0,p=pressureFrom(s),t=turbulenceFrom(s);
 sessionCard('r4',a);sessionCard('r5',b);renderPositions(s);renderNow(a,b,c);argusRenderVerifiedStates(s);renderExperiment(a,b,e);renderAuthority(a,b,u);renderTradeAnatomy(a,b);renderObservatory(c,o);renderPerformance(a,b);renderActivity(s);
 document.getElementById('gCurrent').textContent=val(a.stage,'—');document.getElementById('gCurrentSub').textContent='R4 · '+val(a.health,'unknown');document.getElementById('gDepth').textContent=depthTotal?depthPct.toFixed(2)+'%':'—';document.getElementById('depthFill').style.width=depthPct+'%';document.getElementById('gPressure').textContent=p.v;document.getElementById('gPressureSub').textContent=p.sub;document.getElementById('gTurbulence').textContent=t.v;document.getElementById('gTurbulenceSub').textContent=t.sub;document.getElementById('nodeR4').textContent=val(a.stage,'—')+' · '+val(a.health,'—');document.getElementById('nodeR5').textContent=val(b.status,'—')+' · '+r5h;document.getElementById('nodeResearch').textContent=val(c.current_lane,c.status||'—')+' · '+researchh;
@@ -1122,7 +1243,7 @@ setDot('researchdot',researchh);document.getElementById('researchmain').textCont
 setDot('universedot',u.error?'RED':'GREEN');document.getElementById('universemain').textContent=u.error?'ERROR':'AVAILABLE';document.getElementById('universesub').textContent=val(u.paper_eligible,0)+' paper eligible';document.getElementById('universe').innerHTML=row('Paper eligible',val(u.paper_eligible,0))+row('Unscanned',val(u.unscanned,0))+row('Insufficient data',val(u.insufficient_data,0))+row('Scanned · no pattern',val(u.scanned_no_pattern,0))+row('Fresh scored',val(u.scored,0))+row('R5 qualified',val(u.qualified,0))+(u.error?'<div class="err">'+esc(u.error)+'</div>':'');
 setDot('systemdot',s.publisher_age_seconds!=null&&Number(s.publisher_age_seconds)<120?'GREEN':'YELLOW');document.getElementById('systemmain').textContent=d.paper_only===false?'CHECK':'PAPER ONLY';document.getElementById('systemage').textContent='publisher '+fmtAge(s.publisher_age_seconds);document.getElementById('system').innerHTML=row('Telemetry schema',s.schema)+row('Shutdown mode',d.shutdown_mode)+row('R4 control',d.r4_mode)+row('R5 control',d.r5_mode)+row('Paper only',d.paper_only===false?'NO':'YES')+row('Brokerage',d.brokerage_connection===true?'CONNECTED':'NONE')+row('Publisher age',fmtAge(s.publisher_age_seconds))+row('R4 heartbeat',fmtAge(a.heartbeat_age_seconds))+row('R5 heartbeat',fmtAge(b.heartbeat_age_seconds))+row('Research heartbeat',fmtAge(c.heartbeat_age_seconds))+row('Last R4 eval bar',val(d.r4_last_eval_bar_et||a.last_eval_bar_et,'—'))+row('Last R5 eval bar',val(d.r5_last_eval_bar_et||b.last_eval_bar_et,'—'))+row('R5 scan errors',val(d.r5_scan_errors,b.scan_errors||0))+(a.last_error?'<div class="err">R4 · '+esc(a.last_error)+'</div>':'')+(b.last_error?'<div class="err">R5 · '+esc(b.last_error)+'</div>':'')+(c.last_error?'<div class="err">RESEARCH · '+esc(c.last_error)+'</div>':'');
 document.getElementById('raw-r4').textContent=JSON.stringify(a,null,2);document.getElementById('raw-r5').textContent=JSON.stringify(b,null,2);document.getElementById('raw-research').textContent=JSON.stringify(c,null,2);document.getElementById('raw-universe').textContent=JSON.stringify(u,null,2);document.getElementById('raw-system').textContent=JSON.stringify({system:d,runtime:s.runtime||{},experiment:e,observatory:o,accounting:s.accounting||{},activity:s.activity||[],publisher_age_seconds:s.publisher_age_seconds,overall_health:s.overall_health,published_at_utc:s.published_at_utc},null,2);bindMetrics();hideUnavailable();if(!ledgerCache&&!ledgerPromise)loadLedgers(false)}
-async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');if(ob){ob.className='badge red';const z=ob.querySelector('span:last-child');if(z)z.textContent='DISPLAY ERROR'}const rt=document.getElementById('runtimeText');if(rt)rt.textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message;pcPut('pcCurrentJudgmentWhy','Live telemetry arrived, but a legacy diagnostic renderer failed: '+String(e.message||e)+'. The Private Chamber remains live.');const ph=pcEl('pcPhaseChip');if(ph){const ps=ph.querySelector('span');if(ps)ps.textContent='PHASE DISPLAY WARNING';pcClassChip('pcPhaseChip','YELLOW')}}}
+async function refresh(){let payload;try{const r=await fetch(API+'&t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);payload=await r.json()}catch(e){const ob=document.getElementById('overall');ob.className='badge red';ob.querySelector('span:last-child').textContent='STATUS FETCH ERROR';document.getElementById('runtimeText').textContent='TELEMETRY LINK LOST // trading controllers unaffected // '+e.message;argusClockTelemetry.fetchOk=false;argusClockTelemetry.fetchError=String(e.message||e);argusClockRender();return}try{draw(payload)}catch(e){const ob=document.getElementById('overall');if(ob){ob.className='badge red';const z=ob.querySelector('span:last-child');if(z)z.textContent='DISPLAY ERROR'}const rt=document.getElementById('runtimeText');if(rt)rt.textContent='DASHBOARD RENDER ERROR // trading controllers unaffected // '+e.message;pcPut('pcCurrentJudgmentWhy','Live telemetry arrived, but a legacy diagnostic renderer failed: '+String(e.message||e)+'. The Private Chamber remains live.');const ph=pcEl('pcPhaseChip');if(ph){const ps=ph.querySelector('span');if(ps)ps.textContent='PHASE DISPLAY WARNING';pcClassChip('pcPhaseChip','YELLOW')}}}
 // Verified frozen historical paper trades snapshot from original Drive ledgers, used only
 // if independent live-published ledgers have not yet appeared. Never treated as live.
 const ARGUS_SHADOW_SEED={"R5S":[{"engine":"R5S","trade_no":1,"symbol":"MPWR","entry_time_et":"2026-10-16T13:06:00.437623-04:00","exit_time_et":"2026-10-16T13:36:04.713112-04:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":0.06558904,"pnl":0.6558904},{"engine":"R5S","trade_no":2,"symbol":"SNDQ","entry_time_et":"2026-11-05T09:36:02.388582-05:00","exit_time_et":"2026-11-05T09:37:02.292701-05:00","exit_reason":"STOP_0_75_PCT_OBSERVED_MARK","pct":-2.11859106,"pnl":-21.19980626},{"engine":"R5S","trade_no":3,"symbol":"FND","entry_time_et":"2026-11-05T09:46:01.188985-05:00","exit_time_et":"2026-11-05T10:16:09.188109-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":1.5040235,"pnl":14.7312497},{"engine":"R5S","trade_no":4,"symbol":"COP","entry_time_et":"2026-11-05T10:16:09.188109-05:00","exit_time_et":"2026-11-05T10:46:15.803910-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":-0.00717803,"pnl":-0.07136309},{"engine":"R5S","trade_no":5,"symbol":"COP","entry_time_et":"2026-11-05T11:46:08.199378-05:00","exit_time_et":"2026-11-05T12:16:14.677526-05:00","exit_reason":"FIXED_30_MINUTE_HORIZON","pct":0.27221255,"pnl":2.70610848}],"R7":[{"engine":"R7","trade_no":1,"symbol":"MRNA","entry_time_et":"2026-11-04T09:35:11.716316-05:00","exit_time_et":"2026-11-04T09:41:13.652400-05:00","exit_reason":"R7_V2_BETTER_CAPITAL_USE","pct":1.78777182,"pnl":17.87771821},{"engine":"R7","trade_no":2,"symbol":"MRNA","entry_time_et":"2026-11-04T09:41:15.874340-05:00","exit_time_et":"2026-11-04T09:46:08.707103-05:00","exit_reason":"R7_V2_BETTER_CAPITAL_USE","pct":3.21875254,"pnl":32.76296494},{"engine":"R7","trade_no":3,"symbol":"MRNA","entry_time_et":"2026-11-04T09:46:10.636089-05:00","exit_time_et":"2026-11-04T09:51:16.233074-05:00","exit_reason":"R7_V2_NO_RELIABLE_PATH_AUTHORITY_AT_CHECKPOINT","pct":1.34854304,"pnl":14.16834177},{"engine":"R7","trade_no":4,"symbol":"MRNA","entry_time_et":"2026-11-04T09:55:09.840040-05:00","exit_time_et":"2026-11-04T09:58:36.597123-05:00","exit_reason":"R7_V2_STOP_0_75_PCT","pct":-0.84601217,"pnl":-9.00841396}]};
@@ -1318,6 +1439,7 @@ argusRefreshCommandStatuses();setInterval(argusRefreshCommandStatuses,30000);
 refreshR5S();setInterval(refreshR5S,30000);
 
 
+argusClockRender();setInterval(argusClockRender,1000);window.addEventListener('focus',argusClockRender);document.addEventListener('visibilitychange',argusClockRender);
 </script>
 </body>
 </html>
