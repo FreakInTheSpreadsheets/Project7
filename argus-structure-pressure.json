@@ -1,18 +1,18 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-13T21:17:08.604133+00:00",
+  "generated_at_utc": "2026-11-13T21:18:58.172848+00:00",
   "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
   "status": "AVAILABLE",
-  "score": 51.5,
+  "score": 52.8,
   "label": "RISING",
   "components": {
     "decoupling": {
-      "percentile": 68.1,
-      "raw": 0.00598432488164391
+      "percentile": 71.4,
+      "raw": 0.00612183446298209
     },
     "dispersion": {
       "percentile": 40.7,
-      "raw": 0.007126001807384679
+      "raw": 0.00713121225782526
     },
     "leadership_rotation": {
       "percentile": 40.0,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 91,
-  "current_context_at_utc": "2026-11-13T21:10:54.295020+00:00",
+  "current_context_at_utc": "2026-11-13T21:17:30.721775+00:00",
   "previous_complete_session": "2026-11-12",
   "proxy_count": 18,
   "accounts": {
@@ -39,11 +39,11 @@
       "components": {
         "decoupling": {
           "percentile": 39.6,
-          "raw": 0.005031860664582135
+          "raw": 0.005006668392801729
         },
         "dispersion": {
           "percentile": 46.8,
-          "raw": 0.005993891512603004
+          "raw": 0.005968794061874321
         },
         "leadership_rotation": {
           "percentile": 92.0,
@@ -84,7 +84,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-13T21:10:54.295020+00:00",
+      "current_context_at_utc": "2026-11-13T21:17:30.721775+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
@@ -113,11 +113,11 @@
       "components": {
         "decoupling": {
           "percentile": 56.0,
-          "raw": 0.005304022767781559
+          "raw": 0.005296373258296162
         },
         "dispersion": {
           "percentile": 54.9,
-          "raw": 0.005975717597890068
+          "raw": 0.005956740458768817
         },
         "leadership_rotation": {
           "percentile": 83.0,
@@ -153,7 +153,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-13T21:10:54.295020+00:00",
+      "current_context_at_utc": "2026-11-13T21:17:30.721775+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
