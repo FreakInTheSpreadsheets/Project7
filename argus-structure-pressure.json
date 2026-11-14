@@ -1,7 +1,7 @@
 {
-  "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5",
-  "generated_at_utc": "2026-11-14T05:39:32.025852+00:00",
-  "authority": "DISPLAY_CONTEXT_ONLY_NO_LIVE_WRITE_PATH",
+  "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V4_PER_SYSTEM",
+  "generated_at_utc": "2026-11-14T06:41:00.236786+00:00",
+  "authority": "DESCRIPTIVE_MARKET_CONTEXT_AND_PAPER_EXPERIMENT_ONLY",
   "status": "AVAILABLE",
   "score": 52.8,
   "label": "RISING",
@@ -20,7 +20,7 @@
     }
   },
   "validated_predictor": false,
-  "note": "Descriptive precursor only; not yet validated as a forward regime classifier.",
+  "note": "Percentile pressure, NOT a calibrated chance of loss. R5 paper-only experimental hold; R4/R7 frozen controls unchanged.",
   "weights": {
     "decoupling": 0.4,
     "dispersion": 0.35,
@@ -30,6 +30,8 @@
   "current_context_at_utc": "2026-11-14T05:36:27.642528+00:00",
   "previous_complete_session": "2026-11-12",
   "proxy_count": 18,
+  "warning_threshold": 65.0,
+  "experimental_paper_hold_threshold": 70.0,
   "accounts": {
     "r4": {
       "engine": "R4",
@@ -174,12 +176,159 @@
           "weight": 0.1538
         }
       ]
+    },
+    "r5s": {
+      "engine": "R5S",
+      "status": "AVAILABLE",
+      "score": 59.5,
+      "label": "RISING",
+      "components": {
+        "decoupling": {
+          "percentile": 48.4,
+          "raw": 0.004981058234326561
+        },
+        "dispersion": {
+          "percentile": 57.1,
+          "raw": 0.005850939754657118
+        },
+        "leadership_rotation": {
+          "percentile": 80.7,
+          "raw": 0.631578947368421
+        }
+      },
+      "weights": {
+        "decoupling": 0.4,
+        "dispersion": 0.35,
+        "leadership_rotation": 0.25
+      },
+      "authority": {
+        "source": "R5_FALL_FROZEN_WATCHLIST",
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-16.csv",
+        "session": "2026-11-16",
+        "patterns": 29,
+        "symbols": 27,
+        "direction": "FALL",
+        "execution_scope": "PAPER_SHADOW_BORROW_COST_NOT_MODELED"
+      },
+      "coverage": {
+        "authority_symbols": 27,
+        "mapped_symbols": 19,
+        "unmapped_symbols": 8,
+        "mapped_pct": 70.4,
+        "sector_count": 6,
+        "sector_counts": {
+          "Consumer Discretionary": 5,
+          "Financials": 6,
+          "Health Care": 1,
+          "Industrials": 2,
+          "Real Estate": 1,
+          "Technology": 4
+        }
+      },
+      "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
+      "baseline_sessions": 88,
+      "current_context_at_utc": "2026-11-14T05:36:27.642528+00:00",
+      "previous_complete_session": "2026-11-12",
+      "top_sector_weights": [
+        {
+          "sector": "Financials",
+          "weight": 0.3158
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.2632
+        },
+        {
+          "sector": "Technology",
+          "weight": 0.2105
+        },
+        {
+          "sector": "Industrials",
+          "weight": 0.1053
+        }
+      ]
+    },
+    "r7": {
+      "engine": "R7",
+      "status": "AVAILABLE",
+      "score": 55.3,
+      "label": "RISING",
+      "components": {
+        "decoupling": {
+          "percentile": 39.6,
+          "raw": 0.005006668392801729
+        },
+        "dispersion": {
+          "percentile": 46.8,
+          "raw": 0.005968794061874321
+        },
+        "leadership_rotation": {
+          "percentile": 92.0,
+          "raw": 0.768595041322314
+        }
+      },
+      "weights": {
+        "decoupling": 0.4,
+        "dispersion": 0.35,
+        "leadership_rotation": 0.25
+      },
+      "authority": {
+        "source": "R4_FROZEN_INHERITED_FOR_R7",
+        "source_file": "Argus_V478_Frozen_Watchlist.csv",
+        "session": "2026-11-16",
+        "patterns": 170,
+        "symbols": 153,
+        "inherited_from": "R4",
+        "entry_engine_readiness_not_verified": true
+      },
+      "coverage": {
+        "authority_symbols": 153,
+        "mapped_symbols": 121,
+        "unmapped_symbols": 32,
+        "mapped_pct": 79.1,
+        "sector_count": 11,
+        "sector_counts": {
+          "Communication Services": 1,
+          "Consumer Discretionary": 16,
+          "Consumer Staples": 1,
+          "Energy": 7,
+          "Financials": 7,
+          "Health Care": 14,
+          "Industrials": 29,
+          "Materials": 14,
+          "Real Estate": 3,
+          "Technology": 26,
+          "Utilities": 3
+        }
+      },
+      "note": "R4-derived authority market pressure; separately verified R7 engine activity is NOT implied.",
+      "baseline_sessions": 88,
+      "current_context_at_utc": "2026-11-14T05:36:27.642528+00:00",
+      "previous_complete_session": "2026-11-12",
+      "top_sector_weights": [
+        {
+          "sector": "Industrials",
+          "weight": 0.2397
+        },
+        {
+          "sector": "Technology",
+          "weight": 0.2149
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.1322
+        },
+        {
+          "sector": "Health Care",
+          "weight": 0.1157
+        }
+      ]
     }
   },
   "comparison": {
     "r5_minus_r4": 2.6,
     "higher_pressure": "R5",
-    "basis": "same 40/35/25 formula; each engine weighted by its current frozen authority sector mix against the same market-history sessions"
+    "basis": "same fixed 40/35/25 formula; authority sector mix differs by engine. R7 inherits R4 sector mix by contract."
   },
-  "account_metric_note": "R4 and R5 are computed independently from their own frozen authority populations. A duplicated market-wide score is not used as an account comparison."
+  "account_metric_note": "R4/R5 independently authority-weighted; R5S uses FALL-only R5; R7 intentionally inherits R4. Scores are descriptive, not validated trade probabilities."
 }
