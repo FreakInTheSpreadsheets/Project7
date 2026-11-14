@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V4_PER_SYSTEM",
-  "generated_at_utc": "2026-11-14T07:54:54.777927+00:00",
+  "generated_at_utc": "2026-11-14T07:56:28.345789+00:00",
   "authority": "DESCRIPTIVE_MARKET_CONTEXT_AND_PAPER_EXPERIMENT_ONLY",
   "status": "AVAILABLE",
   "score": 52.8,
@@ -27,7 +27,7 @@
     "leadership_rotation": 0.25
   },
   "baseline_sessions": 91,
-  "current_context_at_utc": "2026-11-14T07:50:03.845852+00:00",
+  "current_context_at_utc": "2026-11-14T07:55:41.611822+00:00",
   "previous_complete_session": "2026-11-12",
   "proxy_count": 18,
   "warning_threshold": 65.0,
@@ -86,7 +86,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-14T07:50:03.845852+00:00",
+      "current_context_at_utc": "2026-11-14T07:55:41.611822+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
@@ -156,7 +156,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-14T07:50:03.845852+00:00",
+      "current_context_at_utc": "2026-11-14T07:55:41.611822+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
@@ -227,7 +227,7 @@
       },
       "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-14T07:50:03.845852+00:00",
+      "current_context_at_utc": "2026-11-14T07:55:41.611822+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
@@ -303,7 +303,7 @@
       },
       "note": "R4-derived authority market pressure; separately verified R7 engine activity is NOT implied.",
       "baseline_sessions": 88,
-      "current_context_at_utc": "2026-11-14T07:50:03.845852+00:00",
+      "current_context_at_utc": "2026-11-14T07:55:41.611822+00:00",
       "previous_complete_session": "2026-11-12",
       "top_sector_weights": [
         {
