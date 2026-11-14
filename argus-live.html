@@ -328,6 +328,27 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 .argus-time-integrity[data-freshness="stale"] strong,.argus-time-integrity[data-freshness="error"] strong{color:#f09ba0}
 .argus-time-integrity .argus-time-detail{grid-column:1/-1;color:#7f9da9;overflow-wrap:anywhere}
 @media(max-width:420px){.argus-time-rail{gap:7px;margin-bottom:12px}.argus-time-box{padding:11px 10px}.argus-time-value{font-size:18px}.argus-time-label{font-size:9px}.argus-time-meta,.argus-time-explain{font-size:9px}.argus-time-integrity{padding:9px 10px}}
+
+/* ARGUS_PROOF_PRESSURE_GAUGES_RC1_20261113 */
+.proof-pressure-section{margin:10px 0 22px}
+.proof-pressure-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px;flex-wrap:wrap}
+.proof-pressure-head h2{font-family:inherit;margin:0;font-size:16px;letter-spacing:.04em;color:var(--pc-text,#e9dfd0)}
+.proof-pressure-head span{font-size:11px;opacity:.78}
+.proof-pressure-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.proof-pressure-card{border:1px solid rgba(194,164,117,.28);background:rgba(13,19,27,.77);border-radius:13px;padding:13px 12px;min-width:0}
+.proof-pressure-name{font-size:12px;font-weight:700;letter-spacing:.09em;color:#dbd4c9}
+.proof-pressure-val{font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;line-height:1.18;margin:7px 0}
+.proof-pressure-meter{height:7px;border-radius:7px;background:rgba(220,220,220,.13);overflow:hidden}
+.proof-pressure-fill{height:100%;width:0;background:#83a89a;transition:width .3s}
+.proof-pressure-card[data-band=warn] .proof-pressure-fill{background:#d9ae66}
+.proof-pressure-card[data-band=hold] .proof-pressure-fill{background:#da7279}
+.proof-pressure-card[data-band=unknown] .proof-pressure-fill{background:#66747d}
+.proof-pressure-status{font-size:11px;font-weight:650;letter-spacing:.03em;margin:8px 0 4px}
+.proof-pressure-note,.proof-pressure-proof{font-size:10px;color:#b7b9bd;line-height:1.5;overflow-wrap:anywhere}
+.proof-pressure-foot{margin-top:9px;font-size:10px;line-height:1.5;color:#aeb1b6}
+@media(max-width:1020px){.proof-pressure-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.proof-pressure-card{padding:11px 9px}.proof-pressure-val{font-size:22px}}
+
 </style>
 </head>
 <body>
@@ -369,6 +390,19 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
     <span class="argus-time-detail" id="argusClockData">R4/R5 completed market-bar times: not reported</span>
     <span class="argus-time-detail" id="argusClockSource">System time source: waiting for R4 heartbeat</span>
   </div>
+</section>
+
+
+<!-- ARGUS_PROOF_PRESSURE_GAUGES_RC1_20261113: descriptive market structure + independent daily outcomes; never a calibrated loss probability. -->
+<section class="proof-pressure-section" aria-label="Account specific market structure pressure and recent paper outcomes">
+ <div class="proof-pressure-head"><h2>Market pressure / pattern proof</h2><span>65% watch · 70% proposed hold · evidence quality shown</span></div>
+ <div class="proof-pressure-grid">
+  <article class="proof-pressure-card" id="pressureCardR4" data-band="unknown"><div class="proof-pressure-name">R4 · Frozen control</div><div class="proof-pressure-val" id="pressureValueR4">—</div><div class="proof-pressure-meter"><div class="proof-pressure-fill" id="pressureBarR4"></div></div><div class="proof-pressure-status" id="pressureStatusR4">Loading evidence</div><div class="proof-pressure-note" id="pressureCoverageR4">Market-data coverage unverified</div><div class="proof-pressure-proof" id="pressureProofR4">Pattern outcomes not loaded</div></article>
+  <article class="proof-pressure-card" id="pressureCardR5" data-band="unknown"><div class="proof-pressure-name">R5 · Rolling long</div><div class="proof-pressure-val" id="pressureValueR5">—</div><div class="proof-pressure-meter"><div class="proof-pressure-fill" id="pressureBarR5"></div></div><div class="proof-pressure-status" id="pressureStatusR5">Loading evidence</div><div class="proof-pressure-note" id="pressureCoverageR5">Market-data coverage unverified</div><div class="proof-pressure-proof" id="pressureProofR5">Pattern outcomes not loaded</div></article>
+  <article class="proof-pressure-card" id="pressureCardR5S" data-band="unknown"><div class="proof-pressure-name">R5-S · Short shadow</div><div class="proof-pressure-val" id="pressureValueR5S">—</div><div class="proof-pressure-meter"><div class="proof-pressure-fill" id="pressureBarR5S"></div></div><div class="proof-pressure-status" id="pressureStatusR5S">Loading evidence</div><div class="proof-pressure-note" id="pressureCoverageR5S">Market-data coverage unverified</div><div class="proof-pressure-proof" id="pressureProofR5S">Pattern outcomes not loaded</div></article>
+  <article class="proof-pressure-card" id="pressureCardR7" data-band="unknown"><div class="proof-pressure-name">R7 · Adaptive hold</div><div class="proof-pressure-val" id="pressureValueR7">—</div><div class="proof-pressure-meter"><div class="proof-pressure-fill" id="pressureBarR7"></div></div><div class="proof-pressure-status" id="pressureStatusR7">Loading evidence</div><div class="proof-pressure-note" id="pressureCoverageR7">Market-data coverage unverified</div><div class="proof-pressure-proof" id="pressureProofR7">Pattern outcomes not loaded</div></article>
+ </div>
+ <div class="proof-pressure-foot" id="pressureFeedProvenance">Structural pressure is a descriptive percentile of decoupling, dispersion, and leadership rotation, NOT a calibrated chance of loss. Pattern deterioration is independently estimated from gross paper exits. R4 and R7 retain frozen entry authority; R5’s 70% hold is a paper-only experiment, not broker execution.</div>
 </section>
 
   <section class="pc-section">
@@ -589,7 +623,7 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 <div class="tape" id="activity"></div>
 </section><section aria-label="Argus sea state" class="field">
 <div class="fieldhead"><span class="fieldtitle">SYSTEM CORE</span><span class="fieldnote">health and diagnostics</span></div>
-<div class="sea"><div class="gauge"><div class="glabel">Current</div><div class="gvalue" id="gCurrent">—</div><div class="gsub" id="gCurrentSub">R4 stage</div></div><div class="gauge"><div class="glabel">Historical Coverage</div><div class="gvalue" id="gDepth">—</div><div class="gsub">patterns with retained occurrence evidence</div><div class="depthtrack"><div class="depthfill" id="depthFill"></div></div></div><div class="gauge"><div class="glabel">Pressure</div><div class="gvalue" id="gPressure">—</div><div class="gsub" id="gPressureSub">heartbeat load</div></div><div class="gauge"><div class="glabel">Turbulence</div><div class="gvalue" id="gTurbulence">—</div><div class="gsub" id="gTurbulenceSub">exceptions</div></div></div>
+<div class="sea"><div class="gauge"><div class="glabel">Current</div><div class="gvalue" id="gCurrent">—</div><div class="gsub" id="gCurrentSub">R4 stage</div></div><div class="gauge"><div class="glabel">Historical Coverage</div><div class="gvalue" id="gDepth">—</div><div class="gsub">patterns with retained occurrence evidence</div><div class="depthtrack"><div class="depthfill" id="depthFill"></div></div></div><div class="gauge"><div class="glabel">Telemetry lag</div><div class="gvalue" id="gPressure">—</div><div class="gsub" id="gPressureSub">heartbeat load</div></div><div class="gauge"><div class="glabel">Turbulence</div><div class="gvalue" id="gTurbulence">—</div><div class="gsub" id="gTurbulenceSub">exceptions</div></div></div>
 <div class="map" id="machineMap"><button class="node" data-open="r4mod" type="button"><strong>Frozen R4</strong><small>control authority</small><div class="state" id="nodeR4">—</div></button><button class="node" data-open="r5mod" type="button"><strong>Rolling R5</strong><small>fresh authority</small><div class="state" id="nodeR5">—</div></button><button class="node" data-open="researchmod" hidden="hidden" type="button"><strong>Research</strong><small>depth engine</small><div class="state" id="nodeResearch">—</div></button></div>
 </section><div aria-live="polite" class="inspect" id="inspection"><div class="inspect-k" id="inspectKey"></div><div class="inspect-v" id="inspectValue"></div><div class="inspect-n" id="inspectNote"></div></div><details class="module" id="r4mod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r4dot"></span>Frozen R4</div><div class="summary-sub" id="r4sub">frozen prospective control account</div></div><div class="summary-state"><div class="state-main" id="r4main">—</div><div class="state-sub" id="r4age">—</div></div><span aria-hidden="true" class="chev">›</span></summary><div class="body"><div id="r4"></div><details class="raw"><summary>Raw R4 payload</summary><pre id="raw-r4">—</pre></details></div></details><details class="module" id="r5mod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="r5dot"></span>Rolling R5</div><div class="summary-sub" id="r5sub">rolling prospective paper account</div></div><div class="summary-state"><div class="state-main" id="r5main">—</div><div class="state-sub" id="r5age">—</div></div><span aria-hidden="true" class="chev">›</span></summary><div class="body"><div id="r5"></div><details class="raw"><summary>Raw R5 payload</summary><pre id="raw-r5">—</pre></details></div></details><details class="module" id="systemmod"><summary><div class="summary-left"><div class="summary-name"><span class="dot" id="systemdot"></span>System</div><div class="summary-sub">authority and publishing</div></div><div class="summary-state"><div class="state-main" id="systemmain">—</div><div class="state-sub" id="systemage">—</div></div><span aria-hidden="true" class="chev">›</span></summary><div class="body"><div id="system"></div><details class="raw"><summary>Raw system payload</summary><pre id="raw-system">—</pre></details></div></details></div></details>
 
@@ -663,6 +697,9 @@ main{max-width:1180px!important;padding:24px 22px 70px!important}
 </main>
 <script>
 const API='https://egomsethmkyrpymdoauu.supabase.co/functions/v1/argus-live?format=json';
+const ARGUS_PRESSURE_FEED='https://freakinthespreadsheets.github.io/Project7/argus-structure-pressure.json';
+let argusPressureFeed=null;
+
 const R4_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-trade-history.json';
 const R5_LEDGER='https://freakinthespreadsheets.github.io/Project7/argus-r5-trade-history.json';
 
@@ -697,6 +734,57 @@ function setDot(id,health){const e=document.getElementById(id);e.className='dot'
 function effectiveR5Health(b){const status=String(b.status||'').toUpperCase();if(b.watchlist_ready===true&&status==='WATCHLIST_READY'&&Number(b.scan_errors||0)===0)return 'GREEN';return String(b.health||'GRAY').toUpperCase()}
 function effectiveResearchHealth(c){const h=String(c.health||'GRAY').toUpperCase();if(h!=='GRAY')return h;return String(c.status||'').toUpperCase()==='RUNNING'?'YELLOW':'GRAY'}
 function effectiveOverall(s){const hs=[String(s.r4?.health||'GRAY').toUpperCase(),effectiveR5Health(s.r5||{})];if(hs.includes('RED'))return 'RED';if(hs.includes('YELLOW'))return 'YELLOW';if(Number(s.publisher_age_seconds)>120)return 'YELLOW';if(hs.includes('GREEN'))return 'GREEN';return 'WAITING'}
+
+// Account-indexed structure pressure. Never treat unavailable telemetry as 0%.
+async function refreshAccountPressure(force=false){
+ try{
+   const r=await fetch(ARGUS_PRESSURE_FEED+'?t='+Date.now(),{cache:'no-store'});
+   if(!r.ok)throw new Error('HTTP '+r.status);
+   const j=await r.json();
+   if(!j || !['ARGUS_MARKET_STRUCTURE_PRESSURE_V4_PER_SYSTEM','ARGUS_MARKET_STRUCTURE_PRESSURE_V3_R4_R5'].includes(j.schema))throw new Error('unexpected pressure schema');
+   argusPressureFeed=j;
+ }catch(e){argusPressureFeed=null}
+ renderAccountPressure();
+}
+function argusPressureRecentProof(engine){
+ const trades=[...(ledgerCache||[]),...argusShadowTrades].filter(t=>t.engine===engine&&Number.isFinite(Number(t.pct))&&/^\d{4}-\d{2}-\d{2}/.test(String(t.exit_time_et||'')));
+ if(!trades.length)return 'Recent pattern proof: no independently published closed trades';
+ const dates=[...new Set(trades.map(t=>String(t.exit_time_et).slice(0,10)))].sort();
+ const selected=trades.filter(t=>dates.slice(-5).includes(String(t.exit_time_et).slice(0,10)));
+ const n=selected.length, losses=selected.filter(t=>Number(t.pct)<0).length, stops=selected.filter(t=>/STOP/i.test(String(t.exit_reason||''))).length;
+ const ageDays=(Date.now()-Date.parse(dates.at(-1)+'T21:00:00Z'))/86400000;
+ const note=n<8?' · small sample':ageDays>7?' · historical only':'';
+ return 'Recent paper exits: '+n+' · '+losses+' losing · '+stops+' stopped · last '+dates.at(-1)+note;
+}
+function renderAccountPressure(){
+ const src=argusPressureFeed, now=Date.now();
+ const age=src?.generated_at_utc?Math.max(0,(now-Date.parse(src.generated_at_utc))/1000):Infinity;
+ const validAge=Number.isFinite(age)&&age<=180;
+ const suffix={R4:'r4',R5:'r5',R5S:'r5s',R7:'r7'};
+ for(const [engine,key] of Object.entries(suffix)){
+   const a=src?.accounts?.[key];
+   const coverage=Number(a?.coverage?.mapped_pct);
+   const score=Number(a?.score);
+   const valid=validAge&&a?.status==='AVAILABLE'&&a?.score!==null&&Number.isFinite(score)&&score>=0&&score<=100;
+   const band=!valid?'unknown':score>=70?'hold':score>=65?'warn':'low';
+   const id=engine,card=document.getElementById('pressureCard'+id);if(!card)continue;
+   card.dataset.band=band;
+   document.getElementById('pressureValue'+id).textContent=valid?score.toFixed(1)+'%':'—';
+   document.getElementById('pressureBar'+id).style.width=(valid?score:0)+'%';
+   const dataCoverage=Number.isFinite(coverage)?coverage.toFixed(1)+'% mapped':'sector coverage unavailable';
+   const n=a?.baseline_sessions;
+   const ready=valid&&Number.isFinite(coverage)&&coverage>=65&&Number(n)>=60;
+   const policy=engine==='R5'?'experimental R5 paper entry hold':'research warning only';
+   document.getElementById('pressureStatus'+id).textContent=!valid?(validAge?'NOT VERIFIED':'STALE / NO FEED'):
+       !ready?'COVERAGE INSUFFICIENT':score>=70?'≥70% · '+policy:score>=65?'65–70% · WARNING':'<65% · MONITOR';
+   document.getElementById('pressureCoverage'+id).textContent=dataCoverage+' · '+(n??'—')+' baseline sessions · '+(a?.authority?.source||'no authority source')+(engine==='R7'?' · inherits R4 universe':'');
+   document.getElementById('pressureProof'+id).textContent=argusPressureRecentProof(engine);
+ }
+ const foot=document.getElementById('pressureFeedProvenance');
+ if(foot)foot.textContent='Market-structure model: unvalidated forward predictor · no brokerage trading. '+(validAge?'Pressure feed age '+Math.round(age)+'s. ':'Pressure feed stale/missing. ')+
+ '70% cutoff is an R5 paper-only experimental hold with fresh evidence; R4, R5-S, R7 retain original paper strategy rules. Recent pattern outcomes use gross observed trades, not executable net results.';
+}
+
 function pressureFrom(s){const ages=[s.r4?.heartbeat_age_seconds,s.research?.heartbeat_age_seconds,s.publisher_age_seconds].filter(x=>Number.isFinite(Number(x))).map(Number);if(!ages.length)return{v:'—',sub:'no heartbeat data'};const m=Math.max(...ages);return m<45?{v:'LOW',sub:fmtAge(m)+' max age'}:m<120?{v:'RISING',sub:fmtAge(m)+' max age'}:{v:'HIGH',sub:fmtAge(m)+' max age'}}
 function turbulenceFrom(s){const hs=[s.r4?.health,effectiveR5Health(s.r5||{}),effectiveResearchHealth(s.research||{})].map(x=>String(x||'').toUpperCase());const red=hs.filter(x=>x==='RED').length,yellow=hs.filter(x=>x==='YELLOW').length,errs=[s.r4?.last_error,s.r5?.last_error,s.research?.last_error,s.universe?.error].filter(Boolean).length;return{v:red||errs?'ROUGH':yellow?'CHOPPY':'CALM',sub:(red+yellow)+' stressed · '+errs+' errors'}}
 function hideUnavailable(){document.querySelectorAll('.metric').forEach(el=>{const v=(el.dataset.v||el.querySelector('b')?.textContent||'').trim().toUpperCase();const unavailable=(v==='—'||v==='NOT YET AVAILABLE'||v==='UNAVAILABLE'||v==='UNKNOWN'||v==='NOT YET PERSISTED'||v==='PENDING');el.classList.toggle('unavailable-row',unavailable)});document.querySelectorAll('.labdrawer').forEach(d=>{const t=(d.textContent||'').toUpperCase();if(t.includes('NOT YET AVAILABLE')&&!t.match(/AVAILABLE(?!\.)/))d.open=false})}
@@ -779,6 +867,7 @@ async function loadLedgers(renderFull=false,force=false){
    argusShadowTrades=await argusFetchShadowLedgers();
    out.sort((a,b)=>String(b.exit_time_et||b.entry_time_et||'').localeCompare(String(a.exit_time_et||a.entry_time_et||'')));
    ledgerCache=out;
+   renderAccountPressure();
    document.getElementById('ledgerLoadState').textContent=out.length?'loaded':'unavailable';
    document.getElementById('ledgerLoadState').className=out.length?'pos':'neg';
    document.getElementById('ledgerBasis').textContent='Gross observed paper accounting · execution costs not broker-measured';
@@ -1390,7 +1479,7 @@ function argusRenderVerifiedStates(s){
 }
 
 
-document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.getElementById('pcRefresh')?.addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));const _pcRi=pcEl('researchIntake');if(_pcRi)new MutationObserver(()=>pcMirrorResearch()).observe(_pcRi,{subtree:true,childList:true,characterData:true,attributes:true});refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);
+document.getElementById('expandAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=true));document.getElementById('collapseAll').addEventListener('click',()=>document.querySelectorAll('.module,.labdrawer').forEach(x=>x.open=false));document.getElementById('refreshNow').addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.getElementById('pcRefresh')?.addEventListener('click',()=>{refresh();refreshStrategyClimate(true);refreshResearchIntake(true)});document.querySelectorAll('#performancePeriod button').forEach(btn=>btn.addEventListener('click',()=>{performancePeriod=btn.dataset.period||'daily';document.querySelectorAll('#performancePeriod button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.querySelectorAll('#performanceWindow button').forEach(btn=>btn.addEventListener('click',()=>{performanceWindow=btn.dataset.window||'matched';document.querySelectorAll('#performanceWindow button').forEach(b=>b.classList.toggle('active',b===btn));if(ledgerCache)renderPerformanceCharts(ledgerCache);else loadLedgers(false)}));document.getElementById('tradingLedger').addEventListener('toggle',e=>{if(e.currentTarget.open)loadLedgers(true)});document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>{const d=document.getElementById(b.dataset.open);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'start'})}}));const _pcRi=pcEl('researchIntake');if(_pcRi)new MutationObserver(()=>pcMirrorResearch()).observe(_pcRi,{subtree:true,childList:true,characterData:true,attributes:true});refresh();refreshStrategyClimate(true);refreshResearchIntake(true);setInterval(refresh,10000);setInterval(refreshStrategyClimate,60000);setInterval(refreshResearchIntake,30000);refreshAccountPressure();setInterval(refreshAccountPressure,60000);
 
 
 // R5-S telemetry is strictly independent. A missing/stale feed is UNKNOWN, never zero.
