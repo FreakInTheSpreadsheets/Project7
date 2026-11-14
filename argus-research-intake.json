@@ -1,10 +1,10 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-11-14T06:44:25.311035+00:00",
+  "generated_at_utc": "2026-11-14T06:46:40.963278+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
-  "status": "STALE",
+  "status": "ACTIVE",
   "phase": "MAINTENANCE_RESCAN",
-  "working_on": "MAINTENANCE_RESCAN \u00b7 TELEMETRY STALE",
+  "working_on": "MAINTENANCE_RESCAN \u00b7 ISSZF, SMWFF, DX, DXC",
   "progress_pct": 100.0,
   "progress_done": 30397,
   "progress_total": 30397,
@@ -14,6 +14,8 @@
   "queue_preview": [],
   "queue_depth": null,
   "current_batch_symbols": [
+    "ISSZF",
+    "SMWFF",
     "DX",
     "DXC",
     "DXCM",
@@ -75,9 +77,7 @@
     "EC",
     "ECAT",
     "ECBK",
-    "ECC",
-    "ECCC",
-    "ECCU"
+    "ECC"
   ],
   "last_completed_symbols": [
     "BWLB",
@@ -145,13 +145,13 @@
     "DWWN",
     "DWX"
   ],
-  "worker_stage": "UNIVERSE_EXPANSION",
-  "watcher_status": "EXPANDING_UNIVERSE",
-  "heartbeat_age_seconds": 3906.7,
-  "telemetry_fresh": false,
+  "worker_stage": "PARALLEL_COMPUTE",
+  "watcher_status": "PARALLEL_COMPUTE",
+  "heartbeat_age_seconds": 2.9,
+  "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only.",
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-11-14T05:39:18.595816+00:00",
+  "worker_heartbeat_utc": "2026-11-14T06:46:38.086566+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
   "scan_in_progress": true,
   "last_completed_at_utc": "2026-11-13T21:39:58.613126+00:00",
