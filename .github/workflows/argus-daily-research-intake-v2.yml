@@ -1,7 +1,8 @@
 # Argus Daily Research Intake V2 -- source ingestion and feature preparation only.
 # No R4/R5/R7, Colab, Supabase, dashboard or Google Drive writes.
 # Artifacts: 30-day retention; private scoring/Drive handoff requires a later human/ChatGPT review.
-# ARGUS_OVERNIGHT_WINDOW_V1: GitHub research-only intake; Colab trader remains independent.
+# ARGUS_OVERNIGHT_WINDOW_V2: hard worker start gate + deadline and bounded checkpoint.
+# Separate GitHub research only; no trading authority, no Colab startup control.
 name: Argus Daily Research Intake V2 (Independent)
 
 on:
@@ -68,7 +69,8 @@ jobs:
           et = ZoneInfo('America/New_York')
           now = datetime.now(et)
           # Research begins 15 minutes after regular-session close.
-          # All research workers must stop by 05:40 PT / 08:40 ET.
+          # Plan gate only; each delayed worker rechecks and enforces an earlier hard cutoff.
+          # New data collection stops by 05:20 PT / 08:20 ET; checkpoint gets 20 minutes.
           allowed = now.weekday() >= 5 or now.time() >= time(16, 15) or now.time() < time(8, 40)
           date = now.date()
           if now.time() >= time(8, 40) or now.weekday() >= 5:
@@ -78,7 +80,7 @@ jobs:
           cutoff = datetime.combine(date, time(8, 40), tzinfo=et)
           remaining = int((cutoff - now).total_seconds() / 60)
           # 10 minute margin for GitHub runner startup/checkpoint.
-          max_budget = max(0, min(45, remaining - 10))
+          max_budget = max(0, min(45, remaining - 30))
           enabled = allowed and max_budget >= 5
           with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
               out.write(f'enabled={str(enabled).lower()}\n')
@@ -148,7 +150,8 @@ jobs:
           if git cat-file -e "origin/argus-research-intake-data:research-intake/v2/state/shard-$tag.json" 2>/dev/null; then
             git show "origin/argus-research-intake-data:research-intake/v2/state/shard-$tag.json" > research-work/input/previous.json
           fi
-      - name: Collect historic bars and deterministic research features
+      - id: ingest_guarded
+        name: Research shard with fresh pre-open clock and enforced wall deadline
         shell: bash
         env:
           SHARD: ${{ matrix.shard }}
@@ -156,15 +159,47 @@ jobs:
           BUDGET: ${{ needs.plan.outputs.budget }}
         run: |
           set -euo pipefail
+          # Recheck at actual execution time, AFTER runner queuing, setup and fetch.
+          # All calculations use the next weekday in America/New_York (DST-safe).
+          read -r ELIGIBLE ACTUAL_BUDGET HARD_TIMEOUT < <(python3 - <<'PYGUARD'
+          import os
+          from datetime import datetime, timedelta, time
+          from zoneinfo import ZoneInfo
+          tz = ZoneInfo('America/New_York')
+          now = datetime.now(tz)
+          allowed = now.weekday() >= 5 or now.time() >= time(16,15) or now.time() < time(8,20)
+          d = now.date()
+          if now.weekday() >= 5 or now.time() >= time(8,20):
+              d += timedelta(days=1)
+          while d.weekday() >= 5:
+              d += timedelta(days=1)
+          stop = datetime.combine(d, time(8,20), tzinfo=tz).timestamp()
+          secs = int(stop - now.timestamp())
+          # Reserve time for the Python script's graceful exit and artifact upload.
+          hard_timeout = max(0, secs - 45)
+          budget = min(int(os.environ['BUDGET']), max(0, (hard_timeout - 60)//60))
+          ok = allowed and budget >= 5 and hard_timeout >= 360
+          print(('true' if ok else 'false'), (budget if ok else 0), (hard_timeout if ok else 0))
+          PYGUARD
+          )
+          if [[ "$ELIGIBLE" != true ]]; then
+            echo "::notice::Shard $SHARD skipped: worker started too late for pre-open hard cutoff. No cursor update."
+            exit 0
+          fi
           tag=$(printf '%02d' "$SHARD")
-          python research-intake/argus_intake_v2.py \
-            --queue research-work/input/queue.json \
-            --intake-status research-work/input/intake-status.json \
-            --prior research-work/input/previous.json \
-            --output "research-work/out/shard-$tag" \
-            --shard "$SHARD" --count "$COUNT" \
-            --budget-minutes "$BUDGET" --run-id "$GITHUB_RUN_ID"
+          # OS-level wall limit protects against source/provider hangs.
+          # Any forced termination fails the step; no success artifact or cursor advancement.
+          timeout --signal=TERM --kill-after=10s "${HARD_TIMEOUT}s" \
+            python research-intake/argus_intake_v2.py \
+              --queue research-work/input/queue.json \
+              --intake-status research-work/input/intake-status.json \
+              --prior research-work/input/previous.json \
+              --output "research-work/out/shard-$tag" \
+              --shard "$SHARD" --count "$COUNT" \
+              --budget-minutes "$ACTUAL_BUDGET" --run-id "$GITHUB_RUN_ID"
+          echo 'completed=true' >> "$GITHUB_OUTPUT"
       - name: Upload research-ready artifact (30-day retention)
+        if: steps.ingest_guarded.outputs.completed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: argus-intake-v2-success-shard-${{ matrix.shard }}-run-${{ github.run_id }}
@@ -201,6 +236,34 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ ! -d research-work/merged ]] || \
+             [[ -z "$(find research-work/merged -name manifest.json -print -quit)" ]]; then
+            echo '::notice::No completed research shards; no checkpoint or cursor advancement.'
+            exit 0
+          fi
+          # A queued checkpoint must also obey the market clock. Never write
+          # research state during a weekday market/pre-open holdout window.
+          REMAINING=$(python3 - <<'PYCLOCK'
+          from datetime import datetime, timedelta, time
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo('America/New_York'))
+          allowed = now.weekday() >= 5 or now.time() >= time(16,15) or now.time() < time(8,40)
+          date = now.date()
+          if now.weekday() >= 5 or now.time() >= time(8,40):
+              date += timedelta(days=1)
+          while date.weekday() >= 5:
+              date += timedelta(days=1)
+          cutoff = datetime.combine(date, time(8,40), tzinfo=ZoneInfo('America/New_York'))
+          print(max(0, int(cutoff.timestamp() - now.timestamp()) - 30) if allowed else 0)
+          PYCLOCK
+          )
+          if (( REMAINING < 60 )); then
+            echo '::warning::Pre-open cutoff reached; source artifacts retained, no GitHub research checkpoint. Remaining symbols will be revisited.'
+            exit 0
+          fi
+          # Time-bound the *entire* validation/push, not just its initial clock check.
+          # A deadline hit makes this step fail rather than claim a successful checkpoint.
+          timeout --signal=TERM --kill-after=10s "${REMAINING}s" bash -euo pipefail <<'CHECKPOINT_SCRIPT'
           python - <<'PY'
           from pathlib import Path
           import hashlib, json, os
@@ -266,3 +329,4 @@ jobs:
             git push origin HEAD:refs/heads/argus-research-intake-data
           fi
           echo 'Research data artifacts retained; scores remain unwritten pending private review.'
+          CHECKPOINT_SCRIPT
