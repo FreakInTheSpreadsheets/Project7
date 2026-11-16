@@ -1,6 +1,7 @@
 # Argus Daily Research Intake V2 -- source ingestion and feature preparation only.
 # No R4/R5/R7, Colab, Supabase, dashboard or Google Drive writes.
 # Artifacts: 30-day retention; private scoring/Drive handoff requires a later human/ChatGPT review.
+# ARGUS_OVERNIGHT_WINDOW_V1: GitHub research-only intake; Colab trader remains independent.
 name: Argus Daily Research Intake V2 (Independent)
 
 on:
@@ -30,10 +31,10 @@ on:
         options: ['5', '45', '180', '330']
         default: '45'
         required: true
-  # UTC; 10:25-17:25 ET depending on daylight saving. Weekdays only.
-  # Schedules are best effort and may start late; no trading critical path.
+  # GitHub schedules use UTC. Runtime gate enforces US Eastern market clock, including DST.
+  # Hourly best-effort research; no weekday regular-session jobs.
   schedule:
-    - cron: '25 15,18,21 * * 1-5'
+    - cron: '17 * * * *'
 
 permissions:
   contents: read
@@ -53,13 +54,44 @@ jobs:
       matrix: ${{ steps.plan.outputs.matrix }}
       limit: ${{ steps.plan.outputs.limit }}
       budget: ${{ steps.plan.outputs.budget }}
+      enabled: ${{ steps.window.outputs.enabled }}
     steps:
+      - id: window
+        name: Apply after-hours research and pre-open stop gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PYWINDOW'
+          import os
+          from datetime import datetime, timedelta, time
+          from zoneinfo import ZoneInfo
+          et = ZoneInfo('America/New_York')
+          now = datetime.now(et)
+          # Research begins 15 minutes after regular-session close.
+          # All research workers must stop by 05:40 PT / 08:40 ET.
+          allowed = now.weekday() >= 5 or now.time() >= time(16, 15) or now.time() < time(8, 40)
+          date = now.date()
+          if now.time() >= time(8, 40) or now.weekday() >= 5:
+              date += timedelta(days=1)
+          while date.weekday() >= 5:
+              date += timedelta(days=1)
+          cutoff = datetime.combine(date, time(8, 40), tzinfo=et)
+          remaining = int((cutoff - now).total_seconds() / 60)
+          # 10 minute margin for GitHub runner startup/checkpoint.
+          max_budget = max(0, min(45, remaining - 10))
+          enabled = allowed and max_budget >= 5
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f'enabled={str(enabled).lower()}\n')
+              out.write(f'max_budget={max_budget}\n')
+          print('Research window allowed:', enabled, 'ET:', now.isoformat(), 'max minutes:', max_budget)
+          PYWINDOW
       - id: plan
+        if: steps.window.outputs.enabled == 'true'
         shell: bash
         env:
           SCOPE: ${{ inputs.scope || 'all' }}
           SHARD: ${{ inputs.shard || '0' }}
-          COUNT: ${{ inputs.symbols_per_shard || '16' }}
+          COUNT: ${{ inputs.symbols_per_shard || '64' }}
           BUDGET: ${{ inputs.budget_minutes || '45' }}
         run: |
           set -euo pipefail
@@ -71,13 +103,17 @@ jobs:
             [[ "$SHARD" =~ ^[0-7]$ ]]
             echo "matrix={\"shard\":[$SHARD]}" >> "$GITHUB_OUTPUT"
           fi
+          MAX_BUDGET=${{ steps.window.outputs.max_budget }}
+          if (( BUDGET > MAX_BUDGET )); then
+            BUDGET=$MAX_BUDGET
+          fi
           echo "limit=$COUNT" >> "$GITHUB_OUTPUT"
           echo "budget=$BUDGET" >> "$GITHUB_OUTPUT"
 
   ingest:
     name: 'Build research-ready data / shard ${{ matrix.shard }}'
     needs: plan
-    if: needs.plan.result == 'success'
+    if: needs.plan.result == 'success' && needs.plan.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 345
     strategy:
@@ -147,7 +183,7 @@ jobs:
   checkpoint:
     name: 'Commit metadata to data branch, never main'
     needs: [plan, ingest]
-    if: always() && needs.plan.result == 'success'
+    if: always() && needs.plan.result == 'success' && needs.plan.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
