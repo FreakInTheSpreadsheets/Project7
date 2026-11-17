@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-11-17T13:51:14.955505+00:00",
+  "generated_at_utc": "2026-11-17T13:59:59.355871+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "MAINTENANCE_RESCAN",
@@ -145,25 +145,25 @@
     "GLIX",
     "GLL"
   ],
-  "worker_stage": "PARALLEL_COMPUTE",
-  "watcher_status": "PARALLEL_COMPUTE",
-  "heartbeat_age_seconds": 9.3,
+  "worker_stage": "PARALLEL_MERGE_ASSEMBLED",
+  "watcher_status": "SCANNING",
+  "heartbeat_age_seconds": 10.1,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only; it does not describe all research lanes.",
   "research_activity": {
     "schema": "ARGUS_RESEARCH_ACTIVITY_V1",
-    "generated_at_utc": "2026-11-17T13:51:14.955531+00:00",
+    "generated_at_utc": "2026-11-17T13:59:59.355899+00:00",
     "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
     "source": "DIRECT_PERSISTED_WORKER_STATES",
     "historical_universe": {
       "status": "PARTIAL_BOUNDED",
       "source_reported_status": "PARTIAL_BOUNDED",
       "worker_heartbeat_utc": "2026-11-17T12:44:47.782515+00:00",
-      "worker_heartbeat_age_seconds": 3987.2,
+      "worker_heartbeat_age_seconds": 4511.6,
       "worker_receipt_fresh": false,
       "worker_is_proven_running": false,
       "last_progress_utc": "2026-11-17T12:44:47.628345+00:00",
-      "progress_age_seconds": 3987.3,
+      "progress_age_seconds": 4511.7,
       "progress_stage": "BATCH_COMMITTED",
       "current_year": 2026,
       "batch_position": 32,
@@ -185,7 +185,7 @@
     },
     "summary": {
       "generated_at_utc": "2026-11-17T13:50:17.374286+00:00",
-      "age_seconds": 57.6,
+      "age_seconds": 582.0,
       "scope": "CYCLE_SUMMARY_NOT_WORKER_HEARTBEAT"
     },
     "theory_queue": {
@@ -201,7 +201,7 @@
     "privacy": "Aggregate operational receipts only; raw research stays in private source files."
   },
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-11-17T13:51:05.729322+00:00",
+  "worker_heartbeat_utc": "2026-11-17T13:59:49.453167+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
   "scan_in_progress": true,
   "last_completed_at_utc": "2026-11-17T13:38:47.719692+00:00",
