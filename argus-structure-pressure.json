@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_MARKET_STRUCTURE_PRESSURE_V4_PER_SYSTEM",
-  "generated_at_utc": "2026-11-17T01:57:40.086504+00:00",
+  "generated_at_utc": "2026-11-17T01:59:09.288550+00:00",
   "authority": "DESCRIPTIVE_MARKET_CONTEXT_AND_PAPER_EXPERIMENT_ONLY",
   "status": "AVAILABLE",
   "score": 27.0,
@@ -110,20 +110,20 @@
     "r5": {
       "engine": "R5",
       "status": "AVAILABLE",
-      "score": 7.4,
+      "score": 4.7,
       "label": "LOW",
       "components": {
         "decoupling": {
-          "percentile": 2.2,
-          "raw": 0.0018303448515942533
+          "percentile": 1.1,
+          "raw": 0.0012048034730725477
         },
         "dispersion": {
-          "percentile": 4.3,
-          "raw": 0.0025061664532469168
+          "percentile": 3.3,
+          "raw": 0.0018044408051511348
         },
         "leadership_rotation": {
-          "percentile": 20.2,
-          "raw": 0.3076923076923077
+          "percentile": 12.4,
+          "raw": 0.18181818181818182
         }
       },
       "weights": {
@@ -133,95 +133,22 @@
       },
       "authority": {
         "source": "R5_FROZEN_WATCHLIST",
-        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-16.csv",
-        "session": "2026-11-16",
-        "patterns": 43,
-        "symbols": 37
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-17.csv",
+        "session": "2026-11-17",
+        "patterns": 37,
+        "symbols": 34
       },
       "coverage": {
-        "authority_symbols": 37,
-        "mapped_symbols": 26,
-        "unmapped_symbols": 11,
-        "mapped_pct": 70.3,
-        "sector_count": 7,
+        "authority_symbols": 34,
+        "mapped_symbols": 22,
+        "unmapped_symbols": 12,
+        "mapped_pct": 64.7,
+        "sector_count": 5,
         "sector_counts": {
           "Consumer Discretionary": 6,
-          "Financials": 6,
-          "Health Care": 1,
-          "Industrials": 4,
+          "Financials": 8,
+          "Industrials": 3,
           "Materials": 1,
-          "Real Estate": 1,
-          "Technology": 7
-        }
-      },
-      "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
-      "baseline_sessions": 89,
-      "current_context_at_utc": "2026-11-17T01:10:18.013955+00:00",
-      "previous_complete_session": "2026-11-13",
-      "top_sector_weights": [
-        {
-          "sector": "Technology",
-          "weight": 0.2692
-        },
-        {
-          "sector": "Consumer Discretionary",
-          "weight": 0.2308
-        },
-        {
-          "sector": "Financials",
-          "weight": 0.2308
-        },
-        {
-          "sector": "Industrials",
-          "weight": 0.1538
-        }
-      ]
-    },
-    "r5s": {
-      "engine": "R5S",
-      "status": "AVAILABLE",
-      "score": 7.0,
-      "label": "LOW",
-      "components": {
-        "decoupling": {
-          "percentile": 2.2,
-          "raw": 0.001581941796806275
-        },
-        "dispersion": {
-          "percentile": 5.4,
-          "raw": 0.0024272815307086527
-        },
-        "leadership_rotation": {
-          "percentile": 16.9,
-          "raw": 0.2631578947368421
-        }
-      },
-      "weights": {
-        "decoupling": 0.4,
-        "dispersion": 0.35,
-        "leadership_rotation": 0.25
-      },
-      "authority": {
-        "source": "R5_FALL_FROZEN_WATCHLIST",
-        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-16.csv",
-        "session": "2026-11-16",
-        "patterns": 29,
-        "symbols": 27,
-        "direction": "FALL",
-        "execution_scope": "PAPER_SHADOW_BORROW_COST_NOT_MODELED"
-      },
-      "coverage": {
-        "authority_symbols": 27,
-        "mapped_symbols": 19,
-        "unmapped_symbols": 8,
-        "mapped_pct": 70.4,
-        "sector_count": 6,
-        "sector_counts": {
-          "Consumer Discretionary": 5,
-          "Financials": 6,
-          "Health Care": 1,
-          "Industrials": 2,
-          "Real Estate": 1,
           "Technology": 4
         }
       },
@@ -232,19 +159,88 @@
       "top_sector_weights": [
         {
           "sector": "Financials",
-          "weight": 0.3158
+          "weight": 0.3636
         },
         {
           "sector": "Consumer Discretionary",
-          "weight": 0.2632
+          "weight": 0.2727
         },
         {
           "sector": "Technology",
-          "weight": 0.2105
+          "weight": 0.1818
         },
         {
           "sector": "Industrials",
-          "weight": 0.1053
+          "weight": 0.1364
+        }
+      ]
+    },
+    "r5s": {
+      "engine": "R5S",
+      "status": "AVAILABLE",
+      "score": 6.9,
+      "label": "LOW",
+      "components": {
+        "decoupling": {
+          "percentile": 2.2,
+          "raw": 0.0010107185232295368
+        },
+        "dispersion": {
+          "percentile": 4.3,
+          "raw": 0.0015763281531126316
+        },
+        "leadership_rotation": {
+          "percentile": 18.0,
+          "raw": 0.21428571428571427
+        }
+      },
+      "weights": {
+        "decoupling": 0.4,
+        "dispersion": 0.35,
+        "leadership_rotation": 0.25
+      },
+      "authority": {
+        "source": "R5_FALL_FROZEN_WATCHLIST",
+        "source_file": "Argus_R5_Frozen_Watchlist_2026-11-17.csv",
+        "session": "2026-11-17",
+        "patterns": 25,
+        "symbols": 23,
+        "direction": "FALL",
+        "execution_scope": "PAPER_SHADOW_BORROW_COST_NOT_MODELED"
+      },
+      "coverage": {
+        "authority_symbols": 23,
+        "mapped_symbols": 14,
+        "unmapped_symbols": 9,
+        "mapped_pct": 60.9,
+        "sector_count": 4,
+        "sector_counts": {
+          "Consumer Discretionary": 4,
+          "Financials": 6,
+          "Industrials": 1,
+          "Technology": 3
+        }
+      },
+      "note": "Authority-weighted descriptive precursor only; not yet validated as a forward regime classifier.",
+      "baseline_sessions": 89,
+      "current_context_at_utc": "2026-11-17T01:10:18.013955+00:00",
+      "previous_complete_session": "2026-11-13",
+      "top_sector_weights": [
+        {
+          "sector": "Financials",
+          "weight": 0.4286
+        },
+        {
+          "sector": "Consumer Discretionary",
+          "weight": 0.2857
+        },
+        {
+          "sector": "Technology",
+          "weight": 0.2143
+        },
+        {
+          "sector": "Industrials",
+          "weight": 0.0714
         }
       ]
     },
@@ -326,7 +322,7 @@
     }
   },
   "comparison": {
-    "r5_minus_r4": -10.1,
+    "r5_minus_r4": -12.8,
     "higher_pressure": "R4",
     "basis": "same fixed 40/35/25 formula; authority sector mix differs by engine. R7 inherits R4 sector mix by contract."
   },
