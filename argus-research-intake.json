@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-11-17T04:01:41.452833+00:00",
+  "generated_at_utc": "2026-11-17T04:03:10.415862+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "STALE",
   "phase": "MAINTENANCE_RESCAN",
@@ -82,26 +82,26 @@
   ],
   "worker_stage": "WAITING",
   "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 3691.2,
+  "heartbeat_age_seconds": 3780.2,
   "telemetry_fresh": false,
   "note": "Research intake telemetry is display-only; it does not describe all research lanes.",
   "research_activity": {
     "schema": "ARGUS_RESEARCH_ACTIVITY_V1",
-    "generated_at_utc": "2026-11-17T04:01:41.452859+00:00",
+    "generated_at_utc": "2026-11-17T04:03:10.415888+00:00",
     "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
     "source": "DIRECT_PERSISTED_WORKER_STATES",
     "historical_universe": {
       "status": "WORKER_RECEIPT_RECENT",
       "source_reported_status": "RUNNING",
-      "worker_heartbeat_utc": "2026-11-17T04:00:36.097838+00:00",
-      "worker_heartbeat_age_seconds": 65.4,
+      "worker_heartbeat_utc": "2026-11-17T04:02:13.714717+00:00",
+      "worker_heartbeat_age_seconds": 56.7,
       "worker_receipt_fresh": true,
       "worker_is_proven_running": false,
       "last_progress_utc": null,
       "progress_age_seconds": null,
       "progress_stage": "LEGACY_SYMBOL_START_RECEIPT",
       "current_year": 2026,
-      "batch_position": 23,
+      "batch_position": 24,
       "batch_total": 32,
       "batch_attempted": null,
       "batch_scored_uncommitted": null,
@@ -120,7 +120,7 @@
     },
     "summary": {
       "generated_at_utc": "2026-11-17T03:07:32.567228+00:00",
-      "age_seconds": 3248.9,
+      "age_seconds": 3337.8,
       "scope": "CYCLE_SUMMARY_NOT_WORKER_HEARTBEAT"
     },
     "theory_queue": {
