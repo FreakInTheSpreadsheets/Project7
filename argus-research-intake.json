@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-11-17T04:30:48.497400+00:00",
+  "generated_at_utc": "2026-11-17T04:31:51.548090+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "STALE",
   "phase": "MAINTENANCE_RESCAN",
@@ -82,19 +82,19 @@
   ],
   "worker_stage": "WAITING",
   "watcher_status": "ACTIVE",
-  "heartbeat_age_seconds": 455.0,
+  "heartbeat_age_seconds": 518.0,
   "telemetry_fresh": false,
   "note": "Research intake telemetry is display-only; it does not describe all research lanes.",
   "research_activity": {
     "schema": "ARGUS_RESEARCH_ACTIVITY_V1",
-    "generated_at_utc": "2026-11-17T04:30:48.497419+00:00",
+    "generated_at_utc": "2026-11-17T04:31:51.548112+00:00",
     "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
     "source": "DIRECT_PERSISTED_WORKER_STATES",
     "historical_universe": {
       "status": "STALE_WORKER_RECEIPT",
       "source_reported_status": "RUNNING",
       "worker_heartbeat_utc": "2026-11-17T04:06:05.857113+00:00",
-      "worker_heartbeat_age_seconds": 1482.6,
+      "worker_heartbeat_age_seconds": 1545.7,
       "worker_receipt_fresh": false,
       "worker_is_proven_running": false,
       "last_progress_utc": null,
@@ -119,12 +119,12 @@
       "note": "Heartbeat is a worker checkpoint, not proof of continuing computation. Legacy processed_this_launch is excluded until reset-aware instrumentation is loaded."
     },
     "summary": {
-      "generated_at_utc": "2026-11-17T03:07:32.567228+00:00",
-      "age_seconds": 4995.9,
+      "generated_at_utc": "2026-11-17T04:31:20.528088+00:00",
+      "age_seconds": 31.0,
       "scope": "CYCLE_SUMMARY_NOT_WORKER_HEARTBEAT"
     },
     "theory_queue": {
-      "source_generated_at_utc": "2026-11-17T03:07:32.567228+00:00",
+      "source_generated_at_utc": "2026-11-17T04:31:20.528088+00:00",
       "status": "NO_NEW_COMPLETE_CHECKPOINT_AND_NO_PENDING_WORK",
       "work_remaining": false,
       "scope": "THEORY_QUEUE_ONLY_NOT_HISTORICAL_BACKLOG"
