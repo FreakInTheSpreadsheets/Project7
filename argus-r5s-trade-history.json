@@ -205,7 +205,7 @@
     }
   ],
   "count": 20,
-  "generated_at_utc": "2026-11-17T04:50:16.263465+00:00",
+  "generated_at_utc": "2026-11-17T04:50:22.983249+00:00",
   "source_file": "15_R5S_Short/06_Paper/Argus_R5S_Closed_Trades.csv",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNMEASURED",
