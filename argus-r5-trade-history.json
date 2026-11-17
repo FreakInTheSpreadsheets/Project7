@@ -501,7 +501,7 @@
       "horizon_minutes": 30
     }
   ],
-  "generated_at_utc": "2026-11-17T02:22:31.945261+00:00",
+  "generated_at_utc": "2026-11-17T02:23:58.336924+00:00",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNKNOWN_NOT_MEASURED",
   "semantics": "display-only projection of canonical R5 closed paper ledger; no trading authority or execution writes",
