@@ -1,6 +1,6 @@
 {
   "schema": "ARGUS_RESEARCH_INTAKE_STATUS_V1",
-  "generated_at_utc": "2026-11-17T04:18:37.546681+00:00",
+  "generated_at_utc": "2026-11-17T04:19:16.807109+00:00",
   "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
   "status": "ACTIVE",
   "phase": "MAINTENANCE_RESCAN",
@@ -145,21 +145,21 @@
     "GABF",
     "GAEM"
   ],
-  "worker_stage": "PARALLEL_COMPUTE",
-  "watcher_status": "PARALLEL_COMPUTE",
-  "heartbeat_age_seconds": 0.1,
+  "worker_stage": "PROMOTION_COMPLETE",
+  "watcher_status": "SCANNING",
+  "heartbeat_age_seconds": 12.3,
   "telemetry_fresh": true,
   "note": "Research intake telemetry is display-only; it does not describe all research lanes.",
   "research_activity": {
     "schema": "ARGUS_RESEARCH_ACTIVITY_V1",
-    "generated_at_utc": "2026-11-17T04:18:37.546722+00:00",
+    "generated_at_utc": "2026-11-17T04:19:16.807141+00:00",
     "authority": "DISPLAY_RESEARCH_ONLY_NO_LIVE_WRITE_PATH",
     "source": "DIRECT_PERSISTED_WORKER_STATES",
     "historical_universe": {
       "status": "STALE_WORKER_RECEIPT",
       "source_reported_status": "RUNNING",
       "worker_heartbeat_utc": "2026-11-17T04:06:05.857113+00:00",
-      "worker_heartbeat_age_seconds": 751.7,
+      "worker_heartbeat_age_seconds": 791.0,
       "worker_receipt_fresh": false,
       "worker_is_proven_running": false,
       "last_progress_utc": null,
@@ -185,7 +185,7 @@
     },
     "summary": {
       "generated_at_utc": "2026-11-17T03:07:32.567228+00:00",
-      "age_seconds": 4265.0,
+      "age_seconds": 4304.2,
       "scope": "CYCLE_SUMMARY_NOT_WORKER_HEARTBEAT"
     },
     "theory_queue": {
@@ -201,7 +201,7 @@
     "privacy": "Aggregate operational receipts only; raw research stays in private source files."
   },
   "queue_source": "NOT_PERSISTED",
-  "worker_heartbeat_utc": "2026-11-17T04:18:37.436589+00:00",
+  "worker_heartbeat_utc": "2026-11-17T04:19:04.484729+00:00",
   "validation_contract": "ARGUS_V478_VALIDATION_V11_PURGED_FIXED_FAMILY_20260825",
   "scan_in_progress": true,
   "last_completed_at_utc": "2026-11-17T03:00:10.235255+00:00",
