@@ -42,10 +42,20 @@
       "exit_reason": "R7_V2_STOP_0_75_PCT",
       "pct": -0.8460121724855774,
       "pnl": -9.008413964553128
+    },
+    {
+      "engine": "R7",
+      "trade_no": 5,
+      "symbol": "TZA",
+      "entry_time_et": "2026-11-17T09:35:10.877058-05:00",
+      "exit_time_et": "2026-11-17T09:46:40.894231-05:00",
+      "exit_reason": "R7_STOP_0_75_PCT",
+      "pct": -0.8855733498326135,
+      "pnl": -9.349888837996524
     }
   ],
-  "count": 4,
-  "generated_at_utc": "2026-11-17T14:14:58.117283+00:00",
+  "count": 5,
+  "generated_at_utc": "2026-11-18T14:52:41.177155+00:00",
   "source_file": "14_R7_R4_Staircase/06_Paper/Argus_R7_Closed_Trades.csv",
   "basis": "GROSS_OBSERVED_PENDING_EXECUTION_COST",
   "execution_cost_status": "UNMEASURED",
