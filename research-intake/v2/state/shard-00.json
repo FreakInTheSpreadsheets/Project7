@@ -1,18 +1,19 @@
 {
-  "cursor": 1641,
+  "cursor": 47,
   "last_counts": {
     "INSUFFICIENT_COMPLETE_SESSIONS": 40,
-    "LOW_PRICE": 1,
-    "NO_BARS": 2,
-    "RESEARCH_DATA_READY": 20,
+    "LOW_DOLLAR_VOLUME": 1,
+    "LOW_PRICE": 3,
+    "NO_BARS": 3,
+    "RESEARCH_DATA_READY": 16,
     "STALE_HISTORY": 1
   },
-  "last_run_id": "45001224228",
+  "last_run_id": "45043514085",
   "last_symbols_processed": 64,
   "queue_size": 1658,
   "retry_symbols": [],
   "schema": "ARGUS_GITHUB_INTAKE_SHARD_STATE_V2",
   "shard": 0,
   "source_digest_sha256": "c68b68c65fb65cd940d7a3aad1f8ab876727a17dab8cb040ad2d0a8e45b14ccf",
-  "updated_at_utc": "2026-11-22T08:07:39.839528+00:00"
+  "updated_at_utc": "2026-11-22T16:24:25.629848+00:00"
 }
