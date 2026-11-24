@@ -1,0 +1,135 @@
+{
+  "completed_shards": 8,
+  "dashboard_modified": false,
+  "drive_saved": false,
+  "historical_bars": 1161344,
+  "live_authority_modified": false,
+  "repository": "FreakInTheSpreadsheets/Project7",
+  "run_id": "45311423763",
+  "schema": "ARGUS_RESEARCH_INTAKE_V2_RUN_RECEIPT",
+  "shards": [
+    {
+      "artifact_name": "argus-intake-v2-success-shard-0-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 41,
+        "LOW_DOLLAR_VOLUME": 1,
+        "NO_BARS": 1,
+        "NO_VALID_RTH_BARS": 1,
+        "RESEARCH_DATA_READY": 19,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 239,
+      "generated_at_utc": "2026-11-24T02:20:07.372281+00:00",
+      "rth_five_minute_bars": 131602,
+      "shard": 0,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-1-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 34,
+        "NO_BARS": 9,
+        "NO_VALID_RTH_BARS": 1,
+        "RESEARCH_DATA_READY": 19,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 226,
+      "generated_at_utc": "2026-11-24T02:20:13.870140+00:00",
+      "rth_five_minute_bars": 115961,
+      "shard": 1,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-2-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 25,
+        "LOW_PRICE": 3,
+        "NO_BARS": 3,
+        "NO_VALID_RTH_BARS": 2,
+        "RESEARCH_DATA_READY": 30,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 270,
+      "generated_at_utc": "2026-11-24T02:20:16.174340+00:00",
+      "rth_five_minute_bars": 172839,
+      "shard": 2,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-3-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 37,
+        "LOW_DOLLAR_VOLUME": 1,
+        "LOW_PRICE": 5,
+        "RESEARCH_DATA_READY": 21
+      },
+      "cursor_after": 287,
+      "generated_at_utc": "2026-11-24T02:20:14.524622+00:00",
+      "rth_five_minute_bars": 160137,
+      "shard": 3,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-4-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 29,
+        "LOW_PRICE": 4,
+        "NO_BARS": 5,
+        "NO_VALID_RTH_BARS": 2,
+        "RESEARCH_DATA_READY": 21,
+        "STALE_HISTORY": 3
+      },
+      "cursor_after": 158,
+      "generated_at_utc": "2026-11-24T02:21:42.780926+00:00",
+      "rth_five_minute_bars": 138865,
+      "shard": 4,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-5-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 35,
+        "LOW_PRICE": 2,
+        "NO_BARS": 2,
+        "RESEARCH_DATA_READY": 24,
+        "STALE_HISTORY": 1
+      },
+      "cursor_after": 244,
+      "generated_at_utc": "2026-11-24T02:21:46.503304+00:00",
+      "rth_five_minute_bars": 142256,
+      "shard": 5,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-6-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 32,
+        "LOW_DOLLAR_VOLUME": 1,
+        "LOW_PRICE": 2,
+        "NO_BARS": 7,
+        "RESEARCH_DATA_READY": 22
+      },
+      "cursor_after": 392,
+      "generated_at_utc": "2026-11-24T02:21:46.681365+00:00",
+      "rth_five_minute_bars": 139734,
+      "shard": 6,
+      "symbols_processed": 64
+    },
+    {
+      "artifact_name": "argus-intake-v2-success-shard-7-run-45311423763",
+      "counts": {
+        "INSUFFICIENT_COMPLETE_SESSIONS": 34,
+        "LOW_PRICE": 2,
+        "NO_BARS": 1,
+        "RESEARCH_DATA_READY": 27
+      },
+      "cursor_after": 110,
+      "generated_at_utc": "2026-11-24T02:21:42.515717+00:00",
+      "rth_five_minute_bars": 159950,
+      "shard": 7,
+      "symbols_processed": 64
+    }
+  ],
+  "status": "AWAITING_PRIVATE_CHATGPT_SCORING",
+  "symbols_processed": 512
+}
